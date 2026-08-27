@@ -227,5 +227,4 @@ This document is the source of truth for implementation status. The existence of
 - Approved social sharing artwork is pending; `og:image` and `twitter:image` should be enabled through the existing layout prop when it is delivered.
 - The final public domain remains unconfirmed. Production must define `SITE_URL` before deployment acceptance so canonical and sitemap URLs are emitted.
 - Services uses `client:visible`; preserve its server-rendered fallback and verify hydration again when production media is introduced.
-- `README.md` remains the Astro starter README. New sessions should use `AGENTS.md` and this roadmap for project-specific guidance.
 - Media models for future sections must not invent asset paths while approved assets are unavailable.
