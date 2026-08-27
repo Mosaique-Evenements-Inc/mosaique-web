@@ -247,6 +247,29 @@
   margin: 0;
 }
 
+.quote-step__groups {
+  display: grid;
+  gap: var(--space-10);
+}
+
+.quote-step__section {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.quote-step__section > header {
+  border-block-end: 1px solid var(--color-border-default);
+  padding-block-end: var(--space-3);
+}
+
+.quote-step__section h3 {
+  font-family: var(--font-family-display);
+  font-size: var(--text-body-lg-size);
+  font-weight: var(--text-heading-lg-weight);
+  line-height: 1.2;
+  margin: 0;
+}
+
 .quote-fields {
   align-content: start;
   display: grid;
@@ -264,14 +287,29 @@
   padding: 0;
 }
 
+.quote-field {
+  gap: 0;
+  position: relative;
+}
+
 .quote-field--wide {
   grid-column: 1 / -1;
 }
 
-.quote-field > span,
+.quote-field > span:not(.quote-field__control),
 .quote-choice-group legend {
   font-size: var(--text-navigation-size);
   font-weight: 600;
+}
+
+.quote-field > span:not(.quote-field__control) {
+  background: var(--color-background);
+  justify-self: start;
+  margin-inline-start: var(--space-5);
+  padding-inline: var(--space-2);
+  position: relative;
+  transform: translateY(50%);
+  z-index: 1;
 }
 
 .quote-field strong,
@@ -282,23 +320,24 @@
 .quote-field input:not([type="checkbox"]),
 .quote-field select,
 .quote-field textarea {
-  background: var(--color-surface-elevated);
+  background: transparent;
   border: 1px solid var(--color-border-strong);
-  border-radius: var(--primitive-radius-xs);
   color: var(--color-text-primary);
   font: inherit;
   inline-size: 100%;
-  min-block-size: 3.25rem;
-  padding: var(--space-3) var(--space-4);
+  min-block-size: 3.75rem;
+  padding: var(--space-4) var(--space-6);
 }
 
 .quote-field input:not([type="checkbox"]),
 .quote-field select {
   align-self: start;
-  block-size: 3.25rem;
+  block-size: 3.75rem;
+  border-radius: var(--primitive-radius-pill);
 }
 
 .quote-field textarea {
+  border-radius: var(--primitive-radius-md);
   min-block-size: 8rem;
   resize: vertical;
 }
@@ -316,7 +355,7 @@
   align-items: center;
   background: var(--color-accent-muted);
   border: 1px solid var(--color-border-default);
-  border-radius: var(--primitive-radius-sm);
+  border-radius: var(--primitive-radius-pill);
   color: var(--color-text-primary);
   display: inline-flex;
   font-size: var(--text-caption-size);
@@ -345,6 +384,10 @@
   margin: 0;
 }
 
+.quote-field > small {
+  margin-block-start: var(--space-2);
+}
+
 .quote-field [data-quote-error]:not(:empty),
 .quote-choice-group [data-quote-error]:not(:empty),
 [data-venue-name-error]:not(:empty),
@@ -354,12 +397,12 @@
 
 .quote-check {
   align-items: center;
-  border: 1px solid var(--color-border-default);
+  border: 0;
   cursor: pointer;
   display: flex;
   gap: var(--space-3);
-  min-block-size: 3.25rem;
-  padding: var(--space-3) var(--space-4);
+  min-block-size: 3.75rem;
+  padding: var(--space-3) var(--space-2);
 }
 
 .quote-date-group {
@@ -387,9 +430,9 @@
 
 .quote-date-trigger {
   align-items: center;
-  background: var(--color-surface-elevated);
+  background: transparent;
   border: 1px solid var(--color-border-strong);
-  border-radius: var(--primitive-radius-xs);
+  border-radius: var(--primitive-radius-pill);
   color: var(--color-text-primary);
   cursor: pointer;
   display: flex;
@@ -398,8 +441,8 @@
   grid-row: 2;
   inline-size: 100%;
   justify-content: space-between;
-  min-block-size: 3.25rem;
-  padding: var(--space-3) var(--space-4);
+  min-block-size: 3.75rem;
+  padding: var(--space-4) var(--space-6);
   text-align: start;
 }
 
@@ -968,7 +1011,7 @@
     block-size: auto;
     display: grid;
     gap: 0;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     justify-content: stretch;
   }
 

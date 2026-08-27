@@ -1,6 +1,6 @@
 # Mosaïque Web Roadmap
 
-Last verified against code and git history: 2026-08-26.
+Last verified against code and git history: 2026-08-27.
 
 This document is the source of truth for implementation status. The existence of a module in `src/content/home/` does not mean its section has been implemented.
 
@@ -28,22 +28,29 @@ This document is the source of truth for implementation status. The existence of
 
 ### Navigation
 
-- **Implementation: complete.** Astro navigation with a contact-action trigger for the Quote Flow, centered brand, semantic menu disclosure, keyboard Escape handling, and outside-click close behavior.
+- **Implementation: complete.** Astro navigation with a topbar quote action routed to `/contact`, centered brand, semantic menu disclosure, keyboard Escape handling, and outside-click close behavior.
 - **Fidelity Pass: complete.** Composition and Hero integration were compared against Movra reference states.
 - Responsive mobile compaction is implemented.
 
 ### Quote / Contact Flow
 
-- **Implementation: complete for the available contact infrastructure.** The unchanged topbar CTA opens a three-step native-dialog flow for Contacto, Tu evento, and Cuéntanos un poco más; the form is not rendered as a permanent visible page section.
-- Step-local validation runs only when advancing, focuses the first invalid control, and preserves every value through Back, Close, and same-session reopen. The stepper reports active, completed, and pending states without enabling direct step jumps.
-- Venue = Sí opens a second accessible native dialog with required venue name, optional JPEG/PNG/WEBP selection, five-file limit, local previews, individual removal, saved summary, and edit behavior. Venue details are excluded from the prepared payload when the final choice is No or Estoy buscando.
-- The current repository has no form API, EmailJS integration, server endpoint, or attachment transport. Submit therefore prepares a truthful email draft through the verified `mailto:` contact channel; venue photos remain local previews and are explicitly reported as requiring separate delivery.
-- `#contact` remains on Final CTA for the existing Hero, Services, navigation, footer, and deep-link contract. Only the topbar CTA intercepts that destination to open the flow.
-- Mobile uses a compact branded header, a complete three-stage connected stepper, an independently scrollable form body, and persistent bottom navigation with an icon-only Back control and full-width primary action. Tablet and desktop retain the established editorial dialog composition.
+- **Implementation: complete for the available contact infrastructure.** The inline form at `/contact` now has one capture stage containing Contacto and Información del evento. Información adicional and the step indicator are no longer rendered. The former main quote dialog and its global trigger interception have been removed.
+- Form validation runs only when opening review, focuses the first invalid control, and preserves every value through review edits. Review remains a separate confirmation state rather than a second form step.
+- The current repository has no form API, EmailJS integration, server endpoint, or attachment transport. Submit preserves the existing cancellable `quote:submit-request` integration event and completion fallback; venue photos remain local previews and require a future transport integration.
+- All approved quote and contact actions now navigate to `/contact`; no homepage CTA opens an overlay, drawer, sheet, or dialog for the main form.
+- Mobile uses natural page scroll, one-column fields, a full-width primary action, and media after the form. Tablet and desktop use the dedicated split form/media composition.
 - The optional event-date field uses a localized, dependency-free calendar dialog instead of the browser-native picker. It preserves the ISO submission contract and Back/Next persistence while providing Spanish month navigation, circular day controls, distinct today/selected/past states, keyboard arrow navigation, Escape/backdrop close, and compatibility with “Aún no tengo fecha”.
-- After the third capture step, a separate review state summarizes Contacto, Tu evento, and Cuéntanos un poco más without presenting itself as a fourth step. Each summary section returns directly to its corresponding step for edits, and the real email preparation occurs only from the final “Enviar solicitud” action.
-- The former full-screen confirmation state and `mailto:`-based completion were removed. A token-driven, accessible success toast now closes the flow and confirms completion after every submission attempt, independently of whether the optional `quote:submit-request` transport integration resolves, rejects, or is not connected yet.
-- Desktop, tablet, mobile, nested-dialog stacking, body-scroll restoration, Escape, focus return, validation, Back persistence, 500-character enforcement, and horizontal overflow were validated.
+- After capture, a separate review state summarizes Contacto and Información del evento without presenting a duplicate visible review title. Each summary section returns to the single form stage for edits, and the real email preparation occurs only from the final “Enviar solicitud” action.
+- Form opening, review, back, and edit actions emit uppercase development logs without altering form state or transport behavior.
+- A token-driven, accessible success toast confirms completion after every submission attempt, independently of whether the optional `quote:submit-request` transport integration resolves, rejects, or is not connected yet.
+- Desktop, tablet, mobile, auxiliary-dialog stacking, validation, Back persistence, 500-character enforcement, and horizontal overflow were validated.
+
+### Contact Page
+
+- **Implementation and Fidelity Pass: complete.** The static `/contact` route reuses Navigation, Footer, the two-tab QuoteForm, approved quote labels, and the verified contact email from the existing content foundation.
+- Desktop follows the supplied reference with an approximately 40/60 form-media split, compact form density, pill-shaped token-driven fields, existing select contracts, a strong full-width action, and a large sticky replaceable media placeholder. The single-stage form begins directly with its content and retains a visually hidden accessible heading without a redundant page title or step indicator. Tablet preserves a readable split; mobile stacks form then media in natural flow.
+- The media placeholder is isolated in `ContactMediaPlaceholder.astro` so approved photography can replace it without changing form behavior or page composition.
+- The page introduces no complex motion. Labels, fieldsets, validation errors, keyboard navigation, focus states, loading status, review editing, auxiliary dialogs, and the accessible success toast remain available.
 
 ### Hero
 
@@ -64,7 +71,7 @@ This document is the source of truth for implementation status. The existence of
 ### Services
 
 - **Implementation: complete.** StickyServices, ServicesScene, PanelReveal, and the neutral ScrollLinkedScene pattern are integrated. ServicesIntro was removed from the page; Marquee remains an independent preceding section while a panel-only overlap lets Services reveal over its final viewport.
-- The seven service records use the approved compact title, description, audience, and commercial CTA copy from `src/content/home/services.ts`; the commercial actions continue to target `#contact`.
+- The seven service records use the approved compact title, description, audience, and commercial CTA copy from `src/content/home/services.ts`; the commercial actions target `/contact`.
 - Desktop and tablet use equal scene columns plus an intrinsic-width index column so service copy and synchronized media carry comparable visual weight without increasing the bounded scroll interval.
 - The synchronized media frame exposes one contextual `Ver más` button for the active service on desktop and tablet. It uses the existing stable service `id`, provides a descriptive accessible name, and currently logs the selected identifier without navigation so a future detail action can replace one handler.
 - Mobile removes the media frame and its associated `Ver más` action at the existing 48 rem breakpoint, leaving the complete service copy in a full-width natural flow without reserved media space.
@@ -129,7 +136,7 @@ This document is the source of truth for implementation status. The existence of
 - The section uses semantic `details` and `summary` elements grouped by the native `name` attribute, so pointer and keyboard interaction work without React, custom JavaScript, or event listeners while only one answer remains open at a time.
 - **Fidelity Pass: complete.** A centered editorial header leads into two independent, balanced question columns on desktop; tablet and mobile use one linear column. Each item remains a low-chrome row with a subtle divider, full-row interaction, a plus-to-close state, and an inline answer without cards or shadows.
 - Questions are divided from the data source with a derived `ceil(total / 2)` split, so expanded content changes only its own column without forcing artificial height into the opposite column.
-- A quiet closing CTA reuses the established quote-flow trigger and `#contact` fallback instead of duplicating modal logic or inventing a route.
+- A quiet closing CTA routes to the dedicated `/contact` form without duplicating form logic.
 - Supporting browsers receive a token-driven CSS open/close transition through `::details-content`; other browsers retain immediate native disclosure behavior without JavaScript. Reduced motion removes the disclosure and icon transitions while preserving immediate state changes.
 
 ### Final CTA
@@ -222,6 +229,7 @@ This document is the source of truth for implementation status. The existence of
 
 ## Known Issues / Deferred Decisions
 
+- The current `src/pages/index.astro` composition comments out About/Milestones and Why Choose Us and changes previously validated section handoffs. Those homepage changes predate the Contact Page task and have not completed a new fidelity or full-regression pass; preserve them until their product intent is confirmed.
 - Approved production photography is unavailable. Hero, About/Milestones, Marquee, Services, Projects, Process, Testimonials, FAQ, and Final CTA currently use lightweight replaceable placeholders.
 - Approved self-hosted Cinzel and Montserrat font files are pending; see `docs/DESIGN_SYSTEM.md`.
 - Approved social sharing artwork is pending; `og:image` and `twitter:image` should be enabled through the existing layout prop when it is delivered.

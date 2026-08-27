@@ -9,7 +9,7 @@ export const navigationContent = {
     { label: "Experiencias", href: "#experiences" },
     { label: "Proceso", href: "#process" },
     { label: "Preguntas", href: "#faq" },
-    { label: "Contacto", href: "#contact" },
+    { label: "Contacto", href: "/contact" },
   ] satisfies ContentLink[],
-  cta: { label: "Cotizar un evento", href: "#contact" } satisfies ContentLink,
+  cta: { label: "Cotizar un evento", href: "/contact" } satisfies ContentLink,
 } as const;

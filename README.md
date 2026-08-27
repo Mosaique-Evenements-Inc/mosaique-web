@@ -51,6 +51,7 @@ El repositorio no tiene actualmente un script de tests automatizados.
 ## Superficie pública
 
 - `/`: homepage editorial.
+- `/contact`: página dedicada con el formulario de cotización.
 - `/events/[slug]`: seis páginas estáticas de detalle de evento.
 - `/robots.txt`: directivas de rastreo; incluye el sitemap cuando existe `SITE_URL`.
 
@@ -64,9 +65,9 @@ El repositorio no tiene actualmente un script de tests automatizados.
 | Homepage `/`                 | HTTP `200`; título `MOSAÏQUE EVENTS — Eventos en Montréal`           |
 | Evento `/events/nossa-copa/` | HTTP `200`; título `Nossa Copa — MOSAÏQUE EVENTS`                    |
 | `/robots.txt`                | HTTP `200`; `User-agent: *` y `Allow: /`                             |
-| `pnpm build`                 | Correcto; 7 páginas estáticas generadas                              |
+| `pnpm build`                 | Correcto; 8 páginas estáticas generadas                              |
 | `pnpm lint`                  | Correcto; 0 errores                                                  |
-| `pnpm typecheck`             | Correcto; 67 archivos, 0 errores, 0 warnings, 0 hints                |
+| `pnpm typecheck`             | Correcto; 70 archivos, 0 errores, 0 warnings, 0 hints                |
 | `git diff --check`           | Correcto                                                             |
 
 El servidor background de esta verificación permanece disponible en `http://localhost:4322`.

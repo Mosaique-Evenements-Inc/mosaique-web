@@ -1,0 +1,34 @@
+---
+import ContactMediaPlaceholder from "../components/quote/ContactMediaPlaceholder.astro";
+import QuoteForm from "../components/quote/QuoteForm.astro";
+import Footer from "../components/sections/Footer.astro";
+import Navigation from "../components/sections/Navigation.astro";
+import Container from "../components/ui/Container.astro";
+import { footerContent } from "../content/home/footer";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+import "../styles/sections/contact-page.css";
+---
+
+<BaseLayout title="Contacto — MOSAÏQUE ÉVÉNEMENTS" description={footerContent.description}>
+  <Navigation surface="solid" anchorPrefix="/" />
+
+  <main class="contact-page" id="main-content" tabindex="-1">
+    <section class="contact-page__stage" aria-label="Formulario de cotización">
+      <Container class="contact-page__container">
+        <div class="contact-page__form-column">
+          <QuoteForm />
+
+          <p class="contact-page__secondary-contact">
+            <span>Email</span>
+            <a href={footerContent.contact.email.href}>{footerContent.contact.email.label}</a>
+          </p>
+        </div>
+
+        <ContactMediaPlaceholder />
+      </Container>
+    </section>
+  </main>
+
+  <Footer anchorPrefix="/" />
+</BaseLayout>

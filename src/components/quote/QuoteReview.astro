@@ -1,7 +1,7 @@
 <section class="quote-review" data-quote-review aria-labelledby="quote-review-title" hidden>
   <header>
     <span>Revisión final</span>
-    <h2 id="quote-review-title" tabindex="-1">Revisar y confirmar información</h2>
+    <h2 class="visually-hidden" id="quote-review-title" tabindex="-1">Revisión final</h2>
     <p>
       Verifica los detalles antes de preparar tu solicitud. Puedes editar cualquier sección.
     </p>
@@ -31,7 +31,7 @@
           <span>02</span>
           <h3 id="quote-review-event-title">Tu evento</h3>
         </div>
-        <button type="button" class="quote-text-action" data-quote-edit-step="1">
+        <button type="button" class="quote-text-action" data-quote-edit-step="0">
           Editar <span class="sr-only">información del evento</span>
         </button>
       </header>
@@ -40,31 +40,6 @@
         <div><dt>Tipo de evento</dt><dd data-review-value="eventType"></dd></div>
         <div><dt>Fecha</dt><dd data-review-value="eventDate"></dd></div>
         <div><dt>Invitados</dt><dd data-review-value="guestRange"></dd></div>
-      </dl>
-    </section>
-
-    <section class="quote-review__section" aria-labelledby="quote-review-details-title">
-      <header>
-        <div>
-          <span>03</span>
-          <h3 id="quote-review-details-title">Cuéntanos un poco más</h3>
-        </div>
-        <button type="button" class="quote-text-action" data-quote-edit-step="2">
-          Editar <span class="sr-only">detalles adicionales</span>
-        </button>
-      </header>
-      <dl>
-        <div><dt>Venue</dt><dd data-review-value="venue"></dd></div>
-        <div data-review-venue-name hidden>
-          <dt>Nombre del venue</dt><dd data-review-value="venueName"></dd>
-        </div>
-        <div data-review-venue-files hidden>
-          <dt>Fotografías</dt><dd data-review-value="venueFiles"></dd>
-        </div>
-        <div><dt>Presupuesto</dt><dd data-review-value="budget"></dd></div>
-        <div class="quote-review__message">
-          <dt>Descripción</dt><dd data-review-value="message"></dd>
-        </div>
       </dl>
     </section>
   </div>

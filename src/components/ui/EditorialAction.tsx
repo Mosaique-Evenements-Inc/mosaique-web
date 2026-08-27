@@ -6,7 +6,6 @@ import "./editorial-action.css";
 type CommonProps = {
   children: ReactNode;
   className?: string;
-  "data-quote-trigger"?: boolean | string;
 };
 
 type LinkProps = CommonProps &

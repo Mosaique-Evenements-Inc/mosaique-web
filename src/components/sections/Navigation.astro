@@ -22,11 +22,7 @@ const resolveHref = (href: string) =>
   <div class="site-navigation__backdrop" aria-hidden="true"></div>
 
   <Container class="site-navigation__inner">
-    <a
-      class="site-navigation__contact"
-      href={resolveHref(navigationContent.cta.href)}
-      data-quote-trigger
-    >
+    <a class="site-navigation__contact" href={resolveHref(navigationContent.cta.href)}>
       <Icon name="plusCircle" size={16} />
       <span class="site-navigation__contact-label">{navigationContent.cta.label}</span>
     </a>

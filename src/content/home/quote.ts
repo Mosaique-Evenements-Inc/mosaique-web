@@ -5,9 +5,8 @@ export const quoteContent = {
   title: "Cuéntanos sobre tu evento.",
   mobileTitle: "Cotizar un evento",
   steps: [
-    { id: "contact", index: "01", label: "Contacto" },
-    { id: "event", index: "02", label: "Tu evento" },
-    { id: "details", index: "03", label: "Cuéntanos un poco más" },
+    { id: "basic", index: "01", label: "Información básica" },
+    { id: "additional", index: "02", label: "Información adicional" },
   ],
   services: [
     ...servicesContent.items.map(({ id, title }) => ({ value: id, label: title })),

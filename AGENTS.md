@@ -85,10 +85,13 @@ Current responsibilities:
 - `src/tokens/motion.ts`: runtime equivalents of CSS motion tokens for React/Motion.
 - `src/layouts/BaseLayout.astro`: shared document shell and metadata contract.
 
-The current public surface is the homepage at `/`, plus `/robots.txt`. `src/pages/index.astro`
-currently composes Navigation; Hero/About through `PanelReveal`; Why Choose Us; Marquee;
-Services through an overlapping `PanelReveal`; Event Gallery; Process with Testimonials; FAQ;
-Final CTA; and Footer. A module or component existing on disk does not prove it is rendered.
+The current public surface includes the homepage at `/`, the contact page at `/contact`, event
+detail pages at `/events/[slug]`, and `/robots.txt`. `src/pages/index.astro` currently composes
+Navigation; then a `PanelReveal` containing Hero, Event Gallery, Services, Process with
+Testimonials, and Marquee; followed by FAQ, Final CTA, and Footer. The `/contact` route owns the
+inline two-tab QuoteForm and its replaceable media placeholder. About/Milestones and Why Choose
+Us are currently commented out of the homepage composition. A module or component existing on
+disk does not prove it is rendered.
 
 ## Technology Principle
 
