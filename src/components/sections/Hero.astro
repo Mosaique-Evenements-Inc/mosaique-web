@@ -7,9 +7,12 @@ import { heroContent } from "../../content/home/hero";
 import "../../styles/sections/home-entry.css";
 ---
 
-<section class="home-hero" id="top" aria-labelledby="home-hero-title">
-  <p class="home-hero__brand" aria-hidden="true">{heroContent.brand}</p>
-
+<section
+  class="home-hero"
+  id="top"
+  aria-labelledby="home-hero-title"
+  data-navigation-contrast="light"
+>
   <div class="home-hero__scene">
     <figure
       class="home-hero__media"
@@ -56,9 +59,6 @@ import "../../styles/sections/home-entry.css";
 
     hero.dataset.scrollMotionReady = "true";
 
-    const navigation = document.querySelector<HTMLElement>(".site-navigation");
-    const heroBrand = hero.querySelector<HTMLElement>(".home-hero__brand");
-    const navigationBrand = navigation?.querySelector<HTMLElement>(".site-navigation__brand");
     const scrollOrigin = hero.closest<HTMLElement>(".panel-reveal") ?? hero;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const controller = new AbortController();
@@ -69,42 +69,15 @@ import "../../styles/sections/home-entry.css";
       frameId = 0;
 
       if (reducedMotion.matches) {
-        navigation?.style.removeProperty("--hero-nav-brand-opacity");
+        hero.style.setProperty("--hero-caption-opacity", "1");
         return;
       }
 
       const scrollRange = Math.max(window.innerHeight * 0.55, 1);
       const progress = clamp((window.scrollY - heroTop) / scrollRange);
-      const brandProgress = rangeProgress(progress, 0, 0.58);
-      const brandHandoffProgress = rangeProgress(progress, 0.56, 0.64);
       const captionProgress = rangeProgress(progress, 0.64, 0.88);
 
-      if (heroBrand && navigationBrand) {
-        const currentScale =
-          Number.parseFloat(hero.style.getPropertyValue("--hero-brand-scale")) || 1;
-        const heroBrandRect = heroBrand.getBoundingClientRect();
-        const heroBrandTop = Number.parseFloat(window.getComputedStyle(heroBrand).top);
-        const navigationBrandRect = navigationBrand.getBoundingClientRect();
-        const heroBrandWidth = heroBrandRect.width / currentScale;
-        const heroBrandHeight = heroBrandRect.height / currentScale;
-        const heroBrandCenter = heroBrandTop + heroBrandHeight / 2;
-        const navigationBrandCenter = navigationBrandRect.top + navigationBrandRect.height / 2;
-        const targetScale = navigationBrandRect.width / heroBrandWidth;
-
-        hero.style.setProperty("--hero-brand-opacity", String(1 - brandHandoffProgress));
-        hero.style.setProperty(
-          "--hero-brand-y",
-          `${(navigationBrandCenter - heroBrandCenter) * brandProgress}px`,
-        );
-        hero.style.setProperty(
-          "--hero-brand-scale",
-          String(1 - (1 - targetScale) * brandProgress),
-        );
-        navigation?.style.setProperty("--hero-nav-brand-opacity", String(brandHandoffProgress));
-      }
-
       hero.style.setProperty("--hero-caption-opacity", String(captionProgress));
-      navigation?.style.setProperty("--hero-nav-progress", `${brandProgress * 100}%`);
     };
 
     const requestUpdate = () => {

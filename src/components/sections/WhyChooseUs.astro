@@ -10,7 +10,11 @@ import "../../styles/sections/why-choose-us.css";
 const reasonIcons: IconName[] = ["networkRight", "designNib", "coinsSwap", "strategy"];
 ---
 
-<section class="why-choose-us" aria-label={whyChooseUsContent.title}>
+<section
+  class="why-choose-us"
+  aria-label={whyChooseUsContent.title}
+  data-navigation-contrast="dark"
+>
   <Container>
     <Heading as="h2" variant="heading-md" class="visually-hidden">
       {whyChooseUsContent.title}

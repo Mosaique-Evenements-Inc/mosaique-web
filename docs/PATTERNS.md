@@ -8,7 +8,7 @@ Patterns should be promoted here only after a real section demonstrates a reusab
 
 `PanelReveal` composes a sticky lead and a higher-layer panel while preserving both children in normal document flow. It is a CSS-only handoff: scroll position naturally controls how the panel covers the lead, so pausing or reversing scroll pauses or reverses the reveal without additional orchestration.
 
-Hero/About uses the default form. Hero occupies the `lead` slot and retains its existing internal scene and brand-to-navigation motion; About is the solid panel that enters from the viewport edge and then continues as ordinary content. The Hero script measures progress from the non-sticky `PanelReveal` wrapper so the existing morph remains stable during sticky positioning and viewport resizes.
+Hero/About uses the default form. Hero occupies the `lead` slot as a full-viewport media scene; About is the solid panel that enters from the viewport edge and then continues as ordinary content. The Hero script measures progress from the non-sticky `PanelReveal` wrapper only to coordinate the media caption while the CSS handoff remains stable. Navigation independently samples the explicitly declared contrast surface beneath its centerline so its foreground stays legible through this and later section handoffs.
 
 Services uses the `overlap` form without a lead slot. Its negative viewport overlap pulls only the Services panel over the final Marquee viewport; Marquee remains an independent section with its own bounded scene.
 

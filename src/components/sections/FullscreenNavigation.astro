@@ -1,0 +1,168 @@
+---
+import Icon from "../ui/Icon.astro";
+import { footerContent } from "../../content/home/footer";
+import { navigationContent } from "../../content/home/navigation";
+
+interface Props {
+  anchorPrefix?: string;
+}
+
+const { anchorPrefix = "" } = Astro.props;
+const resolveHref = (href: string) =>
+  anchorPrefix && href.startsWith("#") ? `${anchorPrefix}${href}` : href;
+---
+
+<div class="site-navigation__mobile-navigation">
+  <button
+    class="site-navigation__menu-trigger"
+    type="button"
+    aria-label="Abrir navegación"
+    aria-expanded="false"
+    aria-controls="site-navigation-dialog"
+  >
+    <Icon name="menu" size={24} />
+  </button>
+
+  <dialog
+    class="site-navigation__dialog"
+    id="site-navigation-dialog"
+    aria-labelledby="site-navigation-dialog-title"
+  >
+    <div class="site-navigation__dialog-layout">
+      <div class="site-navigation__dialog-header">
+        <a
+          class="site-navigation__dialog-brand"
+          href={resolveHref("#top")}
+          id="site-navigation-dialog-title"
+        >
+          {navigationContent.logo}
+        </a>
+
+        <button
+          class="site-navigation__dialog-close"
+          type="button"
+          aria-label="Cerrar navegación"
+          autofocus
+        >
+          <Icon name="xmark" size={28} />
+        </button>
+      </div>
+
+      <nav class="site-navigation__dialog-nav" aria-label="Navegación principal">
+        <ol>
+          {
+            navigationContent.items.map((item, index) => (
+              <li style={`--navigation-item-index:${index};`}>
+                <a
+                  href={resolveHref(item.href)}
+                  data-quote-trigger={item.href === "#contact" ? true : undefined}
+                >
+                  <span class="site-navigation__dialog-index" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span>{item.label}</span>
+                  <Icon name="arrowRight" size={22} />
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </nav>
+
+      <div class="site-navigation__dialog-footer">
+        <div class="site-navigation__dialog-meta">
+          <span>{footerContent.contact.location}</span>
+          <a href={footerContent.contact.email.href}>{footerContent.contact.email.label}</a>
+        </div>
+      </div>
+    </div>
+  </dialog>
+</div>
+
+<script>
+  document
+    .querySelectorAll<HTMLElement>(".site-navigation__mobile-navigation")
+    .forEach((navigation) => {
+      if (navigation.dataset.menuReady === "true") return;
+      navigation.dataset.menuReady = "true";
+
+      const trigger = navigation.querySelector<HTMLButtonElement>(
+        ".site-navigation__menu-trigger",
+      );
+      const dialog = navigation.querySelector<HTMLDialogElement>(".site-navigation__dialog");
+      const closeButton = dialog?.querySelector<HTMLButtonElement>(
+        ".site-navigation__dialog-close",
+      );
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const desktop = window.matchMedia("(min-width: 80rem)");
+      const root = document.documentElement;
+      const body = document.body;
+      let previousRootOverflow = "";
+      let previousBodyOverflow = "";
+      let restoreTriggerFocus = false;
+      let closeTimer = 0;
+
+      if (!trigger || !dialog || !closeButton) return;
+
+      const unlockScroll = () => {
+        root.style.overflow = previousRootOverflow;
+        body.style.overflow = previousBodyOverflow;
+      };
+
+      const finishClose = () => {
+        window.clearTimeout(closeTimer);
+        dialog.removeAttribute("data-closing");
+        if (dialog.open) dialog.close();
+      };
+
+      const closeMenu = ({ returnFocus = true, immediate = false } = {}) => {
+        if (!dialog.open) return;
+        restoreTriggerFocus = returnFocus;
+
+        if (immediate || reducedMotion.matches) {
+          finishClose();
+          return;
+        }
+
+        dialog.setAttribute("data-closing", "true");
+        closeTimer = window.setTimeout(finishClose, 360);
+      };
+
+      trigger.addEventListener("click", () => {
+        previousRootOverflow = root.style.overflow;
+        previousBodyOverflow = body.style.overflow;
+        root.style.overflow = "hidden";
+        body.style.overflow = "hidden";
+        trigger.setAttribute("aria-expanded", "true");
+        dialog.showModal();
+        closeButton.focus();
+      });
+
+      closeButton.addEventListener("click", () => closeMenu());
+
+      dialog.addEventListener("cancel", (event) => {
+        event.preventDefault();
+        closeMenu();
+      });
+
+      dialog.addEventListener("click", (event) => {
+        const link = (event.target as Element).closest<HTMLAnchorElement>("a[href]");
+        if (link) closeMenu({ returnFocus: false, immediate: true });
+      });
+
+      dialog.addEventListener("animationend", (event) => {
+        if (event.target === dialog && dialog.hasAttribute("data-closing")) finishClose();
+      });
+
+      dialog.addEventListener("close", () => {
+        unlockScroll();
+        trigger.setAttribute("aria-expanded", "false");
+        if (restoreTriggerFocus) trigger.focus();
+        restoreTriggerFocus = false;
+      });
+
+      desktop.addEventListener("change", (event) => {
+        if (event.matches) closeMenu({ returnFocus: false, immediate: true });
+      });
+    });
+</script>
