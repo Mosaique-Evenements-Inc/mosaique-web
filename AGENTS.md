@@ -252,7 +252,7 @@ Validate desktop, laptop, tablet, mobile, and narrow mobile—not only the suppl
 
 Treat these behaviors as regression-sensitive:
 
-- Hero transforms the large Mosaïque brand into the centered navigation brand while scrolling.
+- Hero no longer renders or transforms a large Mosaïque brand; the topbar logo remains independent while the Hero script only coordinates navigation color and caption state.
 - Hero hands off to About through the default `PanelReveal` sticky lead.
 - Marquee hands off to Services through the overlapping `PanelReveal` form.
 - Services synchronizes scroll progress, active copy, index, and media through
@@ -276,13 +276,14 @@ boundaries and navigation layering.
 The persistent navigation is conceptually:
 
 ```text
-contact action | centered Mosaïque brand | menu control
+Mosaïque logo | desktop inline navigation or responsive menu control
 ```
 
-Preserve true visual centering of the brand independent of unequal side content. Check vertical
-alignment, layout shifts during the Hero morph, and all menu states. The native `details` menu
-must continue to support keyboard navigation, focus containment, Escape-to-close, outside-click
-close, link-close behavior, scroll locking, and responsive panel sizing. Modify menu items in
+Preserve the approved `src/assets/logos/logo_topbar.png` asset at the leading edge, the four-link
+desktop navigation, and the tablet/mobile fullscreen menu. Contacto owns the centralized Quote
+Flow trigger; do not restore a separate topbar quote action. The native dialog menu must continue
+to support keyboard navigation, focus containment, Escape-to-close, close-button and link-close
+behavior, scroll locking, and responsive sizing. Modify menu items in
 `src/content/home/navigation.ts`, not by hardcoding parallel markup.
 
 ## Services Contract

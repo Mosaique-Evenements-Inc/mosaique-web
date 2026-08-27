@@ -1,7 +1,7 @@
 ---
 import Container from "../ui/Container.astro";
-import Icon from "../ui/Icon.astro";
-import { footerContent } from "../../content/home/footer";
+import FullscreenNavigation from "./FullscreenNavigation.astro";
+import topbarLogo from "../../assets/logos/logo_topbar.png";
 import { navigationContent } from "../../content/home/navigation";
 
 import "../../styles/sections/home-entry.css";
@@ -19,128 +19,35 @@ const resolveHref = (href: string) =>
 ---
 
 <header class:list={["site-navigation", { "site-navigation--solid": surface === "solid" }]}>
-  <div class="site-navigation__backdrop" aria-hidden="true"></div>
-
   <Container class="site-navigation__inner">
     <a
-      class="site-navigation__contact"
-      href={resolveHref(navigationContent.cta.href)}
-      data-quote-trigger
-    >
-      <Icon name="plusCircle" size={16} />
-      <span class="site-navigation__contact-label">{navigationContent.cta.label}</span>
-    </a>
-
-    <a
-      class="site-navigation__brand"
+      class="site-navigation__logo"
       href={resolveHref("#top")}
       aria-label={`${navigationContent.logo} — ${homeLabel}`}
     >
-      <span class="site-navigation__brand-line" aria-hidden="true"
-        >{navigationContent.logo}</span
-      >
+      <span
+        class="site-navigation__logo-mark"
+        style={`--topbar-logo-url:url("${topbarLogo.src}");`}
+        aria-hidden="true"></span>
     </a>
 
-    <details class="site-navigation__menu">
-      <summary>
-        <Icon name="menu" size={24} class="site-navigation__menu-open-icon" />
-        <span class="site-navigation__menu-open-label">Menú</span>
-        <Icon name="xmark" size={28} class="site-navigation__menu-close-icon" />
-        <span class="site-navigation__menu-close-label">Cerrar</span>
-      </summary>
+    <nav class="site-navigation__desktop-nav" aria-label="Navegación principal">
+      <ul>
+        {
+          navigationContent.desktopItems.map((item) => (
+            <li>
+              <a
+                href={resolveHref(item.href)}
+                data-quote-trigger={item.href === "#contact" ? true : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
 
-      <div class="site-navigation__menu-panel">
-        <nav aria-label="Navegación principal">
-          <ul>
-            {
-              navigationContent.items.map((item) => (
-                <li>
-                  <a href={resolveHref(item.href)}>{item.label}</a>
-                </li>
-              ))
-            }
-          </ul>
-        </nav>
-
-        <div class="site-navigation__menu-footer">
-          <div class="site-navigation__menu-contact">
-            <a href={footerContent.contact.phone.href}>
-              <strong>{footerContent.contact.phone.label}</strong>
-            </a>
-            <a href={footerContent.contact.email.href}>
-              <strong>{footerContent.contact.email.label}</strong>
-            </a>
-          </div>
-
-          <div class="site-navigation__menu-media">
-            <div class="site-navigation__menu-media-placeholder" aria-hidden="true">
-              <span>{navigationContent.logo}</span>
-              <span></span>
-              <span></span>
-            </div>
-            <p>{footerContent.legal}</p>
-          </div>
-        </div>
-      </div>
-    </details>
+    <FullscreenNavigation anchorPrefix={anchorPrefix} />
   </Container>
 </header>
-
-<script>
-  document.querySelectorAll<HTMLDetailsElement>(".site-navigation__menu").forEach((menu) => {
-    const summary = menu.querySelector<HTMLElement>("summary");
-    const root = document.documentElement;
-    let previousOverflow = "";
-
-    const getFocusableElements = () =>
-      Array.from(menu.querySelectorAll<HTMLElement>("summary, a[href]"));
-
-    menu.addEventListener("toggle", () => {
-      if (menu.open) {
-        previousOverflow = root.style.overflow;
-        root.style.overflow = "hidden";
-        menu.scrollTop = 0;
-      } else {
-        root.style.overflow = previousOverflow;
-      }
-    });
-
-    menu.addEventListener("click", (event) => {
-      if ((event.target as Element).closest("a")) {
-        menu.open = false;
-      }
-    });
-
-    document.addEventListener("pointerdown", (event) => {
-      if (menu.open && !menu.contains(event.target as Node)) {
-        menu.open = false;
-      }
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (!menu.open) return;
-
-      if (event.key === "Escape") {
-        menu.open = false;
-        summary?.focus();
-        return;
-      }
-
-      if (event.key === "Tab") {
-        const focusableElements = getFocusableElements();
-        const firstElement = focusableElements[0];
-        const lastElement = focusableElements.at(-1);
-
-        if (!firstElement || !lastElement) return;
-
-        if (event.shiftKey && document.activeElement === firstElement) {
-          event.preventDefault();
-          lastElement.focus();
-        } else if (!event.shiftKey && document.activeElement === lastElement) {
-          event.preventDefault();
-          firstElement.focus();
-        }
-      }
-    });
-  });
-</script>
