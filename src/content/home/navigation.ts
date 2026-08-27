@@ -7,10 +7,10 @@ const navigationItems = [
   { label: "Experiencias", href: "#experiences" },
   { label: "Proceso", href: "#process" },
   { label: "Preguntas", href: "#faq" },
-  { label: "Contacto", href: "#contact" },
+  { label: "Contacto", href: "/contact" },
 ] satisfies ContentLink[];
 
-const desktopNavigationHrefs = new Set(["#about", "#services", "#experiences", "#contact"]);
+const desktopNavigationHrefs = new Set(["#about", "#services", "#experiences", "/contact"]);
 
 export const navigationContent = {
   logo: "MOSAÏQUE ÉVÉNEMENTS",
