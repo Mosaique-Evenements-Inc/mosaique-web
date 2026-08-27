@@ -1,5 +1,4 @@
 ---
-import Button from "../ui/Button.astro";
 import Container from "../ui/Container.astro";
 import Heading from "../ui/Heading.astro";
 import Text from "../ui/Text.astro";
@@ -25,9 +24,9 @@ import "../../styles/sections/projects-experiences.css";
 
         <div class="projects-experiences__introduction">
           <Text variant="body-lg" tone="primary">{eventGalleryContent.introduction}</Text>
-          <Button href={eventGalleryContent.cta.href} variant="ghost">
+          <a class="projects-experiences__cta" href={eventGalleryContent.cta.href}>
             {eventGalleryContent.cta.label}
-          </Button>
+          </a>
         </div>
       </header>
 

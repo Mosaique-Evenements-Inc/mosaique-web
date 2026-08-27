@@ -1,5 +1,5 @@
 ---
-import EditorialAction from "../ui/EditorialAction";
+import Button from "../ui/Button";
 import Container from "../ui/Container.astro";
 import Heading from "../ui/Heading.astro";
 import Text from "../ui/Text.astro";
@@ -22,12 +22,13 @@ const galleryTones = ["01", "02", "03", "04", "05"] as const;
         <Text>{finalCtaContent.text}</Text>
 
         <div class="final-cta__actions">
-          <EditorialAction
+          <Button
             className="final-cta__action final-cta__action--primary"
             href={finalCtaContent.action.href}
+            variant="light"
           >
             {finalCtaContent.action.label}
-          </EditorialAction>
+          </Button>
         </div>
       </div>
     </Container>

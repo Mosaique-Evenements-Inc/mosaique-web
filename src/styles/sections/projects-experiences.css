@@ -33,6 +33,22 @@
   max-inline-size: var(--layout-max-reading);
 }
 
+.projects-experiences__cta {
+  color: var(--color-text-primary);
+  font-family: var(--font-family-display);
+  font-size: var(--text-button-size);
+  font-weight: var(--text-button-weight);
+  line-height: var(--text-button-line-height);
+  text-decoration-color: var(--color-border-strong);
+  transition: color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+@media (hover: hover) {
+  .projects-experiences__cta:hover {
+    color: var(--color-accent-text);
+  }
+}
+
 .projects-experiences__controls {
   align-items: center;
   display: flex;

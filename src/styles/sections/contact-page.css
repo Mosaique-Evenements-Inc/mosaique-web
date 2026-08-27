@@ -98,7 +98,7 @@
 }
 
 .contact-page .quote-step__groups {
-  gap: var(--space-4);
+  gap: var(--space-12);
 }
 
 .contact-page .quote-step__section {
@@ -112,6 +112,7 @@
 .contact-page .quote-form__actions {
   align-items: stretch;
   background: transparent;
+  border-block-start: 0;
   display: grid;
   gap: var(--space-3);
   margin-block-start: var(--space-2);
@@ -123,7 +124,7 @@
   grid-template-columns: auto minmax(0, 1fr);
 }
 
-.contact-page .quote-form__actions .quote-button--primary {
+.contact-page .quote-form__actions [data-quote-next] {
   inline-size: 100%;
 }
 

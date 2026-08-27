@@ -2,6 +2,7 @@
 import EventDatePicker from "./EventDatePicker.astro";
 import QuoteBasicStep from "./QuoteBasicStep.astro";
 import QuoteReview from "./QuoteReview.astro";
+import Button from "../ui/Button";
 import Icon from "../ui/Icon.astro";
 
 import "../../styles/sections/quote-form.css";
@@ -17,19 +18,12 @@ import "../../styles/sections/quote-form.css";
     <footer class="quote-form__actions" data-quote-actions>
       <p data-quote-submit-status aria-live="polite"></p>
       <div>
-        <button
-          type="button"
-          class="quote-button quote-button--secondary"
-          data-quote-back
-          hidden
-        >
-          <Icon name="arrowLeft" size={20} />
+        <Button type="button" className="quote-button" data-quote-back hidden>
           <span data-quote-back-label>Atrás</span>
-        </button>
-        <button type="button" class="quote-button quote-button--primary" data-quote-next>
+        </Button>
+        <Button type="button" className="quote-button" data-quote-next variant="light">
           <span data-quote-next-label>Revisar información</span>
-          <Icon name="arrowRight" size={20} />
-        </button>
+        </Button>
       </div>
     </footer>
   </form>
@@ -69,9 +63,9 @@ import "../../styles/sections/quote-form.css";
 
     const step = quoteFlow.querySelector<HTMLElement>("[data-quote-step]");
     const backButton = quoteFlow.querySelector<HTMLButtonElement>("[data-quote-back]");
-    const backButtonLabel = quoteFlow.querySelector<HTMLElement>("[data-quote-back-label]");
+    const backButtonLabels = quoteFlow.querySelectorAll<HTMLElement>("[data-quote-back-label]");
     const nextButton = quoteFlow.querySelector<HTMLButtonElement>("[data-quote-next]");
-    const nextButtonLabel = quoteFlow.querySelector<HTMLElement>("[data-quote-next-label]");
+    const nextButtonLabels = quoteFlow.querySelectorAll<HTMLElement>("[data-quote-next-label]");
     const review = quoteFlow.querySelector<HTMLElement>("[data-quote-review]");
     const successToast = document.querySelector<HTMLElement>("[data-quote-success-toast]");
     const toastClose = successToast?.querySelector<HTMLButtonElement>(
@@ -97,6 +91,12 @@ import "../../styles/sections/quote-form.css";
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     let calendarMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    const setButtonLabels = (labels: NodeListOf<HTMLElement>, value: string) => {
+      labels.forEach((label) => {
+        label.textContent = value;
+      });
+    };
 
     const logFormAction = (action: string) => {
       console.log(`QUOTE FORM ACTION: ${action.toUpperCase()} | STEP: INFORMACIÓN BÁSICA`);
@@ -245,20 +245,21 @@ import "../../styles/sections/quote-form.css";
       if (step) step.hidden = reviewing;
       if (review) review.hidden = !reviewing;
       if (backButton) backButton.hidden = !reviewing && !editingFromReview;
-      if (backButton && backButtonLabel) {
-        backButtonLabel.textContent = editingFromReview ? "Volver a revisión" : "Atrás";
+      if (backButton) {
+        setButtonLabels(backButtonLabels, editingFromReview ? "Volver a revisión" : "Atrás");
         backButton.setAttribute(
           "aria-label",
           editingFromReview ? "Volver a revisión" : "Volver al formulario",
         );
       }
-      if (nextButtonLabel) {
-        nextButtonLabel.textContent = reviewing
+      setButtonLabels(
+        nextButtonLabels,
+        reviewing
           ? "Enviar solicitud"
           : editingFromReview
             ? "Guardar cambios"
-            : "Revisar información";
-      }
+            : "Revisar información",
+      );
       if (focusHeading) {
         const heading = reviewing
           ? review?.querySelector<HTMLElement>("h2")
@@ -376,7 +377,7 @@ import "../../styles/sections/quote-form.css";
       }
       submitting = true;
       nextButton.disabled = true;
-      if (nextButtonLabel) nextButtonLabel.textContent = "Enviando…";
+      setButtonLabels(nextButtonLabels, "Enviando…");
       if (submitStatus) submitStatus.textContent = "Enviando tu solicitud.";
       try {
         await submitQuote(createSubmission());

@@ -1,5 +1,4 @@
 ---
-import Button from "../ui/Button.astro";
 import Container from "../ui/Container.astro";
 import Heading from "../ui/Heading.astro";
 import Text from "../ui/Text.astro";
@@ -46,9 +45,9 @@ const faqColumns = [faqContent.items.slice(0, columnSize), faqContent.items.slic
 
     <div class="faq__contact">
       <p>{faqContent.contact.prompt}</p>
-      <Button href={faqContent.contact.cta.href} variant="ghost">
+      <a class="faq__contact-link" href={faqContent.contact.cta.href}>
         {faqContent.contact.cta.label}
-      </Button>
+      </a>
     </div>
   </Container>
 </section>

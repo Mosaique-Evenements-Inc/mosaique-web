@@ -336,6 +336,19 @@
   border-radius: var(--primitive-radius-pill);
 }
 
+.quote-field select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--color-text-primary) 50%),
+    linear-gradient(135deg, var(--color-text-primary) 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.625rem) 50%,
+    calc(100% - 1.3125rem) 50%;
+  background-repeat: no-repeat;
+  background-size: 0.3125rem 0.3125rem;
+  padding-inline-end: var(--space-12);
+}
+
 .quote-field textarea {
   border-radius: var(--primitive-radius-md);
   min-block-size: 8rem;
@@ -362,9 +375,9 @@
   font-weight: 600;
   inset: 50% var(--space-3) auto auto;
   justify-content: center;
-  min-block-size: 2rem;
-  min-inline-size: 3.75rem;
-  padding-inline: var(--space-2);
+  min-block-size: 1.5rem;
+  min-inline-size: 3rem;
+  padding-inline: var(--space-1);
   position: absolute;
   transform: translateY(-50%);
 }
@@ -668,29 +681,19 @@
 }
 
 .quote-button {
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--primitive-radius-sm);
-  cursor: pointer;
-  font: inherit;
-  font-size: var(--text-button-size);
-  font-weight: var(--text-button-weight);
-  min-block-size: 2.75rem;
-  padding: var(--space-3) var(--space-5);
-}
-
-.quote-button--primary {
-  background: var(--color-primary);
-  color: var(--color-text-inverse);
-}
-
-.quote-button--secondary {
-  background: transparent;
-  color: var(--color-text-primary);
+  --action-button-border: var(--color-text-primary);
+  --action-button-fill: var(--color-background-inverse);
+  --action-button-filled-text: var(--color-text-inverse);
+  --action-button-transparent-text: var(--color-text-primary);
 }
 
 .quote-button:disabled {
   cursor: progress;
   opacity: 0.55;
+}
+
+.quote-form__actions [data-quote-next] {
+  font-size: var(--text-body-size);
 }
 
 .quote-review {
@@ -726,12 +729,12 @@
 }
 
 .quote-review__sections {
-  border-block-start: 1px solid var(--color-border-default);
+  display: grid;
 }
 
 .quote-review__section {
   border-block-end: 1px solid var(--color-border-default);
-  padding-block: var(--space-6);
+  padding-block: var(--space-8);
 }
 
 .quote-review__section > header {
@@ -1192,7 +1195,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .quote-button,
   .quote-close,
   .quote-text-action {
     transition: none;

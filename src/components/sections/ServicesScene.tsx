@@ -1,5 +1,5 @@
 import { ScrollLinkedScene } from "../motion/ScrollLinkedScene";
-import EditorialAction from "../ui/EditorialAction";
+import Button from "../ui/Button";
 import type {
   ServiceContentItem,
   ServicesPanelRevealContent,
@@ -39,14 +39,14 @@ export default function ServicesScene({ panelReveal, services }: ServicesScenePr
               </div>
             ))}
           </div>
-          <EditorialAction
+          <Button
             aria-label={`Ver más sobre ${activeItem.title}`}
             className="services-spike__media-action"
             onClick={() => handleViewMore(activeItem)}
             type="button"
           >
             Ver más
-          </EditorialAction>
+          </Button>
         </div>
       )}
       renderContent={({ activeIndex, activeItem, itemCount, items, registerItem }) => (

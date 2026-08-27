@@ -1,5 +1,6 @@
 ---
 import Icon from "../ui/Icon.astro";
+import Button from "../ui/Button";
 ---
 
 <dialog class="venue-dialog" data-venue-dialog aria-labelledby="venue-dialog-title">
@@ -58,12 +59,10 @@ import Icon from "../ui/Icon.astro";
     </div>
 
     <footer>
-      <button type="button" class="quote-button quote-button--secondary" data-venue-cancel
-        >Cancelar</button
-      >
-      <button type="button" class="quote-button quote-button--primary" data-venue-save
-        >Guardar</button
-      >
+      <Button type="button" className="quote-button" data-venue-cancel> Cancelar </Button>
+      <Button type="button" className="quote-button" data-venue-save variant="light">
+        Guardar
+      </Button>
     </footer>
   </div>
 </dialog>
