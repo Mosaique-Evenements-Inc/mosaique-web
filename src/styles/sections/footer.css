@@ -130,24 +130,50 @@
   border-inline-start: 1px solid var(--footer-divider);
 }
 
-.site-footer__logo-mark,
-.site-footer__logo-name {
-  font-family: var(--font-family-display);
+.site-footer__collaborator-link {
+  align-items: center;
+  block-size: 100%;
+  display: flex;
+  inline-size: 100%;
+  justify-content: center;
+  text-decoration: none;
 }
 
-.site-footer__logo-mark {
-  font-size: clamp(2.75rem, 4vw, 4.25rem);
+.site-footer__collaborator-link:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: var(--space-1);
 }
 
-.site-footer__logo-name {
-  font-size: clamp(1rem, 1.8vw, 1.75rem);
+.site-footer__collaborator-logo {
+  block-size: auto;
+  display: block;
+  filter: grayscale(1) brightness(0) invert(1);
+  inline-size: 100%;
+  max-block-size: clamp(4rem, 7vw, 6.5rem);
+  object-fit: contain;
+  opacity: 0.9;
+  transition:
+    opacity var(--motion-duration-fast) var(--motion-ease-standard),
+    transform var(--motion-duration-fast) var(--motion-ease-standard);
 }
 
-.site-footer__logo-category {
-  font-family: var(--font-family-ui);
-  font-size: clamp(0.65rem, 0.8vw, var(--text-caption-size));
-  font-weight: 700;
-  text-transform: uppercase;
+.site-footer__collaborator-link:hover .site-footer__collaborator-logo,
+.site-footer__collaborator-link:focus-visible .site-footer__collaborator-logo {
+  opacity: 1;
+  transform: scale(1.025);
+}
+
+.site-footer__collaborator-logo--landscape {
+  max-inline-size: clamp(7rem, 12vw, 10rem);
+}
+
+.site-footer__collaborator-logo--portrait {
+  max-block-size: clamp(5rem, 9vw, 8rem);
+  max-inline-size: clamp(2.5rem, 4vw, 3.75rem);
+}
+
+.site-footer__collaborator-logo--monogram {
+  max-inline-size: clamp(4.5rem, 8vw, 7rem);
 }
 
 .site-footer__middle {
@@ -267,7 +293,6 @@
 }
 
 @media (max-width: 63.99rem) {
-  .site-footer__logo-wall,
   .site-footer__details {
     border-block-start: 1px solid var(--footer-divider);
     padding-block-start: clamp(var(--space-10), 5vw, var(--space-16));
@@ -324,12 +349,13 @@
     padding: var(--space-3);
   }
 
-  .site-footer__logo-mark {
-    font-size: 2.5rem;
+  .site-footer__collaborator-logo {
+    max-block-size: 4.5rem;
   }
 
-  .site-footer__logo-name {
-    font-size: 0.95rem;
+  .site-footer__collaborator-logo--portrait {
+    max-block-size: 5rem;
+    max-inline-size: 2.5rem;
   }
 
   .site-footer__contact {
@@ -344,6 +370,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .site-footer__collaborator-logo,
   .site-footer__navigation summary > span {
     transition: none;
   }
