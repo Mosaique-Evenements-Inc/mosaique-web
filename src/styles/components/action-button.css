@@ -14,7 +14,7 @@
   cursor: pointer;
   display: inline-flex;
   font-family: var(--font-family-display);
-  font-size: var(--text-button-size);
+  font-size: var(--text-body-lg-size);
   font-weight: var(--text-button-weight);
   gap: var(--space-4);
   isolation: isolate;

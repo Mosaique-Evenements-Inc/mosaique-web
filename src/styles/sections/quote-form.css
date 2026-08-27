@@ -692,10 +692,6 @@
   opacity: 0.55;
 }
 
-.quote-form__actions [data-quote-next] {
-  font-size: var(--text-body-size);
-}
-
 .quote-review {
   margin-inline: auto;
   max-inline-size: 58rem;
