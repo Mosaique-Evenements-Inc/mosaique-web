@@ -4,7 +4,7 @@ import Container from "../ui/Container.astro";
 import Heading from "../ui/Heading.astro";
 import Text from "../ui/Text.astro";
 import Icon from "../ui/Icon.astro";
-import { eventGalleryContent } from "../../content/home/projects";
+import { eventGalleryContent, eventGalleryItems } from "../../content/home/projects";
 
 import "../../styles/sections/projects-experiences.css";
 ---
@@ -39,46 +39,52 @@ import "../../styles/sections/projects-experiences.css";
           tabindex="0"
         >
           {
-            eventGalleryContent.items.map((event, index) => (
-              <li
-                class="projects-experiences__slide"
-                data-projects-slide
-                data-event-id={event.id}
-                data-event-title={event.title}
-                data-content-status={event.status}
-                data-active={index === 0 ? "true" : "false"}
-                aria-label={`${index + 1} de ${eventGalleryContent.items.length}`}
-                aria-roledescription="slide"
-              >
-                <article>
-                  <div
-                    class="projects-experiences__media"
-                    data-media-status={event.media.status}
-                    data-tone={String(index + 1).padStart(2, "0")}
-                    aria-hidden="true"
-                  >
-                    <span />
-                    <span />
-                  </div>
-                  <div class="projects-experiences__meta">
-                    <span>{event.index}</span>
-                    <div>
-                      <Heading as="h3" variant="heading-md">
-                        {event.title}
-                      </Heading>
-                      <Text>{event.context}</Text>
-                    </div>
-                  </div>
-                </article>
-              </li>
-            ))
+            eventGalleryItems.map((event, index) => {
+              const eventNumber = String(index + 1).padStart(2, "0");
+
+              return (
+                <li
+                  class="projects-experiences__slide"
+                  data-projects-slide
+                  data-event-id={event.id}
+                  data-event-title={event.title}
+                  data-content-status={event.status}
+                  data-active={index === 0 ? "true" : "false"}
+                  aria-label={`${index + 1} de ${eventGalleryItems.length}`}
+                  aria-roledescription="slide"
+                >
+                  <a class="projects-experiences__link" href={event.href}>
+                    <article>
+                      <div
+                        class="projects-experiences__media"
+                        data-media-status={event.media.status}
+                        data-tone={eventNumber}
+                        aria-hidden="true"
+                      >
+                        <span />
+                        <span />
+                      </div>
+                      <div class="projects-experiences__meta">
+                        <span>{eventNumber}</span>
+                        <div>
+                          <Heading as="h3" variant="heading-md">
+                            {event.title}
+                          </Heading>
+                          <Text>{event.context}</Text>
+                        </div>
+                      </div>
+                    </article>
+                  </a>
+                </li>
+              );
+            })
           }
         </ol>
       </div>
 
       <div class="projects-experiences__controls">
         <p class="projects-experiences__status" aria-live="polite" aria-atomic="true">
-          Evento 1 de {eventGalleryContent.items.length}: {eventGalleryContent.items[0]?.title}
+          Evento 1 de {eventGalleryItems.length}: {eventGalleryItems[0]?.title}
         </p>
         <div class="projects-experiences__buttons">
           <button

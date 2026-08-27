@@ -20,6 +20,11 @@
   z-index: var(--primitive-z-navigation);
 }
 
+.site-navigation--solid {
+  --hero-nav-progress: 100%;
+  --hero-nav-brand-opacity: 1;
+}
+
 .site-navigation__inner {
   align-items: center;
   block-size: 4rem;
@@ -255,7 +260,8 @@
 }
 
 @media (max-width: 29.999rem) {
-  .site-navigation__contact-label {
+  .site-navigation__contact-label,
+  .site-navigation__menu-open-label {
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
     block-size: 1px !important;

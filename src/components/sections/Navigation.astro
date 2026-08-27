@@ -8,20 +8,32 @@ import "../../styles/sections/home-entry.css";
 import "../../styles/sections/navigation-menu.css";
 
 const homeLabel = navigationContent.items[0].label;
+interface Props {
+  anchorPrefix?: string;
+  surface?: "overlay" | "solid";
+}
+
+const { anchorPrefix = "", surface = "overlay" } = Astro.props;
+const resolveHref = (href: string) =>
+  anchorPrefix && href.startsWith("#") ? `${anchorPrefix}${href}` : href;
 ---
 
-<header class="site-navigation">
+<header class:list={["site-navigation", { "site-navigation--solid": surface === "solid" }]}>
   <div class="site-navigation__backdrop" aria-hidden="true"></div>
 
   <Container class="site-navigation__inner">
-    <a class="site-navigation__contact" href={navigationContent.cta.href} data-quote-trigger>
+    <a
+      class="site-navigation__contact"
+      href={resolveHref(navigationContent.cta.href)}
+      data-quote-trigger
+    >
       <Icon name="plusCircle" size={16} />
       <span class="site-navigation__contact-label">{navigationContent.cta.label}</span>
     </a>
 
     <a
       class="site-navigation__brand"
-      href="#top"
+      href={resolveHref("#top")}
       aria-label={`${navigationContent.logo} — ${homeLabel}`}
     >
       <span class="site-navigation__brand-line" aria-hidden="true"
@@ -43,7 +55,7 @@ const homeLabel = navigationContent.items[0].label;
             {
               navigationContent.items.map((item) => (
                 <li>
-                  <a href={item.href}>{item.label}</a>
+                  <a href={resolveHref(item.href)}>{item.label}</a>
                 </li>
               ))
             }

@@ -161,6 +161,17 @@
   min-inline-size: 0;
 }
 
+.projects-experiences__link {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+}
+
+.projects-experiences__link:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
 .projects-experiences__slide[data-active="false"] {
   display: none;
 }
