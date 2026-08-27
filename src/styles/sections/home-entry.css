@@ -4,55 +4,39 @@
 
 .site-navigation {
   --site-navigation-fade-height: var(--space-12);
-  --site-navigation-glass-blur: var(--space-4);
-  --site-navigation-glass-tint: color-mix(
-    in srgb,
-    var(--color-background) var(--hero-nav-progress, 0%),
-    var(--color-primary)
-  );
-  background: color-mix(in srgb, var(--site-navigation-glass-tint) 72%, transparent);
+  --site-navigation-blur: var(--space-4);
   color: color-mix(
     in srgb,
-    var(--color-text-primary) var(--hero-nav-progress, 0%),
+    var(--color-text-primary) var(--navigation-color-progress, 0%),
     var(--color-text-inverse)
   );
   inset: 0 0 auto;
   isolation: isolate;
   position: fixed;
+  transition: color var(--motion-duration-fast) var(--motion-easing-standard);
   z-index: var(--primitive-z-navigation);
 }
 
-.site-navigation::after {
-  background: linear-gradient(
-    to bottom,
-    color-mix(in srgb, var(--site-navigation-glass-tint) 14%, transparent),
-    transparent
-  );
+.site-navigation::before {
   content: "";
-  block-size: var(--site-navigation-fade-height);
-  inset: 100% 0 auto;
-  mask-image: linear-gradient(to bottom, black 0%, black 18%, transparent 100%);
+  block-size: calc(100% + var(--site-navigation-fade-height));
+  inset: 0 0 auto;
+  mask-image: linear-gradient(to bottom, black 0%, black 42%, transparent 100%);
   pointer-events: none;
   position: absolute;
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 18%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 42%, transparent 100%);
   z-index: 0;
 }
 
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .site-navigation {
-    -webkit-backdrop-filter: blur(var(--site-navigation-glass-blur)) saturate(112%);
-    backdrop-filter: blur(var(--site-navigation-glass-blur)) saturate(112%);
-    background: color-mix(in srgb, var(--site-navigation-glass-tint) 24%, transparent);
-  }
-
-  .site-navigation::after {
-    -webkit-backdrop-filter: blur(var(--site-navigation-glass-blur)) saturate(108%);
-    backdrop-filter: blur(var(--site-navigation-glass-blur)) saturate(108%);
+  .site-navigation::before {
+    -webkit-backdrop-filter: blur(var(--site-navigation-blur));
+    backdrop-filter: blur(var(--site-navigation-blur));
   }
 }
 
 .site-navigation--solid {
-  --hero-nav-progress: 100%;
+  --navigation-color-progress: 100%;
 }
 
 .site-navigation__inner {
@@ -231,13 +215,13 @@
 @media (max-width: 47.999rem) {
   .site-navigation {
     --site-navigation-fade-height: var(--space-8);
-    --site-navigation-glass-blur: var(--space-3);
+    --site-navigation-blur: var(--space-3);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .site-navigation {
-    color: var(--color-text-primary);
+    transition: none;
   }
 
   .home-hero__media-placeholder,

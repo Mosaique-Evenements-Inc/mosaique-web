@@ -7,7 +7,12 @@ import { heroContent } from "../../content/home/hero";
 import "../../styles/sections/home-entry.css";
 ---
 
-<section class="home-hero" id="top" aria-labelledby="home-hero-title">
+<section
+  class="home-hero"
+  id="top"
+  aria-labelledby="home-hero-title"
+  data-navigation-contrast="light"
+>
   <div class="home-hero__scene">
     <figure
       class="home-hero__media"
@@ -53,9 +58,7 @@ import "../../styles/sections/home-entry.css";
 
     hero.dataset.scrollMotionReady = "true";
 
-    const navigation = document.querySelector<HTMLElement>(".site-navigation");
     const scrollOrigin = hero.closest<HTMLElement>(".panel-reveal") ?? hero;
-    const handoffPanel = scrollOrigin.querySelector<HTMLElement>(".panel-reveal__panel");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const controller = new AbortController();
     let heroTop = scrollOrigin.getBoundingClientRect().top + window.scrollY;
@@ -65,21 +68,15 @@ import "../../styles/sections/home-entry.css";
       frameId = 0;
 
       if (reducedMotion.matches) {
-        navigation?.style.setProperty("--hero-nav-progress", "100%");
         hero.style.setProperty("--hero-caption-opacity", "1");
         return;
       }
 
       const scrollRange = Math.max(window.innerHeight * 0.55, 1);
       const progress = clamp((window.scrollY - heroTop) / scrollRange);
-      const navigationHeight = navigation?.offsetHeight ?? 64;
-      const handoffTop =
-        handoffPanel?.getBoundingClientRect().top ?? hero.getBoundingClientRect().bottom;
-      const navigationProgress = clamp((navigationHeight - handoffTop) / navigationHeight);
       const captionProgress = rangeProgress(progress, 0.64, 0.88);
 
       hero.style.setProperty("--hero-caption-opacity", String(captionProgress));
-      navigation?.style.setProperty("--hero-nav-progress", `${navigationProgress * 100}%`);
     };
 
     const requestUpdate = () => {

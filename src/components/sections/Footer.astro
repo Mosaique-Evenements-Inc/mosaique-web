@@ -18,7 +18,12 @@ const resolveHref = (href: string) =>
   anchorPrefix && href.startsWith("#") ? `${anchorPrefix}${href}` : href;
 ---
 
-<footer class="site-footer" id="footer" aria-labelledby="footer-brand">
+<footer
+  class="site-footer"
+  id="footer"
+  aria-labelledby="footer-brand"
+  data-navigation-contrast="light"
+>
   <Container bleed class="site-footer__container">
     <h2 class="site-footer__sr-only" id="footer-brand">{footerContent.logo}</h2>
 
