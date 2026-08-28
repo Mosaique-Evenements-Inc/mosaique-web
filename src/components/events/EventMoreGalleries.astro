@@ -1,6 +1,11 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 
+import {
+  eventImageFallbackFormat,
+  eventImageFormats,
+  eventImageWidths,
+} from "../../assets/images/events/delivery";
 import Heading from "../ui/Heading.astro";
 import Text from "../ui/Text.astro";
 import { eventDetailNavigationContent, type EventDetail } from "../../content/events";
@@ -35,10 +40,12 @@ const titleId = `more-galleries-${event.slug}`;
         <div class="event-more-galleries__media-inner">
           {
             media.kind === "image" ? (
-              <Image
+              <Picture
                 src={media.src}
                 alt=""
-                widths={[720, 1080, 1440, 1920]}
+                formats={eventImageFormats}
+                fallbackFormat={eventImageFallbackFormat}
+                widths={eventImageWidths}
                 sizes="100vw"
                 loading="lazy"
                 decoding="async"

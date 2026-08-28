@@ -1,6 +1,11 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 
+import {
+  eventImageFallbackFormat,
+  eventImageFormats,
+  eventImageWidths,
+} from "../../assets/images/events/delivery";
 import Icon from "../ui/Icon.astro";
 import type { EventDetailImage } from "../../content/events";
 
@@ -39,10 +44,12 @@ const { id, images, title } = Astro.props;
             hidden={index !== 0}
           >
             {image.status === "approved" ? (
-              <Image
+              <Picture
                 src={image.src}
                 alt={image.alt}
-                widths={[960, 1440, 1920]}
+                formats={eventImageFormats}
+                fallbackFormat={eventImageFallbackFormat}
+                widths={eventImageWidths}
                 sizes="100vw"
                 loading="lazy"
                 decoding="async"

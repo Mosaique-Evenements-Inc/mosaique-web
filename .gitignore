@@ -1,5 +1,9 @@
 # build output
 dist/
+
+# original photography and design deliveries
+/assets-raw/
+
 # generated types
 .astro/
 

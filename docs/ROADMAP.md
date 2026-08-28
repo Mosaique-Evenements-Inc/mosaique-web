@@ -233,6 +233,13 @@ This document is the source of truth for implementation status. The existence of
 
 ## Current
 
+### Production Asset Pipeline
+
+1. **Raw Assets + Preparation Pipeline — complete.** Original event deliveries live under the Git-ignored `assets-raw/events/` tree. `pnpm images:prepare` recursively prepares versioned masters under `src/assets/images/events/`, preserves event subfolders, corrects EXIF orientation, strips unnecessary metadata, limits the longest edge to `3600px`, retains transparent PNGs, normalizes opaque sources to high-quality JPG, and refuses silent overwrites unless `--force` is supplied. Sharp is an explicit development dependency because pnpm does not expose Astro's transitive copy to project scripts.
+2. **Event Content + Asset Curation — architecture complete; photographic curation pending approved masters.** Each existing event now owns its reviewed metadata, stable route, category, featured-media state, and ordered gallery contract in a dedicated module under `src/content/events/`. The simple `eventDetails` index feeds routing while Projects and Gallery derive their listing metadata from the same event records, removing duplicated event constants and title-derived route logic. No image imports, final alt text, or editorial ordering were invented because `src/assets/images/events/` does not yet contain approved masters.
+3. **Astro Media Delivery — pending approved masters and approval.** Validate responsive formats, widths, loading priority, crops, and layout stability after real curated media is available.
+4. **Documentation + Guardrails — pending.** Document the approved workflow after responsibilities 2–3 establish the final content and delivery contracts.
+
 ### Event Detail Reference Fidelity
 
 - **Current phase: Event Detail reference-fidelity program complete for the approved pending-media contract.** Implementation, fidelity, responsive behavior, accessibility, performance, and final regression checks are complete. Runtime reduced-motion emulation and final photographic rhythm remain production-acceptance items that depend respectively on a capable test browser and the final approved asset count and business media. No additional Event Detail implementation phase should begin without new content or product direction.

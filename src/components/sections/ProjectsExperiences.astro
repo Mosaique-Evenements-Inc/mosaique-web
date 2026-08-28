@@ -1,4 +1,11 @@
 ---
+import { Picture } from "astro:assets";
+
+import {
+  eventImageFallbackFormat,
+  eventImageFormats,
+  eventImageWidths,
+} from "../../assets/images/events/delivery";
 import Container from "../ui/Container.astro";
 import Heading from "../ui/Heading.astro";
 import Text from "../ui/Text.astro";
@@ -61,8 +68,23 @@ import "../../styles/sections/projects-experiences.css";
                         data-tone={eventNumber}
                         aria-hidden="true"
                       >
-                        <span />
-                        <span />
+                        {event.media.status === "approved" ? (
+                          <Picture
+                            src={event.media.src}
+                            alt=""
+                            formats={eventImageFormats}
+                            fallbackFormat={eventImageFallbackFormat}
+                            widths={eventImageWidths}
+                            sizes="(min-width: 1024px) 42vw, (min-width: 768px) 76vw, 100vw"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        ) : (
+                          <>
+                            <span />
+                            <span />
+                          </>
+                        )}
                       </div>
                       <div class="projects-experiences__meta">
                         <span>{eventNumber}</span>

@@ -1,4 +1,11 @@
 ---
+import { Picture } from "astro:assets";
+
+import {
+  eventImageFallbackFormat,
+  eventImageFormats,
+  eventImageWidths,
+} from "../../assets/images/events/delivery";
 import Container from "../ui/Container.astro";
 import { eventGalleryItems, type EventGalleryItem } from "../../content/home/projects";
 import { galleryCategories } from "../../content/gallery";
@@ -83,8 +90,23 @@ const heading = activeCategory
                       data-tone={tone}
                       aria-hidden="true"
                     >
-                      <span />
-                      <span />
+                      {event.media.status === "approved" ? (
+                        <Picture
+                          src={event.media.src}
+                          alt=""
+                          formats={eventImageFormats}
+                          fallbackFormat={eventImageFallbackFormat}
+                          widths={eventImageWidths}
+                          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 38vw, 100vw"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : (
+                        <>
+                          <span />
+                          <span />
+                        </>
+                      )}
                     </div>
 
                     <div class="gallery-archive__copy">

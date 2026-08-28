@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "astro dev --background",
     "build": "astro build",
+    "images:prepare": "node scripts/prepare-images.mjs",
     "preview": "astro preview",
     "lint": "eslint .",
     "format": "prettier . --write",
@@ -36,6 +37,7 @@
     "eslint-plugin-astro": "^3.1.0",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
+    "sharp": "0.35.3",
     "typescript": "^5.9.3"
   }
 }

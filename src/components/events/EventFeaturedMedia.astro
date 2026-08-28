@@ -1,6 +1,11 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 
+import {
+  eventImageFallbackFormat,
+  eventImageFormats,
+  eventImageWidths,
+} from "../../assets/images/events/delivery";
 import Button from "../ui/Button";
 import type { EventDetailFeaturedMedia } from "../../content/events";
 
@@ -27,10 +32,12 @@ const aspectRatio =
     <div class="event-featured-media__media">
       {
         media.kind === "image" ? (
-          <Image
+          <Picture
             src={media.src}
             alt={media.alt}
-            widths={[720, 1080, 1440, 1920]}
+            formats={eventImageFormats}
+            fallbackFormat={eventImageFallbackFormat}
+            widths={eventImageWidths}
             sizes="(min-width: 1024px) 72vw, 100vw"
             loading="eager"
             decoding="async"

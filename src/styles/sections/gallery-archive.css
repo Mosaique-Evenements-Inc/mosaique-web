@@ -150,6 +150,17 @@
   position: relative;
 }
 
+.gallery-archive__media picture,
+.gallery-archive__media img {
+  block-size: 100%;
+  display: block;
+  inline-size: 100%;
+}
+
+.gallery-archive__media img {
+  object-fit: cover;
+}
+
 .gallery-archive__media span {
   position: absolute;
 }

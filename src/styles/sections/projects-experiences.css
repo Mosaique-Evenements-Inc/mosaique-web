@@ -199,6 +199,17 @@
   position: relative;
 }
 
+.projects-experiences__media picture,
+.projects-experiences__media img {
+  block-size: 100%;
+  display: block;
+  inline-size: 100%;
+}
+
+.projects-experiences__media img {
+  object-fit: cover;
+}
+
 .projects-experiences__media span {
   position: absolute;
 }

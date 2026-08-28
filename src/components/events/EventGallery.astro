@@ -1,6 +1,11 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 
+import {
+  eventImageFallbackFormat,
+  eventImageFormats,
+  eventImageWidths,
+} from "../../assets/images/events/delivery";
 import EventFeaturedMedia from "./EventFeaturedMedia.astro";
 import EventLightbox from "./EventLightbox.astro";
 import Container from "../ui/Container.astro";
@@ -37,10 +42,12 @@ const lightboxId = `${galleryId}-lightbox`;
               <span class="event-gallery__reveal">
                 <span class="event-gallery__media">
                   {image.status === "approved" ? (
-                    <Image
+                    <Picture
                       src={image.src}
                       alt={image.alt}
-                      widths={[480, 720, 960, 1440]}
+                      formats={eventImageFormats}
+                      fallbackFormat={eventImageFallbackFormat}
+                      widths={eventImageWidths}
                       sizes={
                         image.layout === "full-landscape"
                           ? "(min-width: 1024px) 58vw, 100vw"

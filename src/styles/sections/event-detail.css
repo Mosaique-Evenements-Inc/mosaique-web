@@ -75,6 +75,15 @@
   object-fit: cover;
 }
 
+.event-featured-media picture,
+.event-gallery__media picture,
+.event-lightbox__panel picture,
+.event-more-galleries__media picture {
+  block-size: 100%;
+  display: block;
+  inline-size: 100%;
+}
+
 .event-featured-media__reveal,
 .event-featured-media__media {
   block-size: 100%;
