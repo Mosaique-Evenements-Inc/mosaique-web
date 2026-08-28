@@ -56,9 +56,9 @@
 }
 
 .event-featured-media {
-  aspect-ratio: var(--event-featured-media-ratio);
-  background: var(--color-surface-muted);
-  inline-size: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--color-background-inverse);
+  inline-size: calc(100% - var(--event-gallery-gap));
   margin: 0;
   overflow: hidden;
   position: relative;
@@ -148,7 +148,7 @@
   aspect-ratio: var(--event-gallery-outer-ratio);
   display: grid;
   grid-column: span 1;
-  justify-items: center;
+  justify-items: start;
   min-inline-size: 0;
   overflow: hidden;
   view-timeline-axis: block;
@@ -157,32 +157,29 @@
 
 .event-gallery__item[data-layout="pair-landscape"] {
   --event-gallery-media-ratio: 3 / 2;
-  --event-gallery-media-width: 87.5%;
   --event-gallery-outer-ratio: 513 / 333;
 }
 
 .event-gallery__item[data-layout="pair-portrait"] {
   --event-gallery-media-ratio: 2 / 3;
-  --event-gallery-media-width: 77.75%;
   --event-gallery-outer-ratio: 513 / 748;
 }
 
 .event-gallery__item[data-layout="full-landscape"] {
   --event-gallery-media-ratio: 3 / 2;
-  --event-gallery-media-width: 78.85%;
   --event-gallery-outer-ratio: 1026 / 675;
 
   grid-column: 1 / -1;
 }
 
 .event-gallery__trigger {
-  background: var(--color-surface-muted);
+  background: var(--color-background-inverse);
   block-size: auto;
   border: 0;
   color: var(--color-text-primary);
   cursor: zoom-in;
   display: block;
-  inline-size: var(--event-gallery-media-width);
+  inline-size: calc(100% - var(--event-gallery-gap));
   overflow: hidden;
   padding: 0;
   position: relative;
@@ -447,25 +444,33 @@
 
 @supports (animation-timeline: view()) {
   .event-featured-media__reveal {
-    animation: event-media-reveal-frame linear both;
+    --event-media-animation: event-media-reveal-frame linear both;
+
+    animation: var(--event-media-animation);
     animation-range: entry 0% entry 100%;
     animation-timeline: --event-featured-media;
   }
 
   .event-featured-media__media {
-    animation: event-media-reveal-image linear both;
+    --event-media-animation: event-media-reveal-image linear both;
+
+    animation: var(--event-media-animation);
     animation-range: entry 0% entry 100%;
     animation-timeline: --event-featured-media;
   }
 
   .event-gallery__reveal {
-    animation: event-media-reveal-frame linear both;
+    --event-media-animation: event-media-reveal-frame linear both;
+
+    animation: var(--event-media-animation);
     animation-range: entry 0% entry 100%;
     animation-timeline: --event-gallery-item;
   }
 
   .event-gallery__media {
-    animation: event-media-reveal-image linear both;
+    --event-media-animation: event-media-reveal-image linear both;
+
+    animation: var(--event-media-animation);
     animation-range: entry 0% entry 100%;
     animation-timeline: --event-gallery-item;
   }

@@ -226,12 +226,20 @@ This document is the source of truth for implementation status. The existence of
 
 ### SEO / Metadata
 
-- **Implementation: complete for the current single-page surface.** Spanish document language, descriptive title, description, robots directives, Open Graph metadata, Twitter card metadata, favicons, and Organization JSON-LD are present.
+- **Implementation: complete for the current public surface.** Spanish document language, descriptive titles and descriptions, robots directives, Open Graph metadata, Twitter card metadata, favicons, and Organization JSON-LD are present.
 - `SITE_URL` is the single production URL source. Canonical, `og:url`, the Organization URL, sitemap generation, and the sitemap reference in robots are emitted only when it is configured, preventing localhost or speculative domains from entering production metadata.
 - The official Astro sitemap integration generates the sitemap index and page sitemap. `robots.txt` remains valid without a configured domain and adds the absolute sitemap URL when one exists.
 - Social image tags remain intentionally absent until an approved production image is available.
 
 ## Current
+
+### Active Scope
+
+- **Home:** only the `Eventos que ya tomaron forma` Projects / Experiences section.
+- **Gallery:** `/gallery` and its generated category routes.
+- **Event Detail:** the six generated `/events/[slug]` routes.
+- Shared Navigation, Footer, layout, tokens, metadata, and asset infrastructure count only when a change is required to support or validate one of these three surfaces.
+- Every other homepage section, absent section, deferred content concept, Storybook initiative, and unrelated business-asset request is outside the active roadmap and does not block acceptance or completion.
 
 ### Production Asset Pipeline
 
@@ -243,53 +251,44 @@ This document is the source of truth for implementation status. The existence of
 
 ### Event Detail Reference Fidelity
 
-- **Current phase: Event Detail reference-fidelity program complete with the supplied event photography.** Implementation, fidelity, responsive behavior, accessibility, performance, real-media integration, and final regression checks are complete. Runtime reduced-motion emulation remains a production-acceptance item because the available browser cannot emulate that media feature. No additional Event Detail implementation phase should begin without new content or product direction.
-- The reference program is tracked as independent implementation, fidelity, responsive, accessibility, and QA phases. No later phase should begin automatically.
+- **Current phase: gallery/media reference-fidelity program complete locally; deployment sync pending.** The previous Event Detail acceptance remains baseline evidence, and the supplied Gallery Detail reference has now completed its independently gated fidelity pass limited to the media composition.
+- **Responsibility 1 — Diagnostic: complete.** At the measured desktop state, the reference uses the existing `28/72` rail/media split, a `16:9` featured frame, and one editorial gap as the media inset. The local production build preserved the correct outer row geometry but rendered source-ratio featured media, undersized gallery triggers, and no viewport-entry transform. The absent production motion was isolated to CSS optimization producing an invalid `animation` shorthand; it is not a Vercel, hydration, asset, or deployment issue.
+- **Responsibility 2 — Gallery Layout Fidelity: complete.** The featured frame now keeps the measured `16:9` editorial role and the featured, full-row, and paired gallery media share the same one-gap inset and leading alignment. At `1440 × 900`, rendered geometry measures `1022.39 × 575.09px` for the featured frame, `1022.39px` for full-row media, and approximately `504px` per paired medium inside the unchanged `28/72` composition. Tablet validation at `900 × 900` preserved the same proportional language with `639px` full media and `315px` paired media, no horizontal overflow, and no console warnings or errors.
+- **Responsibility 3 — Production-safe Viewport-entry Motion: complete.** The frame and compensating media animations retain their original named view timelines, ranges, and `0.8 → 1` / `1.2 → 1` transforms. Their animation shorthands now resolve through a local custom property so Astro's CSS optimizer cannot merge the timeline into an invalid shorthand. The production preview reports the expected animation names and named timelines; at `1280 × 720`, the first entering frame progressed `0.828 → 0.913 → 1.000` while its media progressed reciprocally `1.172 → 1.087 → 1.000`, and the next row entered from the same contract. Tablet retained the accepted geometry, no horizontal overflow, and a clean console. No listener, observer, hydration, dependency, asset, or layout change was introduced.
+- **Responsibility 4 — Final Component Fidelity Audit: complete for the local production build.** At the shared `1280 × 720`, DPR 1 viewport, the reference and local build align on the `28/72` rail/media split, approximately `908.8 × 512px` featured frame, one-gap media inset, role-based `3:2` / `2:3` geometry, dense background exposure, reciprocal entry transforms, and chapter-bounded sticky release. A clear medium discrepancy was corrected by replacing the light reveal-wrapper backing with Mosaïque's semantic dark background. The normalized release state measured rail tops at approximately `-98px` and chapter bottoms at approximately `622px` in both implementations. Tablet `900 × 900`, mobile `390 × 844`, and narrow mobile `320 × 800` preserve the intended responsive flow without horizontal overflow or console errors.
+- **Difference classification:** the local build has no remaining critical, high, or clear medium system-fidelity gap. The roughly `1.6` percentage-point frame-scale difference sampled at one equivalent landscape entry is low and does not change pacing or final state. The reference's seventeen media items and longer gallery duration versus Nossa Copa's six approved items, plus photography, ordering, color, and typography, are deliberate content/brand differences and are not padded or copied. Vercel production remains a high deployment-sync difference because it still serves the previous source-ratio featured frame, reduced media widths, light wrapper backing, and inactive viewport-entry animation; no deployment was authorized in this phase.
+- The available in-app browser cannot emulate `prefers-reduced-motion`, and no connected Chrome browser is available. The compiled production CSS keeps the existing `animation: none` and `transform: none` override after the new custom-property declaration, but a fresh runtime emulation of this exact build remains deployment acceptance work rather than being claimed from code inspection.
+
+### Scoped Final QA
+
+- **Status: complete for the current Home Projects, Gallery, and Event Detail revision.** Normal-motion checks at `1440 × 900` and `390 × 844` confirmed all scoped media, headings, controls, responsive layouts, and navigation without broken images, horizontal overflow, warnings, or errors.
+- Runtime reduced motion was validated in Chrome headless with `prefers-reduced-motion: reduce` forced at desktop and mobile viewports. Home Projects uses immediate carousel scrolling; Gallery removes its motion attribute, reveals all six records, and keeps every title fully visible; Event Detail reports no featured, gallery, or next-preview animation or transform, collapses the desktop preview chapter to `100svh`, and returns the preview link to normal flow.
+- The normal-motion Event Detail lightbox opens with focus on Close, locks document scroll, closes cleanly, restores scrolling, and returns focus to the originating image. Gallery category navigation reached the generated Festival route with the expected active filter and records.
+- Desktop and mobile screenshots were inspected for Home Projects, Gallery, and Event Detail. The reduced-motion and normal-motion branches retain the intended composition, readable content, complete controls, and stable media crops.
 
 ### Deployment Sync / Verification
 
-- **Status: public deployment verified on 2026-08-28 and confirmed stale.** `https://mosaique-web.vercel.app` responds successfully over HTTPS, but it serves a revision that predates the current route, media, and SEO work.
-- The deployed homepage contains no Astro image output or canonical URL. `/contact`, `/gallery`, `/events/nossa-copa`, and `/sitemap-index.xml` return Vercel's `404: NOT_FOUND`; the available browser blocked direct inspection of `/robots.txt`, so that endpoint remains unverified rather than assumed.
+- **Status: current application revision deployed and scoped route acceptance complete.** `https://mosaique-web.vercel.app` serves the merged Home Projects media, Gallery, and Event Detail revision over HTTPS.
+- Home Projects, `/gallery`, all generated Gallery categories, and all six Event Detail routes passed a production browser sweep with no route-level 404, broken image, horizontal overflow, warning, or error. The scoped surfaces deliver generated AVIF media; WebP remains the configured fallback.
+- The warm Vercel build reused all 407 image-cache entries, completed Astro's build in approximately 4 seconds, and completed the full Vercel build in approximately 8 seconds.
 - **Local production preflight: complete.** A temporary build with `SITE_URL=https://mosaique-web.vercel.app` emits the 14 static pages, 407 responsive image derivatives, canonical URLs for the audited routes, `robots.txt`, `sitemap-index.xml`, and its page sitemap. The value was supplied only to the build process; no environment file or production setting was created.
-- Redeploy the current code, configure `SITE_URL` after the definitive public domain is confirmed, and then repeat production acceptance across routes, canonical metadata, robots, sitemap, responsive images, console output, reduced motion, and field performance. No deployment or external configuration was changed during this read-only verification.
+- **Remaining deployment configuration:** production does not currently expose canonical URLs and `/sitemap-index.xml` returns `404: NOT_FOUND`, confirming that `SITE_URL` is not configured in the deployed build. Confirm the definitive domain, add `SITE_URL` to Vercel, redeploy with the existing build cache, and verify canonical, `og:url`, JSON-LD URL, robots sitemap reference, and both sitemap files.
 
 ## Next
 
-### Remaining Production Assets
+### Production URL + Scoped SEO Acceptance
 
-- **Status: pending business instruction outside Event surfaces.** Obtain approved photography for the remaining placeholder sections, self-hosted font files, social sharing artwork, and any final content decisions.
+- Confirm the definitive public domain and configure it as `SITE_URL` in Vercel Production.
+- Redeploy with the existing build cache, then verify canonical and `og:url` for `/`, `/gallery`, every generated Gallery category, and every Event Detail route.
+- Verify the JSON-LD URL, robots sitemap reference, `sitemap-index.xml`, and its page sitemap include the scoped routes.
 
 ## Pending
 
-### Metrics
+### Scoped Production Acceptance
 
-- **Status: removed from the rendered page by product direction.** The metric tiles and their count-up runtime were removed from `AboutMilestones.astro`; typed content remains in `src/content/home/metrics.ts` for possible future review.
-- About and Milestones retain their existing sticky-media composition without a separate Metrics block.
-
-### Values / Spotlights
-
-- **Status: deferred for business review.** The attempted implementation was fully removed; content remains only in `src/content/home/values.ts`.
-- Revisit implementation and the Movra spotlight/floating-card reference only after business approval.
-
-### Production Assets
-
-- **Status: Event delivery complete; remaining surfaces deferred pending business instruction.** Event routes, Gallery, and homepage Projects now use the supplied responsive photography. Placeholder replacement in other sections, approved fonts, and social artwork remain pending.
-
-### Storybook
-
-- **Status: not started and not currently configured.** No Storybook dependency, stories, or build command exists.
-- Add only under an explicit phase; it is not required for current section delivery.
-
-### Vercel
-
-- **Status: initial deployment live but not synchronized with the current application.** The public URL serves an older homepage-only revision; redeployment, final domain configuration, and production acceptance checks remain pending.
+- Run Lighthouse and capture field-oriented performance evidence for Home Projects, `/gallery`, and one representative Event Detail route after `SITE_URL` is deployed.
+- After the final `SITE_URL` deployment, run a focused metadata and route smoke check; the full desktop/mobile and reduced-motion matrices do not need to be repeated unless application code changes.
 
 ## Known Issues / Deferred Decisions
 
-- The current `src/pages/index.astro` composition comments out About/Milestones and Why Choose Us and changes previously validated section handoffs. Those homepage changes predate the Contact Page task and have not completed a new fidelity or full-regression pass; preserve them until their product intent is confirmed.
-- Approved production photography is now available for Event routes, Gallery, and homepage Projects. Hero, About/Milestones, Marquee, Services, Process, Testimonials, FAQ, and Final CTA continue to use lightweight replaceable placeholders.
-- Approved self-hosted Cinzel and Montserrat font files are pending; see `docs/DESIGN_SYSTEM.md`.
-- Approved social sharing artwork is pending; `og:image` and `twitter:image` should be enabled through the existing layout prop when it is delivered.
 - The final public domain remains unconfirmed. Production must define `SITE_URL` before deployment acceptance so canonical and sitemap URLs are emitted.
-- Services uses `client:visible`; preserve its server-rendered fallback and verify hydration again when production media is introduced.
-- Media models for future sections must not reuse Event photography or invent asset paths without explicit approval.
