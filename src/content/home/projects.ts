@@ -1,6 +1,10 @@
 import type { ContentLink } from "../types";
 
+export type EventCategory =
+  "Boda" | "Celebración" | "Celebración privada" | "Cumpleaños" | "Festival";
+
 export interface EventGalleryItem {
+  category: EventCategory;
   context: string;
   href: string;
   id: string;
@@ -27,6 +31,7 @@ export const eventGalleryItems = [
   createEventGalleryItem({
     id: "event-slot-01",
     title: "Nossa Copa",
+    category: "Festival",
     context: "Fútbol, comunidad y emprendimiento reunidos en una experiencia de festival.",
     status: "placeholder",
     media: { status: "pending" },
@@ -34,6 +39,7 @@ export const eventGalleryItems = [
   createEventGalleryItem({
     id: "event-slot-02",
     title: "Baila da Zaza",
+    category: "Celebración",
     context: "Ritmo, baile y esencia brasileña en una experiencia hecha para celebrar.",
     status: "placeholder",
     media: { status: "pending" },
@@ -41,6 +47,7 @@ export const eventGalleryItems = [
   createEventGalleryItem({
     id: "event-slot-03",
     title: "Baby Shower",
+    category: "Celebración privada",
     context: "Una celebración íntima para compartir la llegada de un nuevo comienzo.",
     status: "placeholder",
     media: { status: "pending" },
@@ -48,6 +55,7 @@ export const eventGalleryItems = [
   createEventGalleryItem({
     id: "event-slot-04",
     title: "Wedding R&R",
+    category: "Boda",
     context: "Una celebración de inspiración Amalfi en el entorno de Riverest.",
     status: "placeholder",
     media: { status: "pending" },
@@ -55,6 +63,7 @@ export const eventGalleryItems = [
   createEventGalleryItem({
     id: "event-slot-05",
     title: "Cumpleaños Ana Paula",
+    category: "Cumpleaños",
     context:
       "Juego, celebración y momentos en familia en una experiencia pensada para los más pequeños.",
     status: "placeholder",
@@ -63,6 +72,7 @@ export const eventGalleryItems = [
   createEventGalleryItem({
     id: "event-slot-06",
     title: "Fan Fest Club",
+    category: "Festival",
     context:
       "Fútbol, música y entretenimiento reunidos en una experiencia para celebrar juntos.",
     status: "placeholder",
@@ -72,8 +82,8 @@ export const eventGalleryItems = [
 
 export const eventGalleryContent = {
   status: "placeholder",
-  title: "Eventos que ya tomaron forma.",
+  title: "Eventos que ya tomaron forma",
   introduction:
     "Una selección de celebraciones, producciones y experiencias que hemos llevado de la idea a la realidad.",
-  cta: { label: "Explorar eventos", href: "#experiences" } satisfies ContentLink,
+  cta: { label: "Explorar eventos", href: "/gallery" } satisfies ContentLink,
 } as const;

@@ -1,5 +1,5 @@
 export const testimonialsContent = {
-  title: "Lo que buscamos generar en cada experiencia.",
+  title: "Lo que buscamos generar en cada experiencia",
   items: [
     {
       name: "Valentina R.",

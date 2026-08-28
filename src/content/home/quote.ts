@@ -2,7 +2,7 @@ import { servicesContent } from "./services";
 
 export const quoteContent = {
   eyebrow: "Solicitud de cotización",
-  title: "Cuéntanos sobre tu evento.",
+  title: "Cuéntanos sobre tu evento",
   mobileTitle: "Cotizar un evento",
   steps: [
     { id: "basic", index: "01", label: "Información básica" },

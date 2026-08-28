@@ -16,6 +16,9 @@ interface Props {
 const { anchorPrefix = "", surface = "overlay" } = Astro.props;
 const resolveHref = (href: string) =>
   anchorPrefix && href.startsWith("#") ? `${anchorPrefix}${href}` : href;
+const isCurrentPage = (href: string) =>
+  href.startsWith("/") &&
+  (Astro.url.pathname === href || (href !== "/" && Astro.url.pathname.startsWith(`${href}/`)));
 ---
 
 <header
@@ -41,7 +44,7 @@ const resolveHref = (href: string) =>
             <li>
               <a
                 href={resolveHref(item.href)}
-                data-quote-trigger={item.href === "#contact" ? true : undefined}
+                aria-current={isCurrentPage(item.href) ? "page" : undefined}
               >
                 {item.label}
               </a>

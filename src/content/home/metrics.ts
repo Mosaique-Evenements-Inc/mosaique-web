@@ -1,9 +1,10 @@
 export const metricsContent = {
-  title: "Eventos con estructura, estética y estrategia.",
+  title: "Eventos con estructura, estética y estrategia",
   items: [
     {
       value: "360°",
-      label: "Organización, producción, montaje, logística y alquiler en un solo sistema de servicio.",
+      label:
+        "Organización, producción, montaje, logística y alquiler en un solo sistema de servicio.",
     },
     {
       value: "4+ formatos",
