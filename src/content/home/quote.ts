@@ -22,6 +22,11 @@ export const quoteContent = {
     "Otro",
   ],
   guestRanges: ["Menos de 25", "25–50", "51–100", "101–200", "200+", "Aún no lo sé"],
+  preferredLanguages: [
+    { value: "es", label: "Español" },
+    { value: "fr", label: "Francés" },
+    { value: "en", label: "Inglés" },
+  ],
   venueOptions: [
     { value: "yes", label: "Sí" },
     { value: "no", label: "No" },

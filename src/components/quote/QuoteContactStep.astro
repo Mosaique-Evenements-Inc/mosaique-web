@@ -1,3 +1,7 @@
+---
+import { quoteContent } from "../../content/home/quote";
+---
+
 <section class="quote-step__section" aria-labelledby="quote-contact-title">
   <header>
     <h3 id="quote-contact-title">Contacto</h3>
@@ -33,15 +37,17 @@
 
     <label class="quote-field">
       <span>Teléfono <strong aria-hidden="true">*</strong></span>
-      <span class="quote-field__control">
+      <span class="quote-field__control quote-field__control--phone">
+        <span id="quote-phone-prefix" class="quote-field__phone-prefix">+1</span>
         <input
           type="tel"
           name="phone"
           autocomplete="tel"
-          inputmode="tel"
+          inputmode="numeric"
+          pattern="[0-9]{7,10}"
           maxlength="10"
           required
-          aria-describedby="quote-phone-count quote-phone-error"
+          aria-describedby="quote-phone-prefix quote-phone-count quote-phone-error"
           data-error-required="Ingresa tu teléfono."
           data-error-invalid="Ingresa un teléfono válido."
         />
@@ -53,6 +59,19 @@
         >
       </span>
       <small id="quote-phone-error" data-quote-error></small>
+    </label>
+
+    <label class="quote-field quote-field--wide">
+      <span>Idioma de preferencia</span>
+      <select name="preferredLanguage">
+        <option value="">Sin preferencia</option>
+        {
+          quoteContent.preferredLanguages.map((language) => (
+            <option value={language.value}>{language.label}</option>
+          ))
+        }
+      </select>
+      <small data-quote-error></small>
     </label>
   </div>
 </section>

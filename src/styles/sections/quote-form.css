@@ -364,6 +364,19 @@
   padding-inline-end: 5.25rem;
 }
 
+.quote-field__control--phone input:not([type="checkbox"]) {
+  padding-inline-start: 3.75rem;
+}
+
+.quote-field__phone-prefix {
+  color: var(--color-text-primary);
+  font: inherit;
+  font-weight: 600;
+  inset: 50% auto auto var(--space-6);
+  position: absolute;
+  transform: translateY(-50%);
+}
+
 .quote-field__counter {
   align-items: center;
   background: var(--color-accent-muted);
