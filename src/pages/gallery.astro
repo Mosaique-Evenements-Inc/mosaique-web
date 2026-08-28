@@ -1,0 +1,18 @@
+---
+import Footer from "../components/sections/Footer.astro";
+import GalleryArchive from "../components/sections/GalleryArchive.astro";
+import Navigation from "../components/sections/Navigation.astro";
+import { eventGalleryContent, eventGalleryItems } from "../content/home/projects";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Galería de eventos — MOSAÏQUE EVENTS"
+  description={eventGalleryContent.introduction}
+>
+  <Navigation anchorPrefix="/" />
+  <main class="gallery-page" id="main-content" tabindex="-1">
+    <GalleryArchive items={eventGalleryItems} />
+  </main>
+  <Footer anchorPrefix="/" />
+</BaseLayout>

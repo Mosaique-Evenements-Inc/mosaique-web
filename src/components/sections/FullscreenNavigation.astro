@@ -1,5 +1,6 @@
 ---
 import Icon from "../ui/Icon.astro";
+import topbarLogo from "../../assets/logos/logo_topbar.png";
 import { footerContent } from "../../content/home/footer";
 import { navigationContent } from "../../content/home/navigation";
 
@@ -10,6 +11,9 @@ interface Props {
 const { anchorPrefix = "" } = Astro.props;
 const resolveHref = (href: string) =>
   anchorPrefix && href.startsWith("#") ? `${anchorPrefix}${href}` : href;
+const isCurrentPage = (href: string) =>
+  href.startsWith("/") &&
+  (Astro.url.pathname === href || (href !== "/" && Astro.url.pathname.startsWith(`${href}/`)));
 ---
 
 <div class="site-navigation__mobile-navigation">
@@ -27,6 +31,7 @@ const resolveHref = (href: string) =>
     class="site-navigation__dialog"
     id="site-navigation-dialog"
     aria-labelledby="site-navigation-dialog-title"
+    tabindex="-1"
   >
     <div class="site-navigation__dialog-layout">
       <div class="site-navigation__dialog-header">
@@ -34,15 +39,18 @@ const resolveHref = (href: string) =>
           class="site-navigation__dialog-brand"
           href={resolveHref("#top")}
           id="site-navigation-dialog-title"
+          aria-label={`${navigationContent.logo} — ${navigationContent.items[0].label}`}
         >
-          {navigationContent.logo}
+          <span
+            class="site-navigation__dialog-logo-mark"
+            style={`--topbar-logo-url:url("${topbarLogo.src}");`}
+            aria-hidden="true"></span>
         </a>
 
         <button
           class="site-navigation__dialog-close"
           type="button"
           aria-label="Cerrar navegación"
-          autofocus
         >
           <Icon name="xmark" size={28} />
         </button>
@@ -51,17 +59,13 @@ const resolveHref = (href: string) =>
       <nav class="site-navigation__dialog-nav" aria-label="Navegación principal">
         <ol>
           {
-            navigationContent.items.map((item, index) => (
+            navigationContent.desktopItems.map((item, index) => (
               <li style={`--navigation-item-index:${index};`}>
                 <a
                   href={resolveHref(item.href)}
-                  data-quote-trigger={item.href === "#contact" ? true : undefined}
+                  aria-current={isCurrentPage(item.href) ? "page" : undefined}
                 >
-                  <span class="site-navigation__dialog-index" aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
                   <span>{item.label}</span>
-                  <Icon name="arrowRight" size={22} />
                 </a>
               </li>
             ))
@@ -135,7 +139,7 @@ const resolveHref = (href: string) =>
         body.style.overflow = "hidden";
         trigger.setAttribute("aria-expanded", "true");
         dialog.showModal();
-        closeButton.focus();
+        dialog.focus({ preventScroll: true });
       });
 
       closeButton.addEventListener("click", () => closeMenu());

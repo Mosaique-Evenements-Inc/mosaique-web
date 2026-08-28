@@ -85,8 +85,10 @@ Current responsibilities:
 - `src/tokens/motion.ts`: runtime equivalents of CSS motion tokens for React/Motion.
 - `src/layouts/BaseLayout.astro`: shared document shell and metadata contract.
 
-The current public surface includes the homepage at `/`, the contact page at `/contact`, event
-detail pages at `/events/[slug]`, and `/robots.txt`. `src/pages/index.astro` currently composes
+The current public surface includes the homepage at `/`, the gallery page at `/gallery`, derived
+gallery category pages at `/gallery/[category]`, the contact page at `/contact`, event detail
+pages at `/events/[slug]`, and `/robots.txt`.
+`src/pages/index.astro` currently composes
 Navigation; then a `PanelReveal` containing Hero, Event Gallery, Services, Process with
 Testimonials, and Marquee; followed by FAQ, Final CTA, and Footer. The `/contact` route owns the
 inline two-tab QuoteForm and its replaceable media placeholder. About/Milestones and Why Choose
@@ -283,8 +285,9 @@ Mosaïque logo | desktop inline navigation or responsive menu control
 ```
 
 Preserve the approved `src/assets/logos/logo_topbar.png` asset at the leading edge, the four-link
-desktop navigation, and the tablet/mobile fullscreen menu. Contacto owns the centralized Quote
-Flow trigger; do not restore a separate topbar quote action. The native dialog menu must continue
+desktop navigation, and the tablet/mobile fullscreen menu. Galería routes to `/gallery` and
+Contacto routes to the dedicated `/contact` page; do not restore a separate topbar quote action
+or obsolete modal triggers. The native dialog menu must continue
 to support keyboard navigation, focus containment, Escape-to-close, close-button and link-close
 behavior, scroll locking, and responsive sizing. Modify menu items in
 `src/content/home/navigation.ts`, not by hardcoding parallel markup.
@@ -309,11 +312,31 @@ stable IDs, numbering, compact descriptions, “Ideal para” copy, CTAs, and ex
 `ProjectsExperiences.astro`. Each record represents one future documented event and has a stable
 ID suitable for later detail/gallery behavior.
 
-The current six records are explicit placeholders because no verified event names, clients,
-venues, dates, or photography exist in the repository. Keep that status honest. Do not invent
-portfolio data or image paths. Desktop navigation advances the six items in pairs; tablet and
-mobile use static responsive grids. Preserve keyboard/touch access and the live status when
-changing carousel behavior.
+The current six records preserve explicit placeholder media because no verified clients, venues,
+dates, or photography exist in the repository. Keep that status honest. Do not invent portfolio
+data or image paths. Categories are part of the same records and must remain supported by the
+approved event titles or descriptions. Desktop navigation advances the six items in pairs;
+tablet and mobile use single-item navigation. Preserve keyboard/touch access and the live status
+when changing carousel behavior.
+
+## Gallery Archive Contract
+
+`/gallery` and its static `/gallery/[category]` pages render `GalleryArchive.astro` from the same
+`eventGalleryItems` collection used by the homepage gallery and event detail routes. Do not
+duplicate event records or maintain a parallel category list: `All` is the UI default and the
+remaining filters and route IDs derive from categories present in the records. Desktop and tablet
+portrait use natural page scroll with a sticky vertical category sidebar. Mobile uses wrapped,
+non-sticky category links in natural flow. Rows link to existing event detail routes and show only
+pending media, category, and event title. Filter links use a bottom-origin fill while hover and
+focus preserve the same visual contract; same-tab category navigation adds a short local list exit
+without replacing native link behavior. Event titles reveal by character once as their rows enter
+the viewport. Reduced motion keeps category changes immediate and reveals every title without
+transforms, delays, or hidden content. Pending-media placeholder tones remain keyed to each
+record's stable source position so an event does not change appearance between `All` and a
+category route. The desktop archive intentionally remains viewport-fluid beyond the shared 90 rem
+content maximum: its 1 vw outer/grid gutters, 38% media column, 331:200 media ratio, 2 vw copy
+inset, and 4.25 vw title scale reproduce the approved wide editorial composition. Tablet and
+mobile override those values at their existing breakpoints rather than scaling the desktop tree.
 
 ## Footer Contract
 

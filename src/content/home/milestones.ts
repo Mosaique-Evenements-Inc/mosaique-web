@@ -1,5 +1,5 @@
 export const milestonesContent = {
-  title: "De una idea a una experiencia en movimiento.",
+  title: "De una idea a una experiencia en movimiento",
   introduction:
     "Cada evento comienza con una intención. Nuestro proceso convierte esa intención en concepto, producción y ejecución real.",
   items: [

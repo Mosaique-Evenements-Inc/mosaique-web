@@ -1,0 +1,37 @@
+---
+import Footer from "../../components/sections/Footer.astro";
+import GalleryArchive from "../../components/sections/GalleryArchive.astro";
+import Navigation from "../../components/sections/Navigation.astro";
+import {
+  galleryCategories,
+  getGalleryEvents,
+  type GalleryCategory,
+} from "../../content/gallery";
+import { eventGalleryContent } from "../../content/home/projects";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  return galleryCategories.map((category) => ({
+    params: { category: category.id },
+    props: { category },
+  }));
+}
+
+interface Props {
+  category: GalleryCategory;
+}
+
+const { category } = Astro.props;
+const events = getGalleryEvents(category.id);
+---
+
+<BaseLayout
+  title={`${category.label} — Galería de eventos — MOSAÏQUE EVENTS`}
+  description={eventGalleryContent.introduction}
+>
+  <Navigation anchorPrefix="/" />
+  <main class="gallery-page" id="main-content" tabindex="-1">
+    <GalleryArchive activeCategoryId={category.id} items={events} />
+  </main>
+  <Footer anchorPrefix="/" />
+</BaseLayout>
