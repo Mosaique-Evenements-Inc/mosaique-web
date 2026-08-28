@@ -2,14 +2,19 @@
 import Container from "../ui/Container.astro";
 import Heading from "../ui/Heading.astro";
 import Text from "../ui/Text.astro";
+import Icon, { type IconName } from "../ui/Icon.astro";
 import { whyChooseUsContent } from "../../content/home/whyChooseUs";
 
 import "../../styles/sections/why-choose-us.css";
 
-const reasonIcons = ["✦", "◎", "◇", "◉"] as const;
+const reasonIcons: IconName[] = ["networkRight", "designNib", "coinsSwap", "strategy"];
 ---
 
-<section class="why-choose-us" aria-label={whyChooseUsContent.title}>
+<section
+  class="why-choose-us"
+  aria-label={whyChooseUsContent.title}
+  data-navigation-contrast="dark"
+>
   <Container>
     <Heading as="h2" variant="heading-md" class="visually-hidden">
       {whyChooseUsContent.title}
@@ -21,7 +26,7 @@ const reasonIcons = ["✦", "◎", "◇", "◉"] as const;
           <li class="why-choose-us__reason">
             <article>
               <span class="why-choose-us__icon" aria-hidden="true">
-                {reasonIcons[index]}
+                <Icon name={reasonIcons[index]} size={22} />
               </span>
               <Heading as="h3" variant="heading-md">
                 {reason.title}

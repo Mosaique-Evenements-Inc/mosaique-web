@@ -11,7 +11,7 @@ export const footerContent = {
     { label: "Experiencias", href: "#experiences" },
     { label: "Proceso", href: "#process" },
     { label: "FAQ", href: "#faq" },
-    { label: "Contacto", href: "#contact" },
+    { label: "Contacto", href: "/contact" },
   ] satisfies ContentLink[],
   services: [
     "Producción integral",

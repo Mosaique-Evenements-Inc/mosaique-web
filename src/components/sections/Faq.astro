@@ -1,8 +1,8 @@
 ---
-import Button from "../ui/Button.astro";
 import Container from "../ui/Container.astro";
 import Heading from "../ui/Heading.astro";
 import Text from "../ui/Text.astro";
+import Icon from "../ui/Icon.astro";
 import { faqContent } from "../../content/home/faq";
 
 import "../../styles/sections/faq.css";
@@ -11,7 +11,7 @@ const columnSize = Math.ceil(faqContent.items.length / 2);
 const faqColumns = [faqContent.items.slice(0, columnSize), faqContent.items.slice(columnSize)];
 ---
 
-<section class="faq" id="faq" aria-labelledby="faq-title">
+<section class="faq" id="faq" aria-labelledby="faq-title" data-navigation-contrast="dark">
   <Container>
     <header class="faq__header">
       <p>{faqContent.eyebrow}</p>
@@ -28,7 +28,9 @@ const faqColumns = [faqContent.items.slice(0, columnSize), faqContent.items.slic
               <details class="faq__item" name="faq-accordion">
                 <summary>
                   <span class="faq__question">{item.question}</span>
-                  <span class="faq__toggle" aria-hidden="true" />
+                  <span class="faq__toggle" aria-hidden="true">
+                    <Icon name="plus" size={22} />
+                  </span>
                 </summary>
 
                 <div class="faq__answer">
@@ -43,9 +45,9 @@ const faqColumns = [faqContent.items.slice(0, columnSize), faqContent.items.slic
 
     <div class="faq__contact">
       <p>{faqContent.contact.prompt}</p>
-      <Button href={faqContent.contact.cta.href} variant="ghost" data-quote-trigger>
+      <a class="faq__contact-link" href={faqContent.contact.cta.href}>
         {faqContent.contact.cta.label}
-      </Button>
+      </a>
     </div>
   </Container>
 </section>

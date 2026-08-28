@@ -1,5 +1,6 @@
 ---
 import { quoteContent } from "../../content/home/quote";
+import Icon from "../ui/Icon.astro";
 ---
 
 <div class="quote-stepper" aria-label="Progreso de la solicitud">
@@ -10,7 +11,10 @@ import { quoteContent } from "../../content/home/quote";
     {
       quoteContent.steps.map((step, index) => (
         <li data-quote-step-indicator={index} data-state={index === 0 ? "active" : "pending"}>
-          <span data-quote-step-mark>{step.index}</span>
+          <span data-quote-step-mark>
+            <span data-quote-step-number>{step.index}</span>
+            <Icon name="check" size={17} class="quote-stepper__check" />
+          </span>
           <strong>{step.label}</strong>
         </li>
       ))

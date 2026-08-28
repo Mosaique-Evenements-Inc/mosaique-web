@@ -1,5 +1,5 @@
 export const valuesContent = {
-  title: "Cada detalle tiene un lugar.",
+  title: "Cada detalle tiene un lugar",
   text: "El nombre MOSAÏQUE refleja nuestra forma de entender los eventos: piezas distintas que, al unirse con intención, crean una experiencia completa. Un espacio, una mesa, una luz, una canción, un recorrido, una alianza, una conversación. Todo forma parte de la composición.",
   items: [
     {

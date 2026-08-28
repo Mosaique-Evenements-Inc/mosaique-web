@@ -1,4 +1,5 @@
 import { ScrollLinkedScene } from "../motion/ScrollLinkedScene";
+import Button from "../ui/Button";
 import type {
   ServiceContentItem,
   ServicesPanelRevealContent,
@@ -38,15 +39,14 @@ export default function ServicesScene({ panelReveal, services }: ServicesScenePr
               </div>
             ))}
           </div>
-          <button
+          <Button
             aria-label={`Ver más sobre ${activeItem.title}`}
             className="services-spike__media-action"
             onClick={() => handleViewMore(activeItem)}
             type="button"
           >
-            <span>Ver más</span>
-            <span className="services-spike__media-action-arrow" aria-hidden="true" />
-          </button>
+            Ver más
+          </Button>
         </div>
       )}
       renderContent={({ activeIndex, activeItem, itemCount, items, registerItem }) => (

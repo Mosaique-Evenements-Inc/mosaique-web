@@ -47,6 +47,6 @@ export const faqContent = {
   ],
   contact: {
     prompt: "¿No encontraste tu respuesta?",
-    cta: { label: "Hablemos", href: "#contact" } satisfies ContentLink,
+    cta: { label: "Hablemos", href: "/contact" } satisfies ContentLink,
   },
 } as const;

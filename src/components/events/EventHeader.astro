@@ -1,0 +1,24 @@
+---
+import Heading from "../ui/Heading.astro";
+import Text from "../ui/Text.astro";
+
+interface Props {
+  description: string;
+  status: "approved" | "placeholder";
+  title: string;
+}
+
+const { description, status, title } = Astro.props;
+---
+
+<header class="event-header" data-content-status={status}>
+  <div class="event-header__layout">
+    <Heading as="h1" variant="display-lg">{title}</Heading>
+
+    <div class="event-header__narrative">
+      <Text variant="body-lg" tone="inverse">{description}</Text>
+    </div>
+
+    <div class="event-header__divider" aria-hidden="true"></div>
+  </div>
+</header>

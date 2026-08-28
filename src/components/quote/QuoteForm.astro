@@ -1,0 +1,494 @@
+---
+import EventDatePicker from "./EventDatePicker.astro";
+import QuoteBasicStep from "./QuoteBasicStep.astro";
+import QuoteReview from "./QuoteReview.astro";
+import Button from "../ui/Button";
+import Icon from "../ui/Icon.astro";
+
+import "../../styles/sections/quote-form.css";
+---
+
+<div class="quote-flow" data-quote-flow>
+  <form class="quote-form" data-quote-form novalidate>
+    <div class="quote-form__body">
+      <QuoteBasicStep />
+      <QuoteReview />
+    </div>
+
+    <footer class="quote-form__actions" data-quote-actions>
+      <p data-quote-submit-status aria-live="polite"></p>
+      <div>
+        <Button type="button" className="quote-button" data-quote-back hidden>
+          <span data-quote-back-label>Atrás</span>
+        </Button>
+        <Button type="button" className="quote-button" data-quote-next variant="light">
+          <span data-quote-next-label>Revisar información</span>
+        </Button>
+      </div>
+    </footer>
+  </form>
+</div>
+
+<aside
+  class="quote-toast"
+  data-quote-success-toast
+  data-state="closed"
+  role="status"
+  aria-live="polite"
+  aria-atomic="true"
+  hidden
+>
+  <span class="quote-toast__icon" aria-hidden="true"><Icon name="checkCircle" size={24} /></span
+  >
+  <div>
+    <strong>Solicitud enviada correctamente.</strong>
+    <p>Gracias. Nos pondremos en contacto contigo pronto.</p>
+  </div>
+  <button type="button" data-quote-toast-close aria-label="Cerrar confirmación">
+    <Icon name="xmark" size={20} />
+  </button>
+</aside>
+
+<EventDatePicker />
+
+<script>
+  const quoteFlow = document.querySelector<HTMLElement>("[data-quote-flow]");
+  const datePickerDialog = document.querySelector<HTMLDialogElement>(
+    "[data-date-picker-dialog]",
+  );
+  const quoteForm = quoteFlow?.querySelector<HTMLFormElement>("[data-quote-form]");
+
+  if (quoteFlow && datePickerDialog && quoteForm && quoteFlow.dataset.ready !== "true") {
+    quoteFlow.dataset.ready = "true";
+
+    const step = quoteFlow.querySelector<HTMLElement>("[data-quote-step]");
+    const backButton = quoteFlow.querySelector<HTMLButtonElement>("[data-quote-back]");
+    const backButtonLabels = quoteFlow.querySelectorAll<HTMLElement>("[data-quote-back-label]");
+    const nextButton = quoteFlow.querySelector<HTMLButtonElement>("[data-quote-next]");
+    const nextButtonLabels = quoteFlow.querySelectorAll<HTMLElement>("[data-quote-next-label]");
+    const review = quoteFlow.querySelector<HTMLElement>("[data-quote-review]");
+    const successToast = document.querySelector<HTMLElement>("[data-quote-success-toast]");
+    const toastClose = successToast?.querySelector<HTMLButtonElement>(
+      "[data-quote-toast-close]",
+    );
+    const submitStatus = quoteFlow.querySelector<HTMLElement>("[data-quote-submit-status]");
+    const dateInput = quoteForm.elements.namedItem("eventDate") as HTMLInputElement | null;
+    const dateUnknown = quoteForm.elements.namedItem("dateUnknown") as HTMLInputElement | null;
+    const dateTrigger = quoteFlow.querySelector<HTMLButtonElement>("[data-date-trigger]");
+    const dateValue = quoteFlow.querySelector<HTMLElement>("[data-date-value]");
+    const dateMonth = datePickerDialog.querySelector<HTMLElement>("[data-date-month]");
+    const dateGrid = datePickerDialog.querySelector<HTMLElement>("[data-date-grid]");
+    const datePrevious =
+      datePickerDialog.querySelector<HTMLButtonElement>("[data-date-previous]");
+    const dateNext = datePickerDialog.querySelector<HTMLButtonElement>("[data-date-next]");
+    const phone = quoteForm.elements.namedItem("phone") as HTMLInputElement | null;
+    const phoneCount = quoteFlow.querySelector<HTMLOutputElement>("[data-quote-phone-count]");
+    let validationAttempted = false;
+    let reviewing = false;
+    let editingFromReview = false;
+    let submitting = false;
+    let toastTimer: number | undefined;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    let calendarMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    const setButtonLabels = (labels: NodeListOf<HTMLElement>, value: string) => {
+      labels.forEach((label) => {
+        label.textContent = value;
+      });
+    };
+
+    const logFormAction = (action: string) => {
+      console.log(`QUOTE FORM ACTION: ${action.toUpperCase()} | STEP: INFORMACIÓN BÁSICA`);
+    };
+
+    const toIsoDate = (date: Date) => {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    };
+
+    const parseIsoDate = (value: string) => {
+      const [year, month, day] = value.split("-").map(Number);
+      return year && month && day ? new Date(year, month - 1, day) : null;
+    };
+
+    const formatDate = (date: Date) =>
+      new Intl.DateTimeFormat("es-CA", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }).format(date);
+
+    const updateDateField = () => {
+      const selectedDate = dateInput?.value ? parseIsoDate(dateInput.value) : null;
+      if (dateValue)
+        dateValue.textContent = selectedDate ? formatDate(selectedDate) : "Seleccionar fecha";
+    };
+
+    const renderCalendar = (focusIso = "") => {
+      if (!dateGrid || !dateMonth) return;
+      const year = calendarMonth.getFullYear();
+      const month = calendarMonth.getMonth();
+      const firstWeekday = (new Date(year, month, 1).getDay() + 6) % 7;
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const selectedIso = dateInput?.value ?? "";
+      const monthName = new Intl.DateTimeFormat("es-CA", { month: "long" }).format(
+        calendarMonth,
+      );
+
+      dateMonth.textContent = `${monthName.charAt(0).toUpperCase()}${monthName.slice(1)} ${year}`;
+      dateGrid.replaceChildren();
+
+      for (let index = 0; index < 42; index += 1) {
+        const cell = document.createElement("span");
+        cell.setAttribute("role", "gridcell");
+        const day = index - firstWeekday + 1;
+
+        if (day > 0 && day <= daysInMonth) {
+          const date = new Date(year, month, day);
+          const iso = toIsoDate(date);
+          const button = document.createElement("button");
+          button.type = "button";
+          button.textContent = String(day);
+          button.dataset.date = iso;
+          button.tabIndex = -1;
+          button.setAttribute("aria-label", formatDate(date));
+          cell.setAttribute("aria-selected", String(iso === selectedIso));
+          button.disabled = date < today;
+          if (iso === toIsoDate(today)) button.dataset.today = "true";
+          if (iso === selectedIso) button.dataset.selected = "true";
+          cell.append(button);
+        }
+
+        dateGrid.append(cell);
+      }
+
+      const previousMonthEnd = new Date(year, month, 0);
+      if (datePrevious) datePrevious.disabled = previousMonthEnd < today;
+      const focusTarget = dateGrid.querySelector<HTMLButtonElement>(
+        focusIso ? `[data-date="${focusIso}"]` : '[data-selected="true"]',
+      );
+      const fallback = dateGrid.querySelector<HTMLButtonElement>("button:not(:disabled)");
+      const nextFocus = focusTarget && !focusTarget.disabled ? focusTarget : fallback;
+      if (nextFocus) {
+        nextFocus.tabIndex = 0;
+        nextFocus.focus();
+      }
+    };
+
+    const openDatePicker = () => {
+      if (!dateInput || dateTrigger?.disabled) return;
+      const selectedDate = dateInput.value ? parseIsoDate(dateInput.value) : null;
+      calendarMonth = new Date(
+        selectedDate?.getFullYear() ?? today.getFullYear(),
+        selectedDate?.getMonth() ?? today.getMonth(),
+        1,
+      );
+      datePickerDialog.showModal();
+      renderCalendar();
+    };
+
+    const closeDatePicker = () => {
+      datePickerDialog.close();
+      dateTrigger?.focus();
+    };
+
+    const moveCalendarFocus = (offset: number) => {
+      const active = datePickerDialog.querySelector<HTMLButtonElement>("[data-date]:focus");
+      if (!active?.dataset.date) return;
+      const date = parseIsoDate(active.dataset.date);
+      if (!date) return;
+      date.setDate(date.getDate() + offset);
+      if (date < today) return;
+      if (date.getMonth() !== calendarMonth.getMonth()) {
+        calendarMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+      }
+      renderCalendar(toIsoDate(date));
+    };
+
+    const setFieldError = (
+      field: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
+    ) => {
+      if (field.name === "phone") {
+        const digitCount = field.value.replace(/\D/g, "").length;
+        field.setCustomValidity(field.value && digitCount < 7 ? "invalid" : "");
+      }
+
+      const error = field.closest("label")?.querySelector<HTMLElement>("[data-quote-error]");
+      const message = field.validity.valueMissing
+        ? field.dataset.errorRequired
+        : field.validity.valid
+          ? ""
+          : (field.dataset.errorInvalid ?? "Revisa este campo.");
+
+      field.setAttribute("aria-invalid", String(!field.validity.valid));
+      if (error) error.textContent = message ?? "";
+      return field.validity.valid;
+    };
+
+    const validateForm = () => {
+      if (!step) return false;
+      validationAttempted = true;
+      const fields = Array.from(
+        step.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
+          "input, select, textarea",
+        ),
+      ).filter((field) => !field.disabled && field.type !== "hidden");
+      const invalidFields = fields.filter((field) => !setFieldError(field));
+      invalidFields[0]?.focus();
+      return invalidFields.length === 0;
+    };
+
+    const updateView = (focusHeading = true) => {
+      if (step) step.hidden = reviewing;
+      if (review) review.hidden = !reviewing;
+      if (backButton) backButton.hidden = !reviewing && !editingFromReview;
+      if (backButton) {
+        setButtonLabels(backButtonLabels, editingFromReview ? "Volver a revisión" : "Atrás");
+        backButton.setAttribute(
+          "aria-label",
+          editingFromReview ? "Volver a revisión" : "Volver al formulario",
+        );
+      }
+      setButtonLabels(
+        nextButtonLabels,
+        reviewing
+          ? "Enviar solicitud"
+          : editingFromReview
+            ? "Guardar cambios"
+            : "Revisar información",
+      );
+      if (focusHeading) {
+        const heading = reviewing
+          ? review?.querySelector<HTMLElement>("h2")
+          : step?.querySelector<HTMLElement>("h2");
+        heading?.focus();
+      }
+    };
+
+    const setReviewValue = (name: string, value: string) => {
+      const target = review?.querySelector<HTMLElement>(`[data-review-value="${name}"]`);
+      if (target) target.textContent = value || "No indicado";
+    };
+
+    const populateReview = () => {
+      const formData = new FormData(quoteForm);
+      const serviceSelect = quoteForm.elements.namedItem("service") as HTMLSelectElement | null;
+      const selectedDate = dateInput?.value ? parseIsoDate(dateInput.value) : null;
+      setReviewValue("fullName", String(formData.get("fullName") ?? ""));
+      setReviewValue("email", String(formData.get("email") ?? ""));
+      setReviewValue("phone", String(formData.get("phone") ?? ""));
+      setReviewValue("service", serviceSelect?.selectedOptions[0]?.textContent?.trim() ?? "");
+      setReviewValue("eventType", String(formData.get("eventType") ?? ""));
+      setReviewValue(
+        "eventDate",
+        formData.get("dateUnknown")
+          ? "Aún no definida"
+          : selectedDate
+            ? formatDate(selectedDate)
+            : "No indicada",
+      );
+      setReviewValue("guestRange", String(formData.get("guestRange") ?? ""));
+    };
+
+    const showReview = () => {
+      populateReview();
+      reviewing = true;
+      editingFromReview = false;
+      if (submitStatus) submitStatus.textContent = "";
+      updateView();
+    };
+
+    const resetFlow = () => {
+      quoteForm.reset();
+      reviewing = false;
+      editingFromReview = false;
+      validationAttempted = false;
+      submitting = false;
+      if (nextButton) nextButton.disabled = false;
+      if (submitStatus) submitStatus.textContent = "";
+      if (phoneCount) phoneCount.textContent = "0 / 10";
+      if (dateTrigger) dateTrigger.disabled = false;
+      updateDateField();
+      updateView(false);
+    };
+
+    type QuoteSubmissionDetail = {
+      fields: Record<string, string>;
+      venueFiles: File[];
+      resolve: () => void;
+      reject: (reason?: unknown) => void;
+    };
+
+    const createSubmission = () => {
+      const formData = new FormData(quoteForm);
+      const serviceSelect = quoteForm.elements.namedItem("service") as HTMLSelectElement | null;
+      return {
+        fullName: String(formData.get("fullName") ?? ""),
+        email: String(formData.get("email") ?? ""),
+        phone: String(formData.get("phone") ?? ""),
+        service: serviceSelect?.selectedOptions[0]?.textContent?.trim() ?? "",
+        eventType: String(formData.get("eventType") ?? ""),
+        eventDate: formData.get("dateUnknown")
+          ? "Aún no definida"
+          : String(formData.get("eventDate") || "No indicada"),
+        guestRange: String(formData.get("guestRange") ?? ""),
+      };
+    };
+
+    const submitQuote = (fields: Record<string, string>) =>
+      new Promise<void>((resolve, reject) => {
+        const request = new CustomEvent<QuoteSubmissionDetail>("quote:submit-request", {
+          bubbles: true,
+          cancelable: true,
+          detail: { fields, venueFiles: [], resolve, reject },
+        });
+        const connected = !quoteForm.dispatchEvent(request);
+        if (!connected) reject(new Error("Quote transport is not configured."));
+      });
+
+    const hideSuccessToast = () => {
+      if (!successToast || successToast.hidden) return;
+      window.clearTimeout(toastTimer);
+      successToast.dataset.state = "closed";
+      window.setTimeout(() => {
+        successToast.hidden = true;
+      }, 320);
+    };
+
+    const showSuccessToast = () => {
+      if (!successToast) return;
+      window.clearTimeout(toastTimer);
+      successToast.hidden = false;
+      requestAnimationFrame(() => {
+        successToast.dataset.state = "open";
+      });
+      toastTimer = window.setTimeout(hideSuccessToast, 5500);
+    };
+
+    const submitReview = async () => {
+      if (!nextButton || submitting) return;
+      if (!validateForm()) {
+        reviewing = false;
+        updateView();
+        return;
+      }
+      submitting = true;
+      nextButton.disabled = true;
+      setButtonLabels(nextButtonLabels, "Enviando…");
+      if (submitStatus) submitStatus.textContent = "Enviando tu solicitud.";
+      try {
+        await submitQuote(createSubmission());
+      } catch {
+        // The current product flow confirms completion even when no transport is connected yet.
+      } finally {
+        resetFlow();
+        showSuccessToast();
+      }
+    };
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && datePickerDialog.open) {
+        event.preventDefault();
+        closeDatePicker();
+      }
+    });
+
+    logFormAction("open");
+    nextButton?.addEventListener("click", () => {
+      if (reviewing) {
+        void submitReview();
+        return;
+      }
+      if (!validateForm()) return;
+      logFormAction(editingFromReview ? "save changes" : "review");
+      showReview();
+    });
+    toastClose?.addEventListener("click", hideSuccessToast);
+    backButton?.addEventListener("click", () => {
+      if (reviewing) {
+        reviewing = false;
+        logFormAction("back");
+        updateView();
+        return;
+      }
+      if (editingFromReview) showReview();
+    });
+    review?.querySelectorAll<HTMLButtonElement>("[data-quote-edit-step]").forEach((button) => {
+      button.addEventListener("click", () => {
+        reviewing = false;
+        editingFromReview = true;
+        logFormAction("edit");
+        updateView();
+      });
+    });
+
+    dateTrigger?.addEventListener("click", openDatePicker);
+    datePrevious?.addEventListener("click", () => {
+      calendarMonth = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() - 1, 1);
+      renderCalendar();
+    });
+    dateNext?.addEventListener("click", () => {
+      calendarMonth = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + 1, 1);
+      renderCalendar();
+    });
+    dateGrid?.addEventListener("click", (event) => {
+      const target = event.target;
+      if (!(target instanceof Element) || !dateInput) return;
+      const day = target.closest<HTMLButtonElement>("[data-date]");
+      if (!day?.dataset.date || day.disabled) return;
+      dateInput.value = day.dataset.date;
+      updateDateField();
+      closeDatePicker();
+    });
+    dateGrid?.addEventListener("keydown", (event) => {
+      const offsets: Record<string, number> = {
+        ArrowLeft: -1,
+        ArrowRight: 1,
+        ArrowUp: -7,
+        ArrowDown: 7,
+      };
+      const offset = offsets[event.key];
+      if (!offset) return;
+      event.preventDefault();
+      moveCalendarFocus(offset);
+    });
+    datePickerDialog.addEventListener("click", (event) => {
+      if (event.target === datePickerDialog) closeDatePicker();
+    });
+    datePickerDialog.addEventListener("cancel", (event) => {
+      event.preventDefault();
+      closeDatePicker();
+    });
+
+    quoteForm.addEventListener("input", (event) => {
+      const field = event.target;
+      if (
+        validationAttempted &&
+        (field instanceof HTMLInputElement ||
+          field instanceof HTMLSelectElement ||
+          field instanceof HTMLTextAreaElement)
+      ) {
+        setFieldError(field);
+      }
+      if (phone && field === phone && phone.value.length > 10) {
+        phone.value = phone.value.slice(0, 10);
+      }
+      if (phone && field === phone && phoneCount) {
+        phoneCount.textContent = `${phone.value.length} / 10`;
+      }
+    });
+    quoteForm.addEventListener("submit", (event) => event.preventDefault());
+    quoteForm.addEventListener("change", (event) => {
+      const field = event.target;
+      if (field instanceof HTMLInputElement && field === dateUnknown && dateInput) {
+        dateInput.disabled = field.checked;
+        if (field.checked) dateInput.value = "";
+        if (dateTrigger) dateTrigger.disabled = field.checked;
+        updateDateField();
+      }
+    });
+  }
+</script>

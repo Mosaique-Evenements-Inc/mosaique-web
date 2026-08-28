@@ -2,12 +2,11 @@ import { servicesContent } from "./services";
 
 export const quoteContent = {
   eyebrow: "Solicitud de cotización",
-  title: "Cuéntanos sobre tu evento.",
+  title: "Cuéntanos sobre tu evento",
   mobileTitle: "Cotizar un evento",
   steps: [
-    { id: "contact", index: "01", label: "Contacto" },
-    { id: "event", index: "02", label: "Tu evento" },
-    { id: "details", index: "03", label: "Cuéntanos un poco más" },
+    { id: "basic", index: "01", label: "Información básica" },
+    { id: "additional", index: "02", label: "Información adicional" },
   ],
   services: [
     ...servicesContent.items.map(({ id, title }) => ({ value: id, label: title })),
@@ -36,8 +35,4 @@ export const quoteContent = {
     "$20,000+",
     "Aún no tengo un presupuesto definido",
   ],
-  confirmation: {
-    title: "Tu solicitud está lista.",
-    text: "Preparamos los detalles en tu aplicación de correo. Envíalos para completar la solicitud de cotización.",
-  },
 } as const;

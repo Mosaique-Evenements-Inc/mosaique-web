@@ -150,64 +150,10 @@
 }
 
 .services-spike__media-action {
-  align-items: center;
-  background: var(--color-background);
-  border: 0;
-  border-radius: var(--primitive-radius-xs);
   bottom: var(--space-4);
-  color: var(--color-text-primary);
-  cursor: pointer;
-  display: inline-flex;
-  font-family: var(--font-family-ui);
-  font-size: var(--text-button-size);
-  font-weight: var(--text-button-weight);
-  gap: var(--space-4);
-  justify-content: space-between;
-  line-height: var(--text-button-line-height);
-  min-block-size: 2.75rem;
-  padding: var(--space-2) var(--space-4);
   position: absolute;
   right: var(--space-4);
-  transition: background-color var(--motion-duration-fast) var(--motion-easing-standard);
   z-index: var(--primitive-z-content);
-}
-
-.services-spike__media-action-arrow {
-  block-size: 0.625rem;
-  inline-size: 2.5rem;
-  position: relative;
-  transition: transform var(--motion-duration-fast) var(--motion-easing-standard);
-}
-
-.services-spike__media-action-arrow::before {
-  border-block-start: 1px solid currentColor;
-  content: "";
-  inline-size: 100%;
-  left: 0;
-  position: absolute;
-  top: 50%;
-}
-
-.services-spike__media-action-arrow::after {
-  border-block-start: 1px solid currentColor;
-  border-inline-end: 1px solid currentColor;
-  block-size: 0.4rem;
-  content: "";
-  inline-size: 0.4rem;
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-45%) rotate(45deg);
-}
-
-@media (hover: hover) {
-  .services-spike__media-action:hover {
-    background: color-mix(in oklab, var(--color-background) 92%, var(--color-accent));
-  }
-
-  .services-spike__media-action:hover .services-spike__media-action-arrow {
-    transform: translateX(var(--space-1));
-  }
 }
 
 .services-spike__list {
@@ -381,8 +327,7 @@
 @media (prefers-reduced-motion: reduce) {
   .services-spike__media-panel,
   .services-spike__item,
-  .services-spike__media-action,
-  .services-spike__media-action-arrow {
+  .services-spike__media-action {
     transform: none;
     transition: none;
   }

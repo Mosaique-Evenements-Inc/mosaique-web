@@ -2,31 +2,35 @@
 import { quoteContent } from "../../content/home/quote";
 ---
 
-<section class="quote-step" data-quote-step="2" aria-labelledby="quote-details-title" hidden>
-  <header>
-    <span>03</span>
-    <h2 id="quote-details-title" tabindex="-1">Cuéntanos un poco más</h2>
-  </header>
+<section
+  class="quote-step"
+  data-quote-step="1"
+  data-quote-tab-label={quoteContent.steps[1].label}
+  aria-labelledby="quote-details-title"
+  hidden
+>
+  <h2 class="visually-hidden" id="quote-details-title" tabindex="-1">
+    {quoteContent.steps[1].label}
+  </h2>
 
   <div class="quote-fields">
-    <fieldset
-      class="quote-choice-group quote-field--wide"
-      data-quote-choice-group="venue"
-      aria-describedby="quote-venue-error"
-    >
-      <legend>¿Ya tienes venue? <strong aria-hidden="true">*</strong></legend>
-      <div>
+    <label class="quote-field quote-field--wide">
+      <span>¿Ya tienes venue? <strong aria-hidden="true">*</strong></span>
+      <select
+        name="hasVenue"
+        required
+        aria-describedby="quote-venue-error"
+        data-error-required="Selecciona una opción."
+      >
+        <option value="">Selecciona una opción</option>
         {
           quoteContent.venueOptions.map((option) => (
-            <label>
-              <input type="radio" name="hasVenue" value={option.value} />
-              <span>{option.label}</span>
-            </label>
+            <option value={option.value}>{option.label}</option>
           ))
         }
-      </div>
+      </select>
       <small id="quote-venue-error" data-quote-error></small>
-    </fieldset>
+    </label>
 
     <div class="quote-venue-summary quote-field--wide" data-quote-venue-summary hidden>
       <div>

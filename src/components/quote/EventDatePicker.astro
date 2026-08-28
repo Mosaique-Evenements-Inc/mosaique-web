@@ -1,3 +1,7 @@
+---
+import Icon from "../ui/Icon.astro";
+---
+
 <dialog
   id="date-picker-dialog"
   class="date-picker-dialog"
@@ -6,9 +10,13 @@
 >
   <div class="date-picker-dialog__panel">
     <header>
-      <button type="button" data-date-previous aria-label="Mes anterior">←</button>
+      <button type="button" data-date-previous aria-label="Mes anterior">
+        <Icon name="arrowLeft" size={20} />
+      </button>
       <h2 id="date-picker-month" data-date-month aria-live="polite"></h2>
-      <button type="button" data-date-next aria-label="Mes siguiente">→</button>
+      <button type="button" data-date-next aria-label="Mes siguiente">
+        <Icon name="arrowRight" size={20} />
+      </button>
     </header>
 
     <div class="date-picker__weekdays" aria-hidden="true">

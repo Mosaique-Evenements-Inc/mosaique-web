@@ -27,6 +27,7 @@
   --primitive-radius-xs: 0.125rem;
   --primitive-radius-sm: 0.25rem;
   --primitive-radius-md: 0.5rem;
+  --primitive-radius-pill: 999rem;
 
   --primitive-duration-fast: 160ms;
   --primitive-duration-standard: 320ms;

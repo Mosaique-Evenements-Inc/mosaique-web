@@ -1,0 +1,56 @@
+---
+import {
+  ArrowLeft,
+  ArrowRight,
+  Calendar,
+  Check,
+  CheckCircle,
+  CoinsSwap,
+  DesignNib,
+  MenuScale,
+  NetworkRight,
+  Plus,
+  PlusCircle,
+  Strategy,
+  Upload,
+  Xmark,
+} from "iconoir-react";
+
+const icons = {
+  arrowLeft: ArrowLeft,
+  arrowRight: ArrowRight,
+  calendar: Calendar,
+  check: Check,
+  checkCircle: CheckCircle,
+  coinsSwap: CoinsSwap,
+  designNib: DesignNib,
+  menu: MenuScale,
+  networkRight: NetworkRight,
+  plus: Plus,
+  plusCircle: PlusCircle,
+  strategy: Strategy,
+  upload: Upload,
+  xmark: Xmark,
+} as const;
+
+export type IconName = keyof typeof icons;
+
+interface Props {
+  name: IconName;
+  size?: number;
+  strokeWidth?: number;
+  class?: string;
+}
+
+const { name, size = 20, strokeWidth = 1.5, class: className } = Astro.props;
+const SelectedIcon = icons[name];
+---
+
+<SelectedIcon
+  width={size}
+  height={size}
+  strokeWidth={strokeWidth}
+  className={className}
+  aria-hidden="true"
+  focusable="false"
+/>

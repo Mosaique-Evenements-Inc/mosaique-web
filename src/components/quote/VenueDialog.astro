@@ -1,3 +1,8 @@
+---
+import Icon from "../ui/Icon.astro";
+import Button from "../ui/Button";
+---
+
 <dialog class="venue-dialog" data-venue-dialog aria-labelledby="venue-dialog-title">
   <div class="venue-dialog__panel">
     <header>
@@ -11,7 +16,7 @@
         data-venue-cancel
         aria-label="Cerrar detalles del venue"
       >
-        <span aria-hidden="true">×</span>
+        <Icon name="xmark" size={22} />
       </button>
     </header>
 
@@ -39,7 +44,7 @@
             multiple
             data-venue-files
           />
-          <span aria-hidden="true">↑</span>
+          <Icon name="upload" size={28} />
           <strong>Cargar fotos del venue</strong>
           <small>JPG · PNG · WEBP · Máximo 5</small>
         </label>
@@ -54,12 +59,10 @@
     </div>
 
     <footer>
-      <button type="button" class="quote-button quote-button--secondary" data-venue-cancel
-        >Cancelar</button
-      >
-      <button type="button" class="quote-button quote-button--primary" data-venue-save
-        >Guardar</button
-      >
+      <Button type="button" className="quote-button" data-venue-cancel> Cancelar </Button>
+      <Button type="button" className="quote-button" data-venue-save variant="light">
+        Guardar
+      </Button>
     </footer>
   </div>
 </dialog>

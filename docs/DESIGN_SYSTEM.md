@@ -47,7 +47,7 @@ Intent:
 - Neutral Gray functions as the muted neutral.
 - White provides clean surfaces and contrast.
 - Cinzel gives display and heading typography an editorial, elegant character.
-- Montserrat preserves legibility and neutrality across body copy, captions, navigation, buttons, and UI labels.
+- Montserrat preserves legibility and neutrality across body copy, captions, navigation, and UI labels. Interactive CTA labels use Cinzel to retain the editorial title voice at control scale.
 
 Font loading strategy:
 
@@ -93,7 +93,7 @@ Type roles:
 
 Fluid `clamp()` scales are preferred for display and heading sizes where responsive range improves composition. Body sizes should remain stable and readable. Letter spacing is kept at `0` by default. Line height should tighten for display text and open for body copy.
 
-Cinzel should feed `display-xl`, `display-lg`, `heading-lg`, and `heading-md`. Montserrat should feed `body-lg`, `body`, `caption`, `navigation`, `button`, and other UI labels.
+Cinzel should feed `display-xl`, `display-lg`, `heading-lg`, `heading-md`, and interactive CTA labels. Montserrat should feed `body-lg`, `body`, `caption`, `navigation`, and other utility labels.
 
 Each token should define:
 
@@ -206,7 +206,7 @@ Planned primitives:
 - Stack: vertical or horizontal spacing rhythm.
 - Heading: semantic heading with type role mapping.
 - Text: semantic text with readable defaults.
-- Button: accessible command/link primitive.
+- Button: one accessible React command/link primitive that Astro renders statically unless a consumer already belongs to an interactive island. Its two capsule variants share a synchronized bottom-up surface and label transition: transparent to the light application background, and the inverse light-to-transparent state. Low-chrome editorial links and icon-only controls remain outside this treatment.
 - Media: responsive image wrapper with aspect ratio and crop controls.
 
 Primitives must remain content-agnostic, composable, and small.

@@ -1,16 +1,28 @@
 ---
 import Container from "../ui/Container.astro";
+import Icon from "../ui/Icon.astro";
+import { collaborators } from "../../content/home/collaborators";
 import { footerContent } from "../../content/home/footer";
 
 import "../../styles/sections/footer.css";
 
-const [footerBrand, ...footerCategoryParts] = footerContent.logo.split(" ");
-const footerCategory = footerCategoryParts.join(" ");
 const primaryLinks = footerContent.links.slice(0, 4);
 const secondaryLinks = footerContent.links.slice(4);
+interface Props {
+  anchorPrefix?: string;
+}
+
+const { anchorPrefix = "" } = Astro.props;
+const resolveHref = (href: string) =>
+  anchorPrefix && href.startsWith("#") ? `${anchorPrefix}${href}` : href;
 ---
 
-<footer class="site-footer" id="footer" aria-labelledby="footer-brand">
+<footer
+  class="site-footer"
+  id="footer"
+  aria-labelledby="footer-brand"
+  data-navigation-contrast="light"
+>
   <Container bleed class="site-footer__container">
     <h2 class="site-footer__sr-only" id="footer-brand">{footerContent.logo}</h2>
 
@@ -19,13 +31,13 @@ const secondaryLinks = footerContent.links.slice(4);
         <details open data-footer-group>
           <summary>
             <h3>Compañía</h3>
-            <span aria-hidden="true">+</span>
+            <span aria-hidden="true"><Icon name="plus" size={20} /></span>
           </summary>
           <ul>
             {
               primaryLinks.map((link) => (
                 <li>
-                  <a href={link.href}>{link.label}</a>
+                  <a href={resolveHref(link.href)}>{link.label}</a>
                 </li>
               ))
             }
@@ -35,13 +47,13 @@ const secondaryLinks = footerContent.links.slice(4);
         <details open data-footer-group>
           <summary>
             <h3>Recursos</h3>
-            <span aria-hidden="true">+</span>
+            <span aria-hidden="true"><Icon name="plus" size={20} /></span>
           </summary>
           <ul>
             {
               secondaryLinks.map((link) => (
                 <li>
-                  <a href={link.href}>{link.label}</a>
+                  <a href={resolveHref(link.href)}>{link.label}</a>
                 </li>
               ))
             }
@@ -51,7 +63,7 @@ const secondaryLinks = footerContent.links.slice(4);
         <details open data-footer-group>
           <summary>
             <h3>Servicios</h3>
-            <span aria-hidden="true">+</span>
+            <span aria-hidden="true"><Icon name="plus" size={20} /></span>
           </summary>
           <ul>
             {footerContent.services.map((service) => <li>{service}</li>)}
@@ -59,10 +71,33 @@ const secondaryLinks = footerContent.links.slice(4);
         </details>
       </nav>
 
-      <div class="site-footer__logo-wall" aria-hidden="true">
-        <div class="site-footer__logo-tile site-footer__logo-mark">M</div>
-        <div class="site-footer__logo-tile site-footer__logo-name">{footerBrand}</div>
-        <div class="site-footer__logo-tile site-footer__logo-category">{footerCategory}</div>
+      <div class="site-footer__logo-wall" role="list" aria-label="Colaboradores">
+        {
+          collaborators.map((collaborator) => (
+            <div class="site-footer__logo-tile" role="listitem">
+              <a
+                class="site-footer__collaborator-link"
+                href={collaborator.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Visitar el sitio de ${collaborator.nombre} (se abre en una pestaña nueva)`}
+              >
+                <img
+                  class:list={[
+                    "site-footer__collaborator-logo",
+                    `site-footer__collaborator-logo--${collaborator.proportion}`,
+                  ]}
+                  src={collaborator.path}
+                  alt={`Logo de ${collaborator.nombre}`}
+                  width={collaborator.image.width}
+                  height={collaborator.image.height}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+            </div>
+          ))
+        }
       </div>
     </div>
 
@@ -71,7 +106,7 @@ const secondaryLinks = footerContent.links.slice(4);
         <h3>{footerContent.contact.purpose}</h3>
         <a class="site-footer__contact-action" href={footerContent.contact.email.href}>
           <span>{footerContent.contact.email.label}</span>
-          <span aria-hidden="true">→</span>
+          <Icon name="arrowRight" size={20} />
         </a>
       </div>
 
