@@ -5,6 +5,7 @@
   --color-inverse: var(--color-cream-100);
   --color-background: var(--color-cream-100);
   --color-background-inverse: var(--color-green-900);
+  --color-background-cinematic: var(--color-black);
   --color-surface: var(--color-white);
   --color-surface-elevated: color-mix(in oklab, var(--color-white) 84%, var(--color-cream-100));
   --color-surface-muted: color-mix(in oklab, var(--color-gray-300) 32%, var(--color-cream-100));

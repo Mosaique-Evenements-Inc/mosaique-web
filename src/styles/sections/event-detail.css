@@ -44,7 +44,7 @@
 }
 
 .event-gallery {
-  --event-gallery-gap: clamp(var(--space-2), 1vw, var(--space-4));
+  --event-gallery-gap: clamp(0.125rem, 0.25vw, var(--space-1));
 
   padding-block-end: var(--event-gallery-gap);
   padding-block-start: clamp(7rem, 8vw, 9.5rem);
@@ -882,7 +882,7 @@
   .event-more-galleries__media,
   .event-more-galleries__media-inner,
   .event-more-galleries__copy,
-  .event-more-galleries__overlay {
+  .event-more-galleries__preview:not(.is-last) .event-more-galleries__overlay {
     animation: none;
     transform: none;
   }
@@ -911,8 +911,8 @@
   background: var(--color-background-inverse);
   color: var(--color-text-inverse);
   overflow: clip;
-  padding-block: clamp(var(--space-16), 10vw, var(--space-32))
-    clamp(var(--space-12), 6vw, var(--space-20));
+  padding-block: clamp(var(--space-24), 12vw, var(--space-40))
+    clamp(var(--space-20), 8vw, var(--space-32));
 }
 
 .event-contact-marquee__link {
@@ -925,7 +925,7 @@
   font-family: var(--font-family-display);
   font-size: clamp(1.25rem, 1.9vw, 1.5rem);
   line-height: 1.35;
-  margin: 0 auto clamp(var(--space-10), 6vw, var(--space-16));
+  margin: 0 auto clamp(var(--space-12), 7vw, var(--space-20));
   max-inline-size: var(--layout-max-reading);
   padding-inline: var(--space-page-gutter);
   text-align: center;
@@ -958,14 +958,8 @@
   font-size: clamp(4.5rem, 10vw, 8rem);
   font-weight: var(--text-display-xl-weight);
   line-height: 0.85;
+  margin-inline-end: clamp(var(--space-12), 8vw, var(--space-32));
   white-space: nowrap;
-}
-
-.event-contact-marquee__group > span::after {
-  border-block-start: 1px solid color-mix(in oklab, var(--color-text-inverse) 48%, transparent);
-  content: "";
-  inline-size: clamp(var(--space-12), 8vw, var(--space-32));
-  margin-inline: clamp(var(--space-8), 5vw, var(--space-20));
 }
 
 .event-contact-marquee__link:focus-visible {
@@ -981,7 +975,7 @@
 
 @media (max-width: 47.999rem) {
   .event-contact-marquee {
-    padding-block: var(--space-20) var(--space-16);
+    padding-block: var(--space-24) var(--space-20);
   }
 
   .event-contact-marquee__lead {
@@ -1010,9 +1004,5 @@
   .event-contact-marquee__group > span:not(:first-child),
   .event-contact-marquee__group[data-duplicate="true"] {
     display: none;
-  }
-
-  .event-contact-marquee__group > span:first-child::after {
-    content: none;
   }
 }

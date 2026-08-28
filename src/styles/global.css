@@ -34,6 +34,12 @@
     line-height: var(--text-body-line-height);
   }
 
+  .site-page--cinematic {
+    --color-background-inverse: var(--color-background-cinematic);
+
+    background: var(--color-background-cinematic);
+  }
+
   img,
   picture,
   video,

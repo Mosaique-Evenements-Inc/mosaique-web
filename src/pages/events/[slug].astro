@@ -31,7 +31,11 @@ interface Props {
 const { event, nextEvents } = Astro.props;
 ---
 
-<BaseLayout title={`${event.title} — MOSAÏQUE EVENTS`} description={event.description}>
+<BaseLayout
+  title={`${event.title} — MOSAÏQUE EVENTS`}
+  description={event.description}
+  surface="cinematic"
+>
   <Navigation surface="overlay" anchorPrefix="/" />
   <main class="event-detail" id="main-content" tabindex="-1" data-navigation-contrast="light">
     <div class="event-detail__chapter" data-content-status={event.status}>
