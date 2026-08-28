@@ -125,7 +125,7 @@
 .projects-experiences__buttons button {
   align-items: center;
   background: transparent;
-  border: 1px solid var(--color-border-strong);
+  border: 0;
   block-size: 2.75rem;
   color: var(--color-text-primary);
   cursor: pointer;
@@ -135,14 +135,11 @@
   justify-content: center;
   line-height: 1;
   padding: 0;
-  transition:
-    background-color var(--motion-duration-fast) var(--motion-easing-standard),
-    color var(--motion-duration-fast) var(--motion-easing-standard);
+  transition: color var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
 .projects-experiences__buttons button:hover:not(:disabled) {
-  background: var(--color-primary);
-  color: var(--color-text-inverse);
+  color: var(--color-accent-text);
 }
 
 .projects-experiences__buttons button:disabled {

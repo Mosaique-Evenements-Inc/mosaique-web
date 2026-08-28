@@ -264,6 +264,15 @@
   }
 }
 
+@media (max-width: 47.999rem) {
+  .site-navigation__menu-trigger,
+  .site-navigation__menu-trigger:hover {
+    background: transparent;
+    border-color: transparent;
+    border-radius: 0;
+  }
+}
+
 .site-navigation__dialog-nav a[aria-current="page"] {
   color: var(--color-text-primary);
 }

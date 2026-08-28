@@ -6,6 +6,7 @@ import {
   eventImageFormats,
   eventImageWidths,
 } from "../../assets/images/events/delivery";
+import Button from "../ui/Button";
 import Container from "../ui/Container.astro";
 import { eventGalleryItems, type EventGalleryItem } from "../../content/home/projects";
 import { galleryCategories } from "../../content/gallery";
@@ -36,17 +37,24 @@ const heading = activeCategory
     <div class="gallery-archive__layout">
       <aside class="gallery-archive__filters">
         <nav class="gallery-archive__filter-list" aria-label="Categorías de eventos">
-          <a href="/gallery" aria-current={activeCategoryId ? undefined : "page"}>
-            <span>All</span>
-          </a>
+          <Button
+            className="gallery-archive__filter"
+            href="/gallery"
+            variant={activeCategoryId ? "transparent" : "light"}
+            aria-current={activeCategoryId ? undefined : "page"}
+          >
+            All
+          </Button>
           {
             galleryCategories.map((category) => (
-              <a
+              <Button
+                className="gallery-archive__filter"
                 href={category.href}
+                variant={category.id === activeCategoryId ? "light" : "transparent"}
                 aria-current={category.id === activeCategoryId ? "page" : undefined}
               >
-                <span>{category.label}</span>
-              </a>
+                {category.label}
+              </Button>
             ))
           }
         </nav>
