@@ -226,12 +226,20 @@ This document is the source of truth for implementation status. The existence of
 
 ### SEO / Metadata
 
-- **Implementation: complete for the current single-page surface.** Spanish document language, descriptive title, description, robots directives, Open Graph metadata, Twitter card metadata, favicons, and Organization JSON-LD are present.
+- **Implementation: complete for the current public surface.** Spanish document language, descriptive titles and descriptions, robots directives, Open Graph metadata, Twitter card metadata, favicons, and Organization JSON-LD are present.
 - `SITE_URL` is the single production URL source. Canonical, `og:url`, the Organization URL, sitemap generation, and the sitemap reference in robots are emitted only when it is configured, preventing localhost or speculative domains from entering production metadata.
 - The official Astro sitemap integration generates the sitemap index and page sitemap. `robots.txt` remains valid without a configured domain and adds the absolute sitemap URL when one exists.
 - Social image tags remain intentionally absent until an approved production image is available.
 
 ## Current
+
+### Active Scope
+
+- **Home:** only the `Eventos que ya tomaron forma` Projects / Experiences section.
+- **Gallery:** `/gallery` and its generated category routes.
+- **Event Detail:** the six generated `/events/[slug]` routes.
+- Shared Navigation, Footer, layout, tokens, metadata, and asset infrastructure count only when a change is required to support or validate one of these three surfaces.
+- Every other homepage section, absent section, deferred content concept, Storybook initiative, and unrelated business-asset request is outside the active roadmap and does not block acceptance or completion.
 
 ### Production Asset Pipeline
 
@@ -243,53 +251,39 @@ This document is the source of truth for implementation status. The existence of
 
 ### Event Detail Reference Fidelity
 
-- **Current phase: Event Detail reference-fidelity program complete with the supplied event photography.** Implementation, fidelity, responsive behavior, accessibility, performance, real-media integration, and final regression checks are complete. Runtime reduced-motion emulation remains a production-acceptance item because the available browser cannot emulate that media feature. No additional Event Detail implementation phase should begin without new content or product direction.
+- **Current phase: Event Detail reference-fidelity program complete with the supplied event photography.** Implementation, fidelity, responsive behavior, accessibility, performance, real-media integration, runtime reduced-motion coverage, and final regression checks are complete. No additional Event Detail implementation phase should begin without new content or product direction.
 - The reference program is tracked as independent implementation, fidelity, responsive, accessibility, and QA phases. No later phase should begin automatically.
+
+### Scoped Final QA
+
+- **Status: complete for the current Home Projects, Gallery, and Event Detail revision.** Normal-motion checks at `1440 × 900` and `390 × 844` confirmed all scoped media, headings, controls, responsive layouts, and navigation without broken images, horizontal overflow, warnings, or errors.
+- Runtime reduced motion was validated in Chrome headless with `prefers-reduced-motion: reduce` forced at desktop and mobile viewports. Home Projects uses immediate carousel scrolling; Gallery removes its motion attribute, reveals all six records, and keeps every title fully visible; Event Detail reports no featured, gallery, or next-preview animation or transform, collapses the desktop preview chapter to `100svh`, and returns the preview link to normal flow.
+- The normal-motion Event Detail lightbox opens with focus on Close, locks document scroll, closes cleanly, restores scrolling, and returns focus to the originating image. Gallery category navigation reached the generated Festival route with the expected active filter and records.
+- Desktop and mobile screenshots were inspected for Home Projects, Gallery, and Event Detail. The reduced-motion and normal-motion branches retain the intended composition, readable content, complete controls, and stable media crops.
 
 ### Deployment Sync / Verification
 
-- **Status: public deployment verified on 2026-08-28 and confirmed stale.** `https://mosaique-web.vercel.app` responds successfully over HTTPS, but it serves a revision that predates the current route, media, and SEO work.
-- The deployed homepage contains no Astro image output or canonical URL. `/contact`, `/gallery`, `/events/nossa-copa`, and `/sitemap-index.xml` return Vercel's `404: NOT_FOUND`; the available browser blocked direct inspection of `/robots.txt`, so that endpoint remains unverified rather than assumed.
+- **Status: current application revision deployed and scoped route acceptance complete.** `https://mosaique-web.vercel.app` serves the merged Home Projects media, Gallery, and Event Detail revision over HTTPS.
+- Home Projects, `/gallery`, all generated Gallery categories, and all six Event Detail routes passed a production browser sweep with no route-level 404, broken image, horizontal overflow, warning, or error. The scoped surfaces deliver generated AVIF media; WebP remains the configured fallback.
+- The warm Vercel build reused all 407 image-cache entries, completed Astro's build in approximately 4 seconds, and completed the full Vercel build in approximately 8 seconds.
 - **Local production preflight: complete.** A temporary build with `SITE_URL=https://mosaique-web.vercel.app` emits the 14 static pages, 407 responsive image derivatives, canonical URLs for the audited routes, `robots.txt`, `sitemap-index.xml`, and its page sitemap. The value was supplied only to the build process; no environment file or production setting was created.
-- Redeploy the current code, configure `SITE_URL` after the definitive public domain is confirmed, and then repeat production acceptance across routes, canonical metadata, robots, sitemap, responsive images, console output, reduced motion, and field performance. No deployment or external configuration was changed during this read-only verification.
+- **Remaining deployment configuration:** production does not currently expose canonical URLs and `/sitemap-index.xml` returns `404: NOT_FOUND`, confirming that `SITE_URL` is not configured in the deployed build. Confirm the definitive domain, add `SITE_URL` to Vercel, redeploy with the existing build cache, and verify canonical, `og:url`, JSON-LD URL, robots sitemap reference, and both sitemap files.
 
 ## Next
 
-### Remaining Production Assets
+### Production URL + Scoped SEO Acceptance
 
-- **Status: pending business instruction outside Event surfaces.** Obtain approved photography for the remaining placeholder sections, self-hosted font files, social sharing artwork, and any final content decisions.
+- Confirm the definitive public domain and configure it as `SITE_URL` in Vercel Production.
+- Redeploy with the existing build cache, then verify canonical and `og:url` for `/`, `/gallery`, every generated Gallery category, and every Event Detail route.
+- Verify the JSON-LD URL, robots sitemap reference, `sitemap-index.xml`, and its page sitemap include the scoped routes.
 
 ## Pending
 
-### Metrics
+### Scoped Production Acceptance
 
-- **Status: removed from the rendered page by product direction.** The metric tiles and their count-up runtime were removed from `AboutMilestones.astro`; typed content remains in `src/content/home/metrics.ts` for possible future review.
-- About and Milestones retain their existing sticky-media composition without a separate Metrics block.
-
-### Values / Spotlights
-
-- **Status: deferred for business review.** The attempted implementation was fully removed; content remains only in `src/content/home/values.ts`.
-- Revisit implementation and the Movra spotlight/floating-card reference only after business approval.
-
-### Production Assets
-
-- **Status: Event delivery complete; remaining surfaces deferred pending business instruction.** Event routes, Gallery, and homepage Projects now use the supplied responsive photography. Placeholder replacement in other sections, approved fonts, and social artwork remain pending.
-
-### Storybook
-
-- **Status: not started and not currently configured.** No Storybook dependency, stories, or build command exists.
-- Add only under an explicit phase; it is not required for current section delivery.
-
-### Vercel
-
-- **Status: initial deployment live but not synchronized with the current application.** The public URL serves an older homepage-only revision; redeployment, final domain configuration, and production acceptance checks remain pending.
+- Run Lighthouse and capture field-oriented performance evidence for Home Projects, `/gallery`, and one representative Event Detail route after `SITE_URL` is deployed.
+- After the final `SITE_URL` deployment, run a focused metadata and route smoke check; the full desktop/mobile and reduced-motion matrices do not need to be repeated unless application code changes.
 
 ## Known Issues / Deferred Decisions
 
-- The current `src/pages/index.astro` composition comments out About/Milestones and Why Choose Us and changes previously validated section handoffs. Those homepage changes predate the Contact Page task and have not completed a new fidelity or full-regression pass; preserve them until their product intent is confirmed.
-- Approved production photography is now available for Event routes, Gallery, and homepage Projects. Hero, About/Milestones, Marquee, Services, Process, Testimonials, FAQ, and Final CTA continue to use lightweight replaceable placeholders.
-- Approved self-hosted Cinzel and Montserrat font files are pending; see `docs/DESIGN_SYSTEM.md`.
-- Approved social sharing artwork is pending; `og:image` and `twitter:image` should be enabled through the existing layout prop when it is delivered.
 - The final public domain remains unconfirmed. Production must define `SITE_URL` before deployment acceptance so canonical and sitemap URLs are emitted.
-- Services uses `client:visible`; preserve its server-rendered fallback and verify hydration again when production media is introduced.
-- Media models for future sections must not reuse Event photography or invent asset paths without explicit approval.
