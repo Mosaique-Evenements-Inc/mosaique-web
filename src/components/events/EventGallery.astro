@@ -1,27 +1,31 @@
 ---
 import { Image } from "astro:assets";
 
+import EventFeaturedMedia from "./EventFeaturedMedia.astro";
 import EventLightbox from "./EventLightbox.astro";
 import Container from "../ui/Container.astro";
-import type { EventDetailImage } from "../../content/events";
+import type { EventDetailFeaturedMedia, EventDetailImage } from "../../content/events";
 
 interface Props {
+  featuredMedia: EventDetailFeaturedMedia;
   images: EventDetailImage[];
   slug: string;
   title: string;
 }
 
-const { images, slug, title } = Astro.props;
+const { featuredMedia, images, slug, title } = Astro.props;
 const galleryId = `event-gallery-${slug}`;
 const lightboxId = `${galleryId}-lightbox`;
 ---
 
 <section class="event-gallery" aria-label={`Galería de ${title}`} id={galleryId}>
   <Container class="event-gallery__container">
+    <EventFeaturedMedia media={featuredMedia} slug={slug} />
+
     <ol class="event-gallery__list">
       {
         images.map((image, index) => (
-          <li class="event-gallery__item">
+          <li class="event-gallery__item" data-layout={image.layout}>
             <button
               class="event-gallery__trigger"
               type="button"
@@ -30,26 +34,34 @@ const lightboxId = `${galleryId}-lightbox`;
               aria-label={`Abrir imagen ${index + 1} de ${images.length}: ${image.alt}`}
               data-event-lightbox-trigger={index}
             >
-              {image.status === "approved" ? (
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  widths={[480, 720, 960]}
-                  sizes="(min-width: 1024px) 30vw, (min-width: 768px) 46vw, 100vw"
-                  loading={index === 0 ? "eager" : "lazy"}
-                  decoding="async"
-                />
-              ) : (
-                <span
-                  class="event-gallery__placeholder"
-                  data-tone={String((index % 6) + 1).padStart(2, "0")}
-                  role="img"
-                  aria-label={image.alt}
-                >
-                  <span />
-                  <span />
+              <span class="event-gallery__reveal">
+                <span class="event-gallery__media">
+                  {image.status === "approved" ? (
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      widths={[480, 720, 960, 1440]}
+                      sizes={
+                        image.layout === "full-landscape"
+                          ? "(min-width: 1024px) 58vw, 100vw"
+                          : "(min-width: 1024px) 29vw, (min-width: 768px) 42vw, 100vw"
+                      }
+                      loading={index === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                    />
+                  ) : (
+                    <span
+                      class="event-gallery__placeholder"
+                      data-tone={String((index % 6) + 1).padStart(2, "0")}
+                      role="img"
+                      aria-label={image.alt}
+                    >
+                      <span />
+                      <span />
+                    </span>
+                  )}
                 </span>
-              )}
+              </span>
             </button>
           </li>
         ))

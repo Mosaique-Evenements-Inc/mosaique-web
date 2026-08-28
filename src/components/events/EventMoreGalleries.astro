@@ -1,0 +1,74 @@
+---
+import { Image } from "astro:assets";
+
+import Heading from "../ui/Heading.astro";
+import Text from "../ui/Text.astro";
+import { eventDetailNavigationContent, type EventDetail } from "../../content/events";
+
+interface Props {
+  event: EventDetail;
+}
+
+const { event } = Astro.props;
+const media = event.featuredMedia;
+const titleId = `more-galleries-${event.slug}`;
+---
+
+<section
+  class="event-more-galleries"
+  aria-labelledby={titleId}
+  data-navigation-contrast="light"
+>
+  <header class="event-more-galleries__header">
+    <Heading as="h2" variant="display-xl" id={titleId}>
+      {eventDetailNavigationContent.heading}
+    </Heading>
+  </header>
+
+  <article class="event-more-galleries__preview" data-content-status={event.status}>
+    <a
+      class="event-more-galleries__link"
+      href={event.href}
+      aria-label={`${eventDetailNavigationContent.nextLabel}: ${event.title}`}
+    >
+      <div class="event-more-galleries__media" aria-hidden="true">
+        <div class="event-more-galleries__media-inner">
+          {
+            media.kind === "image" ? (
+              <Image
+                src={media.src}
+                alt=""
+                widths={[720, 1080, 1440, 1920]}
+                sizes="100vw"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : media.kind === "video" ? (
+              <video
+                src={media.src}
+                poster={media.poster}
+                muted
+                playsinline
+                preload="metadata"
+                tabindex="-1"
+              />
+            ) : (
+              <span class="event-more-galleries__placeholder">
+                <span />
+                <span />
+              </span>
+            )
+          }
+          <span class="event-more-galleries__overlay"></span>
+        </div>
+      </div>
+
+      <div class="event-more-galleries__copy">
+        <Text as="span" variant="caption" tone="inverse" class="event-more-galleries__label">
+          {eventDetailNavigationContent.nextLabel}
+        </Text>
+        <Heading as="h3" variant="display-lg">{event.title}</Heading>
+      </div>
+    </a>
+  </article>
+</section>

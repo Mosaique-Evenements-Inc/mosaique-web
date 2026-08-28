@@ -1,0 +1,121 @@
+---
+import { Image } from "astro:assets";
+
+import Button from "../ui/Button";
+import type { EventDetailFeaturedMedia } from "../../content/events";
+
+interface Props {
+  media: EventDetailFeaturedMedia;
+  slug: string;
+}
+
+const { media, slug } = Astro.props;
+const mediaId = `event-featured-media-${slug}`;
+const aspectRatio =
+  media.kind === "image"
+    ? `${media.src.width} / ${media.src.height}`
+    : `${media.width} / ${media.height}`;
+---
+
+<figure
+  class="event-featured-media"
+  data-event-featured-media
+  data-kind={media.kind}
+  style={`--event-featured-media-ratio:${aspectRatio};`}
+>
+  <div class="event-featured-media__reveal">
+    <div class="event-featured-media__media">
+      {
+        media.kind === "image" ? (
+          <Image
+            src={media.src}
+            alt={media.alt}
+            widths={[720, 1080, 1440, 1920]}
+            sizes="(min-width: 1024px) 72vw, 100vw"
+            loading="eager"
+            decoding="async"
+          />
+        ) : media.kind === "video" ? (
+          <video
+            id={mediaId}
+            aria-label={media.alt}
+            playsinline
+            poster={media.poster}
+            preload="metadata"
+          >
+            <source src={media.src} type={media.mimeType} />
+            <track
+              kind="captions"
+              src={media.captions.src}
+              srclang={media.captions.srclang}
+              label={media.captions.label}
+              default
+            />
+          </video>
+        ) : (
+          <span class="event-featured-media__placeholder" role="img" aria-label={media.alt}>
+            <span />
+            <span />
+          </span>
+        )
+      }
+    </div>
+  </div>
+
+  {
+    media.kind === "video" && (
+      <div class="event-featured-media__control">
+        <Button
+          aria-controls={mediaId}
+          aria-pressed="false"
+          className="event-featured-media__button"
+          data-event-featured-media-toggle
+          variant="transparent"
+        >
+          Reproducir
+        </Button>
+      </div>
+    )
+  }
+</figure>
+
+<script>
+  const updateFeaturedMediaLabel = (button: HTMLButtonElement, label: string) => {
+    button
+      .querySelectorAll<HTMLElement>(".action-button__content > span")
+      .forEach((element) => {
+        element.textContent = label;
+      });
+  };
+
+  document.querySelectorAll<HTMLElement>("[data-event-featured-media]").forEach((root) => {
+    const video = root.querySelector<HTMLVideoElement>("video");
+    const button = root.querySelector<HTMLButtonElement>("[data-event-featured-media-toggle]");
+
+    if (!video || !button) return;
+
+    const syncControl = () => {
+      const isPlaying = !video.paused && !video.ended;
+      button.setAttribute("aria-pressed", String(isPlaying));
+      updateFeaturedMediaLabel(button, isPlaying ? "Pausar" : "Reproducir");
+    };
+
+    button.addEventListener("click", async () => {
+      if (!video.paused && !video.ended) {
+        video.pause();
+        return;
+      }
+
+      try {
+        await video.play();
+      } catch {
+        syncControl();
+      }
+    });
+
+    video.addEventListener("play", syncControl);
+    video.addEventListener("pause", syncControl);
+    video.addEventListener("ended", syncControl);
+    syncControl();
+  });
+</script>
