@@ -1,4 +1,4 @@
-# Mosaïque Web
+# Mosaïque Web 🎭
 
 Sitio público de **MOSAÏQUE ÉVÉNEMENTS**, empresa de planificación, producción, logística, alquiler y alianzas con venues en Montréal.
 
