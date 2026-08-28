@@ -37,15 +37,17 @@ import { quoteContent } from "../../content/home/quote";
 
     <label class="quote-field">
       <span>Teléfono <strong aria-hidden="true">*</strong></span>
-      <span class="quote-field__control">
+      <span class="quote-field__control quote-field__control--phone">
+        <span id="quote-phone-prefix" class="quote-field__phone-prefix">+1</span>
         <input
           type="tel"
           name="phone"
           autocomplete="tel"
-          inputmode="tel"
+          inputmode="numeric"
+          pattern="[0-9]{7,10}"
           maxlength="10"
           required
-          aria-describedby="quote-phone-count quote-phone-error"
+          aria-describedby="quote-phone-prefix quote-phone-count quote-phone-error"
           data-error-required="Ingresa tu teléfono."
           data-error-invalid="Ingresa un teléfono válido."
         />

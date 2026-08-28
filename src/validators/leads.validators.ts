@@ -32,10 +32,7 @@ const isValidIsoDate = (value: string) => {
 
 export const validateFullName = (value: string) => value.trim().length > 0;
 export const validateEmail = (value: string) => emailPattern.test(value.trim());
-export const validatePhone = (value: string) => {
-  const digitCount = value.replace(/\D/g, "").length;
-  return digitCount >= 7 && digitCount <= 10;
-};
+export const validatePhone = (value: string) => /^\d{7,10}$/.test(value.trim());
 export const validateRequiredSelection = (value: string) => value.trim().length > 0;
 export const validateEventDate = (value: string | null) =>
   value === null || isValidIsoDate(value);
@@ -114,7 +111,7 @@ export const validateLeadPayload = (input: LeadFormInput): LeadValidationResult 
     data: {
       fullName,
       email,
-      phone,
+      phone: `+1${phone}`,
       service,
       eventType,
       eventDate,

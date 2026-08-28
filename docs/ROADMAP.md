@@ -37,6 +37,7 @@ This document is the source of truth for implementation status. The existence of
 
 - **Implementation: complete for the available contact infrastructure.** The inline form at `/contact` now has one capture stage containing Contacto and Información del evento. Información adicional and the step indicator are no longer rendered. The former main quote dialog and its global trigger interception have been removed.
 - Form validation runs only when opening review, focuses the first invalid control, and preserves every value through review edits. Review remains a separate confirmation state rather than a second form step.
+- The phone control keeps a fixed, accessible `+1` prefix outside the editable value, accepts only decimal digits up to the existing 10-digit limit, and normalizes the submitted value to the `+1<digits>` contract.
 - The existing cancellable `quote:submit-request` event now connects the form to the production `POST /functions/v1/leads` endpoint through typed validator, Zustand, hook, service, and repository layers. Only an HTTP 201 response completes the flow; validation, network, and backend errors preserve the form for retry. Venue-file transport remains outside the current inline form.
 - All approved quote and contact actions now navigate to `/contact`; no homepage CTA opens an overlay, drawer, sheet, or dialog for the main form.
 - Mobile uses natural page scroll, one-column fields, a full-width primary action, and media after the form. Tablet and desktop use the dedicated split form/media composition.
