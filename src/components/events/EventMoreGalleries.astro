@@ -1,22 +1,14 @@
 ---
-import { Picture } from "astro:assets";
-
-import {
-  eventImageFallbackFormat,
-  eventImageFormats,
-  eventImageWidths,
-} from "../../assets/images/events/delivery";
-import Heading from "../ui/Heading.astro";
-import Text from "../ui/Text.astro";
 import { eventDetailNavigationContent, type EventDetail } from "../../content/events";
+import Heading from "../ui/Heading.astro";
+import EventPreviewScene from "./EventPreviewScene.astro";
 
 interface Props {
-  event: EventDetail;
+  events: EventDetail[];
 }
 
-const { event } = Astro.props;
-const media = event.featuredMedia;
-const titleId = `more-galleries-${event.slug}`;
+const { events } = Astro.props;
+const titleId = "more-galleries-heading";
 ---
 
 <section
@@ -30,52 +22,11 @@ const titleId = `more-galleries-${event.slug}`;
     </Heading>
   </header>
 
-  <article class="event-more-galleries__preview" data-content-status={event.status}>
-    <a
-      class="event-more-galleries__link"
-      href={event.href}
-      aria-label={`${eventDetailNavigationContent.nextLabel}: ${event.title}`}
-    >
-      <div class="event-more-galleries__media" aria-hidden="true">
-        <div class="event-more-galleries__media-inner">
-          {
-            media.kind === "image" ? (
-              <Picture
-                src={media.src}
-                alt=""
-                formats={eventImageFormats}
-                fallbackFormat={eventImageFallbackFormat}
-                widths={eventImageWidths}
-                sizes="100vw"
-                loading="lazy"
-                decoding="async"
-              />
-            ) : media.kind === "video" ? (
-              <video
-                src={media.src}
-                poster={media.poster}
-                muted
-                playsinline
-                preload="metadata"
-                tabindex="-1"
-              />
-            ) : (
-              <span class="event-more-galleries__placeholder">
-                <span />
-                <span />
-              </span>
-            )
-          }
-          <span class="event-more-galleries__overlay"></span>
-        </div>
-      </div>
-
-      <div class="event-more-galleries__copy">
-        <Text as="span" variant="caption" tone="inverse" class="event-more-galleries__label">
-          {eventDetailNavigationContent.nextLabel}
-        </Text>
-        <Heading as="h3" variant="display-lg">{event.title}</Heading>
-      </div>
-    </a>
-  </article>
+  <div class="event-more-galleries__sequence">
+    {
+      events.map((event, index) => (
+        <EventPreviewScene event={event} index={index} isLast={index === events.length - 1} />
+      ))
+    }
+  </div>
 </section>

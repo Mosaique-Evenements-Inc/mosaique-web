@@ -12,16 +12,22 @@ import "../../styles/sections/event-detail.css";
 export function getStaticPaths() {
   return eventDetails.map((event, index) => ({
     params: { slug: event.slug },
-    props: { event, nextEvent: eventDetails[(index + 1) % eventDetails.length] },
+    props: {
+      event,
+      nextEvents: Array.from(
+        { length: eventDetails.length - 1 },
+        (_, offset) => eventDetails[(index + offset + 1) % eventDetails.length],
+      ),
+    },
   }));
 }
 
 interface Props {
   event: EventDetail;
-  nextEvent: EventDetail;
+  nextEvents: EventDetail[];
 }
 
-const { event, nextEvent } = Astro.props;
+const { event, nextEvents } = Astro.props;
 ---
 
 <BaseLayout title={`${event.title} — MOSAÏQUE EVENTS`} description={event.description}>
@@ -36,7 +42,7 @@ const { event, nextEvent } = Astro.props;
         title={event.title}
       />
     </div>
-    <EventMoreGalleries event={nextEvent} />
+    <EventMoreGalleries events={nextEvents} />
   </main>
   <Footer anchorPrefix="/" />
 </BaseLayout>
