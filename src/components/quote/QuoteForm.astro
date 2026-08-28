@@ -1,5 +1,6 @@
 ---
 import EventDatePicker from "./EventDatePicker.astro";
+import LeadSubmissionTransport from "./LeadSubmissionTransport";
 import QuoteBasicStep from "./QuoteBasicStep.astro";
 import QuoteReview from "./QuoteReview.astro";
 import Button from "../ui/Button";
@@ -50,8 +51,12 @@ import "../../styles/sections/quote-form.css";
 </aside>
 
 <EventDatePicker />
+<LeadSubmissionTransport client:load />
 
 <script>
+  import type { LeadApiError, LeadFormInput, QuoteSubmissionDetail } from "../../types/leads";
+  import { validatePhone } from "../../validators/leads.validators";
+
   const quoteFlow = document.querySelector<HTMLElement>("[data-quote-flow]");
   const datePickerDialog = document.querySelector<HTMLDialogElement>(
     "[data-date-picker-dialog]",
@@ -212,8 +217,7 @@ import "../../styles/sections/quote-form.css";
       field: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
     ) => {
       if (field.name === "phone") {
-        const digitCount = field.value.replace(/\D/g, "").length;
-        field.setCustomValidity(field.value && digitCount < 7 ? "invalid" : "");
+        field.setCustomValidity(field.value && !validatePhone(field.value) ? "invalid" : "");
       }
 
       const error = field.closest("label")?.querySelector<HTMLElement>("[data-quote-error]");
@@ -276,10 +280,18 @@ import "../../styles/sections/quote-form.css";
     const populateReview = () => {
       const formData = new FormData(quoteForm);
       const serviceSelect = quoteForm.elements.namedItem("service") as HTMLSelectElement | null;
+      const languageSelect = quoteForm.elements.namedItem(
+        "preferredLanguage",
+      ) as HTMLSelectElement | null;
       const selectedDate = dateInput?.value ? parseIsoDate(dateInput.value) : null;
       setReviewValue("fullName", String(formData.get("fullName") ?? ""));
       setReviewValue("email", String(formData.get("email") ?? ""));
-      setReviewValue("phone", String(formData.get("phone") ?? ""));
+      const phoneValue = String(formData.get("phone") ?? "");
+      setReviewValue("phone", phoneValue ? `+1 ${phoneValue}` : "");
+      setReviewValue(
+        "preferredLanguage",
+        languageSelect?.selectedOptions[0]?.textContent?.trim() ?? "",
+      );
       setReviewValue("service", serviceSelect?.selectedOptions[0]?.textContent?.trim() ?? "");
       setReviewValue("eventType", String(formData.get("eventType") ?? ""));
       setReviewValue(
@@ -315,30 +327,23 @@ import "../../styles/sections/quote-form.css";
       updateView(false);
     };
 
-    type QuoteSubmissionDetail = {
-      fields: Record<string, string>;
-      venueFiles: File[];
-      resolve: () => void;
-      reject: (reason?: unknown) => void;
-    };
-
-    const createSubmission = () => {
+    const createSubmission = (): LeadFormInput => {
       const formData = new FormData(quoteForm);
-      const serviceSelect = quoteForm.elements.namedItem("service") as HTMLSelectElement | null;
       return {
         fullName: String(formData.get("fullName") ?? ""),
         email: String(formData.get("email") ?? ""),
         phone: String(formData.get("phone") ?? ""),
-        service: serviceSelect?.selectedOptions[0]?.textContent?.trim() ?? "",
+        service: String(formData.get("service") ?? ""),
         eventType: String(formData.get("eventType") ?? ""),
         eventDate: formData.get("dateUnknown")
-          ? "Aún no definida"
-          : String(formData.get("eventDate") || "No indicada"),
+          ? null
+          : String(formData.get("eventDate") || "") || null,
         guestRange: String(formData.get("guestRange") ?? ""),
+        preferredLanguage: String(formData.get("preferredLanguage") || "") || null,
       };
     };
 
-    const submitQuote = (fields: Record<string, string>) =>
+    const submitQuote = (fields: LeadFormInput) =>
       new Promise<void>((resolve, reject) => {
         const request = new CustomEvent<QuoteSubmissionDetail>("quote:submit-request", {
           bubbles: true,
@@ -348,6 +353,34 @@ import "../../styles/sections/quote-form.css";
         const connected = !quoteForm.dispatchEvent(request);
         if (!connected) reject(new Error("Quote transport is not configured."));
       });
+
+    const isLeadApiError = (reason: unknown): reason is LeadApiError => {
+      if (typeof reason !== "object" || reason === null) return false;
+      const candidate = reason as Record<string, unknown>;
+      return typeof candidate.error === "string" && typeof candidate.message === "string";
+    };
+
+    const showSubmissionError = (error: LeadApiError) => {
+      if (submitStatus) submitStatus.textContent = error.message;
+      if (!error.field) return;
+
+      const field = quoteForm.elements.namedItem(error.field);
+      if (
+        !(field instanceof HTMLInputElement) &&
+        !(field instanceof HTMLSelectElement) &&
+        !(field instanceof HTMLTextAreaElement)
+      )
+        return;
+
+      field.setAttribute("aria-invalid", "true");
+      const fieldError = field
+        .closest("label")
+        ?.querySelector<HTMLElement>("[data-quote-error]");
+      if (fieldError) fieldError.textContent = error.message;
+      reviewing = false;
+      updateView(false);
+      field.focus();
+    };
 
     const hideSuccessToast = () => {
       if (!successToast || successToast.hidden) return;
@@ -381,11 +414,23 @@ import "../../styles/sections/quote-form.css";
       if (submitStatus) submitStatus.textContent = "Enviando tu solicitud.";
       try {
         await submitQuote(createSubmission());
-      } catch {
-        // The current product flow confirms completion even when no transport is connected yet.
-      } finally {
         resetFlow();
         showSuccessToast();
+      } catch (reason) {
+        const error = isLeadApiError(reason)
+          ? reason
+          : {
+              error: "Submission error",
+              message: "No fue posible enviar la solicitud. Inténtalo nuevamente.",
+            };
+        showSubmissionError(error);
+        nextButton.disabled = false;
+        setButtonLabels(
+          nextButtonLabels,
+          reviewing ? "Enviar solicitud" : "Revisar información",
+        );
+      } finally {
+        submitting = false;
       }
     };
 
@@ -465,6 +510,10 @@ import "../../styles/sections/quote-form.css";
 
     quoteForm.addEventListener("input", (event) => {
       const field = event.target;
+      if (phone && field === phone) {
+        phone.value = phone.value.replace(/\D/g, "").slice(0, 10);
+        if (phoneCount) phoneCount.textContent = `${phone.value.length} / 10`;
+      }
       if (
         validationAttempted &&
         (field instanceof HTMLInputElement ||
@@ -472,12 +521,6 @@ import "../../styles/sections/quote-form.css";
           field instanceof HTMLTextAreaElement)
       ) {
         setFieldError(field);
-      }
-      if (phone && field === phone && phone.value.length > 10) {
-        phone.value = phone.value.slice(0, 10);
-      }
-      if (phone && field === phone && phoneCount) {
-        phoneCount.textContent = `${phone.value.length} / 10`;
       }
     });
     quoteForm.addEventListener("submit", (event) => event.preventDefault());

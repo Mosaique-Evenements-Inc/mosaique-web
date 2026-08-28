@@ -1,0 +1,38 @@
+---
+import { finalCtaContent } from "../../content/home/finalCta";
+
+const marqueeItems = Array.from({ length: 3 }, () => finalCtaContent.action.label);
+---
+
+<section
+  class="event-contact-marquee"
+  aria-labelledby="event-contact-marquee-title"
+  data-navigation-contrast="light"
+>
+  <h2 id="event-contact-marquee-title" class="sr-only">{finalCtaContent.action.label}</h2>
+
+  <a
+    class="event-contact-marquee__link"
+    href={finalCtaContent.action.href}
+    aria-label={finalCtaContent.action.label}
+  >
+    <p class="event-contact-marquee__lead">{finalCtaContent.text}</p>
+
+    <span class="event-contact-marquee__viewport" aria-hidden="true">
+      <span class="event-contact-marquee__track">
+        {
+          [false, true].map((duplicate) => (
+            <span
+              class="event-contact-marquee__group"
+              data-duplicate={duplicate ? "true" : undefined}
+            >
+              {marqueeItems.map((label) => (
+                <span>{label}</span>
+              ))}
+            </span>
+          ))
+        }
+      </span>
+    </span>
+  </a>
+</section>

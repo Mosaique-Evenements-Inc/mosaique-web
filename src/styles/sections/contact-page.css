@@ -1,6 +1,38 @@
 .contact-page {
-  background: var(--color-background);
+  --color-background: var(--color-background-cinematic);
+  --color-surface-muted: color-mix(
+    in oklab,
+    var(--color-white) 10%,
+    var(--color-background-cinematic)
+  );
+  --color-text-primary: var(--color-white);
+  --color-text-secondary: color-mix(in oklab, var(--color-white) 72%, transparent);
+  --color-border-default: color-mix(in oklab, var(--color-white) 24%, transparent);
+  --color-border-strong: color-mix(in oklab, var(--color-white) 64%, transparent);
+  --color-accent-text: var(--color-white);
+  --color-accent-muted: color-mix(
+    in oklab,
+    var(--color-white) 14%,
+    var(--color-background-cinematic)
+  );
+  --focus-ring-color: var(--color-white);
+
+  background: var(--color-background-cinematic);
+  color: var(--color-text-primary);
   padding-block-start: 4rem;
+}
+
+.contact-page .quote-field input::placeholder,
+.contact-page .quote-field textarea::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 1;
+}
+
+.contact-page .quote-button {
+  --action-button-border: var(--color-white);
+  --action-button-fill: var(--color-white);
+  --action-button-filled-text: var(--color-background-cinematic);
+  --action-button-transparent-text: var(--color-white);
 }
 
 .contact-page__stage {

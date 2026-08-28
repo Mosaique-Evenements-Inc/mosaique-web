@@ -1,6 +1,7 @@
 ---
 import EventGallery from "../../components/events/EventGallery.astro";
 import EventHeader from "../../components/events/EventHeader.astro";
+import EventContactMarquee from "../../components/events/EventContactMarquee.astro";
 import EventMoreGalleries from "../../components/events/EventMoreGalleries.astro";
 import Footer from "../../components/sections/Footer.astro";
 import Navigation from "../../components/sections/Navigation.astro";
@@ -12,19 +13,29 @@ import "../../styles/sections/event-detail.css";
 export function getStaticPaths() {
   return eventDetails.map((event, index) => ({
     params: { slug: event.slug },
-    props: { event, nextEvent: eventDetails[(index + 1) % eventDetails.length] },
+    props: {
+      event,
+      nextEvents: Array.from(
+        { length: eventDetails.length - 1 },
+        (_, offset) => eventDetails[(index + offset + 1) % eventDetails.length],
+      ),
+    },
   }));
 }
 
 interface Props {
   event: EventDetail;
-  nextEvent: EventDetail;
+  nextEvents: EventDetail[];
 }
 
-const { event, nextEvent } = Astro.props;
+const { event, nextEvents } = Astro.props;
 ---
 
-<BaseLayout title={`${event.title} — MOSAÏQUE EVENTS`} description={event.description}>
+<BaseLayout
+  title={`${event.title} — MOSAÏQUE EVENTS`}
+  description={event.description}
+  surface="cinematic"
+>
   <Navigation surface="overlay" anchorPrefix="/" />
   <main class="event-detail" id="main-content" tabindex="-1" data-navigation-contrast="light">
     <div class="event-detail__chapter" data-content-status={event.status}>
@@ -36,7 +47,8 @@ const { event, nextEvent } = Astro.props;
         title={event.title}
       />
     </div>
-    <EventMoreGalleries event={nextEvent} />
+    <EventMoreGalleries events={nextEvents} />
+    <EventContactMarquee />
   </main>
   <Footer anchorPrefix="/" />
 </BaseLayout>

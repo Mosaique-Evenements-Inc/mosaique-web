@@ -13,5 +13,8 @@ const site = process.env.SITE_URL;
 export default defineConfig({
   site,
   integrations: [react(), ...(site ? [sitemap()] : [])],
-  vite: { plugins: [tailwindcss()] },
+  vite: {
+    plugins: [tailwindcss()],
+    resolve: { dedupe: ["react", "react-dom"] },
+  },
 });

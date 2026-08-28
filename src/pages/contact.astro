@@ -10,10 +10,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import "../styles/sections/contact-page.css";
 ---
 
-<BaseLayout title="Contacto — MOSAÏQUE ÉVÉNEMENTS" description={footerContent.description}>
-  <Navigation surface="solid" anchorPrefix="/" />
+<BaseLayout
+  title="Contacto — MOSAÏQUE ÉVÉNEMENTS"
+  description={footerContent.description}
+  surface="cinematic"
+>
+  <Navigation surface="overlay" anchorPrefix="/" />
 
-  <main class="contact-page" id="main-content" tabindex="-1">
+  <main class="contact-page" id="main-content" tabindex="-1" data-navigation-contrast="light">
     <section class="contact-page__stage" aria-label="Formulario de cotización">
       <Container class="contact-page__container">
         <div class="contact-page__form-column">
