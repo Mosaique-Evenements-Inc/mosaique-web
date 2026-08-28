@@ -52,25 +52,26 @@ El repositorio no tiene actualmente un script de tests automatizados.
 
 - `/`: homepage editorial.
 - `/contact`: página dedicada con el formulario de cotización.
+- `/gallery`: archivo de eventos realizados.
+- `/gallery/[category]`: archivos estáticos derivados de las categorías aprobadas.
 - `/events/[slug]`: seis páginas estáticas de detalle de evento.
 - `/robots.txt`: directivas de rastreo; incluye el sitemap cuando existe `SITE_URL`.
 
 ## Evidencia de ejecución
 
-Última verificación local: **2026-08-27**, Node.js `v22.22.3`.
+Última verificación local: **2026-08-28**, Node.js `v22.22.3`.
 
-| Comprobación                 | Resultado                                                            |
-| ---------------------------- | -------------------------------------------------------------------- |
-| Servidor Astro               | Background activo en `http://localhost:4322` durante la verificación |
-| Homepage `/`                 | HTTP `200`; título `MOSAÏQUE EVENTS — Eventos en Montréal`           |
-| Evento `/events/nossa-copa/` | HTTP `200`; título `Nossa Copa — MOSAÏQUE EVENTS`                    |
-| `/robots.txt`                | HTTP `200`; `User-agent: *` y `Allow: /`                             |
-| `pnpm build`                 | Correcto; 8 páginas estáticas generadas                              |
-| `pnpm lint`                  | Correcto; 0 errores                                                  |
-| `pnpm typecheck`             | Correcto; 70 archivos, 0 errores, 0 warnings, 0 hints                |
-| `git diff --check`           | Correcto                                                             |
+| Comprobación                                      | Resultado                                                            |
+| ------------------------------------------------- | -------------------------------------------------------------------- |
+| `pnpm build`                                      | Correcto; 14 páginas y 407 variantes de imagen generadas             |
+| Build temporal con `SITE_URL`                     | Correcto; canonical, `robots.txt` y sitemap generados                |
+| Canonical de `/`, `/contact`, `/gallery` y evento | Correctos con la URL temporal usada exclusivamente para el preflight |
+| `pnpm lint`                                       | Correcto; 0 errores                                                  |
+| `pnpm typecheck`                                  | Correcto; 87 archivos, 0 errores, 0 warnings, 0 hints                |
+| `git diff --check`                                | Correcto                                                             |
 
-El servidor background de esta verificación permanece disponible en `http://localhost:4322`.
+La URL pública actual todavía sirve una revisión antigua. No se creó un `.env`, no se fijó un
+dominio definitivo y no se ejecutó un despliegue durante esta verificación.
 
 ## Documentación
 

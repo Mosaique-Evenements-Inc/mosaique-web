@@ -35,7 +35,7 @@ export const eventGalleryItems = eventDetails.map((event): EventGalleryItem => {
 });
 
 export const eventGalleryContent = {
-  status: "placeholder",
+  status: "approved",
   title: "Eventos que ya tomaron forma",
   introduction:
     "Una selección de celebraciones, producciones y experiencias que hemos llevado de la idea a la realidad.",
