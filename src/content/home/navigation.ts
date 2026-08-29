@@ -1,4 +1,5 @@
 import type { ContentLink } from "../types";
+import { servicesContent } from "./services";
 
 const navigationItems = [
   { label: "Inicio", href: "#top" },
@@ -11,6 +12,11 @@ const navigationItems = [
 ] satisfies ContentLink[];
 
 const desktopNavigationHrefs = new Set(["#about", "#services", "/gallery", "/contact"]);
+
+export const serviceNavigationItems = servicesContent.items.map(({ slug, title }) => ({
+  label: title,
+  href: `/services/${slug}`,
+}));
 
 export const navigationContent = {
   logo: "MOSAÏQUE ÉVÉNEMENTS",

@@ -15,6 +15,7 @@ export const servicesContent = {
   items: [
     {
       id: "service-01",
+      slug: "organizacion-produccion-integral",
       index: "01",
       title: "Organización y producción integral",
       description:
@@ -25,6 +26,7 @@ export const servicesContent = {
     },
     {
       id: "service-02",
+      slug: "bodas-celebraciones-privadas",
       index: "02",
       title: "Bodas y celebraciones privadas",
       description:
@@ -35,6 +37,7 @@ export const servicesContent = {
     },
     {
       id: "service-03",
+      slug: "eventos-corporativos",
       index: "03",
       title: "Eventos corporativos",
       description:
@@ -45,6 +48,7 @@ export const servicesContent = {
     },
     {
       id: "service-04",
+      slug: "alianzas-venues",
       index: "04",
       title: "Alianzas con venues",
       description:
@@ -55,6 +59,7 @@ export const servicesContent = {
     },
     {
       id: "service-05",
+      slug: "montaje-logistica",
       index: "05",
       title: "Montaje y logística",
       description:
@@ -65,6 +70,7 @@ export const servicesContent = {
     },
     {
       id: "service-06",
+      slug: "alquiler-mobiliario",
       index: "06",
       title: "Alquiler de mobiliario",
       description:
@@ -76,6 +82,7 @@ export const servicesContent = {
     },
     {
       id: "service-07",
+      slug: "paquetes-personalizados",
       index: "07",
       title: "Paquetes personalizados",
       description:

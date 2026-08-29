@@ -2,7 +2,7 @@
 import Icon from "../ui/Icon.astro";
 import topbarLogo from "../../assets/logos/logo_topbar.png";
 import { footerContent } from "../../content/home/footer";
-import { navigationContent } from "../../content/home/navigation";
+import { navigationContent, serviceNavigationItems } from "../../content/home/navigation";
 
 interface Props {
   anchorPrefix?: string;
@@ -59,16 +59,58 @@ const isCurrentPage = (href: string) =>
       <nav class="site-navigation__dialog-nav" aria-label="Navegación principal">
         <ol>
           {
-            navigationContent.desktopItems.map((item, index) => (
-              <li style={`--navigation-item-index:${index};`}>
-                <a
-                  href={resolveHref(item.href)}
-                  aria-current={isCurrentPage(item.href) ? "page" : undefined}
+            navigationContent.desktopItems.map((item, index) =>
+              item.href === "#services" ? (
+                <li
+                  class="site-navigation__services-accordion"
+                  style={`--navigation-item-index:${index};`}
+                  data-services-accordion
                 >
-                  <span>{item.label}</span>
-                </a>
-              </li>
-            ))
+                  <button
+                    class="site-navigation__services-accordion-trigger"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="site-navigation-services-accordion"
+                  >
+                    <span>{item.label}</span>
+                    <span
+                      class="site-navigation__services-accordion-indicator"
+                      aria-hidden="true"
+                    />
+                  </button>
+
+                  <div
+                    class="site-navigation__services-accordion-content"
+                    id="site-navigation-services-accordion"
+                    aria-hidden="true"
+                    data-services-accordion-content
+                    inert
+                  >
+                    <ul>
+                      {serviceNavigationItems.map((service) => (
+                        <li>
+                          <a
+                            href={service.href}
+                            aria-current={isCurrentPage(service.href) ? "page" : undefined}
+                          >
+                            {service.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              ) : (
+                <li style={`--navigation-item-index:${index};`}>
+                  <a
+                    href={resolveHref(item.href)}
+                    aria-current={isCurrentPage(item.href) ? "page" : undefined}
+                  >
+                    <span>{item.label}</span>
+                  </a>
+                </li>
+              ),
+            )
           }
         </ol>
       </nav>
@@ -97,6 +139,13 @@ const isCurrentPage = (href: string) =>
       const closeButton = dialog?.querySelector<HTMLButtonElement>(
         ".site-navigation__dialog-close",
       );
+      const servicesAccordion = dialog?.querySelector<HTMLElement>("[data-services-accordion]");
+      const servicesTrigger = servicesAccordion?.querySelector<HTMLButtonElement>(
+        ".site-navigation__services-accordion-trigger",
+      );
+      const servicesContent = servicesAccordion?.querySelector<HTMLElement>(
+        "[data-services-accordion-content]",
+      );
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
       const desktop = window.matchMedia("(min-width: 80rem)");
       const root = document.documentElement;
@@ -107,6 +156,14 @@ const isCurrentPage = (href: string) =>
       let closeTimer = 0;
 
       if (!trigger || !dialog || !closeButton) return;
+
+      const setServicesExpanded = (expanded: boolean) => {
+        if (!servicesAccordion || !servicesTrigger || !servicesContent) return;
+        servicesAccordion.toggleAttribute("data-open", expanded);
+        servicesTrigger.setAttribute("aria-expanded", String(expanded));
+        servicesContent.setAttribute("aria-hidden", String(!expanded));
+        servicesContent.inert = !expanded;
+      };
 
       const unlockScroll = () => {
         root.style.overflow = previousRootOverflow;
@@ -143,6 +200,9 @@ const isCurrentPage = (href: string) =>
       });
 
       closeButton.addEventListener("click", () => closeMenu());
+      servicesTrigger?.addEventListener("click", () => {
+        setServicesExpanded(!servicesAccordion?.hasAttribute("data-open"));
+      });
 
       dialog.addEventListener("cancel", (event) => {
         event.preventDefault();
@@ -161,6 +221,7 @@ const isCurrentPage = (href: string) =>
       dialog.addEventListener("close", () => {
         unlockScroll();
         trigger.setAttribute("aria-expanded", "false");
+        setServicesExpanded(false);
         if (restoreTriggerFocus) trigger.focus();
         restoreTriggerFocus = false;
       });

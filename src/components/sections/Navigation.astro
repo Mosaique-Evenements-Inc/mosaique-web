@@ -1,6 +1,7 @@
 ---
 import Container from "../ui/Container.astro";
 import FullscreenNavigation from "./FullscreenNavigation.astro";
+import ServicesDropdown from "./ServicesDropdown.astro";
 import topbarLogo from "../../assets/logos/logo_topbar.png";
 import { navigationContent } from "../../content/home/navigation";
 
@@ -22,7 +23,13 @@ const isCurrentPage = (href: string) =>
 ---
 
 <header
-  class:list={["site-navigation", { "site-navigation--solid": surface === "solid" }]}
+  class:list={[
+    "site-navigation",
+    {
+      "site-navigation--home": Astro.url.pathname === "/",
+      "site-navigation--solid": surface === "solid",
+    },
+  ]}
   data-navigation-surface={surface}
 >
   <Container class="site-navigation__inner">
@@ -40,16 +47,20 @@ const isCurrentPage = (href: string) =>
     <nav class="site-navigation__desktop-nav" aria-label="Navegación principal">
       <ul>
         {
-          navigationContent.desktopItems.map((item) => (
-            <li>
-              <a
-                href={resolveHref(item.href)}
-                aria-current={isCurrentPage(item.href) ? "page" : undefined}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))
+          navigationContent.desktopItems.map((item) =>
+            item.href === "#services" ? (
+              <ServicesDropdown label={item.label} />
+            ) : (
+              <li>
+                <a
+                  href={resolveHref(item.href)}
+                  aria-current={isCurrentPage(item.href) ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ),
+          )
         }
       </ul>
     </nav>
@@ -97,12 +108,21 @@ const isCurrentPage = (href: string) =>
       if (!frameId) frameId = window.requestAnimationFrame(updateContrast);
     };
 
+    const resetContrast = () => {
+      navigation.removeAttribute("data-navigation-active-contrast");
+      navigation.style.removeProperty("--navigation-color-progress");
+    };
+
     window.addEventListener("scroll", requestUpdate, {
       passive: true,
       signal: controller.signal,
     });
     window.addEventListener("resize", requestUpdate, { signal: controller.signal });
+    document.addEventListener("astro:before-swap", resetContrast, {
+      signal: controller.signal,
+    });
     document.addEventListener("astro:after-swap", requestUpdate, { signal: controller.signal });
+    document.addEventListener("astro:page-load", requestUpdate, { signal: controller.signal });
     window.addEventListener(
       "pagehide",
       () => {
