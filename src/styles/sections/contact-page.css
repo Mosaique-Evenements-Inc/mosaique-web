@@ -157,6 +157,8 @@
   border-block-start: 0;
   display: grid;
   gap: var(--space-3);
+  grid-template-columns: minmax(0, 1fr);
+  justify-content: stretch;
   margin-block-start: var(--space-2);
   padding: var(--space-2) 0 0;
 }
@@ -164,6 +166,7 @@
 .contact-page .quote-form__actions > div {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
+  inline-size: 100%;
 }
 
 .contact-page .quote-form__actions [data-quote-next] {
@@ -268,6 +271,10 @@
   .contact-page__form-column {
     inline-size: 100%;
     padding: var(--space-4) var(--space-page-gutter) 0;
+  }
+
+  .contact-page .quote-form__actions > div {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
   }
 
   .contact-media {
