@@ -7,10 +7,11 @@ import {
   nossaCopaBrzVsEsc199,
   nossaCopaMain,
 } from "../../assets/images/events";
-import type { EventDetail } from "./types";
+import { SERVICE_IDS } from "../services/types";
+import type { Event } from "./types";
 
 export const nossaCopaEvent = {
-  category: "Festival",
+  categoryId: "festival",
   description: "Fútbol, comunidad y emprendimiento reunidos en una experiencia de festival.",
   featuredMedia: {
     alt: "Partida de billar durante Nossa Copa, rodeada de asistentes con camisetas de Brasil.",
@@ -56,9 +57,9 @@ export const nossaCopaEvent = {
       status: "approved",
     },
   ],
-  href: "/events/nossa-copa",
   id: "event-slot-01",
+  serviceId: SERVICE_IDS.celebrations,
   slug: "nossa-copa",
   status: "approved",
   title: "Nossa Copa",
-} satisfies EventDetail;
+} satisfies Event;

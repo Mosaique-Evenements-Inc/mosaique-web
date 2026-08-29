@@ -8,10 +8,11 @@ import {
   weddingEb59673,
   weddingEb59675,
 } from "../../assets/images/events";
-import type { EventDetail } from "./types";
+import { SERVICE_IDS } from "../services/types";
+import type { Event } from "./types";
 
 export const weddingRrEvent = {
-  category: "Boda",
+  categoryId: "wedding",
   description: "Una celebración de inspiración Amalfi en el entorno de Riverest.",
   featuredMedia: {
     alt: "Mesas de la boda R&R dispuestas al aire libre entre árboles y vegetación.",
@@ -63,9 +64,9 @@ export const weddingRrEvent = {
       status: "approved",
     },
   ],
-  href: "/events/wedding-r-r",
   id: "event-slot-04",
+  serviceId: SERVICE_IDS.weddings,
   slug: "wedding-r-r",
   status: "approved",
   title: "Wedding R&R",
-} satisfies EventDetail;
+} satisfies Event;

@@ -1,64 +1,14 @@
-import type { ImageMetadata } from "astro";
+import type { FeaturedMedia, GalleryImage } from "../media";
+import type { ServiceId } from "../services/types";
+import type { EventCategoryId } from "./categories";
 
-export type EventCategory =
-  "Boda" | "Celebración" | "Celebración privada" | "Cumpleaños" | "Festival";
-
-export type EventGalleryLayout = "full-landscape" | "pair-landscape" | "pair-portrait";
-
-export type EventDetailImage =
-  | {
-      alt: string;
-      layout: EventGalleryLayout;
-      src: ImageMetadata;
-      status: "approved";
-    }
-  | {
-      alt: string;
-      height: number;
-      layout: EventGalleryLayout;
-      src: null;
-      status: "pending";
-      width: number;
-    };
-
-export type EventDetailFeaturedMedia =
-  | {
-      alt: string;
-      height: number;
-      kind: "pending";
-      src: null;
-      status: "pending";
-      width: number;
-    }
-  | {
-      alt: string;
-      kind: "image";
-      src: ImageMetadata;
-      status: "approved";
-    }
-  | {
-      alt: string;
-      captions: {
-        label: string;
-        src: string;
-        srclang: string;
-      };
-      height: number;
-      kind: "video";
-      mimeType: string;
-      poster?: string;
-      src: string;
-      status: "approved";
-      width: number;
-    };
-
-export interface EventDetail {
-  category: EventCategory;
+export interface Event {
+  categoryId: EventCategoryId;
   description: string;
-  featuredMedia: EventDetailFeaturedMedia;
-  gallery: EventDetailImage[];
-  href: string;
+  featuredMedia: FeaturedMedia;
+  gallery: GalleryImage[];
   id: string;
+  serviceId: ServiceId;
   slug: string;
   status: "approved" | "placeholder";
   title: string;

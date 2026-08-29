@@ -9,8 +9,12 @@ export const quoteContent = {
     { id: "additional", index: "02", label: "Información adicional" },
   ],
   services: [
-    ...servicesContent.items.map(({ id, title }) => ({ value: id, label: title })),
-    { value: "guidance", label: "No estoy seguro / necesito orientación" },
+    ...servicesContent.items.map(({ id, slug, title }) => ({
+      value: id,
+      slug,
+      label: title,
+    })),
+    { value: "guidance", slug: "", label: "No estoy seguro / necesito orientación" },
   ],
   eventTypes: [
     "Boda",

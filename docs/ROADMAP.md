@@ -30,7 +30,7 @@ This document is the source of truth for implementation status. The existence of
 ### Navigation
 
 - **Implementation: complete.** The approved leading logo and four-link desktop and responsive navigation render Nosotros, Servicios, Galería, and Contacto. Galería opens `/gallery`; Contacto opens the dedicated `/contact` page. Tablet and mobile retain the shared native-dialog fullscreen navigation, and no obsolete quote-trigger attributes remain.
-- **Services Navigation: complete locally.** The seven existing service records now own stable semantic slugs and derive one shared navigation model from `servicesContent.items`. Inline desktop navigation renders a compact start-aligned Services dropdown above the existing blur and sticky content; tablet and mobile reuse the fullscreen menu with a natural-flow Services accordion. The desktop panel uses content-sized geometry, `40px` link targets, token-driven `8px` vertical travel, symmetric open/close motion, hover continuity, outside-click cleanup, Escape, Arrow Down, and visible keyboard focus. The prepared links intentionally target the future `/services/[slug]` contract; no Service Detail route is implemented.
+- **Services Navigation: complete locally.** The eight canonical Service records own stable semantic slugs and derive one shared navigation model from `servicesContent.items`. Inline desktop navigation renders a compact start-aligned Services dropdown above the existing blur and sticky content; tablet and mobile reuse the fullscreen menu with a natural-flow Services accordion. The desktop panel uses content-sized geometry, `40px` link targets, token-driven `8px` vertical travel, symmetric open/close motion, hover continuity, outside-click cleanup, Escape, Arrow Down, and visible keyboard focus. Links derive the implemented `/services/[slug]` routes from each Service slug.
 - The topbar keeps its progressively masked blur and adaptive foreground on overlay pages; event detail and contact retain their approved solid treatment. The shared `--site-navigation-height` value now also supplies exact sticky offsets to page-level navigation such as Gallery categories.
 - **Fidelity Pass: complete.** Desktop, tablet, mobile, fullscreen-menu behavior, adaptive contrast, and active-route treatment were compared in-browser against the supplied references. The responsive dialog now follows the approved light editorial reference with the Mosaïque logo and unframed close control in its header, four centered primary links, and verified contact metadata anchored at the bottom. Runtime reduced-motion emulation remains pending; the CSS media paths passed code review.
 - **Mobile trigger refinement complete.** Below 48 rem, the menu trigger presents only its existing menu glyph while retaining the full 44 px interactive target, accessible name, active feedback, and visible keyboard focus treatment.
@@ -241,8 +241,142 @@ This document is the source of truth for implementation status. The existence of
 - **About:** the dedicated `/about` route, its animated typography hero, and full-bleed media mosaic.
 - **Gallery:** `/gallery` and its generated category routes.
 - **Event Detail:** the six generated `/events/[slug]` routes.
-- Shared Navigation, Footer, layout, tokens, metadata, and asset infrastructure count only when a change is required to support or validate one of these four surfaces.
+- **Service Detail:** Responsibilities 1–4 are implemented and validated locally in dev and the
+  optimized preview build.
+- **Domain normalization:** Responsibilities 1–3 of 3 are complete locally. The normalized
+  Service, Event, category, media, selector, and integrity contracts are the only active domain
+  source of truth; every current product surface remains behaviorally unchanged.
+- Shared Navigation, Footer, layout, tokens, metadata, and asset infrastructure count only when a change is required to support or validate these scoped surfaces.
 - Every other homepage section, absent section, deferred content concept, Storybook initiative, and unrelated business-asset request is outside the active roadmap and does not block acceptance or completion.
+
+### Service Detail Domain
+
+- **Responsibility 1 — Data Layer / Service Model: superseded by domain normalization.** The
+  original seven-record Service Detail baseline and manually stored `relatedEvents` collection
+  have been replaced by the canonical eight-Service model and derived Event relationships
+  documented below.
+- Service CTAs encode the handoff as `/contact?service={service.slug}`. Contact consumes only
+  valid service slugs and leaves the default option selected for absent, empty, or invalid
+  parameters.
+- **Responsibility 2 — Service Detail Domain + Route: complete locally.** The independent
+  `src/pages/services/[slug].astro` route resolves services by slug, uses the shared BaseLayout,
+  Navigation, Footer, Heading, Text, and Button primitives, and renders a dedicated
+  `ServiceHeader` with title, description, and the prepared Contact CTA. It does not import or
+  branch Event Detail.
+- **Responsibility 3 — Gallery + Related Events: complete locally.** `ServiceGallery` renders the
+  explicit Service `featuredMedia` separately from its `gallery`, and
+  `ServiceRelatedEvents` receives the Event records derived from canonical `Event.serviceId`
+  relationships. Celebraciones resolves five approved Events, Bodas resolves Wedding R&R, and
+  Services without Events render no related heading or spacing.
+- **Responsibility 3 correction — Event Detail visual baseline: complete locally.** Service Detail
+  now uses physically duplicated Service-owned copies of the Event Detail header, featured media,
+  gallery/lightbox, related-event preview, and section CSS. The copies preserve the Event Detail
+  grid, sticky boundaries, media geometry, spacing, lightbox behavior, and scroll-linked motion;
+  only Service data, CTA, gallery source, and related-event responsibility differ. Event files,
+  Event CSS, Navigation, Footer, Contact, and Home remain untouched.
+- **Responsibility 4 — Service Detail Fidelity + Contact preselection: implemented locally.**
+  Service Detail remains physically separate from Event Detail: `ServiceHeader`,
+  `ServiceFeaturedMedia`, `ServiceGallery`, `ServiceLightbox`, `ServiceRelatedEventPreview`,
+  `ServiceRelatedEvents`, `src/pages/services/[slug].astro`, and
+  `src/styles/sections/service-detail.css` are Service-owned copies of the Event Detail
+  composition with only service content, CTA, gallery source, and related-event responsibility
+  adapted. Event components, Event CSS, Event data, Navigation, Footer, Contact layout, and Home
+  remain unchanged. The Service route now preserves the copied chapter wrapper and overlay
+  Navigation surface required by the Event `28/72` composition. The empty related-events branch
+  renders no heading or spacing.
+- Contact preselection derives option metadata from `servicesContent.items`: `/contact?service=`
+  matches the service slug while the submitted option value remains the existing stable service
+  ID, preserving the payload and submit transport. Empty, missing, and invalid values fall back
+  to `Selecciona una opción`.
+- **R4 visual and responsive validation:** browser comparison against `/events/nossa-copa`
+  confirmed the same desktop `28/72` rail, `100svh` chapter/header, `16:9` featured media,
+  sticky desktop header, mobile natural-flow switch, and compiled scroll-linked frame/media
+  timelines. At `1280 × 720`, both pages resolve columns to approximately `354.19 / 910.80px`
+  and featured media to `907.59 × 510.52px`; `900 × 900`, `390 × 844`, and `320 × 800` preserve
+  the corresponding Event geometry without horizontal overflow. Differences in title wrapping,
+  header height on compact screens, and final chapter length are authorized consequences of the
+  longer Service title, CTA, pending featured media, empty gallery data, and derived related-event
+  content.
+- **R4 Contact validation:** `/contact?service=eventos-corporativos` selects “Eventos
+  corporativos” while retaining `service-03` as the submitted value. Missing, empty, and invalid
+  query values retain `Selecciona una opción`. Dev and optimized preview return equivalent
+  results.
+- **R4 technical validation:** `pnpm build`, `pnpm lint`, `pnpm typecheck`, and `git diff --check`
+  pass; the current build emits all eight Service Detail routes and preview reports no console warnings or
+  errors. The optimized CSS retains the copied reduced-motion branch that removes media/gallery
+  transforms, timelines, sticky takeover, and hover/lightbox motion; runtime media emulation was
+  unavailable in the integrated browser, so that specific state is verified from compiled CSS
+  rather than claimed as a runtime screenshot.
+- **Visual roadmap:** Responsibility 4 is complete. The separate domain-normalization roadmap
+  below now owns the next Service/Event data work.
+
+### Service / Event Domain Normalization
+
+- **Responsibility 1 — Shared Contracts: complete locally.** `src/content/media.ts` owns the
+  reusable `FeaturedMedia`, `GalleryImage`, and `GalleryLayout` contracts. Responsibility 3
+  migrated the final Event consumers to those shared types and removed the temporary
+  `EventDetailFeaturedMedia`, `EventDetailImage`, and `EventGalleryLayout` aliases.
+- `src/content/services/types.ts` defines `SERVICE_IDS` as the canonical const object and infers
+  `ServiceId` from its values. Responsibility 2 now consumes this contract in every Service and
+  Event record.
+- `src/content/events/categories.ts` defines the stable `EventCategoryId` registry with separate
+  `label` and routing `slug` values. Responsibility 2 now stores the stable category ID in Events
+  while Gallery and preview consumers resolve its presentation metadata from the registry.
+- **Canonical relationship decision:** `Event.serviceId → ServiceId` is implemented. Service does
+  not store an event ID/slug array; Service → Events is derived by a selector. Slugs remain routing
+  identifiers and IDs remain internal relationship identifiers.
+- **Business relationship approval: resolved in Responsibility 2.** The six current Events now
+  carry their approved `serviceId`; no relationship was inferred.
+- **Technical validation:** formatter, `pnpm build`, `pnpm lint`, `pnpm typecheck`, and
+  `git diff --check` pass for the final shared-contract change. No product component, page,
+  stylesheet, content record, route, or asset changed.
+- **Responsibility 2 — Service / Event Normalization: complete locally.** The catalog now contains
+  eight Services. Celebraciones retains existing identity `service-02`; Bodas receives the new
+  stable identity `service-08`; `service-01` and `service-03…07` retain their prior identities.
+  Editorial `index` values provide the visible `01…08` order independently from IDs.
+- The canonical Event model now stores required `serviceId: ServiceId` and stable `categoryId`.
+  Event route `href` was removed because every current route is safely derived from its slug.
+  Service removed both `media` and stored `relatedEvents`, and now owns explicit shared-contract
+  `featuredMedia` plus `gallery`. The current pending featured placeholders preserve the previous
+  Service Detail geometry while empty gallery collections avoid duplicating featured media.
+- Approved relationships are explicit: Nossa Copa, Baila da Zaza, Baby Shower, Cumpleaños Ana
+  Paula, and Fan Fest Club point to Celebraciones; Wedding R&R points to Bodas. Event category IDs
+  remain editorial classifications independent from commercial Services.
+- `getServiceById`, `getServiceBySlug`, `getEventsByServiceId`, and `getEventBySlug` own domain
+  lookup. `getEventCategory` resolves category metadata and `getEventHref` derives the internal
+  Event route. Service Detail no longer performs component/page-level Event `find`/`filter` work.
+- Module-load integrity checks reject duplicate Service IDs/slugs, missing or extra `SERVICE_IDS`
+  records, duplicate Event IDs/slugs, invalid Event → Service references, and unknown Event
+  category IDs. `satisfies` and `astro check` enforce the shared FeaturedMedia/Gallery contracts.
+- Navigation, Contact options, Homepage Services, Footer service labels, Service routes, and
+  Gallery category routing consume the normalized data with no component redesign or stylesheet
+  change. The optimized build emits 23 pages: eight Service Detail, six Event Detail, and the
+  existing Gallery/category/public routes.
+- **Technical validation:** scoped Prettier, `pnpm build`, `pnpm lint`, `pnpm typecheck`, and
+  `git diff --check` pass. Generated output confirms five Celebraciones Event links, one Bodas
+  Event link, all eight Contact options, all eight Service routes, and unchanged Gallery routes.
+- **Responsibility 3 — Migration + Validation: complete locally.** The final consumer audit found
+  temporary `ServiceContentItem`, Event media/category aliases, and the page-specific
+  `EventDetail` domain name. Components now consume `Service`, `Event`, `FeaturedMedia`,
+  `GalleryImage`, `EventCategoryId`, and `EventCategoryLabel` directly. No compatibility alias
+  remains in the active domain exports.
+- Valid audit hits were retained intentionally: `event.href` exists only on the derived Home /
+  Gallery presentation model and is populated by `getEventHref`; `media` remains a presentation
+  field in that model and in unrelated Hero content; Event/Service ownership `find`/`filter`
+  calls live only in selectors. Other collection queries belong to UI state, category filtering,
+  navigation, or integrity checks and do not resolve domain ownership.
+- Integrity now also rejects duplicate Event-category route slugs and the obsolete combined
+  `bodas-celebraciones-privadas` Service slug. Existing checks still reject duplicate Service and
+  Event IDs/slugs, missing or extra `SERVICE_IDS`, invalid Event → Service references, and unknown
+  Event categories.
+- Optimized-build browser smoke passed `/events/wedding-r-r`, `/services/bodas`,
+  `/services/celebraciones`, `/contact?service=bodas`, `/gallery`, and `/gallery/boda`. Bodas
+  resolves only Wedding R&R; Celebraciones resolves Nossa Copa, Baila da Zaza, Baby Shower,
+  Cumpleaños Ana Paula, and Fan Fest Club; Contact exposes all eight Services and selects
+  `service-08`; Gallery retains all five derived category routes with no console warning/error.
+- **Final technical validation:** scoped Prettier, `pnpm build`, `pnpm lint`, `pnpm typecheck`,
+  and `git diff --check` pass. Domain normalization is complete; no UI, stylesheet, asset, or
+  feature redesign was introduced by Responsibility 3.
 
 ### Production Asset Pipeline
 
@@ -295,6 +429,12 @@ This document is the source of truth for implementation status. The existence of
 - **Remaining deployment configuration:** production does not currently expose canonical URLs and `/sitemap-index.xml` returns `404: NOT_FOUND`, confirming that `SITE_URL` is not configured in the deployed build. Confirm the definitive domain, add `SITE_URL` to Vercel, redeploy with the existing build cache, and verify canonical, `og:url`, JSON-LD URL, robots sitemap reference, and both sitemap files.
 
 ## Next
+
+### Architecture Audit
+
+- Not started and approval-gated. Audit the current repository boundaries before proposing any
+  global Clean Architecture migration. The completed normalized Service/Event/Media domain is the
+  baseline and must not be reopened speculatively.
 
 ### Production URL + Scoped SEO Acceptance
 

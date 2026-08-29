@@ -7,10 +7,11 @@ import {
   fanFestMain,
   fanFestMexVsSouth128,
 } from "../../assets/images/events";
-import type { EventDetail } from "./types";
+import { SERVICE_IDS } from "../services/types";
+import type { Event } from "./types";
 
 export const fanFestClubEvent = {
-  category: "Festival",
+  categoryId: "festival",
   description:
     "Fútbol, música y entretenimiento reunidos en una experiencia para celebrar juntos.",
   featuredMedia: {
@@ -57,9 +58,9 @@ export const fanFestClubEvent = {
       status: "approved",
     },
   ],
-  href: "/events/fan-fest-club",
   id: "event-slot-06",
+  serviceId: SERVICE_IDS.celebrations,
   slug: "fan-fest-club",
   status: "approved",
   title: "Fan Fest Club",
-} satisfies EventDetail;
+} satisfies Event;

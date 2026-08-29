@@ -6,12 +6,12 @@ import {
   eventImageFormats,
   eventImageWidths,
 } from "../../assets/images/events/delivery";
-import type { GalleryImage } from "../../content/media";
 import Icon from "../ui/Icon.astro";
+import type { GalleryImage } from "../../content/media";
 
 interface Props {
   id: string;
-  images: GalleryImage[];
+  images: readonly GalleryImage[];
   title: string;
 }
 
@@ -19,27 +19,27 @@ const { id, images, title } = Astro.props;
 ---
 
 <dialog
-  class="event-lightbox"
+  class="service-lightbox"
   id={id}
-  data-event-lightbox
+  data-service-lightbox
   aria-labelledby={`${id}-title`}
   aria-modal="true"
 >
-  <div class="event-lightbox__surface">
-    <header class="event-lightbox__header">
+  <div class="service-lightbox__surface">
+    <header class="service-lightbox__header">
       <h2 class="visually-hidden" id={`${id}-title`}>Galería ampliada de {title}</h2>
-      <p data-event-lightbox-status aria-live="polite" aria-atomic="true"></p>
-      <button type="button" data-event-lightbox-close aria-label="Cerrar galería ampliada">
+      <p data-service-lightbox-status aria-live="polite" aria-atomic="true"></p>
+      <button type="button" data-service-lightbox-close aria-label="Cerrar galería ampliada">
         <Icon name="xmark" size={24} />
       </button>
     </header>
 
-    <div class="event-lightbox__stage">
+    <div class="service-lightbox__stage">
       {
         images.map((image, index) => (
           <figure
-            class="event-lightbox__panel"
-            data-event-lightbox-panel={index}
+            class="service-lightbox__panel"
+            data-service-lightbox-panel={index}
             data-active={index === 0 ? "true" : "false"}
             hidden={index !== 0}
           >
@@ -56,9 +56,9 @@ const { id, images, title } = Astro.props;
               />
             ) : (
               <div
-                class="event-lightbox__placeholder"
+                class="service-lightbox__placeholder"
                 data-tone={String((index % 6) + 1).padStart(2, "0")}
-                style={`--event-lightbox-ratio:${image.width / image.height};aspect-ratio:${image.width} / ${image.height};`}
+                style={`--service-lightbox-ratio:${image.width / image.height};aspect-ratio:${image.width} / ${image.height};`}
                 role="img"
                 aria-label={image.alt}
               >
@@ -72,12 +72,12 @@ const { id, images, title } = Astro.props;
       }
     </div>
 
-    <nav class="event-lightbox__controls" aria-label="Navegación de la galería ampliada">
-      <button type="button" data-event-lightbox-previous aria-label="Imagen anterior">
+    <nav class="service-lightbox__controls" aria-label="Navegación de la galería ampliada">
+      <button type="button" data-service-lightbox-previous aria-label="Imagen anterior">
         <Icon name="arrowLeft" size={22} />
         <span>Anterior</span>
       </button>
-      <button type="button" data-event-lightbox-next aria-label="Imagen siguiente">
+      <button type="button" data-service-lightbox-next aria-label="Imagen siguiente">
         <span>Siguiente</span>
         <Icon name="arrowRight" size={22} />
       </button>
@@ -86,24 +86,26 @@ const { id, images, title } = Astro.props;
 </dialog>
 
 <script>
-  document.querySelectorAll<HTMLDialogElement>("[data-event-lightbox]").forEach((dialog) => {
+  document.querySelectorAll<HTMLDialogElement>("[data-service-lightbox]").forEach((dialog) => {
     if (dialog.dataset.ready === "true") return;
     dialog.dataset.ready = "true";
 
-    const gallery = dialog.closest<HTMLElement>(".event-gallery");
+    const gallery = dialog.closest<HTMLElement>(".service-gallery");
     const triggers = Array.from(
-      gallery?.querySelectorAll<HTMLButtonElement>("[data-event-lightbox-trigger]") ?? [],
+      gallery?.querySelectorAll<HTMLButtonElement>("[data-service-lightbox-trigger]") ?? [],
     );
     const panels = Array.from(
-      dialog.querySelectorAll<HTMLElement>("[data-event-lightbox-panel]"),
+      dialog.querySelectorAll<HTMLElement>("[data-service-lightbox-panel]"),
     );
-    const closeButton = dialog.querySelector<HTMLButtonElement>("[data-event-lightbox-close]");
+    const closeButton = dialog.querySelector<HTMLButtonElement>(
+      "[data-service-lightbox-close]",
+    );
     const previousButton = dialog.querySelector<HTMLButtonElement>(
-      "[data-event-lightbox-previous]",
+      "[data-service-lightbox-previous]",
     );
-    const nextButton = dialog.querySelector<HTMLButtonElement>("[data-event-lightbox-next]");
-    const status = dialog.querySelector<HTMLElement>("[data-event-lightbox-status]");
-    const stage = dialog.querySelector<HTMLElement>(".event-lightbox__stage");
+    const nextButton = dialog.querySelector<HTMLButtonElement>("[data-service-lightbox-next]");
+    const status = dialog.querySelector<HTMLElement>("[data-service-lightbox-status]");
+    const stage = dialog.querySelector<HTMLElement>(".service-lightbox__stage");
     const controller = new AbortController();
     let activeIndex = 0;
     let opener: HTMLButtonElement | null = null;
@@ -155,7 +157,7 @@ const { id, images, title } = Astro.props;
         if (
           target === dialog ||
           target === stage ||
-          (target instanceof HTMLElement && target.matches("[data-event-lightbox-panel]"))
+          (target instanceof HTMLElement && target.matches("[data-service-lightbox-panel]"))
         ) {
           close();
         }

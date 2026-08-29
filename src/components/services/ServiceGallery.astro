@@ -6,41 +6,41 @@ import {
   eventImageFormats,
   eventImageWidths,
 } from "../../assets/images/events/delivery";
-import type { FeaturedMedia, GalleryImage } from "../../content/media";
-import EventFeaturedMedia from "./EventFeaturedMedia.astro";
-import EventLightbox from "./EventLightbox.astro";
+import ServiceFeaturedMedia from "./ServiceFeaturedMedia.astro";
+import ServiceLightbox from "./ServiceLightbox.astro";
 import Container from "../ui/Container.astro";
+import type { FeaturedMedia, GalleryImage } from "../../content/media";
 
 interface Props {
   featuredMedia: FeaturedMedia;
-  images: GalleryImage[];
+  images: readonly GalleryImage[];
   slug: string;
   title: string;
 }
 
 const { featuredMedia, images, slug, title } = Astro.props;
-const galleryId = `event-gallery-${slug}`;
+const galleryId = `service-gallery-${slug}`;
 const lightboxId = `${galleryId}-lightbox`;
 ---
 
-<section class="event-gallery" aria-label={`Galería de ${title}`} id={galleryId}>
-  <Container class="event-gallery__container">
-    <EventFeaturedMedia media={featuredMedia} slug={slug} />
+<section class="service-gallery" aria-label={`Galería de ${title}`} id={galleryId}>
+  <Container class="service-gallery__container">
+    <ServiceFeaturedMedia media={featuredMedia} slug={slug} />
 
-    <ol class="event-gallery__list">
+    <ol class="service-gallery__list">
       {
         images.map((image, index) => (
-          <li class="event-gallery__item" data-layout={image.layout}>
+          <li class="service-gallery__item" data-layout={image.layout}>
             <button
-              class="event-gallery__trigger"
+              class="service-gallery__trigger"
               type="button"
               aria-haspopup="dialog"
               aria-controls={lightboxId}
               aria-label={`Abrir imagen ${index + 1} de ${images.length}: ${image.alt}`}
-              data-event-lightbox-trigger={index}
+              data-service-lightbox-trigger={index}
             >
-              <span class="event-gallery__reveal">
-                <span class="event-gallery__media">
+              <span class="service-gallery__reveal">
+                <span class="service-gallery__media">
                   {image.status === "approved" ? (
                     <Picture
                       src={image.src}
@@ -58,7 +58,7 @@ const lightboxId = `${galleryId}-lightbox`;
                     />
                   ) : (
                     <span
-                      class="event-gallery__placeholder"
+                      class="service-gallery__placeholder"
                       data-tone={String((index % 6) + 1).padStart(2, "0")}
                       role="img"
                       aria-label={image.alt}
@@ -76,5 +76,5 @@ const lightboxId = `${galleryId}-lightbox`;
     </ol>
   </Container>
 
-  <EventLightbox id={lightboxId} images={images} title={title} />
+  <ServiceLightbox id={lightboxId} images={images} title={title} />
 </section>
