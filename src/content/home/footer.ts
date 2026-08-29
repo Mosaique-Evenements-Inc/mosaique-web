@@ -15,7 +15,8 @@ export const footerContent = {
   ] satisfies ContentLink[],
   services: [
     "Producción integral",
-    "Bodas y celebraciones privadas",
+    "Bodas",
+    "Celebraciones",
     "Eventos corporativos",
     "Alquiler de mobiliario",
     "Montaje y desmontaje",

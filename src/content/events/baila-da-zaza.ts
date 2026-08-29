@@ -1,8 +1,9 @@
 import { bailaDaZaza6, bailaDaZaza82, bailaDaZazaMain } from "../../assets/images/events";
-import type { EventDetail } from "./types";
+import { SERVICE_IDS } from "../services/types";
+import type { Event } from "./types";
 
 export const bailaDaZazaEvent = {
-  category: "Celebración",
+  categoryId: "celebration",
   description: "Ritmo, baile y esencia brasileña en una experiencia hecha para celebrar.",
   featuredMedia: {
     alt: "DJ compartiendo la cabina durante Baila da Zaza bajo una iluminación naranja.",
@@ -24,9 +25,9 @@ export const bailaDaZazaEvent = {
       status: "approved",
     },
   ],
-  href: "/events/baila-da-zaza",
   id: "event-slot-02",
+  serviceId: SERVICE_IDS.celebrations,
   slug: "baila-da-zaza",
   status: "approved",
   title: "Baila da Zaza",
-} satisfies EventDetail;
+} satisfies Event;

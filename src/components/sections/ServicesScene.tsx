@@ -1,25 +1,23 @@
 import { ScrollLinkedScene } from "../motion/ScrollLinkedScene";
 import Button from "../ui/Button";
-import type {
-  ServiceContentItem,
-  ServicesPanelRevealContent,
-} from "../../content/home/services";
+import type { ServicesPanelRevealContent } from "../../content/home/services";
+import type { Service } from "../../content/services";
 
 type ServicesSceneProps = {
   panelReveal: ServicesPanelRevealContent;
   services: readonly ServiceSceneItem[];
 };
 
-type ServiceSceneItem = ServiceContentItem & {
+type ServiceSceneItem = Service & {
   optimizedMedia: {
     alt: string;
     height: number;
     src: string;
     width: number;
-  };
+  } | null;
 };
 
-const handleViewMore = (service: ServiceContentItem) => {
+const handleViewMore = (service: Service) => {
   console.log("View service details:", service.id);
 };
 
@@ -40,19 +38,21 @@ export default function ServicesScene({ panelReveal, services }: ServicesScenePr
                   index === activeIndex ? "is-active" : "",
                 ].join(" ")}
                 data-tone={String(index + 1).padStart(2, "0")}
-                data-media-status={service.media.status}
+                data-media-status={service.featuredMedia.status}
                 key={service.id}
                 role="img"
               >
-                <img
-                  alt={service.optimizedMedia.alt}
-                  className="services-spike__media-image"
-                  decoding="async"
-                  height={service.optimizedMedia.height}
-                  loading="lazy"
-                  src={service.optimizedMedia.src}
-                  width={service.optimizedMedia.width}
-                />
+                {service.optimizedMedia ? (
+                  <img
+                    alt={service.optimizedMedia.alt}
+                    className="services-spike__media-image"
+                    decoding="async"
+                    height={service.optimizedMedia.height}
+                    loading="lazy"
+                    src={service.optimizedMedia.src}
+                    width={service.optimizedMedia.width}
+                  />
+                ) : null}
                 <span className="services-spike__media-number">{service.index}</span>
                 <span className="services-spike__media-label">{service.title}</span>
               </div>

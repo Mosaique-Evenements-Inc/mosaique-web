@@ -5,7 +5,7 @@ import EventContactMarquee from "../../components/events/EventContactMarquee.ast
 import EventMoreGalleries from "../../components/events/EventMoreGalleries.astro";
 import Footer from "../../components/sections/Footer.astro";
 import Navigation from "../../components/sections/Navigation.astro";
-import { eventDetails, type EventDetail } from "../../content/events";
+import { eventDetails, type Event } from "../../content/events";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 import "../../styles/sections/event-detail.css";
@@ -24,8 +24,8 @@ export function getStaticPaths() {
 }
 
 interface Props {
-  event: EventDetail;
-  nextEvents: EventDetail[];
+  event: Event;
+  nextEvents: Event[];
 }
 
 const { event, nextEvents } = Astro.props;

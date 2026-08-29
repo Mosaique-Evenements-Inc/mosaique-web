@@ -1,13 +1,5 @@
+import { services } from "../services";
 import type { ContentLink } from "../types";
-import {
-  babyShowerMain,
-  bailaDaZazaMain,
-  cumpleanosAnaPaula48,
-  fanFestMain,
-  nossaCopaBrzVsEsc16,
-  weddingDsc08265,
-  weddingEb59664,
-} from "../../assets/images/events";
 
 export const servicesContent = {
   intro: {
@@ -21,87 +13,7 @@ export const servicesContent = {
     text: "Cada evento tiene una escala, un propósito y una dinámica distinta. Por eso nuestros servicios pueden contratarse de forma independiente o combinarse en paquetes personalizados según las necesidades del cliente, el espacio y el tipo de experiencia.",
     cta: { label: "Explorar servicios", href: "#services-list" } satisfies ContentLink,
   },
-  items: [
-    {
-      id: "service-01",
-      slug: "organizacion-produccion-integral",
-      index: "01",
-      title: "Organización y producción integral",
-      description:
-        "Diseñamos y coordinamos tu evento de principio a fin: concepto, logística, proveedores, montaje y ejecución.",
-      idealFor: "Quienes buscan delegar la producción completa de su evento.",
-      cta: { label: "Cotizar producción integral", href: "/contact" } satisfies ContentLink,
-      media: { alt: "", src: nossaCopaBrzVsEsc16, status: "approved" },
-    },
-    {
-      id: "service-02",
-      slug: "bodas-celebraciones-privadas",
-      index: "02",
-      title: "Bodas y celebraciones privadas",
-      description:
-        "Creamos celebraciones personales y memorables, cuidando la atmósfera, el montaje y cada momento de la experiencia.",
-      idealFor: "Bodas, aniversarios, cumpleaños, cenas privadas y celebraciones familiares.",
-      cta: { label: "Planear una celebración", href: "/contact" } satisfies ContentLink,
-      media: { alt: "", src: weddingEb59664, status: "approved" },
-    },
-    {
-      id: "service-03",
-      slug: "eventos-corporativos",
-      index: "03",
-      title: "Eventos corporativos",
-      description:
-        "Producimos encuentros profesionales alineados con el objetivo, la identidad y la experiencia que tu marca quiere crear.",
-      idealFor: "Lanzamientos, activaciones, cenas, networking y celebraciones corporativas.",
-      cta: { label: "Crear un evento corporativo", href: "/contact" } satisfies ContentLink,
-      media: { alt: "", src: fanFestMain, status: "approved" },
-    },
-    {
-      id: "service-04",
-      slug: "alianzas-venues",
-      index: "04",
-      title: "Alianzas con venues",
-      description:
-        "Creamos experiencias junto a restaurantes, hoteles y espacios que quieren atraer público y activar su venue.",
-      idealFor: "Venues que buscan desarrollar eventos propios o colaboraciones estratégicas.",
-      cta: { label: "Proponer una alianza", href: "/contact" } satisfies ContentLink,
-      media: { alt: "", src: bailaDaZazaMain, status: "approved" },
-    },
-    {
-      id: "service-05",
-      slug: "montaje-logistica",
-      index: "05",
-      title: "Montaje y logística",
-      description:
-        "Nos encargamos de la instalación, organización del espacio, movimiento de mobiliario y desmontaje del evento.",
-      idealFor: "Planners, venues y clientes que necesitan apoyo operativo puntual.",
-      cta: { label: "Solicitar soporte logístico", href: "/contact" } satisfies ContentLink,
-      media: { alt: "", src: weddingDsc08265, status: "approved" },
-    },
-    {
-      id: "service-06",
-      slug: "alquiler-mobiliario",
-      index: "06",
-      title: "Alquiler de mobiliario",
-      description:
-        "Ofrecemos mobiliario, equipos e insumos para complementar tu evento de forma individual o dentro de una producción.",
-      idealFor:
-        "Eventos que necesitan recursos específicos sin contratar un servicio completo.",
-      cta: { label: "Ver opciones de alquiler", href: "/contact" } satisfies ContentLink,
-      media: { alt: "", src: babyShowerMain, status: "approved" },
-    },
-    {
-      id: "service-07",
-      slug: "paquetes-personalizados",
-      index: "07",
-      title: "Paquetes personalizados",
-      description:
-        "Combinamos producción, montaje, logística, ambientación y alquiler según las necesidades reales de tu evento.",
-      idealFor: "Quienes buscan flexibilidad y pagar únicamente por lo que necesitan.",
-      cta: { label: "Crear mi paquete", href: "/contact" } satisfies ContentLink,
-      media: { alt: "", src: cumpleanosAnaPaula48, status: "approved" },
-    },
-  ],
+  items: services,
 } as const;
 
-export type ServiceContentItem = (typeof servicesContent.items)[number];
 export type ServicesPanelRevealContent = typeof servicesContent.panelReveal;
