@@ -6,11 +6,11 @@ import {
   eventImageFormats,
   eventImageWidths,
 } from "../../assets/images/events/delivery";
+import type { FeaturedMedia } from "../../content/media";
 import Button from "../ui/Button";
-import type { EventDetailFeaturedMedia } from "../../content/events";
 
 interface Props {
-  media: EventDetailFeaturedMedia;
+  media: FeaturedMedia;
   slug: string;
 }
 

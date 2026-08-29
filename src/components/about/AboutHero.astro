@@ -1,0 +1,121 @@
+---
+interface Props {
+  lines: readonly { text: string; emphasis: boolean }[];
+  caption: string;
+}
+
+const { lines, caption } = Astro.props;
+let characterOffset = 0;
+const animatedLines = lines.map((line) => ({
+  ...line,
+  words: line.text.split(" ").map((word) => {
+    const offset = characterOffset;
+    characterOffset += word.length + 1;
+
+    return { offset, word };
+  }),
+}));
+const titleLabel = lines.map((line) => line.text).join(" ");
+---
+
+<section
+  class="about-hero"
+  data-about-hero
+  data-navigation-contrast="light"
+  aria-labelledby="about-title"
+>
+  <div class="about-hero__scene">
+    <div class="about-hero__composition">
+      <h1 class="about-hero__title" id="about-title" aria-label={titleLabel}>
+        {
+          animatedLines.map((line) => (
+            <span class="about-hero__line" aria-hidden="true">
+              {line.emphasis ? (
+                <em>
+                  {line.words.map(({ offset, word }, wordIndex) => (
+                    <>
+                      <span class="about-hero__word">
+                        {Array.from(word).map((character, characterIndex) => (
+                          <span
+                            class="about-hero__character"
+                            style={`--about-character-index:${offset + characterIndex};`}
+                          >
+                            {character}
+                          </span>
+                        ))}
+                      </span>
+                      {wordIndex < line.words.length - 1 ? " " : null}
+                    </>
+                  ))}
+                </em>
+              ) : (
+                line.words.map(({ offset, word }, wordIndex) => (
+                  <>
+                    <span class="about-hero__word">
+                      {Array.from(word).map((character, characterIndex) => (
+                        <span
+                          class="about-hero__character"
+                          style={`--about-character-index:${offset + characterIndex};`}
+                        >
+                          {character}
+                        </span>
+                      ))}
+                    </span>
+                    {wordIndex < line.words.length - 1 ? " " : null}
+                  </>
+                ))
+              )}
+            </span>
+          ))
+        }
+      </h1>
+      <p class="about-hero__caption">{caption}</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-about-hero]").forEach((hero) => {
+    if (hero.dataset.aboutTitleMotionReady === "true") return;
+    hero.dataset.aboutTitleMotionReady = "true";
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const title = hero.querySelector<HTMLElement>(".about-hero__title");
+    let observer: IntersectionObserver | undefined;
+
+    const revealTitle = () => {
+      observer?.disconnect();
+      observer = undefined;
+      hero.setAttribute("data-about-title-revealed", "true");
+    };
+
+    const observeTitle = () => {
+      observer?.disconnect();
+      hero.setAttribute("data-about-title-motion", "active");
+      hero.removeAttribute("data-about-title-revealed");
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((entry) => entry.isIntersecting)) return;
+          revealTitle();
+        },
+        { rootMargin: "0px 0px -10%", threshold: 0.08 },
+      );
+
+      if (title) observer.observe(title);
+    };
+
+    const updateMotionPreference = () => {
+      if (reducedMotion.matches) {
+        hero.removeAttribute("data-about-title-motion");
+        revealTitle();
+        return;
+      }
+
+      observeTitle();
+    };
+
+    reducedMotion.addEventListener("change", updateMotionPreference);
+    updateMotionPreference();
+  });
+</script>

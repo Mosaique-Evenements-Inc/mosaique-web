@@ -35,7 +35,11 @@ import "../../styles/sections/home-entry.css";
     <Container class="home-hero__stage">
       <div class="home-hero__final-state">
         <Heading as="h1" variant="heading-lg" class="home-hero__title" id="home-hero-title">
-          {heroContent.title}
+          {
+            heroContent.titleSegments.map((segment) =>
+              segment.emphasis ? <em>{segment.text}</em> : segment.text,
+            )
+          }
         </Heading>
         <Button className="home-hero__primary-action" href={heroContent.actions.primary.href}>
           {heroContent.actions.primary.label}

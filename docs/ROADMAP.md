@@ -18,7 +18,7 @@ This document is the source of truth for implementation status. The existence of
 - CSS and TypeScript runtime motion tokens are documented and synchronized.
 - UI primitives exist for Button, Container, Grid, Heading, Media, Section, Stack, and Text.
 - Iconoir is the shared interface-icon source for navigation, disclosures, directional controls, quote-flow states, editorial actions, and the four-icon “¿Por qué elegir MOSAÏQUE?” proof band; decorative media geometry and required-field marks remain outside that icon contract.
-- Motion primitives exist for Reveal, StaggerText, MediaCrossfade, StickyScene, PanelReveal, and ScrollLinkedScene.
+- Motion primitives exist for Reveal, StaggerText, MediaCrossfade, StickyScene, and PanelReveal.
 - **Production asset completion: deferred.** Approved self-hosted Cinzel and Montserrat files are still pending.
 
 ### Content Foundation
@@ -30,8 +30,11 @@ This document is the source of truth for implementation status. The existence of
 ### Navigation
 
 - **Implementation: complete.** The approved leading logo and four-link desktop and responsive navigation render Nosotros, Servicios, Galería, and Contacto. Galería opens `/gallery`; Contacto opens the dedicated `/contact` page. Tablet and mobile retain the shared native-dialog fullscreen navigation, and no obsolete quote-trigger attributes remain.
+- **Services Navigation: complete locally.** The eight canonical Service records own stable semantic slugs and derive one shared navigation model from `servicesContent.items`. Inline desktop navigation renders a compact start-aligned Services dropdown above the existing blur and sticky content; tablet and mobile reuse the fullscreen menu with a natural-flow Services accordion. The desktop panel uses content-sized geometry, `40px` link targets, token-driven `8px` vertical travel, symmetric open/close motion, hover continuity, outside-click cleanup, Escape, Arrow Down, and visible keyboard focus. Links derive the implemented `/services/[slug]` routes from each Service slug.
 - The topbar keeps its progressively masked blur and adaptive foreground on overlay pages; event detail and contact retain their approved solid treatment. The shared `--site-navigation-height` value now also supplies exact sticky offsets to page-level navigation such as Gallery categories.
 - **Fidelity Pass: complete.** Desktop, tablet, mobile, fullscreen-menu behavior, adaptive contrast, and active-route treatment were compared in-browser against the supplied references. The responsive dialog now follows the approved light editorial reference with the Mosaïque logo and unframed close control in its header, four centered primary links, and verified contact metadata anchored at the bottom. Runtime reduced-motion emulation remains pending; the CSS media paths passed code review.
+- **Mobile Services accordion rhythm refined locally.** Its internal vertical padding now exists only while expanded, so the four primary navigation options retain uniform spacing when Services is collapsed. The established 68% subordinate-link tone remains unchanged, together with keyboard access, inert collapsed content, and the existing disclosure transition.
+- **Mobile trigger refinement complete.** Below 48 rem, the menu trigger presents only its existing menu glyph while retaining the full 44 px interactive target, accessible name, active feedback, and visible keyboard focus treatment.
 
 ### Quote / Contact Flow
 
@@ -53,17 +56,31 @@ This document is the source of truth for implementation status. The existence of
 - Desktop follows the supplied reference with an approximately 40/60 form-media split, compact form density, pill-shaped token-driven fields, existing select contracts, a strong full-width action, and a large sticky replaceable media placeholder. The single-stage form begins directly with its content and retains a visually hidden accessible heading without a redundant page title or step indicator. Tablet preserves a readable split; mobile stacks form then media in natural flow.
 - The media placeholder is isolated in `ContactMediaPlaceholder.astro` so approved photography can replace it without changing form behavior or page composition.
 - The page introduces no complex motion. Labels, fieldsets, validation errors, keyboard navigation, focus states, loading status, review editing, auxiliary dialogs, and the accessible success toast remain available.
+- **Production submission behavior restored locally.** The primary action again follows the original validate → review → production-endpoint flow: incomplete fields and request failures remain inline for correction, while the accessible toast appears only after a confirmed successful response. Its manual and timed dismissal behavior remains unchanged.
+- **Mobile review actions corrected locally.** The back and submit controls now render side by side with complete visible labels on compact screens. A proportional two-column layout gives `Enviar solicitud` the larger measure while a locally compact arrow and padding keep `Atrás` intact down to narrow mobile; both preserve their dynamic accessible labels and action hierarchy.
+- **Primary contact action gating implemented locally.** The initial CTA reads `Enviar solicitud` but remains disabled until every required field is natively valid. Once complete it enables and changes to `Revisar información`; the review state then restores `Enviar solicitud` for the existing production request. Input and select changes update the state immediately without surfacing premature validation errors.
+- **Contact toast surface refinement complete locally.** The success notification uses the system's larger restrained radius and inherits a dark, inverse-text treatment on the cinematic Contact surface without introducing a light card that conflicts with the page background.
+- **Inline contact-email row removed locally.** The redundant centered `Email / info@mosaique-events.com` line no longer renders beneath the form; the verified address remains available through the shared Footer contact block.
 
 ### Hero
 
 - **Implementation: complete.** Full-viewport media scene, initial title and CTA, replaceable media contract, and a CSS-only PanelReveal handoff into About. The former oversized Mosaïque brand and its scroll-linked morph were removed, together with the extra 45svh used to stage that animation.
+- **Editorial emphasis refinement complete locally.** The approved Hero sentence remains unchanged while `viven`, `recuerdan`, and `comparten` render as semantic italic segments from the typed content source. Browser checks at `1440 × 900` and `375 × 844` confirmed exactly three italic segments, the unchanged accessible sentence, retained display-family inheritance, complete mobile wrapping, zero horizontal overflow, and no console warnings or errors. The heading level, CTA, scroll behavior, and media contract remain unchanged.
+- **Hero copy width refinement complete locally.** The centered title measure increases from `18ch` to `24ch` so the approved sentence occupies a wider editorial block while retaining intrinsic wrapping and the existing responsive container boundary. Browser checks measured approximately `400px` at `1440 × 900` and `335px` at `375 × 844`, with the three italic segments intact, zero horizontal overflow, and no console warnings or errors.
+- **Desktop Hero measure expanded and validated locally.** From the existing `lg` breakpoint, the title measure increases independently to `32ch`; compact viewports retain the validated `24ch` measure. Browser checks measured approximately `534px` at `1440 × 900` while mobile remained `335px` at `375 × 844`, with zero horizontal overflow and no console warnings or errors.
+- **Hero phrase wrapping refined and validated locally.** A semantic non-breaking space keeps the roman `se` attached to italic `recuerdan`, so both words move together instead of splitting across lines. Browser geometry at `1280 × 720` confirmed both fragments share the exact line top, with unchanged accessible text, zero horizontal overflow, and no console warnings or errors.
 - **Fidelity Pass: complete.** Initial, intermediate, final, and section-handoff states were compared against screenshots and recordings.
 - Desktop, tablet, mobile, and reduced-motion states were validated.
 
 ### About
 
-- **Implementation: complete.** Rendered through `AboutMilestones.astro` from `src/content/home/about.ts`; the section remains in normal flow while revealing over the temporarily sticky Hero.
-- **Fidelity Pass: complete.** The two-column editorial composition, viewport proportions, divider, sticky media, and responsive reading order were compared against the Movra recording.
+- **Homepage status corrected against code.** `AboutMilestones.astro` and its typed content remain available, but the section is currently commented out of the homepage composition and is not a rendered homepage surface.
+- **Dedicated page implementation: complete locally.** `/about` reuses the shared Navigation and Footer, presents the approved About copy as a cinematic CSS-only line reveal, and follows it with a full-bleed, deterministic masonry mosaic sourced from one typed inventory of all 91 currently available event photographs. The same media item supports future animated GIFs without sending them through static optimization.
+- The hero preserves the `2420 / 1080` desktop reference proportion from `lg` upward; tablet and mobile use `100svh` so the editorial title remains readable. The mosaic uses the existing `sm`, `md`, `lg`, `xl`, and `2xl` breakpoints to progress from two through seven columns with no gutters, captions, frames, hydration, listener, or new dependency.
+- **Fidelity and responsive validation: complete for the supplied references and local implementation.** Chrome measurements at `375`, `430`, `768`, `1024`, `1440`, and `1920px` confirmed two, two, four, five, six, and seven columns respectively, all 91 media items, exact viewport-width sections, and zero horizontal overflow. Desktop captures preserve the `2420 / 1080` hero proportion and full-bleed mosaic handoff; compact layouts retain the title in a readable `100svh` composition. Runtime reduced-motion validation exposes the complete final title and caption with no reveal or drift. The supplied collage remains a compositional reference rather than a one-to-one photography/order match because the page deliberately uses the repository's current asset inventory.
+- **Media hover refinement implemented locally.** Fine-pointer hover now applies a restrained zoom and contrast treatment, fades in a cinematic lower shade, and reveals an approved event or neutral category label through a masked vertical entrance. The unassigned K&T wedding photography deliberately uses `Boda` rather than being attributed to Wedding R&R. Touch layouts keep the photography unobstructed, reduced motion removes every transition, and no interactive semantics, runtime JavaScript, asset duplication, or new dependency was added.
+- **Compact-title and mosaic-spacing refinement complete locally.** The About title now follows Gallery's word-safe wrapping contract with inline-block words, `1.08` line height, intrinsic height, and no clipping mask, while retaining its line-stagger reveal. The mobile caption receives an explicit `16px` internal inline inset so it cannot touch the viewport edges. The full-bleed mosaic keeps zero page-edge gutters and adds only a `2px` inter-item column/row separation. In-browser validation at `375`, `430`, and `1440px` confirmed complete title glyphs, the caption inset, exact viewport-width surfaces, zero outer mosaic gutters, exact `2px` internal gaps, the expected two/six columns, and no horizontal overflow.
+- **Hero-to-mosaic scroll and title-motion alignment complete locally.** About now reuses the same shared `PanelReveal` composition as Home's Hero-to-Events handoff: its `145svh` lead contains one native `100svh` sticky scene while the full-bleed mosaic advances above it in document flow. The former automatic line reveal, caption fade, and perpetual drift are removed. The title now follows Gallery Archive's observed, one-time character reveal with word-safe spans, `22ms` stagger, shared motion tokens, and immediate final state under reduced motion. In-browser checks at `1440 × 900` and `375 × 844` confirmed the exact `145svh` / `100svh` geometry, sticky lead, progressive panel overlap, one-time 47-character reveal, complete mobile title, retained two/six-column mosaic, zero horizontal overflow, and no console warnings or errors. The current in-app browser cannot emulate reduced motion; the compiled immediate-state branch passed code inspection but fresh runtime emulation remains pending.
 
 ### Milestones
 
@@ -72,14 +89,35 @@ This document is the source of truth for implementation status. The existence of
 
 ### Services
 
-- **Implementation: complete.** StickyServices, ServicesScene, PanelReveal, and the neutral ScrollLinkedScene pattern are integrated. ServicesIntro was removed from the page; Marquee remains an independent preceding section while a panel-only overlap lets Services reveal over its final viewport.
-- The seven service records use the approved compact title, description, audience, and commercial CTA copy from `src/content/home/services.ts`; the commercial actions target `/contact`.
-- Desktop and tablet use equal scene columns plus an intrinsic-width index column so service copy and synchronized media carry comparable visual weight without increasing the bounded scroll interval.
-- The synchronized media frame exposes one contextual `Ver más` button for the active service on desktop and tablet. It uses the existing stable service `id`, provides a descriptive accessible name, and currently logs the selected identifier without navigation so a future detail action can replace one handler.
-- Mobile removes the media frame and its associated `Ver más` action at the existing 48 rem breakpoint, leaving the complete service copy in a full-width natural flow without reserved media space.
-- The former Services transition CTA beginning “¿Tienes una idea, un espacio o una celebración en mente?” and its exclusive content and styles were removed by product direction, so Services now hands off directly to Projects / Experiences.
-- **Fidelity Pass: complete.** Section overlap, sticky media, seven service states, scroll pacing, responsive behavior, and reduced motion were validated.
-- React is limited to the interactive Services scene and hydrates with `client:visible`.
+- **Home cinematic refactor: implemented locally.** The former `28/72` React scene was replaced
+  by an Astro-only intro followed by eight Service preview scenes copied from the validated Event
+  Detail “Más experiencias” pattern. Event components and CSS remain unchanged.
+- The sequence consumes the canonical eight-Service catalog in editorial `index` order. Every
+  scene renders Service index, title, description, “Ideal para” copy, `Ver más` to
+  `/services/{slug}`, and `Cotizar` to the record's preselected Contact route.
+- Desktop/tablet and mobile retain the Event preview geometry: first seven scenes use `250svh`,
+  the final scene `150svh`, sticky surfaces use `100svh`, and consecutive scenes overlap by
+  `-100svh`. Frame/media scale, copy travel, and outgoing overlay `0.12 → 0.80` use independent,
+  production-safe Home Services timelines.
+- Reduced motion restores eight `100svh` natural-flow scenes with no overlap, sticky takeover,
+  scaling, copy motion, or scroll-linked darkening.
+- The eight canonical `featuredMedia` records remain honestly `pending`; the copied media branch
+  already supports the existing image/video pipeline and currently renders deterministic,
+  token-driven placeholders at the final geometry. Asset 1–8 assignment remains pending delivery.
+- The old `StickyServices`, `ServicesScene`, `ServicesIntro`, `services-spike.css`, and now-unused
+  `ScrollLinkedScene` implementation were removed after confirming no remaining consumers.
+- **Fidelity and responsive validation: complete for dev and optimized preview.** At
+  `1280 × 720`, Home Services matches Event “Más experiencias” with `1800px` initial scenes,
+  `1080px` final scenes, `720px` sticky surfaces, active reciprocal media animations, and the
+  same outgoing overlay timeline. `900 × 900`, `390 × 844`, and `320 × 800` preserve all eight
+  scenes, sixteen CTA links, full copy, and zero horizontal overflow. The optimized preview
+  reports the same animation names/timelines and no console warnings or errors. Compiled reduced-
+  motion CSS retains the natural-flow override; runtime media emulation is unavailable in the
+  integrated browser.
+- **Home Service photography darkened locally.** Every Service preview now begins with a `0.32`
+  inverse overlay instead of `0.12`, producing the requested 20-percentage-point darker image
+  treatment while retaining the existing outgoing `0.80` endpoint, scroll timeline, copy and CTA
+  contrast, and the same static `0.32` treatment under reduced motion.
 
 ### Projects / Experiences
 
@@ -89,15 +127,18 @@ This document is the source of truth for implementation status. The existence of
 - The desktop carousel uses native horizontal scrolling, scroll snap, touch/keyboard scrolling, and accessible previous/next controls. Arrow navigation advances in derived two-event pages (`1–2`, `3–4`, `5–6`) without an isolated final card; the live status announces the first event in the visible pair as `Evento X de 6`.
 - Tablet and mobile use the same data-driven carousel in a single-event mode: one complete event card is visible at a time, navigation advances by one, and the finite previous/next controls share the CTA row above the active card. Mobile keeps the full-width editorial heading clear of the navigation and uses one tokenized grid gap between that control row and the media; tablet retains its wider spacing. Approved featured photography is delivered through the shared Astro responsive-image contract.
 - Desktop, tablet, mobile, breakpoint resize normalization, reduced-motion behavior, overflow, six-item completeness, all six responsive navigation states, and all three desktop paired navigation states were validated.
+- **Carousel control refinement complete.** Previous and next controls now present only their arrow glyphs without a surrounding border or fill, while preserving the 44 px target, disabled state, accessible labels, focus visibility, and existing finite navigation behavior.
 
 ### Gallery / Eventos realizados
 
 - **Implementation: Phase 4 structural build complete.** `/gallery` renders the `All` archive and static `/gallery/[category]` routes render each derived category. All routes compose the existing Navigation and Footer around `GalleryArchive.astro`, use `eventGalleryItems` as their only event source, and keep every row linked to its existing `/events/[slug]` detail route with approved featured media, category, and event title visible.
 - `All` is selected by default. The remaining filter links and URL-safe route IDs derive from the categories present in the event records without React, duplicated records, or a parallel category list. Desktop and tablet portrait use the approved two-column composition with a sticky vertical sidebar; mobile uses wrapped category links and stacked event rows in natural flow.
-- **Motion & Interactions: Phase 5 complete.** Filter hover, keyboard focus, and active state use the reference's bottom-origin fill in Mosaïque colors. Ordinary same-tab category changes preserve their real link destinations while adding a short list exit and destination entrance; modifier clicks and reduced-motion navigation remain native and immediate. Event titles reveal once by character as their rows enter the viewport, with no invented row or media hover. Reduced motion reveals every title immediately and removes all Gallery animation and transition delays.
+- **Motion & Interactions: Phase 5 complete.** Filter hover, keyboard focus, and active state use the shared action-button fill behavior in Mosaïque colors. Ordinary same-tab category changes preserve their real link destinations while adding a short list exit and destination entrance; modifier clicks and reduced-motion navigation remain native and immediate. Event titles reveal once by character as their rows enter the viewport, with no invented row or media hover. Reduced motion reveals every title immediately and removes all Gallery animation and transition delays.
+- **Shared button integration complete.** Gallery category links now render through the existing static `Button` contract, inheriting the same display typography, responsive label size, pill geometry, fill transition, active feedback, focus treatment, and reduced-motion behavior used by the site's other actions while preserving their real routes and active-category semantics.
 - **Responsive Fidelity: Phase 6 complete.** Desktop and tablet landscape retain the wide two-column archive, tablet portrait now matches the audited compact proportions with a 9 rem sticky sidebar, 2.75 rem filters, narrow gutters, a reference-scale 331:200 media column, and restrained title sizing, while mobile switches below 48 rem to the audited wrapped filter composition and stacked 1.9:1 rows. The existing Mosaïque fullscreen navigation remains the intentional brand adaptation at tablet and mobile sizes. Browser comparison covered 1280, 1024, 768, 430, 390, and 320 px with no horizontal overflow.
 - **Mosaïque Content Integration: Phase 7 complete.** The six approved names, categories, descriptions, slugs, detail destinations, status flags, and featured-media records remain centralized in `eventGalleryItems`; the Home gallery, archive, category routes, and detail pages consume that collection without parallel event data. Archive category routes derive from the source categories and visible copy remains limited to category and title. No clients, venues, dates, locations, or future destinations were invented.
-- **Visual Fidelity Pass: Phase 8 complete.** Five browser passes covered macro proportions, typography/spacing, interactions/motion, responsive transformation, and polish. The archive now remains fluid beyond 90 rem like the reference, with 1 vw outer/grid gutters, a 38% media column, 331:200 media, a 2 vw copy inset, uncapped reference-scale title growth through 8 rem, responsive filter height, 700 ms filter wipe, continuous character staggering, and section-owned sticky boundaries. At 2048 px, measured media geometry was 610.16 × 368.67 px against the reference's 610.13 × 368.63 px; both title sizes measured 87.04 px and both filter controls measured 224 × 66.76 px. Desktop, tablet, mobile, narrow mobile, scroll reveal, sticky stop, footer handoff, active navigation, and horizontal overflow were rechecked without console errors.
+- **Visual Fidelity Pass: Phase 8 complete.** Five browser passes covered macro proportions, typography/spacing, interactions/motion, responsive transformation, and polish. The archive remains fluid beyond 90 rem like the reference, with 1 vw outer/grid gutters, a 38% media column, 331:200 media, a 2 vw copy inset, uncapped reference-scale title growth through 8 rem, continuous character staggering, and section-owned sticky boundaries. Gallery filters intentionally follow the shared site button system rather than retaining reference-only dimensions and motion. Desktop, tablet, mobile, narrow mobile, scroll reveal, sticky stop, footer handoff, active navigation, and horizontal overflow were rechecked without console errors.
+- **Title clipping regression corrected.** Gallery event headings retain their fluid scale and opacity/transform character reveal without a word-level overflow mask, so the display font's ascenders, accents, and descenders remain fully visible at every breakpoint.
 - **Final QA: Phase 9 complete for the available browser environment.** The final matrix covered 2048, 1440, 1280, 1024, 768, 430, 390, and 320 px; `All` plus every derived category route; expected filtered counts; event-detail destinations; pointer/touch activation; filter hover; character reveal; sticky start, active state, stop, and footer handoff; mobile-dialog scroll lock, close control, and focus return; active navigation; console output; and horizontal overflow. Every generated route also passed the production build. The Gallery remains static Astro with no hydrated island. Native links/buttons and visible `:focus-visible` rules were reviewed for keyboard access, while this browser-control surface could not dispatch Tab/Escape or emulate `prefers-reduced-motion`; the native dialog cancel path and both reduced-motion CSS/JavaScript branches passed code review, but those two runtime checks remain an explicit environment limitation.
 - **Controlled gallery roadmap:** Phase 1 Reference Audit, Phase 2 Mosaïque Audit, Phase 3 Architecture / Technical Plan, Phase 4 Structural Build, Phase 5 Motion & Interactions, Phase 6 Responsive Fidelity, Phase 7 Mosaïque Content Integration, Phase 8 Visual Fidelity Pass, and Phase 9 Final QA are complete.
 
@@ -183,6 +224,8 @@ This document is the source of truth for implementation status. The existence of
 ### Footer
 
 - **Implementation: complete.** A semantic footer landmark renders the brand, seven navigation links, six service labels, contact details, closing statement, and legal copy from `src/content/home/footer.ts` after `main`.
+- **Email action surface refinement complete locally.** The framed Footer email CTA now uses the existing restrained medium radius while retaining its dimensions, arrow, verified destination, focus behavior, and responsive layout.
+- **Collaborator frame refinement complete locally.** The three-logo wall now shares the same medium radius as the Footer email action, with its internal tiles clipped to the outer frame while preserving separators, logo interactions, destinations, and responsive sizing.
 - On mobile, Compañía, Recursos, and Servicios use collapsed native disclosures to reduce scroll length; tablet and desktop keep all three groups expanded in the established grid.
 - **Fidelity Pass: complete.** Final CTA now hands off through a compact edge-padded visual strip into Movra's two-row footer composition: aligned 50/50 desktop grids, inset vertical dividers, full-width horizontal dividers, three navigation groups, the framed three-collaborator logo grid, contact CTA and verified contact details, a six-item service grid, and the closing copy at opposite lower edges.
 - Desktop uses paired information bands, tablet stacks those bands, and mobile follows a linear reading order without introducing reference-only newsletter, social links, or legal destinations. The three approved transparent collaborator assets are centered in equal framed tiles with uninterrupted dividers, contained without cropping, normalized to the footer's light monochrome treatment, and sourced from one typed collaborators module; each complete tile opens its approved external site in a separate, isolated tab.
@@ -223,11 +266,146 @@ This document is the source of truth for implementation status. The existence of
 
 ### Active Scope
 
-- **Home:** only the `Eventos que ya tomaron forma` Projects / Experiences section.
+- **Home:** `Eventos que ya tomaron forma` and the Astro-only cinematic Services sequence.
+- **About:** the dedicated `/about` route, its animated typography hero, and full-bleed media mosaic.
 - **Gallery:** `/gallery` and its generated category routes.
 - **Event Detail:** the six generated `/events/[slug]` routes.
-- Shared Navigation, Footer, layout, tokens, metadata, and asset infrastructure count only when a change is required to support or validate one of these three surfaces.
+- **Service Detail:** Responsibilities 1–4 are implemented and validated locally in dev and the
+  optimized preview build.
+- **Domain normalization:** Responsibilities 1–3 of 3 are complete locally. The normalized
+  Service, Event, category, media, selector, and integrity contracts are the only active domain
+  source of truth; every current product surface remains behaviorally unchanged.
+- Shared Navigation, Footer, layout, tokens, metadata, and asset infrastructure count only when a change is required to support or validate these scoped surfaces.
 - Every other homepage section, absent section, deferred content concept, Storybook initiative, and unrelated business-asset request is outside the active roadmap and does not block acceptance or completion.
+
+### Service Detail Domain
+
+- **Responsibility 1 — Data Layer / Service Model: superseded by domain normalization.** The
+  original seven-record Service Detail baseline and manually stored `relatedEvents` collection
+  have been replaced by the canonical eight-Service model and derived Event relationships
+  documented below.
+- Service CTAs encode the handoff as `/contact?service={service.slug}`. Contact consumes only
+  valid service slugs and leaves the default option selected for absent, empty, or invalid
+  parameters.
+- **Responsibility 2 — Service Detail Domain + Route: complete locally.** The independent
+  `src/pages/services/[slug].astro` route resolves services by slug, uses the shared BaseLayout,
+  Navigation, Footer, Heading, Text, and Button primitives, and renders a dedicated
+  `ServiceHeader` with title, description, and the prepared Contact CTA. It does not import or
+  branch Event Detail.
+- **Responsibility 3 — Gallery + Related Events: complete locally.** `ServiceGallery` renders the
+  explicit Service `featuredMedia` separately from its `gallery`, and
+  `ServiceRelatedEvents` receives the Event records derived from canonical `Event.serviceId`
+  relationships. Celebraciones resolves five approved Events, Bodas resolves Wedding R&R, and
+  Services without Events render no related heading or spacing.
+- **Responsibility 3 correction — Event Detail visual baseline: complete locally.** Service Detail
+  now uses physically duplicated Service-owned copies of the Event Detail header, featured media,
+  gallery/lightbox, related-event preview, and section CSS. The copies preserve the Event Detail
+  grid, sticky boundaries, media geometry, spacing, lightbox behavior, and scroll-linked motion;
+  only Service data, CTA, gallery source, and related-event responsibility differ. Event files,
+  Event CSS, Navigation, Footer, Contact, and Home remain untouched.
+- **Responsibility 4 — Service Detail Fidelity + Contact preselection: implemented locally.**
+  Service Detail remains physically separate from Event Detail: `ServiceHeader`,
+  `ServiceFeaturedMedia`, `ServiceGallery`, `ServiceLightbox`, `ServiceRelatedEventPreview`,
+  `ServiceRelatedEvents`, `src/pages/services/[slug].astro`, and
+  `src/styles/sections/service-detail.css` are Service-owned copies of the Event Detail
+  composition with only service content, CTA, gallery source, and related-event responsibility
+  adapted. Event components, Event CSS, Event data, Navigation, Footer, Contact layout, and Home
+  remain unchanged. The Service route now preserves the copied chapter wrapper and overlay
+  Navigation surface required by the Event `28/72` composition. The empty related-events branch
+  renders no heading or spacing.
+- Contact preselection derives option metadata from `servicesContent.items`: `/contact?service=`
+  matches the service slug while the submitted option value remains the existing stable service
+  ID, preserving the payload and submit transport. Empty, missing, and invalid values fall back
+  to `Selecciona una opción`.
+- **R4 visual and responsive validation:** browser comparison against `/events/nossa-copa`
+  confirmed the same desktop `28/72` rail, `100svh` chapter/header, `16:9` featured media,
+  sticky desktop header, mobile natural-flow switch, and compiled scroll-linked frame/media
+  timelines. At `1280 × 720`, both pages resolve columns to approximately `354.19 / 910.80px`
+  and featured media to `907.59 × 510.52px`; `900 × 900`, `390 × 844`, and `320 × 800` preserve
+  the corresponding Event geometry without horizontal overflow. Differences in title wrapping,
+  header height on compact screens, and final chapter length are authorized consequences of the
+  longer Service title, CTA, pending featured media, empty gallery data, and derived related-event
+  content.
+- **R4 Contact validation:** `/contact?service=eventos-corporativos` selects “Eventos
+  corporativos” while retaining `service-03` as the submitted value. Missing, empty, and invalid
+  query values retain `Selecciona una opción`. Dev and optimized preview return equivalent
+  results.
+- **R4 technical validation:** `pnpm build`, `pnpm lint`, `pnpm typecheck`, and `git diff --check`
+  pass; the current build emits all eight Service Detail routes and preview reports no console warnings or
+  errors. The optimized CSS retains the copied reduced-motion branch that removes media/gallery
+  transforms, timelines, sticky takeover, and hover/lightbox motion; runtime media emulation was
+  unavailable in the integrated browser, so that specific state is verified from compiled CSS
+  rather than claimed as a runtime screenshot.
+- **Visual roadmap:** Responsibility 4 is complete. The separate domain-normalization roadmap
+  below now owns the next Service/Event data work.
+
+### Service / Event Domain Normalization
+
+- **Responsibility 1 — Shared Contracts: complete locally.** `src/content/media.ts` owns the
+  reusable `FeaturedMedia`, `GalleryImage`, and `GalleryLayout` contracts. Responsibility 3
+  migrated the final Event consumers to those shared types and removed the temporary
+  `EventDetailFeaturedMedia`, `EventDetailImage`, and `EventGalleryLayout` aliases.
+- `src/content/services/types.ts` defines `SERVICE_IDS` as the canonical const object and infers
+  `ServiceId` from its values. Responsibility 2 now consumes this contract in every Service and
+  Event record.
+- `src/content/events/categories.ts` defines the stable `EventCategoryId` registry with separate
+  `label` and routing `slug` values. Responsibility 2 now stores the stable category ID in Events
+  while Gallery and preview consumers resolve its presentation metadata from the registry.
+- **Canonical relationship decision:** `Event.serviceId → ServiceId` is implemented. Service does
+  not store an event ID/slug array; Service → Events is derived by a selector. Slugs remain routing
+  identifiers and IDs remain internal relationship identifiers.
+- **Business relationship approval: resolved in Responsibility 2.** The six current Events now
+  carry their approved `serviceId`; no relationship was inferred.
+- **Technical validation:** formatter, `pnpm build`, `pnpm lint`, `pnpm typecheck`, and
+  `git diff --check` pass for the final shared-contract change. No product component, page,
+  stylesheet, content record, route, or asset changed.
+- **Responsibility 2 — Service / Event Normalization: complete locally.** The catalog now contains
+  eight Services. Celebraciones retains existing identity `service-02`; Bodas receives the new
+  stable identity `service-08`; `service-01` and `service-03…07` retain their prior identities.
+  Editorial `index` values provide the visible `01…08` order independently from IDs.
+- The canonical Event model now stores required `serviceId: ServiceId` and stable `categoryId`.
+  Event route `href` was removed because every current route is safely derived from its slug.
+  Service removed both `media` and stored `relatedEvents`, and now owns explicit shared-contract
+  `featuredMedia` plus `gallery`. The current pending featured placeholders preserve the previous
+  Service Detail geometry while empty gallery collections avoid duplicating featured media.
+- Approved relationships are explicit: Nossa Copa, Baila da Zaza, Baby Shower, Cumpleaños Ana
+  Paula, and Fan Fest Club point to Celebraciones; Wedding R&R points to Bodas. Event category IDs
+  remain editorial classifications independent from commercial Services.
+- `getServiceById`, `getServiceBySlug`, `getEventsByServiceId`, and `getEventBySlug` own domain
+  lookup. `getEventCategory` resolves category metadata and `getEventHref` derives the internal
+  Event route. Service Detail no longer performs component/page-level Event `find`/`filter` work.
+- Module-load integrity checks reject duplicate Service IDs/slugs, missing or extra `SERVICE_IDS`
+  records, duplicate Event IDs/slugs, invalid Event → Service references, and unknown Event
+  category IDs. `satisfies` and `astro check` enforce the shared FeaturedMedia/Gallery contracts.
+- Navigation, Contact options, Homepage Services, Footer service labels, Service routes, and
+  Gallery category routing consume the normalized data with no component redesign or stylesheet
+  change. The optimized build emits 23 pages: eight Service Detail, six Event Detail, and the
+  existing Gallery/category/public routes.
+- **Technical validation:** scoped Prettier, `pnpm build`, `pnpm lint`, `pnpm typecheck`, and
+  `git diff --check` pass. Generated output confirms five Celebraciones Event links, one Bodas
+  Event link, all eight Contact options, all eight Service routes, and unchanged Gallery routes.
+- **Responsibility 3 — Migration + Validation: complete locally.** The final consumer audit found
+  temporary `ServiceContentItem`, Event media/category aliases, and the page-specific
+  `EventDetail` domain name. Components now consume `Service`, `Event`, `FeaturedMedia`,
+  `GalleryImage`, `EventCategoryId`, and `EventCategoryLabel` directly. No compatibility alias
+  remains in the active domain exports.
+- Valid audit hits were retained intentionally: `event.href` exists only on the derived Home /
+  Gallery presentation model and is populated by `getEventHref`; `media` remains a presentation
+  field in that model and in unrelated Hero content; Event/Service ownership `find`/`filter`
+  calls live only in selectors. Other collection queries belong to UI state, category filtering,
+  navigation, or integrity checks and do not resolve domain ownership.
+- Integrity now also rejects duplicate Event-category route slugs and the obsolete combined
+  `bodas-celebraciones-privadas` Service slug. Existing checks still reject duplicate Service and
+  Event IDs/slugs, missing or extra `SERVICE_IDS`, invalid Event → Service references, and unknown
+  Event categories.
+- Optimized-build browser smoke passed `/events/wedding-r-r`, `/services/bodas`,
+  `/services/celebraciones`, `/contact?service=bodas`, `/gallery`, and `/gallery/boda`. Bodas
+  resolves only Wedding R&R; Celebraciones resolves Nossa Copa, Baila da Zaza, Baby Shower,
+  Cumpleaños Ana Paula, and Fan Fest Club; Contact exposes all eight Services and selects
+  `service-08`; Gallery retains all five derived category routes with no console warning/error.
+- **Final technical validation:** scoped Prettier, `pnpm build`, `pnpm lint`, `pnpm typecheck`,
+  and `git diff --check` pass. Domain normalization is complete; no UI, stylesheet, asset, or
+  feature redesign was introduced by Responsibility 3.
 
 ### Production Asset Pipeline
 
@@ -280,6 +458,27 @@ This document is the source of truth for implementation status. The existence of
 - **Remaining deployment configuration:** production does not currently expose canonical URLs and `/sitemap-index.xml` returns `404: NOT_FOUND`, confirming that `SITE_URL` is not configured in the deployed build. Confirm the definitive domain, add `SITE_URL` to Vercel, redeploy with the existing build cache, and verify canonical, `og:url`, JSON-LD URL, robots sitemap reference, and both sitemap files.
 
 ## Next
+
+### Home Services Media + Service CTA Handoff
+
+- **Complete locally.** Each canonical Service now owns one approved existing repository image
+  through `featuredMedia`; these are provisional editorial assignments and can be replaced in the
+  Service constants without changing Home or Service Detail composition.
+- Home Services keeps the cinematic eight-scene contract while its intro uses a wider reading
+  measure and shorter viewport footprint so the first service enters sooner. `Ver más` remains
+  transparent-first and `Cotizar` now uses the light-to-transparent button variant.
+- Mobile keeps the sticky scene rhythm but fixes each service media surface at its fully expanded
+  `scale(1)` state. This prevents the longer Service copy from exposing and colliding with the
+  outgoing scene through the smaller Event-preview entry frame.
+- Service Detail applies the same light-to-transparent treatment to its commercial header CTA and
+  now closes with a Service-owned physical copy of the Event Detail contact marquee structure,
+  reusing the approved Final CTA content and existing Service Detail marquee styles.
+
+### Architecture Audit
+
+- Not started and approval-gated. Audit the current repository boundaries before proposing any
+  global Clean Architecture migration. The completed normalized Service/Event/Media domain is the
+  baseline and must not be reopened speculatively.
 
 ### Production URL + Scoped SEO Acceptance
 

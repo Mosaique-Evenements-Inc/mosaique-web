@@ -1,0 +1,49 @@
+---
+import Footer from "../../components/sections/Footer.astro";
+import Navigation from "../../components/sections/Navigation.astro";
+import ServiceHeader from "../../components/services/ServiceHeader.astro";
+import ServiceGallery from "../../components/services/ServiceGallery.astro";
+import ServiceContactMarquee from "../../components/services/ServiceContactMarquee.astro";
+import ServiceRelatedEvents from "../../components/services/ServiceRelatedEvents.astro";
+import { getEventsByServiceId } from "../../content/events";
+import { services, type Service } from "../../content/services";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+import "../../styles/sections/service-detail.css";
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+const relatedEvents = getEventsByServiceId(service.id);
+---
+
+<BaseLayout
+  title={`${service.title} — MOSAÏQUE EVENTS`}
+  description={service.description}
+  surface="cinematic"
+>
+  <Navigation surface="overlay" anchorPrefix="/" />
+  <main class="service-detail" id="main-content" tabindex="-1" data-navigation-contrast="light">
+    <div class="service-detail__chapter" data-content-status="placeholder">
+      <ServiceHeader service={service} />
+      <ServiceGallery
+        featuredMedia={service.featuredMedia}
+        images={service.gallery}
+        slug={service.slug}
+        title={service.title}
+      />
+    </div>
+    <ServiceRelatedEvents events={relatedEvents} />
+    <ServiceContactMarquee />
+  </main>
+  <Footer anchorPrefix="/" />
+</BaseLayout>

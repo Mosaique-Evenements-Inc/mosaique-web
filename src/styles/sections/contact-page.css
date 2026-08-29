@@ -35,6 +35,16 @@
   --action-button-transparent-text: var(--color-white);
 }
 
+.contact-page .quote-toast {
+  background: color-mix(
+    in oklab,
+    var(--color-background-cinematic) 88%,
+    var(--color-text-inverse)
+  );
+  border-color: color-mix(in oklab, var(--color-text-inverse) 32%, transparent);
+  color: var(--color-text-inverse);
+}
+
 .contact-page__stage {
   min-block-size: calc(100svh - 4rem);
   padding-block: 0 var(--space-4);
@@ -147,6 +157,8 @@
   border-block-start: 0;
   display: grid;
   gap: var(--space-3);
+  grid-template-columns: minmax(0, 1fr);
+  justify-content: stretch;
   margin-block-start: var(--space-2);
   padding: var(--space-2) 0 0;
 }
@@ -154,26 +166,11 @@
 .contact-page .quote-form__actions > div {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
+  inline-size: 100%;
 }
 
 .contact-page .quote-form__actions [data-quote-next] {
   inline-size: 100%;
-}
-
-.contact-page__secondary-contact {
-  color: var(--color-text-secondary);
-  display: flex;
-  flex-wrap: wrap;
-  font-size: var(--text-caption-size);
-  gap: var(--space-2);
-  justify-content: center;
-  margin: var(--space-6) 0 0;
-  text-align: center;
-}
-
-.contact-page__secondary-contact a {
-  color: var(--color-text-primary);
-  overflow-wrap: anywhere;
 }
 
 .contact-media {
@@ -274,6 +271,10 @@
   .contact-page__form-column {
     inline-size: 100%;
     padding: var(--space-4) var(--space-page-gutter) 0;
+  }
+
+  .contact-page .quote-form__actions > div {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
   }
 
   .contact-media {

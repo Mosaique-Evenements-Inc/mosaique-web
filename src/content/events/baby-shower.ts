@@ -7,10 +7,11 @@ import {
   babyShowerKarlaGino7,
   babyShowerMain,
 } from "../../assets/images/events";
-import type { EventDetail } from "./types";
+import { SERVICE_IDS } from "../services/types";
+import type { Event } from "./types";
 
 export const babyShowerEvent = {
-  category: "Celebración privada",
+  categoryId: "privateCelebration",
   description: "Una celebración íntima para compartir la llegada de un nuevo comienzo.",
   featuredMedia: {
     alt: "Decoración principal del baby shower con globos, flores y bloques de letras.",
@@ -56,9 +57,9 @@ export const babyShowerEvent = {
       status: "approved",
     },
   ],
-  href: "/events/baby-shower",
   id: "event-slot-03",
+  serviceId: SERVICE_IDS.celebrations,
   slug: "baby-shower",
   status: "approved",
   title: "Baby Shower",
-} satisfies EventDetail;
+} satisfies Event;

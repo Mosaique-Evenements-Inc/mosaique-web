@@ -188,7 +188,18 @@
   font-size: 1.875rem;
   line-height: 0.98;
   margin: 0;
-  max-inline-size: 18ch;
+  max-inline-size: 24ch;
+}
+
+.home-hero__title em {
+  font-style: italic;
+  font-weight: inherit;
+}
+
+@media (min-width: 64rem) {
+  .home-hero__title {
+    max-inline-size: 32ch;
+  }
 }
 
 .home-hero__handoff {

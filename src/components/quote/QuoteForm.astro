@@ -19,11 +19,11 @@ import "../../styles/sections/quote-form.css";
     <footer class="quote-form__actions" data-quote-actions>
       <p data-quote-submit-status aria-live="polite"></p>
       <div>
-        <Button type="button" className="quote-button" data-quote-back hidden>
+        <Button type="button" className="quote-button" icon="arrow-left" data-quote-back hidden>
           <span data-quote-back-label>Atrás</span>
         </Button>
-        <Button type="button" className="quote-button" data-quote-next variant="light">
-          <span data-quote-next-label>Revisar información</span>
+        <Button type="button" className="quote-button" data-quote-next variant="light" disabled>
+          <span data-quote-next-label>Enviar solicitud</span>
         </Button>
       </div>
     </footer>
@@ -88,6 +88,7 @@ import "../../styles/sections/quote-form.css";
     const dateNext = datePickerDialog.querySelector<HTMLButtonElement>("[data-date-next]");
     const phone = quoteForm.elements.namedItem("phone") as HTMLInputElement | null;
     const phoneCount = quoteFlow.querySelector<HTMLOutputElement>("[data-quote-phone-count]");
+    const serviceSelect = quoteForm.elements.namedItem("service") as HTMLSelectElement | null;
     let validationAttempted = false;
     let reviewing = false;
     let editingFromReview = false;
@@ -96,6 +97,14 @@ import "../../styles/sections/quote-form.css";
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     let calendarMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    const requestedService = new URLSearchParams(window.location.search).get("service")?.trim();
+    if (serviceSelect && requestedService) {
+      const matchingOption = Array.from(serviceSelect.options).find(
+        (option) => option.dataset.serviceSlug === requestedService,
+      );
+      if (matchingOption) serviceSelect.value = matchingOption.value;
+    }
 
     const setButtonLabels = (labels: NodeListOf<HTMLElement>, value: string) => {
       labels.forEach((label) => {
@@ -245,6 +254,32 @@ import "../../styles/sections/quote-form.css";
       return invalidFields.length === 0;
     };
 
+    const isFormComplete = () => {
+      if (!step) return false;
+      const fields = Array.from(
+        step.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
+          "input, select, textarea",
+        ),
+      ).filter((field) => !field.disabled && field.type !== "hidden");
+      return fields.every((field) => field.validity.valid);
+    };
+
+    const updatePrimaryAction = () => {
+      if (!nextButton || submitting) return;
+      const formComplete = isFormComplete();
+      nextButton.disabled = reviewing ? false : !formComplete;
+      setButtonLabels(
+        nextButtonLabels,
+        reviewing
+          ? "Enviar solicitud"
+          : editingFromReview
+            ? "Guardar cambios"
+            : formComplete
+              ? "Revisar información"
+              : "Enviar solicitud",
+      );
+    };
+
     const updateView = (focusHeading = true) => {
       if (step) step.hidden = reviewing;
       if (review) review.hidden = !reviewing;
@@ -256,14 +291,7 @@ import "../../styles/sections/quote-form.css";
           editingFromReview ? "Volver a revisión" : "Volver al formulario",
         );
       }
-      setButtonLabels(
-        nextButtonLabels,
-        reviewing
-          ? "Enviar solicitud"
-          : editingFromReview
-            ? "Guardar cambios"
-            : "Revisar información",
-      );
+      updatePrimaryAction();
       if (focusHeading) {
         const heading = reviewing
           ? review?.querySelector<HTMLElement>("h2")
@@ -279,7 +307,6 @@ import "../../styles/sections/quote-form.css";
 
     const populateReview = () => {
       const formData = new FormData(quoteForm);
-      const serviceSelect = quoteForm.elements.namedItem("service") as HTMLSelectElement | null;
       const languageSelect = quoteForm.elements.namedItem(
         "preferredLanguage",
       ) as HTMLSelectElement | null;
@@ -319,7 +346,6 @@ import "../../styles/sections/quote-form.css";
       editingFromReview = false;
       validationAttempted = false;
       submitting = false;
-      if (nextButton) nextButton.disabled = false;
       if (submitStatus) submitStatus.textContent = "";
       if (phoneCount) phoneCount.textContent = "0 / 10";
       if (dateTrigger) dateTrigger.disabled = false;
@@ -522,6 +548,7 @@ import "../../styles/sections/quote-form.css";
       ) {
         setFieldError(field);
       }
+      updatePrimaryAction();
     });
     quoteForm.addEventListener("submit", (event) => event.preventDefault());
     quoteForm.addEventListener("change", (event) => {
@@ -532,6 +559,7 @@ import "../../styles/sections/quote-form.css";
         if (dateTrigger) dateTrigger.disabled = field.checked;
         updateDateField();
       }
+      updatePrimaryAction();
     });
   }
 </script>

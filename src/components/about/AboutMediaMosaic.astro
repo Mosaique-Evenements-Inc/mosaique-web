@@ -1,0 +1,28 @@
+---
+import AboutMediaItem from "./AboutMediaItem.astro";
+import type { AboutMediaItem as MediaItem } from "../../content/about";
+
+interface Props {
+  label: string;
+  items: readonly MediaItem[];
+}
+
+const { label, items } = Astro.props;
+---
+
+<section
+  id="about-mosaic"
+  class="about-mosaic"
+  data-navigation-contrast="light"
+  aria-label={label}
+>
+  <ul class="about-mosaic__list" aria-hidden="true">
+    {
+      items.map((item) => (
+        <li class="about-mosaic__item">
+          <AboutMediaItem item={item} />
+        </li>
+      ))
+    }
+  </ul>
+</section>

@@ -1,3 +1,4 @@
+import { EVENT_CATEGORIES, type EventCategoryId } from "./events";
 import { eventGalleryItems, type EventGalleryItem } from "./home/projects";
 
 export interface GalleryCategory {
@@ -6,27 +7,21 @@ export interface GalleryCategory {
   label: EventGalleryItem["category"];
 }
 
-export const toGalleryCategoryId = (category: string) =>
-  category
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-
 export const galleryCategories = Array.from(
-  new Set(eventGalleryItems.map((event) => event.category)),
-).map((label) => {
-  const id = toGalleryCategoryId(label);
+  new Set(eventGalleryItems.map((event) => event.categoryId)),
+).map((categoryId: EventCategoryId) => {
+  const category = EVENT_CATEGORIES[categoryId];
 
   return {
-    href: `/gallery/${id}`,
-    id,
-    label,
+    href: `/gallery/${category.slug}`,
+    id: category.slug,
+    label: category.label,
   } satisfies GalleryCategory;
 });
 
 export const getGalleryEvents = (categoryId?: string) =>
   categoryId
-    ? eventGalleryItems.filter((event) => toGalleryCategoryId(event.category) === categoryId)
+    ? eventGalleryItems.filter(
+        (event) => EVENT_CATEGORIES[event.categoryId].slug === categoryId,
+      )
     : eventGalleryItems;
