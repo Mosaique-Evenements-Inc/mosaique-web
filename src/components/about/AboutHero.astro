@@ -1,0 +1,25 @@
+---
+interface Props {
+  lines: readonly { text: string; emphasis: boolean }[];
+  caption: string;
+}
+
+const { lines, caption } = Astro.props;
+---
+
+<section class="about-hero" data-navigation-contrast="light" aria-labelledby="about-title">
+  <div class="about-hero__composition">
+    <h1 class="about-hero__title" id="about-title">
+      {
+        lines.map((line, index) => (
+          <span class="about-hero__line">
+            <span class="about-hero__line-inner" style={`--line-delay:${100 + index * 120}ms;`}>
+              {line.emphasis ? <em>{line.text}</em> : line.text}
+            </span>
+          </span>
+        ))
+      }
+    </h1>
+    <p class="about-hero__caption">{caption}</p>
+  </div>
+</section>

@@ -63,8 +63,11 @@ This document is the source of truth for implementation status. The existence of
 
 ### About
 
-- **Implementation: complete.** Rendered through `AboutMilestones.astro` from `src/content/home/about.ts`; the section remains in normal flow while revealing over the temporarily sticky Hero.
-- **Fidelity Pass: complete.** The two-column editorial composition, viewport proportions, divider, sticky media, and responsive reading order were compared against the Movra recording.
+- **Homepage status corrected against code.** `AboutMilestones.astro` and its typed content remain available, but the section is currently commented out of the homepage composition and is not a rendered homepage surface.
+- **Dedicated page implementation: complete locally.** `/about` reuses the shared Navigation and Footer, presents the approved About copy as a cinematic CSS-only line reveal, and follows it with a full-bleed, deterministic masonry mosaic sourced from one typed inventory of all 91 currently available event photographs. The same media item supports future animated GIFs without sending them through static optimization.
+- The hero preserves the `2420 / 1080` desktop reference proportion from `lg` upward; tablet and mobile use `100svh` so the editorial title remains readable. The mosaic uses the existing `sm`, `md`, `lg`, `xl`, and `2xl` breakpoints to progress from two through seven columns with no gutters, captions, frames, hydration, listener, or new dependency.
+- **Fidelity and responsive validation: complete for the supplied references and local implementation.** Chrome measurements at `375`, `430`, `768`, `1024`, `1440`, and `1920px` confirmed two, two, four, five, six, and seven columns respectively, all 91 media items, exact viewport-width sections, and zero horizontal overflow. Desktop captures preserve the `2420 / 1080` hero proportion and full-bleed mosaic handoff; compact layouts retain the title in a readable `100svh` composition. Runtime reduced-motion validation exposes the complete final title and caption with no reveal or drift. The supplied collage remains a compositional reference rather than a one-to-one photography/order match because the page deliberately uses the repository's current asset inventory.
+- **Media hover refinement implemented locally.** Fine-pointer hover now applies a restrained zoom and contrast treatment, fades in a cinematic lower shade, and reveals an approved event or neutral category label through a masked vertical entrance. The unassigned K&T wedding photography deliberately uses `Boda` rather than being attributed to Wedding R&R. Touch layouts keep the photography unobstructed, reduced motion removes every transition, and no interactive semantics, runtime JavaScript, asset duplication, or new dependency was added.
 
 ### Milestones
 
@@ -228,9 +231,10 @@ This document is the source of truth for implementation status. The existence of
 ### Active Scope
 
 - **Home:** only the `Eventos que ya tomaron forma` Projects / Experiences section.
+- **About:** the dedicated `/about` route, its animated typography hero, and full-bleed media mosaic.
 - **Gallery:** `/gallery` and its generated category routes.
 - **Event Detail:** the six generated `/events/[slug]` routes.
-- Shared Navigation, Footer, layout, tokens, metadata, and asset infrastructure count only when a change is required to support or validate one of these three surfaces.
+- Shared Navigation, Footer, layout, tokens, metadata, and asset infrastructure count only when a change is required to support or validate one of these four surfaces.
 - Every other homepage section, absent section, deferred content concept, Storybook initiative, and unrelated business-asset request is outside the active roadmap and does not block acceptance or completion.
 
 ### Production Asset Pipeline

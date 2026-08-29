@@ -1,0 +1,23 @@
+---
+import AboutHero from "../components/about/AboutHero.astro";
+import AboutMediaMosaic from "../components/about/AboutMediaMosaic.astro";
+import Footer from "../components/sections/Footer.astro";
+import Navigation from "../components/sections/Navigation.astro";
+import { aboutPageContent } from "../content/about";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+import "../styles/sections/about-page.css";
+---
+
+<BaseLayout
+  title={aboutPageContent.metadata.title}
+  description={aboutPageContent.metadata.description}
+  surface="cinematic"
+>
+  <Navigation anchorPrefix="/" />
+  <main id="main-content">
+    <AboutHero {...aboutPageContent.hero} />
+    <AboutMediaMosaic {...aboutPageContent.mosaic} />
+  </main>
+  <Footer />
+</BaseLayout>
