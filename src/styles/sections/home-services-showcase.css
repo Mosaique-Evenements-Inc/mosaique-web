@@ -154,7 +154,7 @@
 .home-service-preview__overlay {
   background: var(--color-background-inverse);
   inset: 0;
-  opacity: 0.12;
+  opacity: 0.32;
   position: absolute;
 }
 
@@ -259,7 +259,7 @@
 
 @keyframes home-service-overlay-darken {
   from {
-    opacity: 0.12;
+    opacity: 0.32;
   }
 
   to {
@@ -464,6 +464,6 @@
   }
 
   .home-service-preview__overlay {
-    opacity: 0.12;
+    opacity: 0.32;
   }
 }

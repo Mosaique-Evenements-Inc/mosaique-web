@@ -33,6 +33,7 @@ This document is the source of truth for implementation status. The existence of
 - **Services Navigation: complete locally.** The eight canonical Service records own stable semantic slugs and derive one shared navigation model from `servicesContent.items`. Inline desktop navigation renders a compact start-aligned Services dropdown above the existing blur and sticky content; tablet and mobile reuse the fullscreen menu with a natural-flow Services accordion. The desktop panel uses content-sized geometry, `40px` link targets, token-driven `8px` vertical travel, symmetric open/close motion, hover continuity, outside-click cleanup, Escape, Arrow Down, and visible keyboard focus. Links derive the implemented `/services/[slug]` routes from each Service slug.
 - The topbar keeps its progressively masked blur and adaptive foreground on overlay pages; event detail and contact retain their approved solid treatment. The shared `--site-navigation-height` value now also supplies exact sticky offsets to page-level navigation such as Gallery categories.
 - **Fidelity Pass: complete.** Desktop, tablet, mobile, fullscreen-menu behavior, adaptive contrast, and active-route treatment were compared in-browser against the supplied references. The responsive dialog now follows the approved light editorial reference with the Mosaïque logo and unframed close control in its header, four centered primary links, and verified contact metadata anchored at the bottom. Runtime reduced-motion emulation remains pending; the CSS media paths passed code review.
+- **Mobile Services accordion rhythm refined locally.** Its internal vertical padding now exists only while expanded, so the four primary navigation options retain uniform spacing when Services is collapsed. The established 68% subordinate-link tone remains unchanged, together with keyboard access, inert collapsed content, and the existing disclosure transition.
 - **Mobile trigger refinement complete.** Below 48 rem, the menu trigger presents only its existing menu glyph while retaining the full 44 px interactive target, accessible name, active feedback, and visible keyboard focus treatment.
 
 ### Quote / Contact Flow
@@ -113,6 +114,10 @@ This document is the source of truth for implementation status. The existence of
   reports the same animation names/timelines and no console warnings or errors. Compiled reduced-
   motion CSS retains the natural-flow override; runtime media emulation is unavailable in the
   integrated browser.
+- **Home Service photography darkened locally.** Every Service preview now begins with a `0.32`
+  inverse overlay instead of `0.12`, producing the requested 20-percentage-point darker image
+  treatment while retaining the existing outgoing `0.80` endpoint, scroll timeline, copy and CTA
+  contrast, and the same static `0.32` treatment under reduced motion.
 
 ### Projects / Experiences
 
