@@ -28,7 +28,6 @@
   align-self: start;
   aspect-ratio: 1 / 1;
   background: color-mix(in oklab, var(--color-background-inverse) 88%, var(--color-accent));
-  border: 1px solid color-mix(in oklab, var(--color-text-inverse) 24%, transparent);
   display: none;
   overflow: hidden;
   position: relative;
@@ -65,24 +64,26 @@
 }
 
 .services-spike__media-panel::before {
-  background:
-    linear-gradient(
-      90deg,
-      color-mix(in oklab, var(--color-primary) 10%, transparent) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      color-mix(in oklab, var(--color-primary) 10%, transparent) 1px,
-      transparent 1px
-    );
-  background-size: clamp(2rem, 7vw, 5rem) clamp(2rem, 7vw, 5rem);
+  background: color-mix(in srgb, var(--color-background-cinematic) 14%, transparent);
   inset: 0;
 }
 
 .services-spike__media-panel::after {
-  background: var(--color-overlay-image);
-  block-size: 46%;
-  inset: auto 0 0;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--color-background-cinematic) 44%, transparent),
+    transparent 42%,
+    color-mix(in srgb, var(--color-background-cinematic) 78%, transparent)
+  );
+  inset: 0;
+}
+
+.services-spike__media-image {
+  block-size: 100%;
+  inline-size: 100%;
+  inset: 0;
+  object-fit: cover;
+  position: absolute;
 }
 
 .services-spike__media-panel[data-tone="01"] {
@@ -136,17 +137,6 @@
   line-height: 1;
   position: relative;
   z-index: var(--primitive-z-content);
-}
-
-.services-spike__media-panel[data-tone="02"] .services-spike__media-label,
-.services-spike__media-panel[data-tone="02"] .services-spike__media-number,
-.services-spike__media-panel[data-tone="03"] .services-spike__media-label,
-.services-spike__media-panel[data-tone="03"] .services-spike__media-number,
-.services-spike__media-panel[data-tone="06"] .services-spike__media-label,
-.services-spike__media-panel[data-tone="06"] .services-spike__media-number,
-.services-spike__media-panel[data-tone="07"] .services-spike__media-label,
-.services-spike__media-panel[data-tone="07"] .services-spike__media-number {
-  color: var(--color-primary);
 }
 
 .services-spike__media-action {

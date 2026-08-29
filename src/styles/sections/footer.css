@@ -111,9 +111,11 @@
 .site-footer__logo-wall {
   align-self: start;
   border: 1px solid var(--footer-divider);
+  border-radius: var(--primitive-radius-md);
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   min-block-size: clamp(11rem, 16vw, 15rem);
+  overflow: hidden;
 }
 
 .site-footer__logo-tile {
@@ -192,6 +194,7 @@
 .site-footer__contact-action {
   align-items: center;
   border: 1px solid color-mix(in oklab, var(--color-text-inverse) 28%, transparent);
+  border-radius: var(--primitive-radius-md);
   display: grid;
   gap: var(--space-4);
   grid-template-columns: minmax(0, 1fr) auto;

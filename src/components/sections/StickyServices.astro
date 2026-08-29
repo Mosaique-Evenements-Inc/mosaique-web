@@ -1,9 +1,37 @@
 ---
+import { getImage } from "astro:assets";
 import Container from "../ui/Container.astro";
 import { servicesContent } from "../../content/home/services";
 import ServicesScene from "./ServicesScene";
 
 import "../../styles/sections/services-spike.css";
+
+const services = await Promise.all(
+  servicesContent.items.map(async (service) => {
+    const optimizedMedia =
+      service.featuredMedia.kind === "image"
+        ? await getImage({
+            src: service.featuredMedia.src,
+            width: 1200,
+            height: 1500,
+            fit: "cover",
+            format: "webp",
+          })
+        : null;
+
+    return {
+      ...service,
+      optimizedMedia: optimizedMedia
+        ? {
+            alt: service.featuredMedia.alt,
+            height: optimizedMedia.attributes.height,
+            src: optimizedMedia.src,
+            width: optimizedMedia.attributes.width,
+          }
+        : null,
+    };
+  }),
+);
 ---
 
 <section
@@ -14,7 +42,7 @@ import "../../styles/sections/services-spike.css";
 >
   <Container>
     <ServicesScene
-      services={servicesContent.items}
+      services={services}
       panelReveal={servicesContent.panelReveal}
       client:visible
     />

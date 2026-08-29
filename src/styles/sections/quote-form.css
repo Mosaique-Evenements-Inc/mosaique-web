@@ -814,7 +814,7 @@
   align-items: start;
   background: var(--color-accent-muted);
   border: 0.3px solid var(--color-primary);
-  border-radius: var(--primitive-radius-sm);
+  border-radius: var(--primitive-radius-md);
   color: var(--color-primary);
   display: grid;
   gap: var(--space-4);
@@ -1152,22 +1152,23 @@
 
   .quote-form__actions > div {
     display: grid;
-    grid-template-columns: 3.25rem minmax(0, 1fr);
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  }
+
+  .quote-form__actions .quote-button {
+    padding-inline: var(--space-5);
   }
 
   .quote-form__actions [data-quote-back] {
-    inline-size: 3.25rem;
-    padding: 0;
+    inline-size: 100%;
   }
 
-  .quote-form__actions [data-quote-back-label] {
-    block-size: 1px;
-    clip: rect(0, 0, 0, 0);
-    clip-path: inset(50%);
-    inline-size: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
+  .quote-form__actions [data-quote-back] .action-button__content {
+    gap: var(--space-2);
+  }
+
+  .quote-form__actions [data-quote-back] .action-button__icon {
+    inline-size: 1rem;
   }
 
   .quote-form__actions [data-quote-next] {
