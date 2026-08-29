@@ -1,15 +1,26 @@
+import {
+  babyShowerMain,
+  bailaDaZazaMain,
+  cumpleanosAnaPaula48,
+  fanFestMain,
+  nossaCopaMain,
+  nossaCopa92,
+  weddingEb59664,
+  weddingEb59673,
+} from "../../assets/images/events";
 import { assertUniqueValues } from "../integrity";
 import type { FeaturedMedia } from "../media";
 import type { ContentLink } from "../types";
 import { SERVICE_IDS, type Service } from "./types";
 
-const createPendingFeaturedMedia = (title: string): FeaturedMedia => ({
-  alt: `Contenido visual pendiente para ${title}.`,
-  height: 900,
-  kind: "pending",
-  src: null,
-  status: "pending",
-  width: 1600,
+const createFeaturedMedia = (
+  src: Extract<FeaturedMedia, { kind: "image" }>["src"],
+  alt: string,
+): FeaturedMedia => ({
+  alt,
+  kind: "image",
+  src,
+  status: "approved",
 });
 
 export const services = [
@@ -25,7 +36,10 @@ export const services = [
       label: "Cotizar producción integral",
       href: "/contact?service=organizacion-produccion-integral",
     } satisfies ContentLink,
-    featuredMedia: createPendingFeaturedMedia("Organización y producción integral"),
+    featuredMedia: createFeaturedMedia(
+      nossaCopa92,
+      "Vista general de los asistentes reunidos para Nossa Copa.",
+    ),
     gallery: [],
   },
   {
@@ -41,7 +55,10 @@ export const services = [
       label: "Planear nuestra boda",
       href: "/contact?service=bodas",
     } satisfies ContentLink,
-    featuredMedia: createPendingFeaturedMedia("Bodas"),
+    featuredMedia: createFeaturedMedia(
+      weddingEb59664,
+      "Mesas de la boda R&R dispuestas al aire libre entre árboles y vegetación.",
+    ),
     gallery: [],
   },
   {
@@ -57,7 +74,10 @@ export const services = [
       label: "Planear una celebración",
       href: "/contact?service=celebraciones",
     } satisfies ContentLink,
-    featuredMedia: createPendingFeaturedMedia("Celebraciones"),
+    featuredMedia: createFeaturedMedia(
+      babyShowerMain,
+      "Decoración principal del baby shower con globos, flores y bloques de letras.",
+    ),
     gallery: [],
   },
   {
@@ -72,7 +92,10 @@ export const services = [
       label: "Crear un evento corporativo",
       href: "/contact?service=eventos-corporativos",
     } satisfies ContentLink,
-    featuredMedia: createPendingFeaturedMedia("Eventos corporativos"),
+    featuredMedia: createFeaturedMedia(
+      fanFestMain,
+      "Presentación musical frente a la afición reunida en Fan Fest Club.",
+    ),
     gallery: [],
   },
   {
@@ -87,7 +110,10 @@ export const services = [
       label: "Proponer una alianza",
       href: "/contact?service=alianzas-venues",
     } satisfies ContentLink,
-    featuredMedia: createPendingFeaturedMedia("Alianzas con venues"),
+    featuredMedia: createFeaturedMedia(
+      bailaDaZazaMain,
+      "DJ compartiendo la cabina durante Baila da Zaza bajo una iluminación naranja.",
+    ),
     gallery: [],
   },
   {
@@ -102,7 +128,10 @@ export const services = [
       label: "Solicitar soporte logístico",
       href: "/contact?service=montaje-logistica",
     } satisfies ContentLink,
-    featuredMedia: createPendingFeaturedMedia("Montaje y logística"),
+    featuredMedia: createFeaturedMedia(
+      cumpleanosAnaPaula48,
+      "Arreglo de globos rosados y lilas para el cumpleaños de Ana Paula.",
+    ),
     gallery: [],
   },
   {
@@ -117,7 +146,10 @@ export const services = [
       label: "Ver opciones de alquiler",
       href: "/contact?service=alquiler-mobiliario",
     } satisfies ContentLink,
-    featuredMedia: createPendingFeaturedMedia("Alquiler de mobiliario"),
+    featuredMedia: createFeaturedMedia(
+      weddingEb59673,
+      "Mesa de dulces con detalles amarillos durante la recepción.",
+    ),
     gallery: [],
   },
   {
@@ -132,7 +164,10 @@ export const services = [
       label: "Crear mi paquete",
       href: "/contact?service=paquetes-personalizados",
     } satisfies ContentLink,
-    featuredMedia: createPendingFeaturedMedia("Paquetes personalizados"),
+    featuredMedia: createFeaturedMedia(
+      nossaCopaMain,
+      "Partida de billar durante Nossa Copa, rodeada de asistentes con camisetas de Brasil.",
+    ),
     gallery: [],
   },
 ] as const satisfies readonly Service[];

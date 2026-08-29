@@ -17,7 +17,7 @@ const { service } = Astro.props;
 
     <div class="service-header__narrative">
       <Text variant="body-lg" tone="inverse">{service.description}</Text>
-      <Button className="service-header__cta" href={service.cta.href} variant="transparent">
+      <Button className="service-header__cta" href={service.cta.href} variant="light">
         {service.cta.label}
       </Button>
     </div>

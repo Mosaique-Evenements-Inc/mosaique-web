@@ -454,6 +454,21 @@ This document is the source of truth for implementation status. The existence of
 
 ## Next
 
+### Home Services Media + Service CTA Handoff
+
+- **Complete locally.** Each canonical Service now owns one approved existing repository image
+  through `featuredMedia`; these are provisional editorial assignments and can be replaced in the
+  Service constants without changing Home or Service Detail composition.
+- Home Services keeps the cinematic eight-scene contract while its intro uses a wider reading
+  measure and shorter viewport footprint so the first service enters sooner. `Ver más` remains
+  transparent-first and `Cotizar` now uses the light-to-transparent button variant.
+- Mobile keeps the sticky scene rhythm but fixes each service media surface at its fully expanded
+  `scale(1)` state. This prevents the longer Service copy from exposing and colliding with the
+  outgoing scene through the smaller Event-preview entry frame.
+- Service Detail applies the same light-to-transparent treatment to its commercial header CTA and
+  now closes with a Service-owned physical copy of the Event Detail contact marquee structure,
+  reusing the approved Final CTA content and existing Service Detail marquee styles.
+
 ### Architecture Audit
 
 - Not started and approval-gated. Audit the current repository boundaries before proposing any

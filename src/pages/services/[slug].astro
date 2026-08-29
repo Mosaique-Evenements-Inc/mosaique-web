@@ -3,6 +3,7 @@ import Footer from "../../components/sections/Footer.astro";
 import Navigation from "../../components/sections/Navigation.astro";
 import ServiceHeader from "../../components/services/ServiceHeader.astro";
 import ServiceGallery from "../../components/services/ServiceGallery.astro";
+import ServiceContactMarquee from "../../components/services/ServiceContactMarquee.astro";
 import ServiceRelatedEvents from "../../components/services/ServiceRelatedEvents.astro";
 import { getEventsByServiceId } from "../../content/events";
 import { services, type Service } from "../../content/services";
@@ -42,6 +43,7 @@ const relatedEvents = getEventsByServiceId(service.id);
       />
     </div>
     <ServiceRelatedEvents events={relatedEvents} />
+    <ServiceContactMarquee />
   </main>
   <Footer anchorPrefix="/" />
 </BaseLayout>

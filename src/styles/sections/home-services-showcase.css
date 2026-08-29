@@ -7,27 +7,29 @@
 .home-services-showcase__intro {
   align-items: center;
   display: grid;
-  min-block-size: clamp(34rem, 78svh, 48rem);
-  padding: clamp(var(--space-24), 12vw, var(--space-40)) var(--space-page-gutter);
+  min-block-size: clamp(28rem, 62svh, 38rem);
+  padding: clamp(var(--space-16), 8vw, var(--space-28)) var(--space-page-gutter);
   text-align: center;
 }
 
 .home-services-showcase__intro-inner {
-  inline-size: min(100%, var(--layout-max-reading));
+  inline-size: min(100%, 76rem);
   margin-inline: auto;
 }
 
 .home-services-showcase__intro h2 {
-  font-size: clamp(3.5rem, 8vw, 7.5rem);
+  font-size: clamp(3.5rem, 6vw, 6.5rem);
+  inline-size: min(60rem, calc(100% - (2 * var(--space-6))));
+  margin-inline: auto;
   line-height: 0.9;
-  margin: 0;
+  margin-block: 0;
   text-wrap: balance;
 }
 
 .home-services-showcase__intro p {
   color: color-mix(in oklab, var(--color-text-inverse) 76%, transparent);
-  margin: var(--space-10) auto 0;
-  max-inline-size: 42rem;
+  margin: var(--space-8) auto 0;
+  max-inline-size: 62rem;
 }
 
 .home-services-showcase__intro-cta {
@@ -36,7 +38,7 @@
   font-family: var(--font-family-ui);
   font-size: var(--text-caption-size);
   font-weight: var(--text-caption-weight);
-  margin-block-start: var(--space-8);
+  margin-block-start: var(--space-6);
   text-decoration-thickness: 1px;
   text-underline-offset: var(--space-2);
 }
@@ -78,6 +80,12 @@
   inset: 0;
   overflow: hidden;
   position: absolute;
+}
+
+.home-service-preview__media picture {
+  block-size: 100%;
+  display: block;
+  inline-size: 100%;
 }
 
 .home-service-preview__media-inner {
@@ -372,15 +380,25 @@
       animation-timing-function: linear;
     }
   }
+
+  @media (max-width: 47.999rem) {
+    .home-service-preview__media,
+    .home-service-preview__media-inner {
+      animation: none;
+      transform: none;
+    }
+  }
 }
 
 @media (max-width: 47.999rem) {
   .home-services-showcase__intro {
-    min-block-size: 70svh;
+    min-block-size: 62svh;
+    padding-block: var(--space-20);
   }
 
   .home-services-showcase__intro h2 {
     font-size: clamp(3rem, 15vw, 4.5rem);
+    inline-size: calc(100% - (2 * var(--space-3)));
   }
 
   .home-service-preview__copy {
