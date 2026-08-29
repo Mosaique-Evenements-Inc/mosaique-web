@@ -74,26 +74,21 @@ task.**
 
 Current responsibilities:
 
-- `src/content/`: reviewed business copy and semantic content models.
-- `src/content/home/`: one typed module per homepage section or editorial concept.
-- `src/components/ui/`: small, reusable, content-agnostic Astro primitives.
-- `src/components/motion/`: reusable motion and interaction orchestration.
-- `src/components/sections/`: section composition, semantics, content binding, and local behavior.
-- `src/pages/`: route composition and section order.
+- `src/core/common/`: framework-light shared contracts, utilities, and content-agnostic UI.
+- `src/core/config/`: environment and application configuration boundaries.
+- `src/features/<feature>/`: feature-owned data, types, selectors, application logic, and UI.
+- `src/features/<feature>/ui/components/`: feature presentation components.
+- `src/features/<feature>/ui/pages/`: rendered route compositions.
+- `src/features/<feature>/ui/styles/`: feature-owned CSS.
+- `src/pages/`: thin Astro routing roots, static-path generation, and route props.
 - `src/styles/tokens/`: executable CSS design-token source of truth.
-- `src/styles/sections/`: section-owned styles.
-- `src/tokens/motion.ts`: runtime equivalents of CSS motion tokens for React/Motion.
+- `src/styles/global.css`: global reset, base rules, and token imports.
 - `src/layouts/BaseLayout.astro`: shared document shell and metadata contract.
 
-The current public surface includes the homepage at `/`, the gallery page at `/gallery`, derived
-gallery category pages at `/gallery/[category]`, the contact page at `/contact`, event detail
-pages at `/events/[slug]`, and `/robots.txt`.
-`src/pages/index.astro` currently composes
-Navigation; then a `PanelReveal` containing Hero, Event Gallery, Services, Process with
-Testimonials, and Marquee; followed by FAQ, Final CTA, and Footer. The `/contact` route owns the
-inline two-tab QuoteForm and its replaceable media placeholder. About/Milestones and Why Choose
-Us are currently commented out of the homepage composition. A module or component existing on
-disk does not prove it is rendered.
+The current public surface includes `/`, `/about`, `/gallery`, `/gallery/[category]`, `/contact`,
+`/events/[slug]`, `/services/[slug]`, and `/robots.txt`. Feature-owned page compositions render
+those experiences; route files remain thin. A module or component existing on disk does not prove
+it is rendered.
 
 ## Technology Principle
 
@@ -103,9 +98,8 @@ disk does not prove it is rendered.
 - Use CSS and native browser behavior for layout, sticky positioning, simple transitions, and
   local disclosures.
 - Add a React island only when client-side state or orchestration is genuinely required.
-- Use Motion for established React motion primitives and scroll-linked orchestration.
-- Do not introduce GSAP or another motion/runtime dependency unless the existing stack cannot
-  express a confirmed requirement.
+- Do not add Motion, GSAP, or another motion runtime unless CSS/native APIs and the existing stack
+  cannot express a confirmed requirement.
 - Preserve native scrolling. Do not hijack wheel/touch input or introduce mandatory scroll snap.
 
 ## Clean Implementation
@@ -156,7 +150,7 @@ Layout and rhythm:
 - Breakpoints: `sm` 40rem, `md` 48rem, `lg` 64rem, `xl` 80rem, `2xl` 96rem.
 - Use `100svh`/`100dvh` deliberately where mobile browser chrome matters.
 
-Use the shared `Button.astro` variants (`primary`, `secondary`, `ghost`) when their contract
+Use the shared `Button.tsx` variants (`primary`, `secondary`, `ghost`) when their contract
 fits. Preserve the hierarchy: primary for the main action, secondary for a quieter framed action,
 and ghost for low-chrome textual action. A destination uses a link; an in-page operation uses a
 button. Never use `<a href="#">` as a placeholder action.
@@ -167,14 +161,15 @@ Content flows as follows:
 
 ```text
 base_content.txt
-  -> reviewed typed modules in src/content/
-  -> section components
+  -> reviewed typed modules in src/features/<feature>/
+  -> feature UI components
   -> UI and motion primitives
 ```
 
 `base_content.txt` is the original business input and is not read at runtime. The typed modules
-in `src/content/` are the executable content source. Keep them presentation-agnostic and preserve
-stable identifiers. CTAs are modeled as label plus `href`; content modules do not create routes.
+inside each owning feature are the executable content source. Keep them presentation-agnostic and
+preserve stable identifiers. CTAs are modeled as label plus `href`; content modules do not create
+routes.
 
 For a content change:
 
@@ -288,11 +283,12 @@ Contacto routes to the dedicated `/contact` page; do not restore a separate topb
 or obsolete modal triggers. The native dialog menu must continue
 to support keyboard navigation, focus containment, Escape-to-close, close-button and link-close
 behavior, scroll locking, and responsive sizing. Modify menu items in
-`src/content/home/navigation.ts`, not by hardcoding parallel markup.
+`src/features/site-shell/content/navigation.ts`, not by hardcoding parallel markup.
 
 ## Services Contract
 
-Home Services is data-driven from `servicesContent.items` in `src/content/home/services.ts` and
+Home Services is data-driven from `servicesContent.items` in
+`src/features/home/content/services.ts` and
 renders an Astro-only cinematic sequence through `HomeServicesShowcase` and
 `HomeServicePreviewScene`. Preserve stable IDs, editorial numbering, descriptions, “Ideal para”
 copy, explicit media status, and catalog order.
@@ -310,7 +306,7 @@ copy, explicit media status, and catalog order.
 
 ## Event Gallery Contract
 
-`src/content/home/projects.ts` exports `eventGalleryContent`; the section remains named
+`src/features/gallery/data/archive.ts` exports `eventGalleryContent`; the section remains named
 `ProjectsExperiences.astro`. Each record represents one future documented event and has a stable
 ID suitable for later detail/gallery behavior.
 
@@ -342,8 +338,9 @@ mobile override those values at their existing breakpoints rather than scaling t
 
 ## Footer Contract
 
-`src/content/home/footer.ts` is the source for the footer's brand, navigation, service labels,
-contact details, closing statement, and legal copy. `Footer.astro` owns the semantic composition.
+`src/features/site-shell/content/footer.ts` is the source for the footer's brand, navigation,
+service labels, contact details, closing statement, and legal copy. The feature-owned
+`Footer.astro` owns the semantic composition.
 
 Preserve the desktop two-band grid, dividers, contact hierarchy, brand wall, and responsive
 stacking unless a visual requirement changes them. Validate alignment and long contact strings.

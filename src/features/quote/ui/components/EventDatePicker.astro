@@ -1,0 +1,36 @@
+---
+import Icon from "@/core/common/ui/components/Icon.astro";
+---
+
+<dialog
+  id="date-picker-dialog"
+  class="date-picker-dialog"
+  data-date-picker-dialog
+  aria-labelledby="date-picker-month"
+>
+  <div class="date-picker-dialog__panel">
+    <header>
+      <button type="button" data-date-previous aria-label="Mes anterior">
+        <Icon name="arrowLeft" size={20} />
+      </button>
+      <h2 id="date-picker-month" data-date-month aria-live="polite"></h2>
+      <button type="button" data-date-next aria-label="Mes siguiente">
+        <Icon name="arrowRight" size={20} />
+      </button>
+    </header>
+
+    <div class="date-picker__weekdays" aria-hidden="true">
+      <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span
+        >D</span
+      >
+    </div>
+
+    <div
+      class="date-picker__grid"
+      data-date-grid
+      role="grid"
+      aria-labelledby="date-picker-month"
+    >
+    </div>
+  </div>
+</dialog>

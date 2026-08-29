@@ -1,0 +1,230 @@
+---
+import { Picture } from "astro:assets";
+
+import {
+  eventImageFallbackFormat,
+  eventImageFormats,
+  eventImageWidths,
+} from "@/assets/images/events/delivery";
+import Button from "@/core/common/ui/components/Button";
+import Container from "@/core/common/ui/components/Container.astro";
+import { eventGalleryItems, type EventGalleryItem } from "@/features/gallery";
+import { galleryCategories } from "@/features/gallery";
+
+import "@/features/gallery/ui/styles/gallery-archive.css";
+
+interface Props {
+  activeCategoryId?: string;
+  items: readonly EventGalleryItem[];
+}
+
+const { activeCategoryId, items } = Astro.props;
+const activeCategory = galleryCategories.find((category) => category.id === activeCategoryId);
+const heading = activeCategory
+  ? `${activeCategory.label} — Galería de eventos realizados`
+  : "Galería de eventos realizados";
+---
+
+<section
+  class="gallery-archive"
+  aria-labelledby="gallery-archive-title"
+  data-gallery-archive
+  data-navigation-contrast="dark"
+>
+  <Container bleed class="gallery-archive__container">
+    <h1 class="gallery-archive__sr-only" id="gallery-archive-title">{heading}</h1>
+
+    <div class="gallery-archive__layout">
+      <aside class="gallery-archive__filters">
+        <nav class="gallery-archive__filter-list" aria-label="Categorías de eventos">
+          <Button
+            className="gallery-archive__filter"
+            href="/gallery"
+            variant={activeCategoryId ? "transparent" : "light"}
+            aria-current={activeCategoryId ? undefined : "page"}
+          >
+            All
+          </Button>
+          {
+            galleryCategories.map((category) => (
+              <Button
+                className="gallery-archive__filter"
+                href={category.href}
+                variant={category.id === activeCategoryId ? "light" : "transparent"}
+                aria-current={category.id === activeCategoryId ? "page" : undefined}
+              >
+                {category.label}
+              </Button>
+            ))
+          }
+        </nav>
+      </aside>
+
+      <div class="gallery-archive__events">
+        <p class="gallery-archive__sr-only">
+          {items.length}
+          {items.length === 1 ? "evento visible" : "eventos visibles"}
+        </p>
+
+        <ol class="gallery-archive__list" aria-label="Eventos realizados por Mosaïque">
+          {
+            items.map((event, index) => {
+              const sourceIndex = eventGalleryItems.findIndex(
+                (source) => source.id === event.id,
+              );
+              const tone = String(sourceIndex >= 0 ? sourceIndex + 1 : index + 1).padStart(
+                2,
+                "0",
+              );
+              const titleWords = event.title.split(" ");
+              const titleSegments = titleWords.map((word, wordIndex) => ({
+                offset: titleWords
+                  .slice(0, wordIndex)
+                  .reduce((total, previousWord) => total + previousWord.length + 1, 0),
+                word,
+              }));
+
+              return (
+                <li
+                  class="gallery-archive__item"
+                  data-gallery-event
+                  data-event-id={event.id}
+                  data-content-status={event.status}
+                >
+                  <a class="gallery-archive__event-link" href={event.href}>
+                    <div
+                      class="gallery-archive__media"
+                      data-media-status={event.media.status}
+                      data-tone={tone}
+                      aria-hidden="true"
+                    >
+                      {event.media.status === "approved" ? (
+                        <Picture
+                          src={event.media.src}
+                          alt=""
+                          formats={eventImageFormats}
+                          fallbackFormat={eventImageFallbackFormat}
+                          widths={eventImageWidths}
+                          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 38vw, 100vw"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : (
+                        <>
+                          <span />
+                          <span />
+                        </>
+                      )}
+                    </div>
+
+                    <div class="gallery-archive__copy">
+                      <p>{event.category}</p>
+                      <h2 aria-label={event.title}>
+                        {titleSegments.map(({ offset, word }, wordIndex) => (
+                          <>
+                            <span class="gallery-archive__title-word" aria-hidden="true">
+                              {Array.from(word).map((character, characterIndex) => (
+                                <span
+                                  class="gallery-archive__title-character"
+                                  style={`--gallery-character-index:${offset + characterIndex};`}
+                                >
+                                  {character}
+                                </span>
+                              ))}
+                            </span>
+                            {wordIndex < titleWords.length - 1 ? " " : null}
+                          </>
+                        ))}
+                      </h2>
+                    </div>
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ol>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-gallery-archive]").forEach((archive) => {
+    if (archive.dataset.galleryMotionReady === "true") return;
+    archive.dataset.galleryMotionReady = "true";
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const events = Array.from(archive.querySelectorAll<HTMLElement>("[data-gallery-event]"));
+    const filterLinks = Array.from(
+      archive.querySelectorAll<HTMLAnchorElement>(".gallery-archive__filter-list a"),
+    );
+    let observer: IntersectionObserver | undefined;
+    let navigationTimer = 0;
+
+    const revealAll = () => {
+      observer?.disconnect();
+      observer = undefined;
+      events.forEach((event) => event.setAttribute("data-gallery-revealed", "true"));
+    };
+
+    const observeEvents = () => {
+      observer?.disconnect();
+      archive.setAttribute("data-gallery-motion", "active");
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            (entry.target as HTMLElement).setAttribute("data-gallery-revealed", "true");
+            observer?.unobserve(entry.target);
+          });
+        },
+        { rootMargin: "0px 0px -10%", threshold: 0.08 },
+      );
+
+      events.forEach((event) => observer?.observe(event));
+    };
+
+    const updateMotionPreference = () => {
+      if (reducedMotion.matches) {
+        archive.removeAttribute("data-gallery-motion");
+        revealAll();
+        return;
+      }
+
+      observeEvents();
+    };
+
+    filterLinks.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        if (
+          event.defaultPrevented ||
+          event.button !== 0 ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey ||
+          link.target === "_blank" ||
+          link.hasAttribute("download")
+        ) {
+          return;
+        }
+
+        if (link.getAttribute("aria-current") === "page") {
+          event.preventDefault();
+          return;
+        }
+
+        if (reducedMotion.matches) return;
+
+        event.preventDefault();
+        window.clearTimeout(navigationTimer);
+        archive.setAttribute("data-gallery-leaving", "true");
+        navigationTimer = window.setTimeout(() => window.location.assign(link.href), 240);
+      });
+    });
+
+    reducedMotion.addEventListener("change", updateMotionPreference);
+    updateMotionPreference();
+  });
+</script>

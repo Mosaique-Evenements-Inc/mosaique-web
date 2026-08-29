@@ -1,14 +1,6 @@
 ---
-import Footer from "../../components/sections/Footer.astro";
-import GalleryArchive from "../../components/sections/GalleryArchive.astro";
-import Navigation from "../../components/sections/Navigation.astro";
-import {
-  galleryCategories,
-  getGalleryEvents,
-  type GalleryCategory,
-} from "../../content/gallery";
-import { eventGalleryContent } from "../../content/home/projects";
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import { galleryCategories, getGalleryEvents, type GalleryCategory } from "@/features/gallery";
+import GalleryPage from "@/features/gallery/ui/pages/GalleryPage.astro";
 
 export function getStaticPaths() {
   return galleryCategories.map((category) => ({
@@ -25,13 +17,8 @@ const { category } = Astro.props;
 const events = getGalleryEvents(category.id);
 ---
 
-<BaseLayout
+<GalleryPage
+  activeCategoryId={category.id}
+  items={events}
   title={`${category.label} — Galería de eventos — MOSAÏQUE EVENTS`}
-  description={eventGalleryContent.introduction}
->
-  <Navigation anchorPrefix="/" />
-  <main class="gallery-page" id="main-content" tabindex="-1">
-    <GalleryArchive activeCategoryId={category.id} items={events} />
-  </main>
-  <Footer anchorPrefix="/" />
-</BaseLayout>
+/>

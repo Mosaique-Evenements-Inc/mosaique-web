@@ -1,0 +1,156 @@
+---
+import { serviceNavigationItems } from "@/features/site-shell/content/navigation";
+
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+const panelId = "site-navigation-services-menu";
+const isCurrentPage = (href: string) =>
+  Astro.url.pathname === href || Astro.url.pathname.startsWith(`${href}/`);
+---
+
+<li class="site-navigation__services-dropdown" data-services-dropdown>
+  <button
+    class="site-navigation__services-trigger"
+    type="button"
+    aria-expanded="false"
+    aria-controls={panelId}
+    aria-haspopup="true"
+  >
+    {label}
+  </button>
+
+  <div
+    class="site-navigation__services-panel"
+    id={panelId}
+    aria-hidden="true"
+    data-services-panel
+  >
+    <ul class="site-navigation__services-list">
+      {
+        serviceNavigationItems.map((item) => (
+          <li>
+            <a href={item.href} aria-current={isCurrentPage(item.href) ? "page" : undefined}>
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</li>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-services-dropdown]").forEach((dropdown) => {
+    if (dropdown.dataset.dropdownReady === "true") return;
+    dropdown.dataset.dropdownReady = "true";
+
+    const trigger = dropdown.querySelector<HTMLButtonElement>(
+      ".site-navigation__services-trigger",
+    );
+    const panel = dropdown.querySelector<HTMLElement>("[data-services-panel]");
+    const links = Array.from(dropdown.querySelectorAll<HTMLAnchorElement>("a[href]"));
+    const desktop = window.matchMedia("(min-width: 80rem)");
+    const controller = new AbortController();
+    let closeTimer = 0;
+    let clickOpen = false;
+
+    if (!trigger || !panel) return;
+
+    const setOpen = (open: boolean, returnFocus = false) => {
+      window.clearTimeout(closeTimer);
+      dropdown.toggleAttribute("data-open", open);
+      trigger.setAttribute("aria-expanded", String(open));
+      panel.setAttribute("aria-hidden", String(!open));
+      if (!open) clickOpen = false;
+      if (!open && returnFocus) trigger.focus();
+    };
+
+    const scheduleClose = () => {
+      window.clearTimeout(closeTimer);
+      if (clickOpen) return;
+      closeTimer = window.setTimeout(() => setOpen(false), 120);
+    };
+
+    dropdown.addEventListener(
+      "pointerenter",
+      () => {
+        if (desktop.matches) setOpen(true);
+      },
+      { signal: controller.signal },
+    );
+    dropdown.addEventListener("pointerleave", scheduleClose, { signal: controller.signal });
+    dropdown.addEventListener(
+      "focusout",
+      () => {
+        window.setTimeout(() => {
+          if (!dropdown.contains(document.activeElement)) setOpen(false);
+        });
+      },
+      { signal: controller.signal },
+    );
+
+    trigger.addEventListener(
+      "click",
+      () => {
+        if (clickOpen) {
+          setOpen(false);
+          return;
+        }
+
+        clickOpen = true;
+        setOpen(true);
+      },
+      { signal: controller.signal },
+    );
+    trigger.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.key !== "ArrowDown") return;
+        event.preventDefault();
+        setOpen(true);
+        links[0]?.focus();
+      },
+      { signal: controller.signal },
+    );
+
+    dropdown.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.key !== "Escape" || !dropdown.hasAttribute("data-open")) return;
+        event.preventDefault();
+        setOpen(false, true);
+      },
+      { signal: controller.signal },
+    );
+
+    document.addEventListener(
+      "pointerdown",
+      (event) => {
+        if (!dropdown.contains(event.target as Node)) setOpen(false);
+      },
+      { signal: controller.signal },
+    );
+
+    links.forEach((link) =>
+      link.addEventListener("click", () => setOpen(false), { signal: controller.signal }),
+    );
+    desktop.addEventListener(
+      "change",
+      (event) => {
+        if (!event.matches) setOpen(false);
+      },
+      { signal: controller.signal },
+    );
+    window.addEventListener(
+      "pagehide",
+      () => {
+        window.clearTimeout(closeTimer);
+        controller.abort();
+      },
+      { once: true },
+    );
+  });
+</script>

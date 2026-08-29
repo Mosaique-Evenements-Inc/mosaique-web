@@ -1,0 +1,42 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/features/site-shell/ui/components/Footer.astro";
+import Navigation from "@/features/site-shell/ui/components/Navigation.astro";
+import type { Event } from "@/features/events";
+import type { Service } from "@/features/services";
+import ServiceContactMarquee from "../components/ServiceContactMarquee.astro";
+import ServiceGallery from "../components/ServiceGallery.astro";
+import ServiceHeader from "../components/ServiceHeader.astro";
+import ServiceRelatedEvents from "../components/ServiceRelatedEvents.astro";
+
+import "../styles/service-detail.css";
+
+interface Props {
+  relatedEvents: Event[];
+  service: Service;
+}
+
+const { relatedEvents, service } = Astro.props;
+---
+
+<BaseLayout
+  title={`${service.title} — MOSAÏQUE EVENTS`}
+  description={service.description}
+  surface="cinematic"
+>
+  <Navigation surface="overlay" anchorPrefix="/" />
+  <main class="service-detail" id="main-content" tabindex="-1" data-navigation-contrast="light">
+    <div class="service-detail__chapter" data-content-status="placeholder">
+      <ServiceHeader {service} />
+      <ServiceGallery
+        featuredMedia={service.featuredMedia}
+        images={service.gallery}
+        slug={service.slug}
+        title={service.title}
+      />
+    </div>
+    <ServiceRelatedEvents events={relatedEvents} />
+    <ServiceContactMarquee />
+  </main>
+  <Footer anchorPrefix="/" />
+</BaseLayout>

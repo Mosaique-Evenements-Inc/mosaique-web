@@ -1,0 +1,284 @@
+---
+import { Picture } from "astro:assets";
+
+import {
+  eventImageFallbackFormat,
+  eventImageFormats,
+  eventImageWidths,
+} from "@/assets/images/events/delivery";
+import Container from "@/core/common/ui/components/Container.astro";
+import Heading from "@/core/common/ui/components/Heading.astro";
+import Text from "@/core/common/ui/components/Text.astro";
+import Icon from "@/core/common/ui/components/Icon.astro";
+import { eventGalleryContent, eventGalleryItems } from "@/features/gallery";
+
+import "@/features/home/ui/styles/projects-experiences.css";
+---
+
+<section
+  class="projects-experiences"
+  id="experiences"
+  aria-labelledby="projects-experiences-title"
+  aria-roledescription="carousel"
+  data-content-status={eventGalleryContent.status}
+  data-navigation-contrast="dark"
+>
+  <Container>
+    <div class="projects-experiences__layout">
+      <header class="projects-experiences__header">
+        <Heading as="h2" variant="display-lg" id="projects-experiences-title">
+          {eventGalleryContent.title}
+        </Heading>
+
+        <div class="projects-experiences__introduction">
+          <Text variant="body-lg" tone="primary">{eventGalleryContent.introduction}</Text>
+          <a class="projects-experiences__cta" href={eventGalleryContent.cta.href}>
+            {eventGalleryContent.cta.label}
+          </a>
+        </div>
+      </header>
+
+      <div class="projects-experiences__viewport">
+        <ol
+          class="projects-experiences__track"
+          data-projects-track
+          aria-label="Eventos realizados por Mosaïque"
+          tabindex="0"
+        >
+          {
+            eventGalleryItems.map((event, index) => {
+              const eventNumber = String(index + 1).padStart(2, "0");
+
+              return (
+                <li
+                  class="projects-experiences__slide"
+                  data-projects-slide
+                  data-event-id={event.id}
+                  data-event-title={event.title}
+                  data-content-status={event.status}
+                  data-active={index === 0 ? "true" : "false"}
+                  aria-label={`${index + 1} de ${eventGalleryItems.length}`}
+                  aria-roledescription="slide"
+                >
+                  <a class="projects-experiences__link" href={event.href}>
+                    <article>
+                      <div
+                        class="projects-experiences__media"
+                        data-media-status={event.media.status}
+                        data-tone={eventNumber}
+                        aria-hidden="true"
+                      >
+                        {event.media.status === "approved" ? (
+                          <Picture
+                            src={event.media.src}
+                            alt=""
+                            formats={eventImageFormats}
+                            fallbackFormat={eventImageFallbackFormat}
+                            widths={eventImageWidths}
+                            sizes="(min-width: 1024px) 42vw, (min-width: 768px) 76vw, 100vw"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        ) : (
+                          <>
+                            <span />
+                            <span />
+                          </>
+                        )}
+                      </div>
+                      <div class="projects-experiences__meta">
+                        <span>{eventNumber}</span>
+                        <div>
+                          <Heading as="h3" variant="heading-md">
+                            {event.title}
+                          </Heading>
+                          <Text>{event.context}</Text>
+                        </div>
+                      </div>
+                    </article>
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ol>
+      </div>
+
+      <div class="projects-experiences__controls">
+        <p class="projects-experiences__status" aria-live="polite" aria-atomic="true">
+          Evento 1 de {eventGalleryItems.length}: {eventGalleryItems[0]?.title}
+        </p>
+        <div class="projects-experiences__buttons">
+          <button
+            type="button"
+            data-projects-previous
+            aria-label="Evento anterior"
+            title="Anterior"
+          >
+            <Icon name="arrowLeft" size={20} />
+          </button>
+          <button
+            type="button"
+            data-projects-next
+            aria-label="Evento siguiente"
+            title="Siguiente"
+          >
+            <Icon name="arrowRight" size={20} />
+          </button>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".projects-experiences").forEach((section) => {
+    if (section.dataset.carouselReady === "true") return;
+
+    section.dataset.carouselReady = "true";
+
+    const track = section.querySelector<HTMLElement>("[data-projects-track]");
+    const slides = Array.from(section.querySelectorAll<HTMLElement>("[data-projects-slide]"));
+    const previous = section.querySelector<HTMLButtonElement>("[data-projects-previous]");
+    const next = section.querySelector<HTMLButtonElement>("[data-projects-next]");
+    const status = section.querySelector<HTMLElement>(".projects-experiences__status");
+
+    if (!track || !previous || !next || slides.length === 0) return;
+
+    const controller = new AbortController();
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const desktopCarousel = window.matchMedia("(min-width: 64rem)");
+    let activeIndex = 0;
+    let frameId = 0;
+
+    const slideOffset = (slide: HTMLElement) => slide.offsetLeft - track.offsetLeft;
+
+    const getNavigationState = () => {
+      const visibleCount = desktopCarousel.matches ? 2 : 1;
+      const lastPageStart = Math.max(0, slides.length - visibleCount);
+
+      return { lastPageStart, visibleCount };
+    };
+
+    const renderState = () => {
+      const { lastPageStart, visibleCount } = getNavigationState();
+      activeIndex = Math.min(Math.max(activeIndex, 0), lastPageStart);
+      previous.disabled = activeIndex === 0;
+      next.disabled = activeIndex === lastPageStart;
+
+      slides.forEach((slide, index) => {
+        const isVisible = index >= activeIndex && index < activeIndex + visibleCount;
+        slide.dataset.active = String(isVisible);
+
+        if (desktopCarousel.matches || isVisible) {
+          slide.removeAttribute("aria-hidden");
+          slide.removeAttribute("inert");
+        } else {
+          slide.setAttribute("aria-hidden", "true");
+          slide.setAttribute("inert", "");
+        }
+      });
+
+      if (status) {
+        status.textContent = `Evento ${activeIndex + 1} de ${slides.length}: ${slides[activeIndex].dataset.eventTitle ?? ""}`;
+      }
+    };
+
+    const update = () => {
+      frameId = 0;
+      if (!desktopCarousel.matches) {
+        renderState();
+        return;
+      }
+
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      const isAtEnd = maxScroll - track.scrollLeft <= 2;
+      const { lastPageStart, visibleCount } = getNavigationState();
+      const closestIndex = isAtEnd
+        ? lastPageStart
+        : slides.reduce((bestIndex, slide, index) => {
+            const currentDistance = Math.abs(slideOffset(slide) - track.scrollLeft);
+            const bestDistance = Math.abs(slideOffset(slides[bestIndex]) - track.scrollLeft);
+            return currentDistance < bestDistance ? index : bestIndex;
+          }, 0);
+
+      activeIndex = Math.min(
+        Math.floor(closestIndex / visibleCount) * visibleCount,
+        lastPageStart,
+      );
+      renderState();
+    };
+
+    const requestUpdate = () => {
+      if (!frameId) frameId = window.requestAnimationFrame(update);
+    };
+
+    const goTo = (index: number) => {
+      const { lastPageStart } = getNavigationState();
+      const targetIndex = Math.min(Math.max(index, 0), lastPageStart);
+
+      if (!desktopCarousel.matches) {
+        activeIndex = targetIndex;
+        renderState();
+        return;
+      }
+
+      track.scrollTo({
+        behavior: reducedMotion.matches ? "auto" : "smooth",
+        left: slideOffset(slides[targetIndex]),
+      });
+    };
+
+    const syncMode = () => {
+      track.tabIndex = desktopCarousel.matches ? 0 : -1;
+      const { lastPageStart, visibleCount } = getNavigationState();
+      activeIndex = Math.min(
+        Math.floor(activeIndex / visibleCount) * visibleCount,
+        lastPageStart,
+      );
+
+      if (desktopCarousel.matches) {
+        track.scrollTo({ behavior: "auto", left: slideOffset(slides[activeIndex]) });
+        requestUpdate();
+      } else {
+        track.scrollTo({ behavior: "auto", left: 0 });
+        renderState();
+      }
+    };
+
+    previous.addEventListener(
+      "click",
+      () => goTo(activeIndex - getNavigationState().visibleCount),
+      {
+        signal: controller.signal,
+      },
+    );
+    next.addEventListener(
+      "click",
+      () => goTo(activeIndex + getNavigationState().visibleCount),
+      {
+        signal: controller.signal,
+      },
+    );
+    track.addEventListener("scroll", requestUpdate, {
+      passive: true,
+      signal: controller.signal,
+    });
+    desktopCarousel.addEventListener("change", syncMode, { signal: controller.signal });
+
+    const resizeObserver = new ResizeObserver(requestUpdate);
+    resizeObserver.observe(track);
+
+    window.addEventListener(
+      "pagehide",
+      () => {
+        controller.abort();
+        resizeObserver.disconnect();
+        if (frameId) window.cancelAnimationFrame(frameId);
+      },
+      { once: true },
+    );
+
+    syncMode();
+  });
+</script>

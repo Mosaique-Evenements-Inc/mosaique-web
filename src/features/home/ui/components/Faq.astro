@@ -1,0 +1,53 @@
+---
+import Container from "@/core/common/ui/components/Container.astro";
+import Heading from "@/core/common/ui/components/Heading.astro";
+import Text from "@/core/common/ui/components/Text.astro";
+import Icon from "@/core/common/ui/components/Icon.astro";
+import { faqContent } from "@/features/home/content/faq";
+
+import "@/features/home/ui/styles/faq.css";
+
+const columnSize = Math.ceil(faqContent.items.length / 2);
+const faqColumns = [faqContent.items.slice(0, columnSize), faqContent.items.slice(columnSize)];
+---
+
+<section class="faq" id="faq" aria-labelledby="faq-title" data-navigation-contrast="dark">
+  <Container>
+    <header class="faq__header">
+      <p>{faqContent.eyebrow}</p>
+      <Heading as="h2" variant="heading-md" id="faq-title">
+        {faqContent.title}
+      </Heading>
+    </header>
+
+    <div class="faq__columns">
+      {
+        faqColumns.map((column) => (
+          <div class="faq__column">
+            {column.map((item) => (
+              <details class="faq__item" name="faq-accordion">
+                <summary>
+                  <span class="faq__question">{item.question}</span>
+                  <span class="faq__toggle" aria-hidden="true">
+                    <Icon name="plus" size={22} />
+                  </span>
+                </summary>
+
+                <div class="faq__answer">
+                  <Text>{item.answer}</Text>
+                </div>
+              </details>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="faq__contact">
+      <p>{faqContent.contact.prompt}</p>
+      <a class="faq__contact-link" href={faqContent.contact.cta.href}>
+        {faqContent.contact.cta.label}
+      </a>
+    </div>
+  </Container>
+</section>

@@ -1,0 +1,11 @@
+---
+import ContactMarquee from "@/core/common/ui/components/ContactMarquee.astro";
+import { finalCtaContent } from "@/features/quote/content/finalCta";
+---
+
+<ContactMarquee
+  href={finalCtaContent.action.href}
+  label={finalCtaContent.action.label}
+  lead={finalCtaContent.text}
+  titleId="event-contact-marquee-title"
+/>

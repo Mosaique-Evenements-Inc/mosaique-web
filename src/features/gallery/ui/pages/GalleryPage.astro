@@ -1,0 +1,23 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/features/site-shell/ui/components/Footer.astro";
+import Navigation from "@/features/site-shell/ui/components/Navigation.astro";
+import { eventGalleryContent, type EventGalleryItem } from "@/features/gallery";
+import GalleryArchive from "../components/GalleryArchive.astro";
+
+interface Props {
+  activeCategoryId?: string;
+  items: readonly EventGalleryItem[];
+  title: string;
+}
+
+const { activeCategoryId, items, title } = Astro.props;
+---
+
+<BaseLayout title={title} description={eventGalleryContent.introduction}>
+  <Navigation anchorPrefix="/" />
+  <main class="gallery-page" id="main-content" tabindex="-1">
+    <GalleryArchive {activeCategoryId} {items} />
+  </main>
+  <Footer anchorPrefix="/" />
+</BaseLayout>

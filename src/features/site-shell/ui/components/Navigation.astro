@@ -1,0 +1,137 @@
+---
+import Container from "@/core/common/ui/components/Container.astro";
+import FullscreenNavigation from "./FullscreenNavigation.astro";
+import ServicesDropdown from "./ServicesDropdown.astro";
+import topbarLogo from "@/assets/logos/logo_topbar.png";
+import { navigationContent } from "@/features/site-shell/content/navigation";
+
+import "@/features/site-shell/ui/styles/home-entry.css";
+import "@/features/site-shell/ui/styles/navigation-menu.css";
+
+const homeLabel = navigationContent.items[0].label;
+interface Props {
+  anchorPrefix?: string;
+  surface?: "overlay" | "solid";
+}
+
+const { anchorPrefix = "", surface = "overlay" } = Astro.props;
+const resolveHref = (href: string) =>
+  anchorPrefix && href.startsWith("#") ? `${anchorPrefix}${href}` : href;
+const isCurrentPage = (href: string) =>
+  href.startsWith("/") &&
+  (Astro.url.pathname === href || (href !== "/" && Astro.url.pathname.startsWith(`${href}/`)));
+---
+
+<header
+  class:list={[
+    "site-navigation",
+    {
+      "site-navigation--home": Astro.url.pathname === "/",
+      "site-navigation--solid": surface === "solid",
+    },
+  ]}
+  data-navigation-surface={surface}
+>
+  <Container class="site-navigation__inner">
+    <a
+      class="site-navigation__logo"
+      href={resolveHref("#top")}
+      aria-label={`${navigationContent.logo} — ${homeLabel}`}
+    >
+      <span
+        class="site-navigation__logo-mark"
+        style={`--topbar-logo-url:url("${topbarLogo.src}");`}
+        aria-hidden="true"></span>
+    </a>
+
+    <nav class="site-navigation__desktop-nav" aria-label="Navegación principal">
+      <ul>
+        {
+          navigationContent.desktopItems.map((item) =>
+            item.href === "#services" ? (
+              <ServicesDropdown label={item.label} />
+            ) : (
+              <li>
+                <a
+                  href={resolveHref(item.href)}
+                  aria-current={isCurrentPage(item.href) ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ),
+          )
+        }
+      </ul>
+    </nav>
+
+    <FullscreenNavigation anchorPrefix={anchorPrefix} />
+  </Container>
+</header>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".site-navigation").forEach((navigation) => {
+    if (
+      navigation.dataset.navigationReady === "true" ||
+      navigation.dataset.navigationSurface === "solid"
+    ) {
+      return;
+    }
+
+    navigation.dataset.navigationReady = "true";
+
+    const controller = new AbortController();
+    let frameId = 0;
+
+    const updateContrast = () => {
+      frameId = 0;
+
+      const sampleY = Math.min(
+        Math.max(navigation.offsetHeight / 2, 0),
+        window.innerHeight - 1,
+      );
+      const layers = document.elementsFromPoint(window.innerWidth / 2, sampleY);
+      const surface = layers
+        .filter((element) => element !== navigation && !navigation.contains(element))
+        .map((element) => element.closest<HTMLElement>("[data-navigation-contrast]"))
+        .find((element): element is HTMLElement => Boolean(element));
+      const contrast = surface?.dataset.navigationContrast ?? "dark";
+
+      navigation.dataset.navigationActiveContrast = contrast;
+      navigation.style.setProperty(
+        "--navigation-color-progress",
+        contrast === "light" ? "0%" : "100%",
+      );
+    };
+
+    const requestUpdate = () => {
+      if (!frameId) frameId = window.requestAnimationFrame(updateContrast);
+    };
+
+    const resetContrast = () => {
+      navigation.removeAttribute("data-navigation-active-contrast");
+      navigation.style.removeProperty("--navigation-color-progress");
+    };
+
+    window.addEventListener("scroll", requestUpdate, {
+      passive: true,
+      signal: controller.signal,
+    });
+    window.addEventListener("resize", requestUpdate, { signal: controller.signal });
+    document.addEventListener("astro:before-swap", resetContrast, {
+      signal: controller.signal,
+    });
+    document.addEventListener("astro:after-swap", requestUpdate, { signal: controller.signal });
+    document.addEventListener("astro:page-load", requestUpdate, { signal: controller.signal });
+    window.addEventListener(
+      "pagehide",
+      () => {
+        controller.abort();
+        if (frameId) window.cancelAnimationFrame(frameId);
+      },
+      { once: true },
+    );
+
+    updateContrast();
+  });
+</script>

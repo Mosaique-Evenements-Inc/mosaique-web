@@ -1,0 +1,32 @@
+---
+import PanelReveal from "@/core/common/ui/motion/PanelReveal.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/features/site-shell/ui/components/Footer.astro";
+import Navigation from "@/features/site-shell/ui/components/Navigation.astro";
+import Faq from "../components/Faq.astro";
+import FinalCta from "../components/FinalCta.astro";
+import Hero from "../components/Hero.astro";
+import HomeServicesShowcase from "../components/HomeServicesShowcase.astro";
+import Marquee from "../components/Marquee.astro";
+import Process from "../components/Process.astro";
+import ProjectsExperiences from "../components/ProjectsExperiences.astro";
+---
+
+<BaseLayout
+  title="MOSAÏQUE EVENTS — Eventos en Montréal"
+  description="Empresa integral de eventos en Montréal especializada en organización, producción, montaje y experiencias."
+>
+  <Navigation />
+  <main class="site-main" id="main-content" tabindex="-1">
+    <PanelReveal>
+      <Hero slot="lead" />
+      <ProjectsExperiences />
+      <HomeServicesShowcase />
+      <Process />
+      <Marquee />
+    </PanelReveal>
+    <Faq />
+    <FinalCta />
+  </main>
+  <Footer />
+</BaseLayout>

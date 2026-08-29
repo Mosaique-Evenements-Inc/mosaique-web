@@ -1,0 +1,131 @@
+---
+import { marqueeContent } from "@/features/home/content/marquee";
+
+import "@/features/home/ui/styles/marquee.css";
+
+const marqueeText = marqueeContent.options[0];
+const marqueeStatement = marqueeContent.options[2];
+---
+
+<section
+  class="marquee"
+  aria-label="Servicios y experiencias Mosaïque"
+  data-navigation-contrast="light"
+>
+  <div class="marquee__scene">
+    <figure class="marquee__media" data-media-status="pending" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </figure>
+
+    <div class="marquee__curtain" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <div class="marquee__intro">
+      <p class="marquee__eyebrow">MOSAÏQUE EVENTS</p>
+      <p>{marqueeStatement}</p>
+    </div>
+
+    <div class="marquee__viewport">
+      <div class="marquee__track">
+        <p class="marquee__group">{marqueeText}</p>
+        <p class="marquee__group" aria-hidden="true">{marqueeText}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const clamp = (value: number) => Math.min(Math.max(value, 0), 1);
+
+  document.querySelectorAll<HTMLElement>(".marquee").forEach((section) => {
+    if (section.dataset.motionReady === "true") return;
+
+    section.dataset.motionReady = "true";
+
+    const scene = section.querySelector<HTMLElement>(".marquee__scene");
+    const track = section.querySelector<HTMLElement>(".marquee__track");
+    const intro = section.querySelector<HTMLElement>(".marquee__intro");
+    const curtainPanels = Array.from(
+      section.querySelectorAll<HTMLElement>(".marquee__curtain span"),
+    );
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    if (!scene || !track || !intro || reducedMotion.matches) return;
+
+    section.classList.add("is-enhanced");
+
+    let frameId = 0;
+    let isNearby = false;
+    let isListening = false;
+
+    const render = () => {
+      frameId = 0;
+
+      if (!isNearby) return;
+
+      const rect = section.getBoundingClientRect();
+      const scrollRange = Math.max(section.offsetHeight - window.innerHeight, 1);
+      const pinnedProgress = clamp(-rect.top / scrollRange);
+      const revealProgress = clamp(
+        (window.innerHeight - rect.top) / (window.innerHeight * 0.63),
+      );
+      const introOpacity = clamp(pinnedProgress / 0.08);
+      const tickerOpacity = clamp(pinnedProgress / 0.1);
+      const curtainDelays = [0.74, 0.62, 0];
+
+      curtainPanels.forEach((panel, index) => {
+        const delay = curtainDelays[index] ?? 0;
+        const panelProgress = clamp((revealProgress - delay) / (1 - delay));
+        panel.style.transform = `translate3d(0, ${-panelProgress * 100}%, 0)`;
+      });
+
+      intro.style.opacity = String(introOpacity);
+      track.style.opacity = String(tickerOpacity);
+    };
+
+    const scheduleRender = () => {
+      if (!frameId) frameId = window.requestAnimationFrame(render);
+    };
+
+    const setScrollListener = (shouldListen: boolean) => {
+      if (shouldListen === isListening) return;
+
+      isListening = shouldListen;
+
+      if (shouldListen) {
+        window.addEventListener("scroll", scheduleRender, { passive: true });
+      } else {
+        window.removeEventListener("scroll", scheduleRender);
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isNearby = entry?.isIntersecting ?? false;
+        setScrollListener(isNearby);
+        if (isNearby) scheduleRender();
+      },
+      { rootMargin: "100% 0px" },
+    );
+    const resizeObserver = new ResizeObserver(scheduleRender);
+
+    observer.observe(section);
+    resizeObserver.observe(scene);
+
+    window.addEventListener(
+      "pagehide",
+      () => {
+        observer.disconnect();
+        resizeObserver.disconnect();
+        setScrollListener(false);
+        if (frameId) window.cancelAnimationFrame(frameId);
+      },
+      { once: true },
+    );
+  });
+</script>
