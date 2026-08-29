@@ -9,35 +9,34 @@ import {
 import ServiceFeaturedMedia from "./ServiceFeaturedMedia.astro";
 import ServiceLightbox from "./ServiceLightbox.astro";
 import Container from "../ui/Container.astro";
-import type { GalleryImage } from "../../content/media";
+import type { FeaturedMedia, GalleryImage } from "../../content/media";
 
 interface Props {
+  featuredMedia: FeaturedMedia;
   images: readonly GalleryImage[];
   slug: string;
   title: string;
 }
 
-const { images, slug, title } = Astro.props;
-const featuredMedia = images[0];
-const galleryImages = images.slice(1);
+const { featuredMedia, images, slug, title } = Astro.props;
 const galleryId = `service-gallery-${slug}`;
 const lightboxId = `${galleryId}-lightbox`;
 ---
 
 <section class="service-gallery" aria-label={`Galería de ${title}`} id={galleryId}>
   <Container class="service-gallery__container">
-    {featuredMedia && <ServiceFeaturedMedia media={featuredMedia} />}
+    <ServiceFeaturedMedia media={featuredMedia} slug={slug} />
 
     <ol class="service-gallery__list">
       {
-        galleryImages.map((image, index) => (
+        images.map((image, index) => (
           <li class="service-gallery__item" data-layout={image.layout}>
             <button
               class="service-gallery__trigger"
               type="button"
               aria-haspopup="dialog"
               aria-controls={lightboxId}
-              aria-label={`Abrir imagen ${index + 1} de ${galleryImages.length}: ${image.alt}`}
+              aria-label={`Abrir imagen ${index + 1} de ${images.length}: ${image.alt}`}
               data-service-lightbox-trigger={index}
             >
               <span class="service-gallery__reveal">
@@ -77,5 +76,5 @@ const lightboxId = `${galleryId}-lightbox`;
     </ol>
   </Container>
 
-  <ServiceLightbox id={lightboxId} images={galleryImages} title={title} />
+  <ServiceLightbox id={lightboxId} images={images} title={title} />
 </section>

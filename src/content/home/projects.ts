@@ -1,12 +1,17 @@
 import type { ImageMetadata } from "astro";
 
 import type { ContentLink } from "../types";
-import { eventDetails, type EventCategory } from "../events";
-
-export type { EventCategory } from "../events";
+import {
+  eventDetails,
+  getEventCategory,
+  getEventHref,
+  type EventCategoryId,
+  type EventCategoryLabel,
+} from "../events";
 
 export interface EventGalleryItem {
-  category: EventCategory;
+  category: EventCategoryLabel;
+  categoryId: EventCategoryId;
   context: string;
   href: string;
   id: string;
@@ -18,11 +23,13 @@ export interface EventGalleryItem {
 
 export const eventGalleryItems = eventDetails.map((event): EventGalleryItem => {
   const media = event.featuredMedia;
+  const category = getEventCategory(event.categoryId);
 
   return {
-    category: event.category,
+    category: category.label,
+    categoryId: event.categoryId,
     context: event.description,
-    href: event.href,
+    href: getEventHref(event),
     id: event.id,
     media:
       media.kind === "image"

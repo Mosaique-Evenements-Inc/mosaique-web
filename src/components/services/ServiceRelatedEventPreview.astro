@@ -6,18 +6,24 @@ import {
   eventImageFormats,
   eventImageWidths,
 } from "../../assets/images/events/delivery";
-import { eventDetailNavigationContent, type EventDetail } from "../../content/events";
+import {
+  eventDetailNavigationContent,
+  getEventCategory,
+  getEventHref,
+  type Event,
+} from "../../content/events";
 import Heading from "../ui/Heading.astro";
 import Text from "../ui/Text.astro";
 
 interface Props {
-  event: EventDetail;
+  event: Event;
   index: number;
   isLast: boolean;
 }
 
 const { event, index, isLast } = Astro.props;
 const media = event.featuredMedia;
+const category = getEventCategory(event.categoryId);
 ---
 
 <article
@@ -27,7 +33,7 @@ const media = event.featuredMedia;
 >
   <a
     class="service-more-galleries__link"
-    href={event.href}
+    href={getEventHref(event)}
     aria-label={`${eventDetailNavigationContent.nextLabel}: ${event.title}`}
   >
     <div class="service-more-galleries__media" aria-hidden="true">
@@ -66,7 +72,7 @@ const media = event.featuredMedia;
 
     <div class="service-more-galleries__copy">
       <Text as="span" variant="caption" tone="inverse" class="service-more-galleries__label">
-        {event.category}
+        {category.label}
       </Text>
       <Heading as="h3" variant="display-lg">{event.title}</Heading>
     </div>

@@ -6,12 +6,12 @@ import {
   eventImageFormats,
   eventImageWidths,
 } from "../../assets/images/events/delivery";
+import type { GalleryImage } from "../../content/media";
 import Icon from "../ui/Icon.astro";
-import type { EventDetailImage } from "../../content/events";
 
 interface Props {
   id: string;
-  images: EventDetailImage[];
+  images: GalleryImage[];
   title: string;
 }
 

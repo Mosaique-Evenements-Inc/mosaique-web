@@ -4,27 +4,25 @@ import Navigation from "../../components/sections/Navigation.astro";
 import ServiceHeader from "../../components/services/ServiceHeader.astro";
 import ServiceGallery from "../../components/services/ServiceGallery.astro";
 import ServiceRelatedEvents from "../../components/services/ServiceRelatedEvents.astro";
-import { eventDetails } from "../../content/events";
-import { servicesContent, type ServiceContentItem } from "../../content/home/services";
+import { getEventsByServiceId } from "../../content/events";
+import { services, type Service } from "../../content/services";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 import "../../styles/sections/service-detail.css";
 
 export function getStaticPaths() {
-  return servicesContent.items.map((service) => ({
+  return services.map((service) => ({
     params: { slug: service.slug },
     props: { service },
   }));
 }
 
 interface Props {
-  service: ServiceContentItem;
+  service: Service;
 }
 
 const { service } = Astro.props;
-const relatedEvents = service.relatedEvents
-  .map((slug) => eventDetails.find((event) => event.slug === slug))
-  .filter((event): event is (typeof eventDetails)[number] => Boolean(event));
+const relatedEvents = getEventsByServiceId(service.id);
 ---
 
 <BaseLayout
@@ -36,7 +34,12 @@ const relatedEvents = service.relatedEvents
   <main class="service-detail" id="main-content" tabindex="-1" data-navigation-contrast="light">
     <div class="service-detail__chapter" data-content-status="placeholder">
       <ServiceHeader service={service} />
-      <ServiceGallery images={service.gallery} slug={service.slug} title={service.title} />
+      <ServiceGallery
+        featuredMedia={service.featuredMedia}
+        images={service.gallery}
+        slug={service.slug}
+        title={service.title}
+      />
     </div>
     <ServiceRelatedEvents events={relatedEvents} />
   </main>

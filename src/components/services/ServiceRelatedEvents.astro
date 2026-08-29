@@ -1,10 +1,10 @@
 ---
-import { type EventDetail } from "../../content/events";
+import { type Event } from "../../content/events";
 import Heading from "../ui/Heading.astro";
 import ServiceRelatedEventPreview from "./ServiceRelatedEventPreview.astro";
 
 interface Props {
-  events: EventDetail[];
+  events: Event[];
 }
 
 const { events } = Astro.props;

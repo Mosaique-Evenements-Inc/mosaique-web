@@ -5,10 +5,11 @@ import {
   cumpleanosAnaPaula51,
   cumpleanosAnaPaula70,
 } from "../../assets/images/events";
-import type { EventDetail } from "./types";
+import { SERVICE_IDS } from "../services/types";
+import type { Event } from "./types";
 
 export const cumpleanosAnaPaulaEvent = {
-  category: "Cumpleaños",
+  categoryId: "birthday",
   description:
     "Juego, celebración y momentos en familia en una experiencia pensada para los más pequeños.",
   featuredMedia: {
@@ -43,9 +44,9 @@ export const cumpleanosAnaPaulaEvent = {
       status: "approved",
     },
   ],
-  href: "/events/cumpleanos-ana-paula",
   id: "event-slot-05",
+  serviceId: SERVICE_IDS.celebrations,
   slug: "cumpleanos-ana-paula",
   status: "approved",
   title: "Cumpleaños Ana Paula",
-} satisfies EventDetail;
+} satisfies Event;

@@ -1,16 +1,14 @@
 import { ScrollLinkedScene } from "../motion/ScrollLinkedScene";
 import Button from "../ui/Button";
-import type {
-  ServiceContentItem,
-  ServicesPanelRevealContent,
-} from "../../content/home/services";
+import type { ServicesPanelRevealContent } from "../../content/home/services";
+import type { Service } from "../../content/services";
 
 type ServicesSceneProps = {
   panelReveal: ServicesPanelRevealContent;
-  services: readonly ServiceContentItem[];
+  services: readonly Service[];
 };
 
-const handleViewMore = (service: ServiceContentItem) => {
+const handleViewMore = (service: Service) => {
   console.log("View service details:", service.id);
 };
 
