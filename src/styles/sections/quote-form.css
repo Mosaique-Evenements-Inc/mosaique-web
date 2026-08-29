@@ -814,7 +814,7 @@
   align-items: start;
   background: var(--color-accent-muted);
   border: 0.3px solid var(--color-primary);
-  border-radius: var(--primitive-radius-sm);
+  border-radius: var(--primitive-radius-md);
   color: var(--color-primary);
   display: grid;
   gap: var(--space-4);

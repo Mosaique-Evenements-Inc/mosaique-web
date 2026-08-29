@@ -55,6 +55,9 @@ This document is the source of truth for implementation status. The existence of
 - Desktop follows the supplied reference with an approximately 40/60 form-media split, compact form density, pill-shaped token-driven fields, existing select contracts, a strong full-width action, and a large sticky replaceable media placeholder. The single-stage form begins directly with its content and retains a visually hidden accessible heading without a redundant page title or step indicator. Tablet preserves a readable split; mobile stacks form then media in natural flow.
 - The media placeholder is isolated in `ContactMediaPlaceholder.astro` so approved photography can replace it without changing form behavior or page composition.
 - The page introduces no complex motion. Labels, fieldsets, validation errors, keyboard navigation, focus states, loading status, review editing, auxiliary dialogs, and the accessible success toast remain available.
+- **Production submission behavior restored locally.** The primary action again follows the original validate → review → production-endpoint flow: incomplete fields and request failures remain inline for correction, while the accessible toast appears only after a confirmed successful response. Its manual and timed dismissal behavior remains unchanged.
+- **Contact toast surface refinement complete locally.** The success notification uses the system's larger restrained radius and inherits a dark, inverse-text treatment on the cinematic Contact surface without introducing a light card that conflicts with the page background.
+- **Inline contact-email row removed locally.** The redundant centered `Email / info@mosaique-events.com` line no longer renders beneath the form; the verified address remains available through the shared Footer contact block.
 
 ### Hero
 
@@ -199,6 +202,8 @@ This document is the source of truth for implementation status. The existence of
 ### Footer
 
 - **Implementation: complete.** A semantic footer landmark renders the brand, seven navigation links, six service labels, contact details, closing statement, and legal copy from `src/content/home/footer.ts` after `main`.
+- **Email action surface refinement complete locally.** The framed Footer email CTA now uses the existing restrained medium radius while retaining its dimensions, arrow, verified destination, focus behavior, and responsive layout.
+- **Collaborator frame refinement complete locally.** The three-logo wall now shares the same medium radius as the Footer email action, with its internal tiles clipped to the outer frame while preserving separators, logo interactions, destinations, and responsive sizing.
 - On mobile, Compañía, Recursos, and Servicios use collapsed native disclosures to reduce scroll length; tablet and desktop keep all three groups expanded in the established grid.
 - **Fidelity Pass: complete.** Final CTA now hands off through a compact edge-padded visual strip into Movra's two-row footer composition: aligned 50/50 desktop grids, inset vertical dividers, full-width horizontal dividers, three navigation groups, the framed three-collaborator logo grid, contact CTA and verified contact details, a six-item service grid, and the closing copy at opposite lower edges.
 - Desktop uses paired information bands, tablet stacks those bands, and mobile follows a linear reading order without introducing reference-only newsletter, social links, or legal destinations. The three approved transparent collaborator assets are centered in equal framed tiles with uninterrupted dividers, contained without cropping, normalized to the footer's light monochrome treatment, and sourced from one typed collaborators module; each complete tile opens its approved external site in a separate, isolated tab.
