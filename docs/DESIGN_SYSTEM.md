@@ -222,8 +222,6 @@ Planned motion primitives:
 - MediaCrossfade: image transition primitive.
 - PanelReveal: staged panel transition for future sections.
 
-`ScrollLinkedScene` is the first extracted scroll orchestration primitive. Its Mosaïque-owned composition pattern and consumer boundaries are documented in `PATTERNS.md`.
-
 Panel-level and cinematic patterns should be implemented only when a real section needs them.
 
 ## 12. Accessibility
