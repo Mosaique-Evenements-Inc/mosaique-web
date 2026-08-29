@@ -7,7 +7,16 @@ import type {
 
 type ServicesSceneProps = {
   panelReveal: ServicesPanelRevealContent;
-  services: readonly ServiceContentItem[];
+  services: readonly ServiceSceneItem[];
+};
+
+type ServiceSceneItem = ServiceContentItem & {
+  optimizedMedia: {
+    alt: string;
+    height: number;
+    src: string;
+    width: number;
+  };
 };
 
 const handleViewMore = (service: ServiceContentItem) => {
@@ -31,9 +40,19 @@ export default function ServicesScene({ panelReveal, services }: ServicesScenePr
                   index === activeIndex ? "is-active" : "",
                 ].join(" ")}
                 data-tone={String(index + 1).padStart(2, "0")}
+                data-media-status={service.media.status}
                 key={service.id}
                 role="img"
               >
+                <img
+                  alt={service.optimizedMedia.alt}
+                  className="services-spike__media-image"
+                  decoding="async"
+                  height={service.optimizedMedia.height}
+                  loading="lazy"
+                  src={service.optimizedMedia.src}
+                  width={service.optimizedMedia.width}
+                />
                 <span className="services-spike__media-number">{service.index}</span>
                 <span className="services-spike__media-label">{service.title}</span>
               </div>
