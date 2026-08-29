@@ -1,25 +1,12 @@
 import type { ImageMetadata } from "astro";
+import type { GalleryImage, GalleryLayout } from "../media";
 
 export type EventCategory =
   "Boda" | "Celebración" | "Celebración privada" | "Cumpleaños" | "Festival";
 
-export type EventGalleryLayout = "full-landscape" | "pair-landscape" | "pair-portrait";
+export type EventGalleryLayout = GalleryLayout;
 
-export type EventDetailImage =
-  | {
-      alt: string;
-      layout: EventGalleryLayout;
-      src: ImageMetadata;
-      status: "approved";
-    }
-  | {
-      alt: string;
-      height: number;
-      layout: EventGalleryLayout;
-      src: null;
-      status: "pending";
-      width: number;
-    };
+export type EventDetailImage = GalleryImage;
 
 export type EventDetailFeaturedMedia =
   | {

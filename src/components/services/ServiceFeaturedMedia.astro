@@ -1,0 +1,51 @@
+---
+import { Picture } from "astro:assets";
+
+import {
+  eventImageFallbackFormat,
+  eventImageFormats,
+  eventImageWidths,
+} from "../../assets/images/events/delivery";
+import type { GalleryImage } from "../../content/media";
+
+interface Props {
+  media: GalleryImage;
+}
+
+const { media } = Astro.props;
+const aspectRatio =
+  media.status === "approved"
+    ? `${media.src.width} / ${media.src.height}`
+    : `${media.width} / ${media.height}`;
+---
+
+<figure
+  class="service-featured-media"
+  data-service-featured-media
+  data-kind="image"
+  style={`--service-featured-media-ratio:${aspectRatio};`}
+>
+  <div class="service-featured-media__reveal">
+    <div class="service-featured-media__media">
+      {
+        media.status === "approved" ? (
+          <Picture
+            src={media.src}
+            alt={media.alt}
+            formats={eventImageFormats}
+            fallbackFormat={eventImageFallbackFormat}
+            widths={eventImageWidths}
+            sizes="(min-width: 1024px) 72vw, 100vw"
+            loading="eager"
+            decoding="async"
+          />
+        ) : (
+          <span class="service-featured-media__placeholder" role="img" aria-label={media.alt}>
+            <span />
+            <span />
+          </span>
+        )
+      }
+    </div>
+  </div>
+</figure>

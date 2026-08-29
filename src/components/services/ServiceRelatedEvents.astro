@@ -1,0 +1,38 @@
+---
+import { type EventDetail } from "../../content/events";
+import Heading from "../ui/Heading.astro";
+import ServiceRelatedEventPreview from "./ServiceRelatedEventPreview.astro";
+
+interface Props {
+  events: EventDetail[];
+}
+
+const { events } = Astro.props;
+const titleId = "service-related-events-heading";
+---
+
+{
+  events.length > 0 && (
+    <section
+      class="service-more-galleries"
+      aria-labelledby={titleId}
+      data-navigation-contrast="light"
+    >
+      <header class="service-more-galleries__header">
+        <Heading as="h2" variant="display-xl" id={titleId}>
+          Eventos relacionados
+        </Heading>
+      </header>
+
+      <div class="service-more-galleries__sequence">
+        {events.map((event, index) => (
+          <ServiceRelatedEventPreview
+            event={event}
+            index={index}
+            isLast={index === events.length - 1}
+          />
+        ))}
+      </div>
+    </section>
+  )
+}

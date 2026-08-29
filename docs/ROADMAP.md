@@ -241,8 +241,75 @@ This document is the source of truth for implementation status. The existence of
 - **About:** the dedicated `/about` route, its animated typography hero, and full-bleed media mosaic.
 - **Gallery:** `/gallery` and its generated category routes.
 - **Event Detail:** the six generated `/events/[slug]` routes.
-- Shared Navigation, Footer, layout, tokens, metadata, and asset infrastructure count only when a change is required to support or validate one of these four surfaces.
+- **Service Detail:** Responsibilities 1–4 are implemented and validated locally in dev and the
+  optimized preview build.
+- Shared Navigation, Footer, layout, tokens, metadata, and asset infrastructure count only when a change is required to support or validate these scoped surfaces.
 - Every other homepage section, absent section, deferred content concept, Storybook initiative, and unrelated business-asset request is outside the active roadmap and does not block acceptance or completion.
+
+### Service Detail Domain
+
+- **Responsibility 1 — Data Layer / Service Model: complete locally.** Services retain their
+  stable IDs, slugs, copy, CTA labels, and pending scene media while adding an explicit gallery
+  collection and event-slug reference collection. Gallery entries reuse the shared
+  `GalleryImage` contract extracted from the existing Event gallery union; Event exports retain
+  compatible aliases, so no Event consumer or UI changed. Each service currently owns one honest
+  pending landscape gallery entry and `relatedEvents: []` because no approved service-to-event
+  associations exist in the content sources.
+- Service CTAs encode the handoff as `/contact?service={service.slug}`. Contact consumes only
+  valid service slugs and leaves the default option selected for absent, empty, or invalid
+  parameters.
+- **Responsibility 2 — Service Detail Domain + Route: complete locally.** The independent
+  `src/pages/services/[slug].astro` route resolves services by slug, uses the shared BaseLayout,
+  Navigation, Footer, Heading, Text, and Button primitives, and renders a dedicated
+  `ServiceHeader` with title, description, and the prepared Contact CTA. It does not import or
+  branch Event Detail.
+- **Responsibility 3 — Gallery + Related Events: complete locally.** `ServiceGallery` always
+  renders the service-owned `gallery` collection through the shared Astro image delivery contract
+  and honest pending placeholders. `ServiceRelatedEvents` renders only when valid event-slug
+  references resolve against `eventDetails`, with links to the existing Event Detail routes and
+  no duplicated event records. All current services intentionally have empty relationships, so
+  the related-events section is currently absent; its positive branch remains data-ready but not
+  content-approved for visual acceptance.
+- **Responsibility 3 correction — Event Detail visual baseline: complete locally.** Service Detail
+  now uses physically duplicated Service-owned copies of the Event Detail header, featured media,
+  gallery/lightbox, related-event preview, and section CSS. The copies preserve the Event Detail
+  grid, sticky boundaries, media geometry, spacing, lightbox behavior, and scroll-linked motion;
+  only Service data, CTA, gallery source, and related-event responsibility differ. Event files,
+  Event CSS, Navigation, Footer, Contact, and Home remain untouched.
+- **Responsibility 4 — Service Detail Fidelity + Contact preselection: implemented locally.**
+  Service Detail remains physically separate from Event Detail: `ServiceHeader`,
+  `ServiceFeaturedMedia`, `ServiceGallery`, `ServiceLightbox`, `ServiceRelatedEventPreview`,
+  `ServiceRelatedEvents`, `src/pages/services/[slug].astro`, and
+  `src/styles/sections/service-detail.css` are Service-owned copies of the Event Detail
+  composition with only service content, CTA, gallery source, and related-event responsibility
+  adapted. Event components, Event CSS, Event data, Navigation, Footer, Contact layout, and Home
+  remain unchanged. The Service route now preserves the copied chapter wrapper and overlay
+  Navigation surface required by the Event `28/72` composition. The empty related-events branch
+  renders no heading or spacing.
+- Contact preselection derives option metadata from `servicesContent.items`: `/contact?service=`
+  matches the service slug while the submitted option value remains the existing stable service
+  ID, preserving the payload and submit transport. Empty, missing, and invalid values fall back
+  to `Selecciona una opción`.
+- **R4 visual and responsive validation:** browser comparison against `/events/nossa-copa`
+  confirmed the same desktop `28/72` rail, `100svh` chapter/header, `16:9` featured media,
+  sticky desktop header, mobile natural-flow switch, and compiled scroll-linked frame/media
+  timelines. At `1280 × 720`, both pages resolve columns to approximately `354.19 / 910.80px`
+  and featured media to `907.59 × 510.52px`; `900 × 900`, `390 × 844`, and `320 × 800` preserve
+  the corresponding Event geometry without horizontal overflow. Differences in title wrapping,
+  header height on compact screens, and final chapter length are authorized consequences of the
+  longer Service title, CTA, pending single-media gallery, and empty related-event data.
+- **R4 Contact validation:** `/contact?service=eventos-corporativos` selects “Eventos
+  corporativos” while retaining `service-03` as the submitted value. Missing, empty, and invalid
+  query values retain `Selecciona una opción`. Dev and optimized preview return equivalent
+  results.
+- **R4 technical validation:** `pnpm build`, `pnpm lint`, `pnpm typecheck`, and `git diff --check`
+  pass; the build emits all seven Service Detail routes and preview reports no console warnings or
+  errors. The optimized CSS retains the copied reduced-motion branch that removes media/gallery
+  transforms, timelines, sticky takeover, and hover/lightbox motion; runtime media emulation was
+  unavailable in the integrated browser, so that specific state is verified from compiled CSS
+  rather than claimed as a runtime screenshot.
+- **Next authorization:** Responsibility 4 is complete. Do not begin Responsibility 5 without
+  explicit approval.
 
 ### Production Asset Pipeline
 

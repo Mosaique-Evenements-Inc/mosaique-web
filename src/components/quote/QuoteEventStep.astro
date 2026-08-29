@@ -20,7 +20,9 @@ import Icon from "../ui/Icon.astro";
         <option value="">Selecciona una opción</option>
         {
           quoteContent.services.map((service) => (
-            <option value={service.value}>{service.label}</option>
+            <option value={service.value} data-service-slug={service.slug}>
+              {service.label}
+            </option>
           ))
         }
       </select>

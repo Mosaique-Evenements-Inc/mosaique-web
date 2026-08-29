@@ -1,4 +1,29 @@
 import type { ContentLink } from "../types";
+import type { GalleryImage } from "../media";
+
+export interface ServiceContentItem {
+  cta: ContentLink;
+  description: string;
+  gallery: readonly GalleryImage[];
+  id: string;
+  idealFor: string;
+  index: string;
+  media: { status: "pending" };
+  relatedEvents: readonly string[];
+  slug: string;
+  title: string;
+}
+
+const createPendingGallery = (title: string): GalleryImage[] => [
+  {
+    alt: `Contenido visual pendiente para ${title}.`,
+    height: 900,
+    layout: "full-landscape",
+    src: null,
+    status: "pending",
+    width: 1600,
+  },
+];
 
 export const servicesContent = {
   intro: {
@@ -21,8 +46,13 @@ export const servicesContent = {
       description:
         "Diseñamos y coordinamos tu evento de principio a fin: concepto, logística, proveedores, montaje y ejecución.",
       idealFor: "Quienes buscan delegar la producción completa de su evento.",
-      cta: { label: "Cotizar producción integral", href: "/contact" } satisfies ContentLink,
+      cta: {
+        label: "Cotizar producción integral",
+        href: "/contact?service=organizacion-produccion-integral",
+      } satisfies ContentLink,
+      gallery: createPendingGallery("Organización y producción integral"),
       media: { status: "pending" },
+      relatedEvents: [],
     },
     {
       id: "service-02",
@@ -32,8 +62,13 @@ export const servicesContent = {
       description:
         "Creamos celebraciones personales y memorables, cuidando la atmósfera, el montaje y cada momento de la experiencia.",
       idealFor: "Bodas, aniversarios, cumpleaños, cenas privadas y celebraciones familiares.",
-      cta: { label: "Planear una celebración", href: "/contact" } satisfies ContentLink,
+      cta: {
+        label: "Planear una celebración",
+        href: "/contact?service=bodas-celebraciones-privadas",
+      } satisfies ContentLink,
+      gallery: createPendingGallery("Bodas y celebraciones privadas"),
       media: { status: "pending" },
+      relatedEvents: [],
     },
     {
       id: "service-03",
@@ -43,8 +78,13 @@ export const servicesContent = {
       description:
         "Producimos encuentros profesionales alineados con el objetivo, la identidad y la experiencia que tu marca quiere crear.",
       idealFor: "Lanzamientos, activaciones, cenas, networking y celebraciones corporativas.",
-      cta: { label: "Crear un evento corporativo", href: "/contact" } satisfies ContentLink,
+      cta: {
+        label: "Crear un evento corporativo",
+        href: "/contact?service=eventos-corporativos",
+      } satisfies ContentLink,
+      gallery: createPendingGallery("Eventos corporativos"),
       media: { status: "pending" },
+      relatedEvents: [],
     },
     {
       id: "service-04",
@@ -54,8 +94,13 @@ export const servicesContent = {
       description:
         "Creamos experiencias junto a restaurantes, hoteles y espacios que quieren atraer público y activar su venue.",
       idealFor: "Venues que buscan desarrollar eventos propios o colaboraciones estratégicas.",
-      cta: { label: "Proponer una alianza", href: "/contact" } satisfies ContentLink,
+      cta: {
+        label: "Proponer una alianza",
+        href: "/contact?service=alianzas-venues",
+      } satisfies ContentLink,
+      gallery: createPendingGallery("Alianzas con venues"),
       media: { status: "pending" },
+      relatedEvents: [],
     },
     {
       id: "service-05",
@@ -65,8 +110,13 @@ export const servicesContent = {
       description:
         "Nos encargamos de la instalación, organización del espacio, movimiento de mobiliario y desmontaje del evento.",
       idealFor: "Planners, venues y clientes que necesitan apoyo operativo puntual.",
-      cta: { label: "Solicitar soporte logístico", href: "/contact" } satisfies ContentLink,
+      cta: {
+        label: "Solicitar soporte logístico",
+        href: "/contact?service=montaje-logistica",
+      } satisfies ContentLink,
+      gallery: createPendingGallery("Montaje y logística"),
       media: { status: "pending" },
+      relatedEvents: [],
     },
     {
       id: "service-06",
@@ -77,8 +127,13 @@ export const servicesContent = {
         "Ofrecemos mobiliario, equipos e insumos para complementar tu evento de forma individual o dentro de una producción.",
       idealFor:
         "Eventos que necesitan recursos específicos sin contratar un servicio completo.",
-      cta: { label: "Ver opciones de alquiler", href: "/contact" } satisfies ContentLink,
+      cta: {
+        label: "Ver opciones de alquiler",
+        href: "/contact?service=alquiler-mobiliario",
+      } satisfies ContentLink,
+      gallery: createPendingGallery("Alquiler de mobiliario"),
       media: { status: "pending" },
+      relatedEvents: [],
     },
     {
       id: "service-07",
@@ -88,11 +143,15 @@ export const servicesContent = {
       description:
         "Combinamos producción, montaje, logística, ambientación y alquiler según las necesidades reales de tu evento.",
       idealFor: "Quienes buscan flexibilidad y pagar únicamente por lo que necesitan.",
-      cta: { label: "Crear mi paquete", href: "/contact" } satisfies ContentLink,
+      cta: {
+        label: "Crear mi paquete",
+        href: "/contact?service=paquetes-personalizados",
+      } satisfies ContentLink,
+      gallery: createPendingGallery("Paquetes personalizados"),
       media: { status: "pending" },
+      relatedEvents: [],
     },
-  ],
+  ] satisfies readonly ServiceContentItem[],
 } as const;
 
-export type ServiceContentItem = (typeof servicesContent.items)[number];
 export type ServicesPanelRevealContent = typeof servicesContent.panelReveal;
