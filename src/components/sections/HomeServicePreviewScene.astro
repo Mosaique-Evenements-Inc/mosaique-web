@@ -1,0 +1,85 @@
+---
+import { Picture } from "astro:assets";
+
+import {
+  eventImageFallbackFormat,
+  eventImageFormats,
+  eventImageWidths,
+} from "../../assets/images/events/delivery";
+import type { Service } from "../../content/services";
+import Button from "../ui/Button";
+import Heading from "../ui/Heading.astro";
+import Text from "../ui/Text.astro";
+
+interface Props {
+  isLast: boolean;
+  sceneIndex: number;
+  service: Service;
+}
+
+const { isLast, sceneIndex, service } = Astro.props;
+const media = service.featuredMedia;
+const detailHref = `/services/${service.slug}`;
+---
+
+<article
+  class:list={["home-service-preview", { "is-last": isLast }]}
+  data-content-status={media.status}
+  style={`--home-service-scene-index: ${sceneIndex + 1}`}
+  aria-labelledby={`home-service-title-${service.id}`}
+>
+  <div class="home-service-preview__surface">
+    <div class="home-service-preview__media" aria-hidden="true">
+      <div class="home-service-preview__media-inner">
+        {
+          media.kind === "image" ? (
+            <Picture
+              src={media.src}
+              alt=""
+              formats={eventImageFormats}
+              fallbackFormat={eventImageFallbackFormat}
+              widths={eventImageWidths}
+              sizes="100vw"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : media.kind === "video" ? (
+            <video
+              src={media.src}
+              poster={media.poster}
+              muted
+              playsinline
+              preload="metadata"
+              tabindex="-1"
+            />
+          ) : (
+            <span class="home-service-preview__placeholder" data-tone={service.index}>
+              <span />
+              <span />
+            </span>
+          )
+        }
+        <span class="home-service-preview__overlay"></span>
+      </div>
+    </div>
+
+    <div class="home-service-preview__copy">
+      <Text as="span" variant="caption" tone="inverse" class="home-service-preview__label">
+        Servicio {service.index}
+      </Text>
+      <Heading as="h3" variant="display-lg" id={`home-service-title-${service.id}`}>
+        {service.title}
+      </Heading>
+      <Text variant="body-lg" tone="inverse" class="home-service-preview__description">
+        {service.description}
+      </Text>
+      <Text tone="inverse" class="home-service-preview__ideal-for">
+        <strong>Ideal para:</strong>{" "}{service.idealFor}
+      </Text>
+      <div class="home-service-preview__actions">
+        <Button href={detailHref} variant="transparent">Ver más</Button>
+        <Button href={service.cta.href} variant="light">Cotizar</Button>
+      </div>
+    </div>
+  </div>
+</article>

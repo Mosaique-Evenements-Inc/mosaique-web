@@ -103,8 +103,6 @@ disk does not prove it is rendered.
 - Use CSS and native browser behavior for layout, sticky positioning, simple transitions, and
   local disclosures.
 - Add a React island only when client-side state or orchestration is genuinely required.
-- The current React island is the Services `ScrollLinkedScene` consumer, hydrated with
-  `client:visible`; preserve its server-rendered content.
 - Use Motion for established React motion primitives and scroll-linked orchestration.
 - Do not introduce GSAP or another motion/runtime dependency unless the existing stack cannot
   express a confirmed requirement.
@@ -259,9 +257,9 @@ Treat these behaviors as regression-sensitive:
 
 - Hero no longer renders or transforms a large Mosaïque brand; the topbar logo remains independent while the Hero script only coordinates navigation color and caption state.
 - Hero hands off to About through the default `PanelReveal` sticky lead.
-- Marquee hands off to Services through the overlapping `PanelReveal` form.
-- Services synchronizes scroll progress, active copy, index, and media through
-  `ScrollLinkedScene`.
+- Home Services uses its own stacked view-timeline scenes inside the default `PanelReveal` page
+  panel. Each scene owns a sticky surface, reciprocal media scaling, overlap, and outgoing
+  darkening.
 
 Before changing wrappers, positioning, transforms, `overflow`, or z-index near these sections,
 inspect the full ancestor chain and the initial/intermediate/final states. Preserve sticky
@@ -294,17 +292,21 @@ behavior, scroll locking, and responsive sizing. Modify menu items in
 
 ## Services Contract
 
-Services is data-driven from `servicesContent.items` in `src/content/home/services.ts`. Preserve
-stable IDs, numbering, compact descriptions, “Ideal para” copy, CTAs, and explicit media status.
+Home Services is data-driven from `servicesContent.items` in `src/content/home/services.ts` and
+renders an Astro-only cinematic sequence through `HomeServicesShowcase` and
+`HomeServicePreviewScene`. Preserve stable IDs, editorial numbering, descriptions, “Ideal para”
+copy, explicit media status, and catalog order.
 
-- Do not duplicate service records inside the React renderer or styles.
-- Keep the commercial CTA destination sourced from the record.
+- Do not duplicate Service records in components or styles.
+- `Ver más` derives `/services/{slug}`; the commercial CTA uses the Contact destination from the
+  canonical Service record.
+- Service media comes only from canonical `featuredMedia`. Pending records render honest
+  token-driven placeholders with the same scene geometry.
+- The Home implementation is physically separate from Event Detail even though it preserves the
+  approved preview pacing, scaling, overlap, darkening, responsive behavior, and reduced-motion
+  contract.
 - Keep copy concise enough for the bounded editorial scene; solve overflow in the responsible
   layout before shortening approved content.
-- Desktop and tablet synchronize copy and media; current mobile behavior hides decorative media
-  at the existing 48rem breakpoint and keeps all service copy in natural flow.
-- The contextual `Ver más` control currently has no approved route and only reports the stable
-  service ID. Do not invent a destination.
 
 ## Event Gallery Contract
 

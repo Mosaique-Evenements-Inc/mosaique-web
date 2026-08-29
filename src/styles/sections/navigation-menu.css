@@ -211,6 +211,12 @@
   margin: 0;
   min-block-size: 0;
   overflow: hidden;
+  padding: 0;
+}
+
+.site-navigation__services-accordion[data-open]
+  .site-navigation__services-accordion-content
+  ul {
   padding: var(--space-4) 0 var(--space-2);
 }
 

@@ -18,7 +18,7 @@ This document is the source of truth for implementation status. The existence of
 - CSS and TypeScript runtime motion tokens are documented and synchronized.
 - UI primitives exist for Button, Container, Grid, Heading, Media, Section, Stack, and Text.
 - Iconoir is the shared interface-icon source for navigation, disclosures, directional controls, quote-flow states, editorial actions, and the four-icon “¿Por qué elegir MOSAÏQUE?” proof band; decorative media geometry and required-field marks remain outside that icon contract.
-- Motion primitives exist for Reveal, StaggerText, MediaCrossfade, StickyScene, PanelReveal, and ScrollLinkedScene.
+- Motion primitives exist for Reveal, StaggerText, MediaCrossfade, StickyScene, and PanelReveal.
 - **Production asset completion: deferred.** Approved self-hosted Cinzel and Montserrat files are still pending.
 
 ### Content Foundation
@@ -33,6 +33,7 @@ This document is the source of truth for implementation status. The existence of
 - **Services Navigation: complete locally.** The eight canonical Service records own stable semantic slugs and derive one shared navigation model from `servicesContent.items`. Inline desktop navigation renders a compact start-aligned Services dropdown above the existing blur and sticky content; tablet and mobile reuse the fullscreen menu with a natural-flow Services accordion. The desktop panel uses content-sized geometry, `40px` link targets, token-driven `8px` vertical travel, symmetric open/close motion, hover continuity, outside-click cleanup, Escape, Arrow Down, and visible keyboard focus. Links derive the implemented `/services/[slug]` routes from each Service slug.
 - The topbar keeps its progressively masked blur and adaptive foreground on overlay pages; event detail and contact retain their approved solid treatment. The shared `--site-navigation-height` value now also supplies exact sticky offsets to page-level navigation such as Gallery categories.
 - **Fidelity Pass: complete.** Desktop, tablet, mobile, fullscreen-menu behavior, adaptive contrast, and active-route treatment were compared in-browser against the supplied references. The responsive dialog now follows the approved light editorial reference with the Mosaïque logo and unframed close control in its header, four centered primary links, and verified contact metadata anchored at the bottom. Runtime reduced-motion emulation remains pending; the CSS media paths passed code review.
+- **Mobile Services accordion rhythm refined locally.** Its internal vertical padding now exists only while expanded, so the four primary navigation options retain uniform spacing when Services is collapsed. The established 68% subordinate-link tone remains unchanged, together with keyboard access, inert collapsed content, and the existing disclosure transition.
 - **Mobile trigger refinement complete.** Below 48 rem, the menu trigger presents only its existing menu glyph while retaining the full 44 px interactive target, accessible name, active feedback, and visible keyboard focus treatment.
 
 ### Quote / Contact Flow
@@ -88,16 +89,35 @@ This document is the source of truth for implementation status. The existence of
 
 ### Services
 
-- **Implementation: complete.** StickyServices, ServicesScene, PanelReveal, and the neutral ScrollLinkedScene pattern are integrated. ServicesIntro was removed from the page; Marquee remains an independent preceding section while a panel-only overlap lets Services reveal over its final viewport.
-- **Service media placeholders replaced and validated locally.** The seven existing service records now receive seven distinct, deterministic photographs from the repository's approved event-media inventory. `StickyServices.astro` generates one cropped `1200 × 1500` WebP per service before serializing lightweight URLs into the existing React island. Browser checks at `1440 × 900` confirmed all seven distinct sources loaded and only the synchronized active panel remained visible; at `375 × 844`, the existing mobile media container remained hidden and the page retained zero horizontal overflow. Service labels, numbering, CTA behavior, sticky geometry, and scroll synchronization remain unchanged, with no console errors.
-- **Service media frame refinement complete locally.** The former one-pixel outline was removed from the synchronized photography frame while its intrinsic `4 / 5` geometry, crop, overlays, active-state transition, and contextual action remain unchanged.
-- The seven service records use the approved compact title, description, audience, and commercial CTA copy from `src/content/home/services.ts`; the commercial actions target `/contact`.
-- Desktop and tablet use equal scene columns plus an intrinsic-width index column so service copy and synchronized media carry comparable visual weight without increasing the bounded scroll interval.
-- The synchronized media frame exposes one contextual `Ver más` button for the active service on desktop and tablet. It uses the existing stable service `id`, provides a descriptive accessible name, and currently logs the selected identifier without navigation so a future detail action can replace one handler.
-- Mobile removes the media frame and its associated `Ver más` action at the existing 48 rem breakpoint, leaving the complete service copy in a full-width natural flow without reserved media space.
-- The former Services transition CTA beginning “¿Tienes una idea, un espacio o una celebración en mente?” and its exclusive content and styles were removed by product direction, so Services now hands off directly to Projects / Experiences.
-- **Fidelity Pass: complete.** Section overlap, sticky media, seven service states, scroll pacing, responsive behavior, and reduced motion were validated.
-- React is limited to the interactive Services scene and hydrates with `client:visible`.
+- **Home cinematic refactor: implemented locally.** The former `28/72` React scene was replaced
+  by an Astro-only intro followed by eight Service preview scenes copied from the validated Event
+  Detail “Más experiencias” pattern. Event components and CSS remain unchanged.
+- The sequence consumes the canonical eight-Service catalog in editorial `index` order. Every
+  scene renders Service index, title, description, “Ideal para” copy, `Ver más` to
+  `/services/{slug}`, and `Cotizar` to the record's preselected Contact route.
+- Desktop/tablet and mobile retain the Event preview geometry: first seven scenes use `250svh`,
+  the final scene `150svh`, sticky surfaces use `100svh`, and consecutive scenes overlap by
+  `-100svh`. Frame/media scale, copy travel, and outgoing overlay `0.12 → 0.80` use independent,
+  production-safe Home Services timelines.
+- Reduced motion restores eight `100svh` natural-flow scenes with no overlap, sticky takeover,
+  scaling, copy motion, or scroll-linked darkening.
+- The eight canonical `featuredMedia` records remain honestly `pending`; the copied media branch
+  already supports the existing image/video pipeline and currently renders deterministic,
+  token-driven placeholders at the final geometry. Asset 1–8 assignment remains pending delivery.
+- The old `StickyServices`, `ServicesScene`, `ServicesIntro`, `services-spike.css`, and now-unused
+  `ScrollLinkedScene` implementation were removed after confirming no remaining consumers.
+- **Fidelity and responsive validation: complete for dev and optimized preview.** At
+  `1280 × 720`, Home Services matches Event “Más experiencias” with `1800px` initial scenes,
+  `1080px` final scenes, `720px` sticky surfaces, active reciprocal media animations, and the
+  same outgoing overlay timeline. `900 × 900`, `390 × 844`, and `320 × 800` preserve all eight
+  scenes, sixteen CTA links, full copy, and zero horizontal overflow. The optimized preview
+  reports the same animation names/timelines and no console warnings or errors. Compiled reduced-
+  motion CSS retains the natural-flow override; runtime media emulation is unavailable in the
+  integrated browser.
+- **Home Service photography darkened locally.** Every Service preview now begins with a `0.32`
+  inverse overlay instead of `0.12`, producing the requested 20-percentage-point darker image
+  treatment while retaining the existing outgoing `0.80` endpoint, scroll timeline, copy and CTA
+  contrast, and the same static `0.32` treatment under reduced motion.
 
 ### Projects / Experiences
 
@@ -246,7 +266,7 @@ This document is the source of truth for implementation status. The existence of
 
 ### Active Scope
 
-- **Home:** only the `Eventos que ya tomaron forma` Projects / Experiences section.
+- **Home:** `Eventos que ya tomaron forma` and the Astro-only cinematic Services sequence.
 - **About:** the dedicated `/about` route, its animated typography hero, and full-bleed media mosaic.
 - **Gallery:** `/gallery` and its generated category routes.
 - **Event Detail:** the six generated `/events/[slug]` routes.
@@ -438,6 +458,21 @@ This document is the source of truth for implementation status. The existence of
 - **Remaining deployment configuration:** production does not currently expose canonical URLs and `/sitemap-index.xml` returns `404: NOT_FOUND`, confirming that `SITE_URL` is not configured in the deployed build. Confirm the definitive domain, add `SITE_URL` to Vercel, redeploy with the existing build cache, and verify canonical, `og:url`, JSON-LD URL, robots sitemap reference, and both sitemap files.
 
 ## Next
+
+### Home Services Media + Service CTA Handoff
+
+- **Complete locally.** Each canonical Service now owns one approved existing repository image
+  through `featuredMedia`; these are provisional editorial assignments and can be replaced in the
+  Service constants without changing Home or Service Detail composition.
+- Home Services keeps the cinematic eight-scene contract while its intro uses a wider reading
+  measure and shorter viewport footprint so the first service enters sooner. `Ver más` remains
+  transparent-first and `Cotizar` now uses the light-to-transparent button variant.
+- Mobile keeps the sticky scene rhythm but fixes each service media surface at its fully expanded
+  `scale(1)` state. This prevents the longer Service copy from exposing and colliding with the
+  outgoing scene through the smaller Event-preview entry frame.
+- Service Detail applies the same light-to-transparent treatment to its commercial header CTA and
+  now closes with a Service-owned physical copy of the Event Detail contact marquee structure,
+  reusing the approved Final CTA content and existing Service Detail marquee styles.
 
 ### Architecture Audit
 
