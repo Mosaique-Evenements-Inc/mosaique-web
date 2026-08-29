@@ -1,12 +1,19 @@
 .about-hero {
+  position: relative;
+  min-block-size: 145svh;
+  background: var(--color-background-cinematic);
+  color: var(--color-text-inverse);
+}
+
+.about-hero__scene {
+  position: sticky;
+  inset-block-start: 0;
   display: grid;
-  min-block-size: 100svh;
+  block-size: 100svh;
   padding: calc(var(--site-navigation-height) + var(--space-8)) var(--layout-page-gutter)
     var(--space-8);
   place-items: center;
   overflow: hidden;
-  background: var(--color-background-cinematic);
-  color: var(--color-text-inverse);
 }
 
 .about-hero__composition {
@@ -15,7 +22,6 @@
   min-inline-size: 0;
   gap: clamp(var(--space-6), 4vw, var(--space-12));
   text-align: center;
-  animation: about-hero-drift 8s var(--motion-easing-standard) 1.8s infinite alternate;
 }
 
 .about-hero__title {
@@ -24,22 +30,14 @@
   font-size: clamp(2.15rem, 9.25vw, 4.5rem);
   font-weight: var(--font-weight-regular);
   letter-spacing: -0.04em;
-  line-height: 0.88;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
   text-wrap: balance;
 }
 
 .about-hero__line {
   display: block;
-  overflow: hidden;
-  padding-block: 0.06em;
-}
-
-.about-hero__line-inner {
-  display: block;
-  opacity: 0;
-  transform: translateY(112%);
-  animation: about-hero-line-reveal var(--motion-duration-cinematic)
-    var(--motion-easing-cinematic) var(--line-delay) forwards;
+  padding-block: 0.04em;
 }
 
 .about-hero__line em {
@@ -47,10 +45,20 @@
   font-weight: inherit;
 }
 
+.about-hero__word {
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.about-hero__character {
+  display: inline-block;
+}
+
 .about-hero__caption {
   inline-size: 100%;
-  max-inline-size: var(--layout-max-reading);
+  max-inline-size: calc(var(--layout-max-reading) + var(--space-8));
   margin: 0 auto;
+  padding-inline: var(--space-4);
   font-family: var(--font-family-body);
   font-size: var(--text-caption-size);
   font-weight: var(--font-weight-medium);
@@ -58,9 +66,23 @@
   line-height: var(--text-caption-line-height);
   text-transform: uppercase;
   text-wrap: balance;
+  opacity: 0.74;
+}
+
+.about-hero[data-about-title-motion="active"]:not([data-about-title-revealed="true"])
+  .about-hero__character {
   opacity: 0;
-  animation: about-hero-caption-reveal var(--motion-duration-slow) var(--motion-easing-standard)
-    760ms forwards;
+  transform: translateY(105%);
+}
+
+.about-hero[data-about-title-motion="active"][data-about-title-revealed="true"]
+  .about-hero__character {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity var(--motion-stagger-text-duration) var(--motion-easing-cinematic),
+    transform var(--motion-stagger-text-duration) var(--motion-easing-cinematic);
+  transition-delay: calc(var(--about-character-index) * 40ms);
 }
 
 .about-mosaic,
@@ -77,14 +99,14 @@
 
 .about-mosaic__list {
   column-count: 2;
-  column-gap: 0;
+  column-gap: 2px;
   list-style: none;
   line-height: 0;
 }
 
 .about-mosaic__item {
   break-inside: avoid;
-  margin: 0;
+  margin: 0 0 2px;
 }
 
 .about-media {
@@ -165,25 +187,6 @@
   }
 }
 
-@keyframes about-hero-line-reveal {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes about-hero-caption-reveal {
-  to {
-    opacity: 0.74;
-  }
-}
-
-@keyframes about-hero-drift {
-  to {
-    transform: translateY(-0.75rem);
-  }
-}
-
 @media (min-width: 40rem) {
   .about-mosaic__list {
     column-count: 3;
@@ -197,11 +200,6 @@
 }
 
 @media (min-width: 64rem) {
-  .about-hero {
-    min-block-size: auto;
-    aspect-ratio: 2420 / 1080;
-  }
-
   .about-mosaic__list {
     column-count: 5;
   }
@@ -224,19 +222,17 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .about-hero__composition,
-  .about-hero__line-inner,
-  .about-hero__caption {
-    animation: none;
+  .about-hero {
+    min-block-size: 100svh;
   }
 
-  .about-hero__line-inner {
-    opacity: 1;
+  .about-hero__scene {
+    position: relative;
+  }
+
+  .about-hero__character {
+    opacity: 1 !important;
     transform: none;
-  }
-
-  .about-hero__caption {
-    opacity: 0.74;
   }
 
   .about-media__visual,
