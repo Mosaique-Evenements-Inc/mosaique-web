@@ -6,6 +6,7 @@ import { getLocaleFromUrl } from "@/core/i18n";
 const locale = getLocaleFromUrl(Astro.url);
 const quoteText = getQuoteTranslations(locale);
 const quoteContent = getQuoteContent(locale);
+const preferredLanguageValue = locale;
 ---
 
 <section class="quote-step__section" aria-labelledby="quote-contact-title">
@@ -73,7 +74,9 @@ const quoteContent = getQuoteContent(locale);
         <option value="">{quoteText.noPreference}</option>
         {
           quoteContent.preferredLanguages.map((language) => (
-            <option value={language.value}>{language.label}</option>
+            <option value={language.value} selected={language.value === preferredLanguageValue}>
+              {language.label}
+            </option>
           ))
         }
       </select>
