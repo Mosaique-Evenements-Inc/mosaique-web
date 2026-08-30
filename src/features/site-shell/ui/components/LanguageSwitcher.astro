@@ -6,6 +6,7 @@ import {
   switchLocaleUrl,
 } from "@/core/i18n";
 import { getSiteShellTranslations } from "@/features/site-shell/i18n";
+import NavigationDropdown from "./NavigationDropdown.astro";
 
 interface Props {
   placement: "desktop" | "mobile";
@@ -14,6 +15,17 @@ interface Props {
 const { placement } = Astro.props;
 const locale = getLocaleFromUrl(Astro.url);
 const shellText = getSiteShellTranslations(locale);
+const languageItems = supportedLocales.map((targetLocale) => ({
+  ariaLabel:
+    targetLocale === locale
+      ? `${targetLocale.toUpperCase()}, ${shellText["navigation.currentLanguage"]}`
+      : targetLocale.toUpperCase(),
+  current: targetLocale === locale,
+  href: switchLocaleUrl(Astro.url, targetLocale),
+  hreflang: getLanguageTag(targetLocale),
+  label: targetLocale.toUpperCase(),
+  lang: getLanguageTag(targetLocale),
+}));
 ---
 
 <nav
@@ -21,27 +33,34 @@ const shellText = getSiteShellTranslations(locale);
   aria-label={shellText["navigation.language"]}
   data-language-switcher
 >
-  <ul>
-    {
-      supportedLocales.map((targetLocale) => (
-        <li>
-          <a
-            href={switchLocaleUrl(Astro.url, targetLocale)}
-            hreflang={getLanguageTag(targetLocale)}
-            lang={getLanguageTag(targetLocale)}
-            aria-current={targetLocale === locale ? "page" : undefined}
-            aria-label={
-              targetLocale === locale
-                ? `${targetLocale.toUpperCase()}, ${shellText["navigation.currentLanguage"]}`
-                : targetLocale.toUpperCase()
-            }
-          >
-            {targetLocale.toUpperCase()}
-          </a>
-        </li>
-      ))
-    }
-  </ul>
+  {
+    placement === "desktop" ? (
+      <ul>
+        <NavigationDropdown
+          className="site-navigation__language-dropdown"
+          items={languageItems}
+          label={locale.toUpperCase()}
+          panelId="site-navigation-language-menu"
+        />
+      </ul>
+    ) : (
+      <ul>
+        {languageItems.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              hreflang={item.hreflang}
+              lang={item.lang}
+              aria-current={item.current ? "page" : undefined}
+              aria-label={item.ariaLabel}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
 </nav>
 
 <script>
