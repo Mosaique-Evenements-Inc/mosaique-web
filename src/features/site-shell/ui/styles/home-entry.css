@@ -1,0 +1,273 @@
+:root {
+  --site-navigation-height: 4rem;
+
+  scroll-padding-top: var(--site-navigation-height);
+}
+
+.site-navigation {
+  --site-navigation-fade-height: var(--space-12);
+  --site-navigation-blur: var(--space-4);
+  color: color-mix(
+    in srgb,
+    var(--color-text-primary) var(--navigation-color-progress, 0%),
+    var(--color-text-inverse)
+  );
+  inset: 0 0 auto;
+  isolation: isolate;
+  position: fixed;
+  transition: color var(--motion-duration-fast) var(--motion-easing-standard);
+  z-index: var(--primitive-z-navigation);
+}
+
+.site-navigation::before {
+  content: "";
+  block-size: calc(100% + var(--site-navigation-fade-height));
+  inset: 0 0 auto;
+  mask-image: linear-gradient(to bottom, black 0%, black 42%, transparent 100%);
+  pointer-events: none;
+  position: absolute;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 42%, transparent 100%);
+  z-index: 0;
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-navigation::before {
+    -webkit-backdrop-filter: blur(var(--site-navigation-blur));
+    backdrop-filter: blur(var(--site-navigation-blur));
+  }
+}
+
+.site-navigation--solid {
+  --navigation-color-progress: 100%;
+}
+
+.site-navigation__inner {
+  align-items: center;
+  block-size: var(--site-navigation-height);
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  position: relative;
+  z-index: 1;
+}
+
+.site-navigation__logo {
+  align-items: center;
+  display: inline-flex;
+  justify-self: start;
+  min-block-size: 2.75rem;
+  text-decoration: none;
+}
+
+.site-navigation__logo-mark {
+  background: currentColor;
+  block-size: 3rem;
+  display: block;
+  inline-size: clamp(9.25rem, 16vw, 11rem);
+  mask-image: var(--topbar-logo-url);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: 115% auto;
+}
+
+.home-hero {
+  background: var(--color-background-inverse);
+  color: var(--color-text-inverse);
+  min-block-size: 145svh;
+  position: relative;
+}
+
+.home-hero__scene {
+  block-size: 100svh;
+  inset-block-start: 0;
+  overflow: clip;
+  position: sticky;
+}
+
+.home-hero__media {
+  background: var(--color-primary);
+  block-size: 100%;
+  inline-size: 100%;
+  inset: 0;
+  margin: 0;
+  overflow: hidden;
+  position: absolute;
+}
+
+.home-hero__media::after {
+  background: color-mix(in srgb, var(--color-primary) 34%, transparent);
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.home-hero__media img {
+  block-size: 100%;
+  inline-size: 100%;
+  object-fit: cover;
+  object-position: var(--home-hero-media-position, center);
+}
+
+.home-hero__media-placeholder {
+  background: var(--color-primary);
+  block-size: 100%;
+  inline-size: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.home-hero__media-placeholder span {
+  position: absolute;
+}
+
+.home-hero__media-placeholder span:first-child {
+  background: var(--color-accent);
+  block-size: 62%;
+  clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 72%);
+  inline-size: 56%;
+  inset: 0 0 auto auto;
+}
+
+.home-hero__media-placeholder span:last-child {
+  background: color-mix(in oklab, var(--color-primary) 82%, var(--color-accent));
+  block-size: 36%;
+  clip-path: polygon(0 20%, 76% 0, 100% 100%, 0 100%);
+  inline-size: 42%;
+  inset: auto auto 0 0;
+}
+
+.home-hero__media figcaption {
+  color: var(--color-text-inverse);
+  font-size: var(--text-caption-size);
+  inset: auto var(--space-page-gutter) var(--space-5) auto;
+  line-height: var(--text-caption-line-height);
+  opacity: var(--hero-caption-opacity, 0);
+  position: absolute;
+  z-index: var(--primitive-z-content);
+}
+
+.home-hero__stage {
+  block-size: 100%;
+  display: grid;
+  place-items: center;
+  position: relative;
+  z-index: var(--primitive-z-content);
+}
+
+.home-hero__brand {
+  font-family: var(--font-family-display);
+  font-size: clamp(1.5rem, 7vw, 8.5rem);
+  font-weight: var(--text-display-xl-weight);
+  inset: 14svh auto auto 50%;
+  letter-spacing: 0;
+  line-height: 0.86;
+  margin: 0;
+  opacity: var(--hero-brand-opacity, 1);
+  pointer-events: none;
+  position: fixed;
+  transform: translate(-50%, var(--hero-brand-y, 0)) scale(var(--hero-brand-scale, 1));
+  transform-origin: center center;
+  white-space: nowrap;
+  z-index: var(--primitive-z-overlay);
+}
+
+.home-hero__final-state {
+  align-items: center;
+  align-self: end;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  inline-size: 100%;
+  padding-block-end: clamp(var(--space-16), 8svh, var(--space-24));
+  text-align: center;
+}
+
+.home-hero__title {
+  color: var(--color-text-inverse);
+  font-size: 1.875rem;
+  line-height: 0.98;
+  margin: 0;
+  max-inline-size: 24ch;
+}
+
+.home-hero__title em {
+  font-style: italic;
+  font-weight: inherit;
+}
+
+@media (min-width: 64rem) {
+  .home-hero__title {
+    max-inline-size: 32ch;
+  }
+}
+
+.home-hero__handoff {
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  min-block-size: 72svh;
+  position: relative;
+  z-index: var(--primitive-z-content);
+}
+
+.home-hero__handoff-inner {
+  align-content: start;
+  display: grid;
+  gap: var(--space-10);
+  padding-block: clamp(var(--space-20), 12svh, var(--space-40));
+}
+
+.home-hero__eyebrow {
+  color: var(--color-accent-text) !important;
+}
+
+.home-hero__copy {
+  display: grid;
+  gap: var(--space-6);
+  max-inline-size: var(--layout-max-reading);
+}
+
+.home-hero__copy p {
+  margin: 0;
+}
+
+.home-hero__copy a {
+  justify-self: start;
+}
+
+@media (max-width: 79.999rem) {
+  .site-navigation__logo-mark {
+    inline-size: clamp(8.5rem, 34vw, 10rem);
+  }
+}
+
+@media (max-width: 47.999rem) {
+  .site-navigation {
+    --site-navigation-fade-height: var(--space-8);
+    --site-navigation-blur: var(--space-3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-navigation {
+    transition: none;
+  }
+
+  .home-hero__media-placeholder,
+  .home-hero__media figcaption {
+    opacity: 1;
+    transform: none;
+  }
+
+  .home-hero__brand {
+    opacity: 0;
+  }
+
+  .home-hero__scene {
+    position: relative;
+  }
+
+  .home-hero {
+    min-block-size: 100svh;
+  }
+}

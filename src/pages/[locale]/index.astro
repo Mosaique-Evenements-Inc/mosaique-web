@@ -1,0 +1,9 @@
+---
+import HomePage from "@/features/home/ui/pages/HomePage.astro";
+
+export function getStaticPaths() {
+  return ["en", "fr"].map((locale) => ({ params: { locale } }));
+}
+---
+
+<HomePage />

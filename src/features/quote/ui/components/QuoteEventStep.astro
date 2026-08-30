@@ -1,0 +1,102 @@
+---
+import { getQuoteContent } from "../../content/quote";
+import { getQuoteTranslations } from "../../i18n";
+import { getLocaleFromUrl } from "@/core/i18n";
+import Icon from "@/core/common/ui/components/Icon.astro";
+
+const locale = getLocaleFromUrl(Astro.url);
+const quoteContent = getQuoteContent(locale);
+const quoteText = getQuoteTranslations(locale);
+---
+
+<section class="quote-step__section" aria-labelledby="quote-event-title">
+  <header>
+    <h3 id="quote-event-title">{quoteText.eventInfo}</h3>
+  </header>
+
+  <div class="quote-fields">
+    <label class="quote-field quote-field--wide">
+      <span>{quoteText.serviceInterest} <strong aria-hidden="true">*</strong></span>
+      <select
+        name="service"
+        required
+        aria-describedby="quote-service-error"
+        data-error-required={quoteText.requiredService}
+      >
+        <option value="">{quoteText.selectOption}</option>
+        {
+          quoteContent.services.map((service) => (
+            <option value={service.value} data-service-slug={service.slug}>
+              {service.label}
+            </option>
+          ))
+        }
+      </select>
+      <small id="quote-service-error" data-quote-error></small>
+    </label>
+
+    <label class="quote-field quote-field--wide">
+      <span>{quoteText.eventType} <strong aria-hidden="true">*</strong></span>
+      <select
+        name="eventType"
+        required
+        aria-describedby="quote-event-type-error"
+        data-error-required={quoteText.requiredEventType}
+      >
+        <option value="">{quoteText.selectOption}</option>
+        {
+          quoteContent.eventTypes.map((eventType) => (
+            <option value={eventType.value}>{eventType.label}</option>
+          ))
+        }
+      </select>
+      <small id="quote-event-type-error" data-quote-error></small>
+    </label>
+
+    <div
+      class="quote-date-group quote-field--wide"
+      role="group"
+      aria-labelledby="quote-event-date-label"
+    >
+      <label class="quote-field quote-date-group__date">
+        <span id="quote-event-date-label">{quoteText.eventDate}</span>
+        <input type="hidden" name="eventDate" />
+        <button
+          type="button"
+          class="quote-date-trigger"
+          data-date-trigger
+          aria-haspopup="dialog"
+          aria-controls="date-picker-dialog"
+          aria-describedby="quote-event-date-help"
+        >
+          <span data-date-value>{quoteText.selectDate}</span>
+          <Icon name="calendar" size={20} />
+        </button>
+        <small id="quote-event-date-help">{quoteText.dateOptional}</small>
+      </label>
+
+      <label class="quote-check quote-date-group__unknown">
+        <input type="checkbox" name="dateUnknown" />
+        <span>{quoteText.noDate}</span>
+      </label>
+    </div>
+
+    <label class="quote-field quote-field--wide">
+      <span>{quoteText.guestRange} <strong aria-hidden="true">*</strong></span>
+      <select
+        name="guestRange"
+        required
+        aria-describedby="quote-guests-error"
+        data-error-required={quoteText.requiredGuestRange}
+      >
+        <option value="">{quoteText.selectOption}</option>
+        {
+          quoteContent.guestRanges.map((range) => (
+            <option value={range.value}>{range.label}</option>
+          ))
+        }
+      </select>
+      <small id="quote-guests-error" data-quote-error></small>
+    </label>
+  </div>
+</section>

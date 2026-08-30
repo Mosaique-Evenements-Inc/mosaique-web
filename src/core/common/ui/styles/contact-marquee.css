@@ -1,0 +1,100 @@
+.contact-marquee {
+  --contact-loop-duration: 20s;
+  background: var(--color-background-inverse);
+  color: var(--color-text-inverse);
+  overflow: clip;
+  padding-block: clamp(var(--space-24), 12vw, var(--space-40))
+    clamp(var(--space-20), 8vw, var(--space-32));
+}
+
+.contact-marquee__link {
+  color: inherit;
+  display: block;
+  text-decoration: none;
+}
+
+.contact-marquee__lead {
+  font-family: var(--font-family-display);
+  font-size: clamp(1.25rem, 1.9vw, 1.5rem);
+  line-height: 1.35;
+  margin: 0 auto clamp(var(--space-12), 7vw, var(--space-20));
+  max-inline-size: var(--layout-max-reading);
+  padding-inline: var(--space-page-gutter);
+  text-align: center;
+  text-wrap: balance;
+}
+
+.contact-marquee__viewport {
+  display: block;
+  overflow: hidden;
+}
+
+.contact-marquee__track {
+  animation: contact-marquee-loop var(--contact-loop-duration) linear infinite;
+  display: flex;
+  inline-size: max-content;
+  will-change: transform;
+}
+
+.contact-marquee__group {
+  align-items: center;
+  display: flex;
+  flex: none;
+}
+
+.contact-marquee__group > span {
+  align-items: center;
+  display: flex;
+  flex: none;
+  font-family: var(--font-family-display);
+  font-size: clamp(4.5rem, 10vw, 8rem);
+  font-weight: var(--text-display-xl-weight);
+  line-height: 0.85;
+  margin-inline-end: clamp(var(--space-12), 8vw, var(--space-32));
+  white-space: nowrap;
+}
+
+.contact-marquee__link:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: calc(var(--focus-ring-offset) * -1);
+}
+
+@keyframes contact-marquee-loop {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (max-width: 47.999rem) {
+  .contact-marquee {
+    padding-block: var(--space-24) var(--space-20);
+  }
+
+  .contact-marquee__lead {
+    margin-block-end: var(--space-12);
+  }
+
+  .contact-marquee__group > span {
+    font-size: clamp(3.25rem, 17vw, 5.25rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-marquee__track {
+    animation: none;
+    inline-size: 100%;
+    justify-content: center;
+    transform: none;
+    will-change: auto;
+  }
+
+  .contact-marquee__group {
+    inline-size: 100%;
+    justify-content: center;
+  }
+
+  .contact-marquee__group > span:not(:first-child),
+  .contact-marquee__group[data-duplicate="true"] {
+    display: none;
+  }
+}

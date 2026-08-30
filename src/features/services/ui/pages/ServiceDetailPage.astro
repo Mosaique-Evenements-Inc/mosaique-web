@@ -1,0 +1,44 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/features/site-shell/ui/components/Footer.astro";
+import Navigation from "@/features/site-shell/ui/components/Navigation.astro";
+import type { Event } from "@/features/events";
+import { getLocalizedService, type Service } from "@/features/services";
+import { getLocaleFromUrl } from "@/core/i18n";
+import ServiceContactMarquee from "../components/ServiceContactMarquee.astro";
+import ServiceGallery from "../components/ServiceGallery.astro";
+import ServiceHeader from "../components/ServiceHeader.astro";
+import ServiceRelatedEvents from "../components/ServiceRelatedEvents.astro";
+
+import "../styles/service-detail.css";
+
+interface Props {
+  relatedEvents: Event[];
+  service: Service;
+}
+
+const { relatedEvents, service } = Astro.props;
+const localizedService = getLocalizedService(service, getLocaleFromUrl(Astro.url));
+---
+
+<BaseLayout
+  title={`${localizedService.title} — MOSAÏQUE EVENTS`}
+  description={localizedService.description}
+  surface="cinematic"
+>
+  <Navigation surface="overlay" anchorPrefix="/" />
+  <main class="service-detail" id="main-content" tabindex="-1" data-navigation-contrast="light">
+    <div class="service-detail__chapter" data-content-status="placeholder">
+      <ServiceHeader service={localizedService} />
+      <ServiceGallery
+        featuredMedia={localizedService.featuredMedia}
+        images={localizedService.gallery}
+        slug={localizedService.slug}
+        title={localizedService.title}
+      />
+    </div>
+    <ServiceRelatedEvents events={relatedEvents} />
+    <ServiceContactMarquee />
+  </main>
+  <Footer anchorPrefix="/" />
+</BaseLayout>

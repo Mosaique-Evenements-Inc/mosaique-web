@@ -1,0 +1,87 @@
+---
+import { Picture } from "astro:assets";
+
+import {
+  eventImageFallbackFormat,
+  eventImageFormats,
+  eventImageWidths,
+} from "@/assets/images/events/delivery";
+import type { FeaturedMedia, GalleryImage } from "@/core/common/types/media";
+import EventFeaturedMedia from "./EventFeaturedMedia.astro";
+import EventLightbox from "./EventLightbox.astro";
+import Container from "@/core/common/ui/components/Container.astro";
+import { galleryTranslations } from "@/features/gallery/i18n";
+import { getLocaleFromUrl } from "@/core/i18n";
+
+interface Props {
+  featuredMedia: FeaturedMedia;
+  images: GalleryImage[];
+  slug: string;
+  title: string;
+}
+
+const { featuredMedia, images, slug, title } = Astro.props;
+const galleryText = galleryTranslations[getLocaleFromUrl(Astro.url)];
+const galleryId = `event-gallery-${slug}`;
+const lightboxId = `${galleryId}-lightbox`;
+---
+
+<section
+  class="event-gallery"
+  aria-label={`${galleryText.eventGallery} ${title}`}
+  id={galleryId}
+>
+  <Container class="event-gallery__container">
+    <EventFeaturedMedia media={featuredMedia} slug={slug} />
+
+    <ol class="event-gallery__list">
+      {
+        images.map((image, index) => (
+          <li class="event-gallery__item" data-layout={image.layout}>
+            <button
+              class="event-gallery__trigger"
+              type="button"
+              aria-haspopup="dialog"
+              aria-controls={lightboxId}
+              aria-label={`${galleryText.openImage} ${index + 1} ${galleryText.of} ${images.length}: ${image.alt}`}
+              data-event-lightbox-trigger={index}
+            >
+              <span class="event-gallery__reveal">
+                <span class="event-gallery__media">
+                  {image.status === "approved" ? (
+                    <Picture
+                      src={image.src}
+                      alt={image.alt}
+                      formats={eventImageFormats}
+                      fallbackFormat={eventImageFallbackFormat}
+                      widths={eventImageWidths}
+                      sizes={
+                        image.layout === "full-landscape"
+                          ? "(min-width: 1024px) 58vw, 100vw"
+                          : "(min-width: 1024px) 29vw, (min-width: 768px) 42vw, 100vw"
+                      }
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <span
+                      class="event-gallery__placeholder"
+                      data-tone={String((index % 6) + 1).padStart(2, "0")}
+                      role="img"
+                      aria-label={image.alt}
+                    >
+                      <span />
+                      <span />
+                    </span>
+                  )}
+                </span>
+              </span>
+            </button>
+          </li>
+        ))
+      }
+    </ol>
+  </Container>
+
+  <EventLightbox id={lightboxId} images={images} title={title} />
+</section>

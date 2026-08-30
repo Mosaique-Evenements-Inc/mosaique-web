@@ -1,5 +1,13 @@
 ---
 import "../styles/global.css";
+import {
+  getContentPathFromUrl,
+  getLanguageTag,
+  getLocaleAlternates,
+  getLocaleFromUrl,
+  getOpenGraphLocale,
+} from "@/core/i18n";
+import { getSiteShellTranslations } from "@/features/site-shell/i18n";
 
 interface Props {
   title?: string;
@@ -9,16 +17,23 @@ interface Props {
   surface?: "default" | "cinematic";
 }
 
+const locale = getLocaleFromUrl(Astro.url);
+const shellText = getSiteShellTranslations(locale);
 const {
-  title = "MOSAÏQUE EVENTS",
-  description = "Organización, producción y experiencias para eventos en Montréal.",
+  title = shellText["metadata.defaultTitle"],
+  description = shellText["metadata.defaultDescription"],
   image,
   noindex = false,
   surface = "default",
 } = Astro.props;
-
-const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
+const contentPath = getContentPathFromUrl(Astro.url);
+const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : Astro.url.pathname;
 const socialImageUrl = image && Astro.site ? new URL(image, Astro.site) : undefined;
+const localeAlternates = getLocaleAlternates(contentPath).map((alternate) => ({
+  ...alternate,
+  href: Astro.site ? new URL(alternate.href, Astro.site) : alternate.href,
+}));
+const xDefaultHref = localeAlternates.find((alternate) => alternate.hreflang === "es")?.href;
 const robots = noindex ? "noindex, nofollow" : "index, follow";
 const structuredData = {
   "@context": "https://schema.org",
@@ -30,13 +45,13 @@ const structuredData = {
     "@type": "City",
     name: "Montréal",
   },
-  ...(canonicalUrl ? { url: canonicalUrl.href } : {}),
+  url: canonicalUrl instanceof URL ? canonicalUrl.href : canonicalUrl,
 };
 const structuredDataJson = JSON.stringify(structuredData).replace(/</g, "\\u003c");
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={getLanguageTag(locale)}>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -45,14 +60,20 @@ const structuredDataJson = JSON.stringify(structuredData).replace(/</g, "\\u003c
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
     <meta name="generator" content={Astro.generator} />
-    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+    <link rel="canonical" href={canonicalUrl} />
+    {
+      localeAlternates.map((alternate) => (
+        <link rel="alternate" hreflang={alternate.hreflang} href={alternate.href} />
+      ))
+    }
+    {xDefaultHref && <link rel="alternate" hreflang="x-default" href={xDefaultHref} />}
 
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="es_CA" />
+    <meta property="og:locale" content={getOpenGraphLocale(locale)} />
     <meta property="og:site_name" content="MOSAÏQUE EVENTS" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+    <meta property="og:url" content={canonicalUrl} />
     {socialImageUrl && <meta property="og:image" content={socialImageUrl} />}
 
     <meta name="twitter:card" content={socialImageUrl ? "summary_large_image" : "summary"} />
@@ -64,7 +85,7 @@ const structuredDataJson = JSON.stringify(structuredData).replace(/</g, "\\u003c
     <title>{title}</title>
   </head>
   <body class:list={{ "site-page--cinematic": surface === "cinematic" }}>
-    <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
+    <a class="skip-link" href="#main-content">{shellText["navigation.skipToContent"]}</a>
     <slot />
   </body>
 </html>

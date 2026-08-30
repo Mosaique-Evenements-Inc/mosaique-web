@@ -1,0 +1,33 @@
+---
+import PanelReveal from "@/core/common/ui/motion/PanelReveal.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/features/site-shell/ui/components/Footer.astro";
+import Navigation from "@/features/site-shell/ui/components/Navigation.astro";
+import Faq from "../components/Faq.astro";
+import FinalCta from "../components/FinalCta.astro";
+import Hero from "../components/Hero.astro";
+import HomeServicesShowcase from "../components/HomeServicesShowcase.astro";
+import Marquee from "../components/Marquee.astro";
+import Process from "../components/Process.astro";
+import ProjectsExperiences from "../components/ProjectsExperiences.astro";
+import { getHomeTranslations } from "@/features/home/i18n";
+import { getLocaleFromUrl } from "@/core/i18n";
+
+const homeText = getHomeTranslations(getLocaleFromUrl(Astro.url));
+---
+
+<BaseLayout title={homeText.metadataTitle} description={homeText.metadataDescription}>
+  <Navigation />
+  <main class="site-main" id="main-content" tabindex="-1">
+    <PanelReveal>
+      <Hero slot="lead" />
+      <ProjectsExperiences />
+      <HomeServicesShowcase />
+      <Process />
+      <Marquee />
+    </PanelReveal>
+    <Faq />
+    <FinalCta />
+  </main>
+  <Footer />
+</BaseLayout>

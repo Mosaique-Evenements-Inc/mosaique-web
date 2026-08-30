@@ -1,0 +1,24 @@
+---
+import { getQuoteContent } from "../../content/quote";
+import { getLocaleFromUrl } from "@/core/i18n";
+
+const quoteContent = getQuoteContent(getLocaleFromUrl(Astro.url));
+import QuoteContactStep from "./QuoteContactStep.astro";
+import QuoteEventStep from "./QuoteEventStep.astro";
+---
+
+<section
+  class="quote-step"
+  data-quote-step="0"
+  data-quote-tab-label={quoteContent.steps[0].label}
+  aria-labelledby="quote-basic-title"
+>
+  <h2 class="visually-hidden" id="quote-basic-title" tabindex="-1">
+    {quoteContent.steps[0].label}
+  </h2>
+
+  <div class="quote-step__groups">
+    <QuoteContactStep />
+    <QuoteEventStep />
+  </div>
+</section>

@@ -1,0 +1,30 @@
+---
+import type { Locale } from "@/core/i18n";
+import { getLocalizedEventCategory, type EventCategoryId } from "@/features/events";
+import { galleryCategories, getGalleryEvents } from "@/features/gallery";
+import { galleryTranslations } from "@/features/gallery/i18n";
+import GalleryPage from "@/features/gallery/ui/pages/GalleryPage.astro";
+
+export function getStaticPaths() {
+  return ["en", "fr"].flatMap((locale) =>
+    galleryCategories.map((category) => ({
+      params: { locale, category: category.id },
+      props: { category },
+    })),
+  );
+}
+
+const locale = Astro.params.locale as Locale;
+const { category } = Astro.props;
+const events = getGalleryEvents(category.id, locale);
+const localizedCategory = getLocalizedEventCategory(
+  category.categoryId as EventCategoryId,
+  locale,
+);
+---
+
+<GalleryPage
+  activeCategoryId={category.id}
+  items={events}
+  title={`${localizedCategory.label} — ${galleryTranslations[locale].archiveTitle} — MOSAÏQUE EVENTS`}
+/>
