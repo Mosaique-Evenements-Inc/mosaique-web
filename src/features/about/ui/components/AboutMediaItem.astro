@@ -1,0 +1,43 @@
+---
+import { Picture } from "astro:assets";
+import type { AboutMediaItem as MediaItem } from "@/features/about/content/about";
+
+interface Props {
+  item: MediaItem;
+}
+
+const { item } = Astro.props;
+const sizes =
+  "(min-width: 96rem) 14.3vw, (min-width: 80rem) 16.7vw, (min-width: 64rem) 20vw, (min-width: 48rem) 25vw, (min-width: 40rem) 33.3vw, 50vw";
+---
+
+<figure class="about-media">
+  <div class="about-media__visual">
+    {
+      item.kind === "gif" ? (
+        <img
+          src={item.src.src}
+          alt=""
+          width={item.src.width}
+          height={item.src.height}
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <Picture
+          src={item.src}
+          alt=""
+          widths={[320, 640]}
+          formats={["avif", "webp"]}
+          sizes={sizes}
+          loading="lazy"
+          decoding="async"
+        />
+      )
+    }
+  </div>
+  <span class="about-media__shade" aria-hidden="true"></span>
+  <figcaption class="about-media__caption">
+    <span>{item.label}</span>
+  </figcaption>
+</figure>

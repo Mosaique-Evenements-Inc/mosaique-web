@@ -1,0 +1,51 @@
+---
+import { servicesContent } from "@/features/home/content/services";
+import Heading from "@/core/common/ui/components/Heading.astro";
+import Text from "@/core/common/ui/components/Text.astro";
+import HomeServicePreviewScene from "./HomeServicePreviewScene.astro";
+import { getHomeContentTranslations } from "@/features/home/i18n";
+import { getLocalizedService } from "@/features/services";
+import { getLocaleFromUrl } from "@/core/i18n";
+
+import "@/features/home/ui/styles/home-services-showcase.css";
+
+const locale = getLocaleFromUrl(Astro.url);
+const services = [...servicesContent.items]
+  .sort((a, b) => a.index.localeCompare(b.index))
+  .map((service) => getLocalizedService(service, locale));
+const titleId = "home-services-heading";
+const servicesPanel = getHomeContentTranslations(locale).servicesPanel;
+---
+
+<section
+  class="home-services-showcase"
+  id="services"
+  aria-labelledby={titleId}
+  data-navigation-contrast="light"
+>
+  <header class="home-services-showcase__intro">
+    <div class="home-services-showcase__intro-inner">
+      <Heading as="h2" variant="display-xl" id={titleId}>
+        {servicesPanel.title}
+      </Heading>
+      <Text variant="body-lg" tone="inverse">
+        {servicesPanel.text}
+      </Text>
+      <a class="home-services-showcase__intro-cta" href="#services-list">
+        {servicesPanel.ctaLabel}
+      </a>
+    </div>
+  </header>
+
+  <div class="home-services-showcase__sequence" id="services-list">
+    {
+      services.map((service, index) => (
+        <HomeServicePreviewScene
+          service={service}
+          sceneIndex={index}
+          isLast={index === services.length - 1}
+        />
+      ))
+    }
+  </div>
+</section>

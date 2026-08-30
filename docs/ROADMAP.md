@@ -476,9 +476,120 @@ This document is the source of truth for implementation status. The existence of
 
 ### Architecture Audit
 
-- Not started and approval-gated. Audit the current repository boundaries before proposing any
-  global Clean Architecture migration. The completed normalized Service/Event/Media domain is the
-  baseline and must not be reopened speculatively.
+- **Architecture Audit: complete.** The approved migration uses a pragmatic feature-first
+  structure with `core/`, Astro composition roots, feature-owned data/selectors, and no
+  repositories for static catalogs.
+- **Clean Architecture Responsibility 1 — Core + Feature Boundaries: complete locally.** Event
+  types, category registry, catalog records, selectors, and public API now live under
+  `src/features/events/`; Service types, IDs, catalog records, selectors, and public API live under
+  `src/features/services/`. All consumers import those public feature APIs or explicit shared
+  contracts; the former `src/content/events/` and `src/content/services/` compatibility paths were
+  removed after repository-wide consumer verification.
+- Shared `ContentLink`, media contracts, and unique-value integrity utility now live under
+  `src/core/common/`. `StaticImageSource` replaces the former direct Astro `ImageMetadata` import
+  with a framework-free structural contract that remains assignable to Astro Assets. Event and
+  Service catalogs still import approved frontend assets because they are local static data, not
+  pure domain persistence.
+- **Clean Architecture Responsibility 2 — Quote + Infrastructure: complete locally.** The complete
+  Quote ownership now lives under `src/features/quote/`: typed contracts, validation, Zustand
+  state, React hook/transport, application service, repository port, HTTP repository adapter,
+  reviewed form content, Astro UI, and feature-owned CSS. `/contact` remains a thin composition
+  root and imports only the feature UI entry components.
+- The preserved flow is `UI -> validation -> submit composition -> service -> repository port ->
+HTTP adapter`. The service receives the repository contract, while `submit-lead.ts` is the
+  feature-local composition boundary. Payload normalization, `POST /functions/v1/leads`, request
+  headers, expected `201` response, field validation, loading/success/error state, preselection,
+  and user-facing messages remain unchanged.
+- Public Supabase environment access is centralized in `src/core/config/env.ts`. The unused
+  `src/lib/supabase.ts` client and `@supabase/supabase-js` dependency were removed after confirming
+  that they had no consumers; the working transport continues to use the existing Fetch adapter.
+  Empty legacy root folders for hooks, repositories, services, stores, types, validators, and lib
+  were removed. No empty folders remain under `src/`.
+- Development and optimized preview passed `/contact?service=bodas` at `390 x 844` and
+  `1280 x 720`: `service-08` remained preselected, there was no horizontal overflow or console
+  error, local validation enabled `Revisar información`, and the review transition produced the
+  unchanged `Enviar solicitud` state. The final external submission was intentionally not sent to
+  avoid creating a production-like lead during architecture QA; endpoint and transport contracts
+  were verified in code and the optimized client bundle built successfully.
+- React, Zustand, the custom-event transport, Quote component decomposition, shared presentation
+  primitives, Event/Service UI duplication, Home cinematic composition, routes, copy, assets, and
+  visual behavior remain otherwise unchanged in Responsibility 2.
+- Development and optimized-preview smoke matrices passed for Home, Gallery, Event Detail,
+  Service Detail, and Contact at `1280 × 720`, `900 × 900`, `390 × 844`, and `320 × 800`: expected
+  titles and landmarks, zero broken images, zero horizontal overflow, and clean browser consoles.
+  Build, lint, typecheck, and diff-check pass.
+- **Clean Architecture Responsibility 3 — UI Ownership + Presentation Cleanup: complete
+  locally.** Feature components, route compositions, reviewed presentation content, and feature
+  CSS now live under `src/features/<feature>/ui/` and their adjacent feature content/data folders
+  for About, Events, Gallery, Home, Quote, Services, and Site Shell. Shared content-agnostic UI and
+  Astro motion primitives live under `src/core/common/ui/`; `src/styles/` now contains only the
+  global stylesheet and executable design tokens.
+- `src/pages/` remains Astro's routing boundary. Static-path generation and route props stay in
+  the dynamic route files, while the rendered compositions moved to feature-owned `ui/pages`.
+  Event Detail, Service Detail, Gallery, Home, About, and Contact retain their existing DOM,
+  content, CSS, assets, responsive geometry, scroll behavior, and navigation/footer composition.
+- The former root `src/components/`, `src/content/`, and `src/tokens/` trees, plus empty section and
+  component style folders, were removed after migration. Confirmed dead presentation artifacts
+  were also removed: `MediaCrossfade`, `Reveal`, `StaggerText`, `StickyScene`, `Stack`,
+  `AboutMilestones`, `WhyChooseUs`, three unused Quote subcomponents, and their orphaned content
+  and styles.
+- React remains required by the shared `Button` and Quote transport; Zustand remains required by
+  Quote submission state. Motion had no remaining runtime consumer after the dead-component audit,
+  so the `motion` dependency and its runtime token module were removed. No replacement dependency,
+  shared Event/Service abstraction, UI redesign, or behavior change was introduced.
+- Development browser QA passed `/`, `/about`, `/gallery`, `/gallery/celebracion`,
+  `/events/nossa-copa`, `/services/celebraciones`, and `/contact` at `1280 × 720` and `390 × 844`:
+  expected titles and landmarks, zero horizontal overflow, and clean consoles. Optimized preview
+  passed representative Home, Gallery, Event Detail, Service Detail, and Contact routes with zero
+  broken images or console issues; Service Detail also passed `320 × 800`. Build, lint, typecheck,
+  scoped Prettier, and diff-check pass.
+- **Clean Architecture Responsibility 4 — Safe Reuse + Architecture Enforcement: complete locally.**
+  The stable Event/Service Contact Marquee equivalence was extracted into
+  `src/core/common/ui/components/ContactMarquee.astro` with its shared CSS. The Event and Service
+  components remain thin feature-owned adapters so each domain retains its content source and
+  accessible heading ID. The rendered structure, animation, responsive sizing, reduced-motion
+  behavior, and visual tokens remain unchanged.
+- The Event and Service Lightbox, FeaturedMedia, Gallery, and detail stylesheet audits confirmed
+  strong structural similarity but meaningful domain namespaces, data attributes, timeline hooks,
+  and Service-specific CTA/related-event sections. They remain physically separate; no wholesale
+  Detail abstraction was introduced. This is intentional safe reuse, not unfinished migration.
+- Added a minimal ESLint boundary rule preventing `src/core/**` from importing `src/features/**`.
+  No compatibility alias or legacy-root import remains in active code, and no new dependency or
+  UI redesign was introduced.
+- Build, lint, typecheck, diff-check, and scoped Prettier pass after the extraction. The existing
+  development and optimized-preview smoke matrix remains green for Home, Gallery, Event Detail,
+  Service Detail, and Contact at `1280 × 720`, `900 × 900`, `390 × 844`, and `320 × 800`; the
+  affected Event and Service detail routes also preserve the shared marquee output.
+- **Next architecture gate:** production acceptance and any future shared extraction require a
+  separate approval. Do not merge Event Detail and Service Detail wholesale; only extract another
+  primitive after a new equivalence audit demonstrates a stable, content-agnostic contract.
+
+### Internationalization
+
+- **✅ R1 — Localization Foundation + Architecture Contract: complete locally.** Astro
+  native i18n is configured for `es`, `en-CA`, and `fr-CA`; Spanish remains the unprefixed default,
+  while `/en/` and `/fr/` are the reserved URL prefixes. No existing Spanish route, copy, design,
+  functionality, domain identity, or slug was changed.
+- `src/core/i18n/` now owns locale configuration, URL locale/path helpers backed by `astro:i18n`,
+  typed dictionary contracts, explicit Spanish fallback behavior, and language-tag/alternate SEO
+  helpers. Feature translation ownership is defined with a minimal Site Shell contract under
+  `src/features/site-shell/i18n/`; no complete translation inventory was started.
+- `docs/I18N.md` records the operational contract, fallback policy, glossary foundation, and
+  requirements for future feature and locale additions. `AGENTS.md` now requires localized
+  user-facing text, locale-aware internal routing, locale-independent domain IDs, and all-locale
+  validation for new UI.
+- **✅ R2 — Translation Inventory + Content Migration: complete locally.** Typed ES / EN-CA / FR-CA
+  projections now cover Home, About metadata, Service, Event, Gallery, Site Shell, and Quote/Contact
+  without duplicating canonical domain records. Home editorial content, navigation/footer labels,
+  carousel controls, ARIA text, calendar controls, validation/review copy, and route metadata are
+  feature-owned and localized. Canonical form values, IDs, slugs, payloads, routes, business rules,
+  and Spanish visual behavior remain unchanged. The hardcoded-text classification is recorded in
+  `docs/I18N.md`; remaining literals are intentional proper nouns or technical/internal values.
+- **🔄 CURRENT R3 — Locale Routing + Language Switcher + SEO: pending approval.** Generate localized
+  route surfaces and add the language selector without manual locale-prefix concatenation. Connect
+  locale-aware metadata, canonical URLs, `hreflang`, and sitemap behavior only after approval.
+- **⏳ R4 — Translation Fidelity + Full QA.** Validate multilingual content, responsive behavior,
+  metadata, accessibility, and visual fidelity.
 
 ### Production URL + Scoped SEO Acceptance
 

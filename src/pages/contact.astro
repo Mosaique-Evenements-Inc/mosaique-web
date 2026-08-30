@@ -1,33 +1,5 @@
 ---
-import ContactMediaPlaceholder from "../components/quote/ContactMediaPlaceholder.astro";
-import QuoteForm from "../components/quote/QuoteForm.astro";
-import Footer from "../components/sections/Footer.astro";
-import Navigation from "../components/sections/Navigation.astro";
-import Container from "../components/ui/Container.astro";
-import { footerContent } from "../content/home/footer";
-import BaseLayout from "../layouts/BaseLayout.astro";
-
-import "../styles/sections/contact-page.css";
+import ContactPage from "@/features/quote/ui/pages/ContactPage.astro";
 ---
 
-<BaseLayout
-  title="Contacto — MOSAÏQUE ÉVÉNEMENTS"
-  description={footerContent.description}
-  surface="cinematic"
->
-  <Navigation surface="overlay" anchorPrefix="/" />
-
-  <main class="contact-page" id="main-content" tabindex="-1" data-navigation-contrast="light">
-    <section class="contact-page__stage" aria-label="Formulario de cotización">
-      <Container class="contact-page__container">
-        <div class="contact-page__form-column">
-          <QuoteForm />
-        </div>
-
-        <ContactMediaPlaceholder />
-      </Container>
-    </section>
-  </main>
-
-  <Footer anchorPrefix="/" />
-</BaseLayout>
+<ContactPage />

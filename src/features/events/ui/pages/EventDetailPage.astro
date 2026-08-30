@@ -1,0 +1,48 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/features/site-shell/ui/components/Footer.astro";
+import Navigation from "@/features/site-shell/ui/components/Navigation.astro";
+import { getLocalizedEvent, type Event } from "@/features/events";
+import { getLocaleFromUrl } from "@/core/i18n";
+import EventContactMarquee from "../components/EventContactMarquee.astro";
+import EventGallery from "../components/EventGallery.astro";
+import EventHeader from "../components/EventHeader.astro";
+import EventMoreGalleries from "../components/EventMoreGalleries.astro";
+
+import "../styles/event-detail.css";
+
+interface Props {
+  event: Event;
+  nextEvents: Event[];
+}
+
+const { event, nextEvents } = Astro.props;
+const locale = getLocaleFromUrl(Astro.url);
+const localizedEvent = getLocalizedEvent(event, locale);
+---
+
+<BaseLayout
+  title={`${localizedEvent.title} — MOSAÏQUE EVENTS`}
+  description={localizedEvent.description}
+  surface="cinematic"
+>
+  <Navigation surface="overlay" anchorPrefix="/" />
+  <main class="event-detail" id="main-content" tabindex="-1" data-navigation-contrast="light">
+    <div class="event-detail__chapter" data-content-status={localizedEvent.status}>
+      <EventHeader
+        title={localizedEvent.title}
+        description={localizedEvent.description}
+        status={localizedEvent.status}
+      />
+      <EventGallery
+        featuredMedia={localizedEvent.featuredMedia}
+        images={localizedEvent.gallery}
+        slug={localizedEvent.slug}
+        title={localizedEvent.title}
+      />
+    </div>
+    <EventMoreGalleries events={nextEvents} />
+    <EventContactMarquee />
+  </main>
+  <Footer anchorPrefix="/" />
+</BaseLayout>

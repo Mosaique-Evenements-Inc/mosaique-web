@@ -1,0 +1,118 @@
+---
+import Button from "@/core/common/ui/components/Button";
+import Container from "@/core/common/ui/components/Container.astro";
+import Heading from "@/core/common/ui/components/Heading.astro";
+import { heroContent } from "@/features/home/content/hero";
+import { getHomeContentTranslations, getHomeTranslations } from "@/features/home/i18n";
+import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
+
+import "@/features/site-shell/ui/styles/home-entry.css";
+
+const locale = getLocaleFromUrl(Astro.url);
+const homeText = getHomeTranslations(locale);
+const heroText = getHomeContentTranslations(locale);
+---
+
+<section
+  class="home-hero"
+  id="top"
+  aria-labelledby="home-hero-title"
+  data-navigation-contrast="light"
+>
+  <div class="home-hero__scene">
+    <figure
+      class="home-hero__media"
+      data-media-status={heroContent.media.status}
+      style={`--home-hero-media-position:${heroContent.media.position};`}
+    >
+      {
+        heroContent.media.src ? (
+          <img src={heroContent.media.src} alt={heroContent.media.alt} loading="eager" />
+        ) : (
+          <div class="home-hero__media-placeholder" aria-hidden="true">
+            <span />
+            <span />
+          </div>
+        )
+      }
+      <figcaption>{homeText.heroOverlay}</figcaption>
+    </figure>
+
+    <Container class="home-hero__stage">
+      <div class="home-hero__final-state">
+        <Heading as="h1" variant="heading-lg" class="home-hero__title" id="home-hero-title">
+          {
+            heroText.heroSegments.map((segment) =>
+              segment.emphasis ? <em>{segment.text}</em> : segment.text,
+            )
+          }
+        </Heading>
+        <Button
+          className="home-hero__primary-action"
+          href={getLocalizedHref(heroContent.actions.primary.href, locale)}
+        >
+          {homeText.planEvent}
+        </Button>
+      </div>
+    </Container>
+  </div>
+</section>
+
+<script>
+  const clamp = (value: number) => Math.min(Math.max(value, 0), 1);
+  const rangeProgress = (progress: number, start: number, end: number) =>
+    clamp((progress - start) / (end - start));
+
+  document.querySelectorAll<HTMLElement>(".home-hero").forEach((hero) => {
+    if (hero.dataset.scrollMotionReady === "true") return;
+
+    hero.dataset.scrollMotionReady = "true";
+
+    const scrollOrigin = hero.closest<HTMLElement>(".panel-reveal") ?? hero;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const controller = new AbortController();
+    let heroTop = scrollOrigin.getBoundingClientRect().top + window.scrollY;
+    let frameId = 0;
+
+    const update = () => {
+      frameId = 0;
+
+      if (reducedMotion.matches) {
+        hero.style.setProperty("--hero-caption-opacity", "1");
+        return;
+      }
+
+      const scrollRange = Math.max(window.innerHeight * 0.55, 1);
+      const progress = clamp((window.scrollY - heroTop) / scrollRange);
+      const captionProgress = rangeProgress(progress, 0.64, 0.88);
+
+      hero.style.setProperty("--hero-caption-opacity", String(captionProgress));
+    };
+
+    const requestUpdate = () => {
+      if (!frameId) frameId = window.requestAnimationFrame(update);
+    };
+
+    const handleResize = () => {
+      heroTop = scrollOrigin.getBoundingClientRect().top + window.scrollY;
+      requestUpdate();
+    };
+
+    window.addEventListener("scroll", requestUpdate, {
+      passive: true,
+      signal: controller.signal,
+    });
+    window.addEventListener("resize", handleResize, { signal: controller.signal });
+    reducedMotion.addEventListener("change", requestUpdate, { signal: controller.signal });
+    window.addEventListener(
+      "pagehide",
+      () => {
+        controller.abort();
+        if (frameId) window.cancelAnimationFrame(frameId);
+      },
+      { once: true },
+    );
+
+    update();
+  });
+</script>

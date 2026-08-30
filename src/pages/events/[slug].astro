@@ -1,14 +1,6 @@
 ---
-import EventGallery from "../../components/events/EventGallery.astro";
-import EventHeader from "../../components/events/EventHeader.astro";
-import EventContactMarquee from "../../components/events/EventContactMarquee.astro";
-import EventMoreGalleries from "../../components/events/EventMoreGalleries.astro";
-import Footer from "../../components/sections/Footer.astro";
-import Navigation from "../../components/sections/Navigation.astro";
-import { eventDetails, type Event } from "../../content/events";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-
-import "../../styles/sections/event-detail.css";
+import { eventDetails, type Event } from "@/features/events";
+import EventDetailPage from "@/features/events/ui/pages/EventDetailPage.astro";
 
 export function getStaticPaths() {
   return eventDetails.map((event, index) => ({
@@ -31,24 +23,4 @@ interface Props {
 const { event, nextEvents } = Astro.props;
 ---
 
-<BaseLayout
-  title={`${event.title} — MOSAÏQUE EVENTS`}
-  description={event.description}
-  surface="cinematic"
->
-  <Navigation surface="overlay" anchorPrefix="/" />
-  <main class="event-detail" id="main-content" tabindex="-1" data-navigation-contrast="light">
-    <div class="event-detail__chapter" data-content-status={event.status}>
-      <EventHeader title={event.title} description={event.description} status={event.status} />
-      <EventGallery
-        featuredMedia={event.featuredMedia}
-        images={event.gallery}
-        slug={event.slug}
-        title={event.title}
-      />
-    </div>
-    <EventMoreGalleries events={nextEvents} />
-    <EventContactMarquee />
-  </main>
-  <Footer anchorPrefix="/" />
-</BaseLayout>
+<EventDetailPage {event} {nextEvents} />

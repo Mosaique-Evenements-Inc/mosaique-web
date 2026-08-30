@@ -1,0 +1,38 @@
+---
+interface Props {
+  href: string;
+  label: string;
+  lead: string;
+  titleId: string;
+}
+
+import "../styles/contact-marquee.css";
+
+const { href, label, lead, titleId } = Astro.props;
+const marqueeItems = Array.from({ length: 3 }, () => label);
+---
+
+<section class="contact-marquee" aria-labelledby={titleId} data-navigation-contrast="light">
+  <h2 id={titleId} class="sr-only">{label}</h2>
+
+  <a class="contact-marquee__link" href={href} aria-label={label}>
+    <p class="contact-marquee__lead">{lead}</p>
+
+    <span class="contact-marquee__viewport" aria-hidden="true">
+      <span class="contact-marquee__track">
+        {
+          [false, true].map((duplicate) => (
+            <span
+              class="contact-marquee__group"
+              data-duplicate={duplicate ? "true" : undefined}
+            >
+              {marqueeItems.map((item) => (
+                <span>{item}</span>
+              ))}
+            </span>
+          ))
+        }
+      </span>
+    </span>
+  </a>
+</section>

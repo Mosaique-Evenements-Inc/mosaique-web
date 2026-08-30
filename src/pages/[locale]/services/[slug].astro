@@ -1,0 +1,19 @@
+---
+import { getEventsByServiceId } from "@/features/events";
+import { services } from "@/features/services";
+import ServiceDetailPage from "@/features/services/ui/pages/ServiceDetailPage.astro";
+
+export function getStaticPaths() {
+  return ["en", "fr"].flatMap((locale) =>
+    services.map((service) => ({
+      params: { locale, slug: service.slug },
+      props: { service },
+    })),
+  );
+}
+
+const { service } = Astro.props;
+const relatedEvents = getEventsByServiceId(service.id);
+---
+
+<ServiceDetailPage {service} {relatedEvents} />

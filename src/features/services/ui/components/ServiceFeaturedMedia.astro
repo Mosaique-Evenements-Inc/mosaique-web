@@ -1,0 +1,130 @@
+---
+import { Picture } from "astro:assets";
+
+import {
+  eventImageFallbackFormat,
+  eventImageFormats,
+  eventImageWidths,
+} from "@/assets/images/events/delivery";
+import type { FeaturedMedia } from "@/core/common/types/media";
+import Button from "@/core/common/ui/components/Button";
+
+interface Props {
+  media: FeaturedMedia;
+  slug: string;
+}
+
+const { media, slug } = Astro.props;
+const mediaId = `service-featured-media-${slug}`;
+const aspectRatio =
+  media.kind === "image"
+    ? `${media.src.width} / ${media.src.height}`
+    : `${media.width} / ${media.height}`;
+---
+
+<figure
+  class="service-featured-media"
+  data-service-featured-media
+  data-kind={media.kind}
+  style={`--service-featured-media-ratio:${aspectRatio};`}
+>
+  <div class="service-featured-media__reveal">
+    <div class="service-featured-media__media">
+      {
+        media.kind === "image" ? (
+          <Picture
+            src={media.src}
+            alt={media.alt}
+            formats={eventImageFormats}
+            fallbackFormat={eventImageFallbackFormat}
+            widths={eventImageWidths}
+            sizes="(min-width: 1024px) 72vw, 100vw"
+            loading="eager"
+            decoding="async"
+          />
+        ) : media.kind === "video" ? (
+          <video
+            id={mediaId}
+            aria-label={media.alt}
+            playsinline
+            poster={media.poster}
+            preload="metadata"
+          >
+            <source src={media.src} type={media.mimeType} />
+            <track
+              kind="captions"
+              src={media.captions.src}
+              srclang={media.captions.srclang}
+              label={media.captions.label}
+              default
+            />
+          </video>
+        ) : (
+          <span class="service-featured-media__placeholder" role="img" aria-label={media.alt}>
+            <span />
+            <span />
+          </span>
+        )
+      }
+    </div>
+  </div>
+
+  {
+    media.kind === "video" && (
+      <div class="service-featured-media__control">
+        <Button
+          aria-controls={mediaId}
+          aria-pressed="false"
+          className="service-featured-media__button"
+          data-service-featured-media-toggle
+          variant="transparent"
+        >
+          Reproducir
+        </Button>
+      </div>
+    )
+  }
+</figure>
+
+<script>
+  const updateFeaturedMediaLabel = (button: HTMLButtonElement, label: string) => {
+    button
+      .querySelectorAll<HTMLElement>(".action-button__content > span")
+      .forEach((element) => {
+        element.textContent = label;
+      });
+  };
+
+  document.querySelectorAll<HTMLElement>("[data-service-featured-media]").forEach((root) => {
+    const video = root.querySelector<HTMLVideoElement>("video");
+    const button = root.querySelector<HTMLButtonElement>(
+      "[data-service-featured-media-toggle]",
+    );
+
+    if (!video || !button) return;
+
+    const syncControl = () => {
+      const isPlaying = !video.paused && !video.ended;
+      button.setAttribute("aria-pressed", String(isPlaying));
+      updateFeaturedMediaLabel(button, isPlaying ? "Pausar" : "Reproducir");
+    };
+
+    button.addEventListener("click", async () => {
+      if (!video.paused && !video.ended) {
+        video.pause();
+        return;
+      }
+
+      try {
+        await video.play();
+      } catch {
+        syncControl();
+      }
+    });
+
+    video.addEventListener("play", syncControl);
+    video.addEventListener("pause", syncControl);
+    video.addEventListener("ended", syncControl);
+    syncControl();
+  });
+</script>

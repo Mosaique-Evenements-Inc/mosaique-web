@@ -1,0 +1,41 @@
+---
+import { type Event } from "@/features/events";
+import { eventDetailTranslations } from "@/features/events";
+import { getLocaleFromUrl } from "@/core/i18n";
+import Heading from "@/core/common/ui/components/Heading.astro";
+import ServiceRelatedEventPreview from "./ServiceRelatedEventPreview.astro";
+
+interface Props {
+  events: Event[];
+}
+
+const { events } = Astro.props;
+const eventText = eventDetailTranslations[getLocaleFromUrl(Astro.url)];
+const titleId = "service-related-events-heading";
+---
+
+{
+  events.length > 0 && (
+    <section
+      class="service-more-galleries"
+      aria-labelledby={titleId}
+      data-navigation-contrast="light"
+    >
+      <header class="service-more-galleries__header">
+        <Heading as="h2" variant="display-xl" id={titleId}>
+          {eventText.relatedEvents}
+        </Heading>
+      </header>
+
+      <div class="service-more-galleries__sequence">
+        {events.map((event, index) => (
+          <ServiceRelatedEventPreview
+            event={event}
+            index={index}
+            isLast={index === events.length - 1}
+          />
+        ))}
+      </div>
+    </section>
+  )
+}

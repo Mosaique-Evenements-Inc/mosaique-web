@@ -29,4 +29,15 @@ export default [
       "@typescript-eslint/no-unused-vars": "error",
     },
   },
+  {
+    files: ["src/core/**/*.{astro,ts,tsx}"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: ["@/features/**", "../../features/**", "../../../features/**"],
+        },
+      ],
+    },
+  },
 ];

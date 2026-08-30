@@ -1,0 +1,58 @@
+---
+import Container from "@/core/common/ui/components/Container.astro";
+import Heading from "@/core/common/ui/components/Heading.astro";
+import Text from "@/core/common/ui/components/Text.astro";
+import Testimonials from "./Testimonials.astro";
+import { getHomeContentTranslations } from "@/features/home/i18n";
+import { getLocaleFromUrl } from "@/core/i18n";
+
+import "@/features/home/ui/styles/process.css";
+
+const processContent = getHomeContentTranslations(getLocaleFromUrl(Astro.url)).process;
+---
+
+<section
+  class="process"
+  id="process"
+  aria-labelledby="process-title"
+  data-navigation-contrast="dark"
+>
+  <Container>
+    <div class="process__layout">
+      <figure class="process__media" data-media-status="pending" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </figure>
+
+      <div class="process__content">
+        <header class="process__header">
+          <Heading as="h2" variant="heading-md" id="process-title">
+            {processContent.title}
+          </Heading>
+          <Text>{processContent.introduction}</Text>
+        </header>
+
+        <ol class="process__steps">
+          {
+            processContent.steps.map((step) => (
+              <li class="process__step">
+                <article>
+                  <span class="process__index" aria-hidden="true">
+                    {step.index}
+                  </span>
+                  <Heading as="h3" variant="heading-md">
+                    {step.title}
+                  </Heading>
+                  <Text>{step.description}</Text>
+                </article>
+              </li>
+            ))
+          }
+        </ol>
+
+        <Testimonials />
+      </div>
+    </div>
+  </Container>
+</section>

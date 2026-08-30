@@ -1,0 +1,60 @@
+---
+import { getQuoteTranslations } from "../../i18n";
+import { getLocaleFromUrl } from "@/core/i18n";
+
+const quoteText = getQuoteTranslations(getLocaleFromUrl(Astro.url));
+---
+
+<section class="quote-review" data-quote-review aria-labelledby="quote-review-title" hidden>
+  <header>
+    <span>{quoteText.reviewFinal}</span>
+    <h2 class="visually-hidden" id="quote-review-title" tabindex="-1">
+      {quoteText.reviewFinal}
+    </h2>
+    <p>{quoteText.reviewIntro}</p>
+  </header>
+
+  <div class="quote-review__sections">
+    <section class="quote-review__section" aria-labelledby="quote-review-contact-title">
+      <header>
+        <div>
+          <span>01</span>
+          <h3 id="quote-review-contact-title">{quoteText.contact}</h3>
+        </div>
+        <button type="button" class="quote-text-action" data-quote-edit-step="0">
+          {quoteText.edit}
+          <span class="sr-only">{quoteText.contactInfo}</span>
+        </button>
+      </header>
+      <dl>
+        <div><dt>{quoteText.name}</dt><dd data-review-value="fullName"></dd></div>
+        <div><dt>{quoteText.email}</dt><dd data-review-value="email"></dd></div>
+        <div><dt>{quoteText.phone}</dt><dd data-review-value="phone"></dd></div>
+        <div><dt>{quoteText.language}</dt><dd data-review-value="preferredLanguage"></dd></div>
+      </dl>
+    </section>
+
+    <section class="quote-review__section" aria-labelledby="quote-review-event-title">
+      <header>
+        <div>
+          <span>02</span>
+          <h3 id="quote-review-event-title">{quoteText.event}</h3>
+        </div>
+        <button type="button" class="quote-text-action" data-quote-edit-step="0">
+          {quoteText.edit}
+          <span class="sr-only">{quoteText.eventInfoSr}</span>
+        </button>
+      </header>
+      <dl>
+        <div><dt>{quoteText.service}</dt><dd data-review-value="service"></dd></div>
+        <div><dt>{quoteText.eventType}</dt><dd data-review-value="eventType"></dd></div>
+        <div><dt>{quoteText.date}</dt><dd data-review-value="eventDate"></dd></div>
+        <div><dt>{quoteText.guests}</dt><dd data-review-value="guestRange"></dd></div>
+      </dl>
+    </section>
+  </div>
+
+  <p class="quote-review__notice">
+    {quoteText.reviewNotice}
+  </p>
+</section>

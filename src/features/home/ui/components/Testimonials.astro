@@ -1,0 +1,46 @@
+---
+import Heading from "@/core/common/ui/components/Heading.astro";
+import { getHomeContentTranslations, getHomeTranslations } from "@/features/home/i18n";
+import { getLocaleFromUrl } from "@/core/i18n";
+
+import "@/features/home/ui/styles/testimonials.css";
+
+const locale = getLocaleFromUrl(Astro.url);
+const testimonialsText = getHomeContentTranslations(locale).testimonials;
+const homeText = getHomeTranslations(locale);
+---
+
+<div
+  class="testimonials"
+  id="testimonials"
+  role="region"
+  aria-labelledby="testimonials-title"
+  data-content-status={homeText.testimonialsStatus}
+>
+  <Heading as="h2" variant="heading-lg" id="testimonials-title" class="visually-hidden">
+    {testimonialsText.title}
+  </Heading>
+
+  <ol class="testimonials__list">
+    {
+      testimonialsText.items.map((testimonial, index) => (
+        <li class="testimonials__item">
+          <figure
+            class="testimonials__media"
+            data-media-status="pending"
+            data-tone={String(index + 1).padStart(2, "0")}
+            aria-hidden="true"
+          >
+            <span />
+            <span />
+          </figure>
+
+          <blockquote>
+            <cite>{testimonial.name}</cite>
+            <p>“{testimonial.quote}”</p>
+          </blockquote>
+        </li>
+      ))
+    }
+  </ol>
+</div>
