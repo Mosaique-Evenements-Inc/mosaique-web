@@ -1,4 +1,5 @@
-import { services } from "../../services";
+import { getLocalizedService, services } from "../../services";
+import { getQuoteTranslations } from "../i18n";
 
 export const quoteContent = {
   eyebrow: "Solicitud de cotización",
@@ -45,3 +46,29 @@ export const quoteContent = {
     "Aún no tengo un presupuesto definido",
   ],
 } as const;
+
+export const getQuoteContent = (locale: "es" | "en" | "fr" = "es") => {
+  const translations = getQuoteTranslations(locale);
+  return {
+    ...quoteContent,
+    eyebrow: translations.eyebrow,
+    title: translations.title,
+    mobileTitle: translations.mobileTitle,
+    steps: [
+      { id: "basic", index: "01", label: translations.basicStep },
+      { id: "additional", index: "02", label: translations.additionalStep },
+    ],
+    services: [
+      ...services.map((service) => {
+        const localized = getLocalizedService(service, locale);
+        return { value: service.id, slug: service.slug, label: localized.title };
+      }),
+      { value: "guidance", slug: "", label: translations.serviceGuidance },
+    ],
+    eventTypes: translations.eventTypes,
+    guestRanges: translations.guestRanges,
+    preferredLanguages: translations.preferredLanguages,
+    venueOptions: translations.venueOptions,
+    budgets: translations.budgets,
+  };
+};

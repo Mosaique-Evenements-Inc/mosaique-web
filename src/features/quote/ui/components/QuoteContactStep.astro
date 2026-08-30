@@ -1,42 +1,48 @@
 ---
-import { quoteContent } from "../../content/quote";
+import { getQuoteContent } from "../../content/quote";
+import { getQuoteTranslations } from "../../i18n";
+import { getLocaleFromUrl } from "@/core/i18n";
+
+const locale = getLocaleFromUrl(Astro.url);
+const quoteText = getQuoteTranslations(locale);
+const quoteContent = getQuoteContent(locale);
 ---
 
 <section class="quote-step__section" aria-labelledby="quote-contact-title">
   <header>
-    <h3 id="quote-contact-title">Contacto</h3>
+    <h3 id="quote-contact-title">{quoteText.contact}</h3>
   </header>
 
   <div class="quote-fields">
     <label class="quote-field quote-field--wide">
-      <span>Nombre completo <strong aria-hidden="true">*</strong></span>
+      <span>{quoteText.fullName} <strong aria-hidden="true">*</strong></span>
       <input
         type="text"
         name="fullName"
         autocomplete="name"
         required
         aria-describedby="quote-full-name-error"
-        data-error-required="Ingresa tu nombre completo."
+        data-error-required={quoteText.requiredFullName}
       />
       <small id="quote-full-name-error" data-quote-error></small>
     </label>
 
     <label class="quote-field">
-      <span>Email <strong aria-hidden="true">*</strong></span>
+      <span>{quoteText.email} <strong aria-hidden="true">*</strong></span>
       <input
         type="email"
         name="email"
         autocomplete="email"
         required
         aria-describedby="quote-email-error"
-        data-error-required="Ingresa tu email."
-        data-error-invalid="Ingresa un email válido."
+        data-error-required={quoteText.requiredEmail}
+        data-error-invalid={quoteText.invalidEmail}
       />
       <small id="quote-email-error" data-quote-error></small>
     </label>
 
     <label class="quote-field">
-      <span>Teléfono <strong aria-hidden="true">*</strong></span>
+      <span>{quoteText.phone} <strong aria-hidden="true">*</strong></span>
       <span class="quote-field__control quote-field__control--phone">
         <span id="quote-phone-prefix" class="quote-field__phone-prefix">+1</span>
         <input
@@ -48,8 +54,8 @@ import { quoteContent } from "../../content/quote";
           maxlength="10"
           required
           aria-describedby="quote-phone-prefix quote-phone-count quote-phone-error"
-          data-error-required="Ingresa tu teléfono."
-          data-error-invalid="Ingresa un teléfono válido."
+          data-error-required={quoteText.requiredPhone}
+          data-error-invalid={quoteText.invalidPhone}
         />
         <output
           id="quote-phone-count"
@@ -62,9 +68,9 @@ import { quoteContent } from "../../content/quote";
     </label>
 
     <label class="quote-field quote-field--wide">
-      <span>Idioma de preferencia</span>
+      <span>{quoteText.preferredLanguage}</span>
       <select name="preferredLanguage">
-        <option value="">Sin preferencia</option>
+        <option value="">{quoteText.noPreference}</option>
         {
           quoteContent.preferredLanguages.map((language) => (
             <option value={language.value}>{language.label}</option>

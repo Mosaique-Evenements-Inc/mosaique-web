@@ -2,8 +2,10 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Footer from "@/features/site-shell/ui/components/Footer.astro";
 import Navigation from "@/features/site-shell/ui/components/Navigation.astro";
-import { eventGalleryContent, type EventGalleryItem } from "@/features/gallery";
+import type { EventGalleryItem } from "@/features/gallery";
 import GalleryArchive from "../components/GalleryArchive.astro";
+import { galleryTranslations } from "@/features/gallery/i18n";
+import { getLocaleFromUrl } from "@/core/i18n";
 
 interface Props {
   activeCategoryId?: string;
@@ -12,9 +14,10 @@ interface Props {
 }
 
 const { activeCategoryId, items, title } = Astro.props;
+const galleryText = galleryTranslations[getLocaleFromUrl(Astro.url)];
 ---
 
-<BaseLayout title={title} description={eventGalleryContent.introduction}>
+<BaseLayout title={title} description={galleryText.archiveDescription}>
   <Navigation anchorPrefix="/" />
   <main class="gallery-page" id="main-content" tabindex="-1">
     <GalleryArchive {activeCategoryId} {items} />

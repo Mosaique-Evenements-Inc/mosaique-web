@@ -6,20 +6,24 @@ import Navigation from "@/features/site-shell/ui/components/Navigation.astro";
 import { aboutPageContent } from "../../content/about";
 import AboutHero from "../components/AboutHero.astro";
 import AboutMediaMosaic from "../components/AboutMediaMosaic.astro";
+import { getAboutTranslations } from "@/features/about/i18n";
+import { getLocaleFromUrl } from "@/core/i18n";
 
 import "../styles/about-page.css";
+
+const aboutText = getAboutTranslations(getLocaleFromUrl(Astro.url));
 ---
 
 <BaseLayout
-  title={aboutPageContent.metadata.title}
-  description={aboutPageContent.metadata.description}
+  title={aboutText.metadataTitle}
+  description={aboutText.metadataDescription}
   surface="cinematic"
 >
   <Navigation anchorPrefix="/" />
   <main id="main-content">
     <PanelReveal class="about-page__reveal">
-      <AboutHero slot="lead" {...aboutPageContent.hero} />
-      <AboutMediaMosaic {...aboutPageContent.mosaic} />
+      <AboutHero slot="lead" lines={aboutText.heroLines} caption={aboutText.heroCaption} />
+      <AboutMediaMosaic label={aboutText.mosaicLabel} items={aboutPageContent.mosaic.items} />
     </PanelReveal>
   </main>
   <Footer />

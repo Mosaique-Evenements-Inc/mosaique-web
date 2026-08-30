@@ -3,18 +3,34 @@ import Container from "@/core/common/ui/components/Container.astro";
 import Icon from "@/core/common/ui/components/Icon.astro";
 import { collaborators } from "@/features/site-shell/content/collaborators";
 import { footerContent } from "@/features/site-shell/content/footer";
+import { getSiteShellTranslations } from "@/features/site-shell/i18n";
+import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
 
 import "@/features/site-shell/ui/styles/footer.css";
 
 const primaryLinks = footerContent.links.slice(0, 4);
 const secondaryLinks = footerContent.links.slice(4);
+const locale = getLocaleFromUrl(Astro.url);
+const shellText = getSiteShellTranslations(locale);
+const localizedPrimaryLinks = primaryLinks.map((link, index) => ({
+  ...link,
+  label: shellText.footerLinkLabels[index] ?? link.label,
+}));
+const localizedSecondaryLinks = secondaryLinks.map((link, index) => ({
+  ...link,
+  label: shellText.footerLinkLabels[index + primaryLinks.length] ?? link.label,
+}));
 interface Props {
   anchorPrefix?: string;
 }
 
 const { anchorPrefix = "" } = Astro.props;
 const resolveHref = (href: string) =>
-  anchorPrefix && href.startsWith("#") ? `${anchorPrefix}${href}` : href;
+  href.startsWith("#")
+    ? anchorPrefix
+      ? `${getLocalizedHref(anchorPrefix, locale)}${href}`
+      : href
+    : getLocalizedHref(href, locale);
 ---
 
 <footer
@@ -27,15 +43,15 @@ const resolveHref = (href: string) =>
     <h2 class="site-footer__sr-only" id="footer-brand">{footerContent.logo}</h2>
 
     <div class="site-footer__top">
-      <nav class="site-footer__navigation" aria-label="Navegación del pie de página">
+      <nav class="site-footer__navigation" aria-label={shellText["footer.navigation"]}>
         <details open data-footer-group>
           <summary>
-            <h3>Compañía</h3>
+            <h3>{shellText["footer.company"]}</h3>
             <span aria-hidden="true"><Icon name="plus" size={20} /></span>
           </summary>
           <ul>
             {
-              primaryLinks.map((link) => (
+              localizedPrimaryLinks.map((link) => (
                 <li>
                   <a href={resolveHref(link.href)}>{link.label}</a>
                 </li>
@@ -46,12 +62,12 @@ const resolveHref = (href: string) =>
 
         <details open data-footer-group>
           <summary>
-            <h3>Recursos</h3>
+            <h3>{shellText["footer.resources"]}</h3>
             <span aria-hidden="true"><Icon name="plus" size={20} /></span>
           </summary>
           <ul>
             {
-              secondaryLinks.map((link) => (
+              localizedSecondaryLinks.map((link) => (
                 <li>
                   <a href={resolveHref(link.href)}>{link.label}</a>
                 </li>
@@ -62,16 +78,24 @@ const resolveHref = (href: string) =>
 
         <details open data-footer-group>
           <summary>
-            <h3>Servicios</h3>
+            <h3>{shellText["footer.services"]}</h3>
             <span aria-hidden="true"><Icon name="plus" size={20} /></span>
           </summary>
           <ul>
-            {footerContent.services.map((service) => <li>{service}</li>)}
+            {
+              footerContent.services.map((service, index) => (
+                <li>{shellText.footerServiceLabels[index] ?? service}</li>
+              ))
+            }
           </ul>
         </details>
       </nav>
 
-      <div class="site-footer__logo-wall" role="list" aria-label="Colaboradores">
+      <div
+        class="site-footer__logo-wall"
+        role="list"
+        aria-label={shellText["footer.collaborators"]}
+      >
         {
           collaborators.map((collaborator) => (
             <div class="site-footer__logo-tile" role="listitem">
@@ -80,7 +104,7 @@ const resolveHref = (href: string) =>
                 href={collaborator.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Visitar el sitio de ${collaborator.nombre} (se abre en una pestaña nueva)`}
+                aria-label={`${shellText["footer.visitSite"]} ${collaborator.nombre} (${shellText["footer.opensNewTab"]})`}
               >
                 <img
                   class:list={[
@@ -88,7 +112,7 @@ const resolveHref = (href: string) =>
                     `site-footer__collaborator-logo--${collaborator.proportion}`,
                   ]}
                   src={collaborator.path}
-                  alt={`Logo de ${collaborator.nombre}`}
+                  alt={`${shellText["footer.visitSite"]} ${collaborator.nombre}`}
                   width={collaborator.image.width}
                   height={collaborator.image.height}
                   loading="lazy"
@@ -103,7 +127,7 @@ const resolveHref = (href: string) =>
 
     <div class="site-footer__middle">
       <div class="site-footer__contact-lead">
-        <h3>{footerContent.contact.purpose}</h3>
+        <h3>{shellText.footerPurpose}</h3>
         <a class="site-footer__contact-action" href={footerContent.contact.email.href}>
           <span>{footerContent.contact.email.label}</span>
           <Icon name="arrowRight" size={20} />
@@ -113,15 +137,15 @@ const resolveHref = (href: string) =>
       <div class="site-footer__details">
         <address class="site-footer__contact">
           <div>
-            <span>Teléfono</span>
+            <span>{shellText["footer.phone"]}</span>
             <a href={footerContent.contact.phone.href}>{footerContent.contact.phone.label}</a>
           </div>
           <div>
-            <span>Email</span>
+            <span>{shellText["footer.email"]}</span>
             <a href={footerContent.contact.email.href}>{footerContent.contact.email.label}</a>
           </div>
           <div>
-            <span>Ubicación</span>
+            <span>{shellText["footer.location"]}</span>
             <p>{footerContent.contact.location}</p>
           </div>
         </address>
@@ -129,8 +153,8 @@ const resolveHref = (href: string) =>
     </div>
 
     <div class="site-footer__legal">
-      <p>{footerContent.closingStatement}</p>
-      <p>{footerContent.legal}</p>
+      <p>{shellText.footerClosing}</p>
+      <p>{shellText.footerLegal}</p>
     </div>
   </Container>
 </footer>

@@ -46,7 +46,7 @@
   block-size: var(--site-navigation-height);
   display: grid;
   gap: var(--space-3);
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   position: relative;
   z-index: 1;
 }

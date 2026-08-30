@@ -4,10 +4,14 @@ import Container from "@/core/common/ui/components/Container.astro";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
 import { finalCtaContent } from "@/features/quote/content/finalCta";
+import { getHomeTranslations } from "@/features/home/i18n";
+import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
 
 import "@/features/home/ui/styles/final-cta.css";
 
 const galleryTones = ["01", "02", "03", "04", "05"] as const;
+const locale = getLocaleFromUrl(Astro.url);
+const finalCtaText = getHomeTranslations(locale);
 ---
 
 <section class="final-cta" id="contact" aria-labelledby="final-cta-title">
@@ -16,18 +20,18 @@ const galleryTones = ["01", "02", "03", "04", "05"] as const;
     <Container class="final-cta__container">
       <div class="final-cta__content">
         <Heading as="h2" variant="heading-lg" id="final-cta-title">
-          {finalCtaContent.title}
+          {finalCtaText.finalCtaTitle}
         </Heading>
 
-        <Text>{finalCtaContent.text}</Text>
+        <Text>{finalCtaText.finalCtaText}</Text>
 
         <div class="final-cta__actions">
           <Button
             className="final-cta__action final-cta__action--primary"
-            href={finalCtaContent.action.href}
+            href={getLocalizedHref(finalCtaContent.action.href, locale)}
             variant="light"
           >
-            {finalCtaContent.action.label}
+            {finalCtaText.finalCtaAction}
           </Button>
         </div>
       </div>

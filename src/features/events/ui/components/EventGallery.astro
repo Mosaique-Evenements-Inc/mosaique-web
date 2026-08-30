@@ -10,6 +10,8 @@ import type { FeaturedMedia, GalleryImage } from "@/core/common/types/media";
 import EventFeaturedMedia from "./EventFeaturedMedia.astro";
 import EventLightbox from "./EventLightbox.astro";
 import Container from "@/core/common/ui/components/Container.astro";
+import { galleryTranslations } from "@/features/gallery/i18n";
+import { getLocaleFromUrl } from "@/core/i18n";
 
 interface Props {
   featuredMedia: FeaturedMedia;
@@ -19,11 +21,16 @@ interface Props {
 }
 
 const { featuredMedia, images, slug, title } = Astro.props;
+const galleryText = galleryTranslations[getLocaleFromUrl(Astro.url)];
 const galleryId = `event-gallery-${slug}`;
 const lightboxId = `${galleryId}-lightbox`;
 ---
 
-<section class="event-gallery" aria-label={`Galería de ${title}`} id={galleryId}>
+<section
+  class="event-gallery"
+  aria-label={`${galleryText.eventGallery} ${title}`}
+  id={galleryId}
+>
   <Container class="event-gallery__container">
     <EventFeaturedMedia media={featuredMedia} slug={slug} />
 
@@ -36,7 +43,7 @@ const lightboxId = `${galleryId}-lightbox`;
               type="button"
               aria-haspopup="dialog"
               aria-controls={lightboxId}
-              aria-label={`Abrir imagen ${index + 1} de ${images.length}: ${image.alt}`}
+              aria-label={`${galleryText.openImage} ${index + 1} ${galleryText.of} ${images.length}: ${image.alt}`}
               data-event-lightbox-trigger={index}
             >
               <span class="event-gallery__reveal">

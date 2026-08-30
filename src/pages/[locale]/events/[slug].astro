@@ -1,0 +1,23 @@
+---
+import { eventDetails } from "@/features/events";
+import EventDetailPage from "@/features/events/ui/pages/EventDetailPage.astro";
+
+export function getStaticPaths() {
+  return ["en", "fr"].flatMap((locale) =>
+    eventDetails.map((event, index) => ({
+      params: { locale, slug: event.slug },
+      props: {
+        event,
+        nextEvents: Array.from(
+          { length: eventDetails.length - 1 },
+          (_, offset) => eventDetails[(index + offset + 1) % eventDetails.length],
+        ),
+      },
+    })),
+  );
+}
+
+const { event, nextEvents } = Astro.props;
+---
+
+<EventDetailPage {event} {nextEvents} />

@@ -564,6 +564,33 @@ HTTP adapter`. The service receives the repository contract, while `submit-lead.
   separate approval. Do not merge Event Detail and Service Detail wholesale; only extract another
   primitive after a new equivalence audit demonstrates a stable, content-agnostic contract.
 
+### Internationalization
+
+- **✅ R1 — Localization Foundation + Architecture Contract: complete locally.** Astro
+  native i18n is configured for `es`, `en-CA`, and `fr-CA`; Spanish remains the unprefixed default,
+  while `/en/` and `/fr/` are the reserved URL prefixes. No existing Spanish route, copy, design,
+  functionality, domain identity, or slug was changed.
+- `src/core/i18n/` now owns locale configuration, URL locale/path helpers backed by `astro:i18n`,
+  typed dictionary contracts, explicit Spanish fallback behavior, and language-tag/alternate SEO
+  helpers. Feature translation ownership is defined with a minimal Site Shell contract under
+  `src/features/site-shell/i18n/`; no complete translation inventory was started.
+- `docs/I18N.md` records the operational contract, fallback policy, glossary foundation, and
+  requirements for future feature and locale additions. `AGENTS.md` now requires localized
+  user-facing text, locale-aware internal routing, locale-independent domain IDs, and all-locale
+  validation for new UI.
+- **✅ R2 — Translation Inventory + Content Migration: complete locally.** Typed ES / EN-CA / FR-CA
+  projections now cover Home, About metadata, Service, Event, Gallery, Site Shell, and Quote/Contact
+  without duplicating canonical domain records. Home editorial content, navigation/footer labels,
+  carousel controls, ARIA text, calendar controls, validation/review copy, and route metadata are
+  feature-owned and localized. Canonical form values, IDs, slugs, payloads, routes, business rules,
+  and Spanish visual behavior remain unchanged. The hardcoded-text classification is recorded in
+  `docs/I18N.md`; remaining literals are intentional proper nouns or technical/internal values.
+- **🔄 CURRENT R3 — Locale Routing + Language Switcher + SEO: pending approval.** Generate localized
+  route surfaces and add the language selector without manual locale-prefix concatenation. Connect
+  locale-aware metadata, canonical URLs, `hreflang`, and sitemap behavior only after approval.
+- **⏳ R4 — Translation Fidelity + Full QA.** Validate multilingual content, responsive behavior,
+  metadata, accessibility, and visual fidelity.
+
 ### Production URL + Scoped SEO Acceptance
 
 - Confirm the definitive public domain and configure it as `SITE_URL` in Vercel Production.

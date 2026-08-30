@@ -1,5 +1,6 @@
 ---
-import { eventDetailNavigationContent, type Event } from "@/features/events";
+import { eventDetailTranslations, type Event } from "@/features/events";
+import { getLocaleFromUrl } from "@/core/i18n";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import EventPreviewScene from "./EventPreviewScene.astro";
 
@@ -8,6 +9,7 @@ interface Props {
 }
 
 const { events } = Astro.props;
+const eventText = eventDetailTranslations[getLocaleFromUrl(Astro.url)];
 const titleId = "more-galleries-heading";
 ---
 
@@ -18,7 +20,7 @@ const titleId = "more-galleries-heading";
 >
   <header class="event-more-galleries__header">
     <Heading as="h2" variant="display-xl" id={titleId}>
-      {eventDetailNavigationContent.heading}
+      {eventText.moreExperiences}
     </Heading>
   </header>
 

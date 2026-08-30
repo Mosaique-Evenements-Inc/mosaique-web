@@ -1,5 +1,7 @@
 ---
-import { galleryCategories, getGalleryEvents, type GalleryCategory } from "@/features/gallery";
+import { galleryCategories, getGalleryEvents } from "@/features/gallery";
+import { getLocalizedEventCategory, type EventCategoryId } from "@/features/events";
+import { galleryTranslations } from "@/features/gallery/i18n";
 import GalleryPage from "@/features/gallery/ui/pages/GalleryPage.astro";
 
 export function getStaticPaths() {
@@ -9,16 +11,13 @@ export function getStaticPaths() {
   }));
 }
 
-interface Props {
-  category: GalleryCategory;
-}
-
 const { category } = Astro.props;
 const events = getGalleryEvents(category.id);
+const localizedCategory = getLocalizedEventCategory(category.categoryId as EventCategoryId);
 ---
 
 <GalleryPage
   activeCategoryId={category.id}
   items={events}
-  title={`${category.label} — Galería de eventos — MOSAÏQUE EVENTS`}
+  title={`${localizedCategory.label} — ${galleryTranslations.es.archiveTitle} — MOSAÏQUE EVENTS`}
 />

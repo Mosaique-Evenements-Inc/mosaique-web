@@ -1,15 +1,20 @@
 ---
-import { marqueeContent } from "@/features/home/content/marquee";
+import { getHomeTranslations } from "@/features/home/i18n";
+import { getHomeContentTranslations } from "@/features/home/i18n";
+import { getLocaleFromUrl } from "@/core/i18n";
 
 import "@/features/home/ui/styles/marquee.css";
 
-const marqueeText = marqueeContent.options[0];
-const marqueeStatement = marqueeContent.options[2];
+const locale = getLocaleFromUrl(Astro.url);
+const homeText = getHomeTranslations(locale);
+const marqueeContentText = getHomeContentTranslations(locale);
+const marqueeText = marqueeContentText.marqueeOptions[0];
+const marqueeStatement = marqueeContentText.marqueeOptions[2];
 ---
 
 <section
   class="marquee"
-  aria-label="Servicios y experiencias Mosaïque"
+  aria-label={homeText.servicesAndExperiences}
   data-navigation-contrast="light"
 >
   <div class="marquee__scene">

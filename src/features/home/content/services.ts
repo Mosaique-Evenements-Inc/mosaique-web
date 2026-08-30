@@ -1,5 +1,5 @@
 import type { ContentLink } from "@/core/common/types/content";
-import { services } from "@/features/services";
+import { getLocalizedService, services } from "@/features/services";
 
 export const servicesContent = {
   intro: {
@@ -13,7 +13,7 @@ export const servicesContent = {
     text: "Cada evento tiene una escala, un propósito y una dinámica distinta. Por eso nuestros servicios pueden contratarse de forma independiente o combinarse en paquetes personalizados según las necesidades del cliente, el espacio y el tipo de experiencia.",
     cta: { label: "Explorar servicios", href: "#services-list" } satisfies ContentLink,
   },
-  items: services,
+  items: services.map((service) => getLocalizedService(service)),
 } as const;
 
 export type ServicesPanelRevealContent = typeof servicesContent.panelReveal;

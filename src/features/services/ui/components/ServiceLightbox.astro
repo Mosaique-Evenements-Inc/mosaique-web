@@ -7,7 +7,9 @@ import {
   eventImageWidths,
 } from "@/assets/images/events/delivery";
 import Icon from "@/core/common/ui/components/Icon.astro";
+import { galleryTranslations } from "@/features/gallery/i18n";
 import type { GalleryImage } from "@/core/common/types/media";
+import { getLocaleFromUrl } from "@/core/i18n";
 
 interface Props {
   id: string;
@@ -16,20 +18,23 @@ interface Props {
 }
 
 const { id, images, title } = Astro.props;
+const galleryText = galleryTranslations[getLocaleFromUrl(Astro.url)];
 ---
 
 <dialog
   class="service-lightbox"
   id={id}
   data-service-lightbox
+  data-image-label={galleryText.image}
+  data-of-label={galleryText.of}
   aria-labelledby={`${id}-title`}
   aria-modal="true"
 >
   <div class="service-lightbox__surface">
     <header class="service-lightbox__header">
-      <h2 class="visually-hidden" id={`${id}-title`}>Galería ampliada de {title}</h2>
+      <h2 class="visually-hidden" id={`${id}-title`}>{galleryText.expandedGallery} {title}</h2>
       <p data-service-lightbox-status aria-live="polite" aria-atomic="true"></p>
-      <button type="button" data-service-lightbox-close aria-label="Cerrar galería ampliada">
+      <button type="button" data-service-lightbox-close aria-label={galleryText.closeGallery}>
         <Icon name="xmark" size={24} />
       </button>
     </header>
@@ -72,13 +77,17 @@ const { id, images, title } = Astro.props;
       }
     </div>
 
-    <nav class="service-lightbox__controls" aria-label="Navegación de la galería ampliada">
-      <button type="button" data-service-lightbox-previous aria-label="Imagen anterior">
+    <nav class="service-lightbox__controls" aria-label={galleryText.galleryNavigation}>
+      <button
+        type="button"
+        data-service-lightbox-previous
+        aria-label={galleryText.previousImage}
+      >
         <Icon name="arrowLeft" size={22} />
-        <span>Anterior</span>
+        <span>{galleryText.previous}</span>
       </button>
-      <button type="button" data-service-lightbox-next aria-label="Imagen siguiente">
-        <span>Siguiente</span>
+      <button type="button" data-service-lightbox-next aria-label={galleryText.nextImage}>
+        <span>{galleryText.next}</span>
         <Icon name="arrowRight" size={22} />
       </button>
     </nav>
@@ -119,7 +128,9 @@ const { id, images, title } = Astro.props;
       });
       if (previousButton) previousButton.disabled = activeIndex === 0;
       if (nextButton) nextButton.disabled = activeIndex === panels.length - 1;
-      if (status) status.textContent = `Imagen ${activeIndex + 1} de ${panels.length}`;
+      if (status) {
+        status.textContent = `${dialog.dataset.imageLabel} ${activeIndex + 1} ${dialog.dataset.ofLabel} ${panels.length}`;
+      }
     };
 
     const open = (index: number, trigger: HTMLButtonElement) => {

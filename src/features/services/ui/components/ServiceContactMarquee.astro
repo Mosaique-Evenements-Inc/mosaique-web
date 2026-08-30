@@ -1,11 +1,16 @@
 ---
 import ContactMarquee from "@/core/common/ui/components/ContactMarquee.astro";
 import { finalCtaContent } from "@/features/quote/content/finalCta";
+import { getHomeTranslations } from "@/features/home/i18n";
+import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
+
+const locale = getLocaleFromUrl(Astro.url);
+const ctaText = getHomeTranslations(locale);
 ---
 
 <ContactMarquee
-  href={finalCtaContent.action.href}
-  label={finalCtaContent.action.label}
-  lead={finalCtaContent.text}
+  href={getLocalizedHref(finalCtaContent.action.href, locale)}
+  label={ctaText.finalCtaAction}
+  lead={ctaText.finalCtaText}
   titleId="service-contact-marquee-title"
 />

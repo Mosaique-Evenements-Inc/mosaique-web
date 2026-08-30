@@ -3,9 +3,12 @@ import Container from "@/core/common/ui/components/Container.astro";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
 import Testimonials from "./Testimonials.astro";
-import { processContent } from "@/features/home/content/process";
+import { getHomeContentTranslations } from "@/features/home/i18n";
+import { getLocaleFromUrl } from "@/core/i18n";
 
 import "@/features/home/ui/styles/process.css";
+
+const processContent = getHomeContentTranslations(getLocaleFromUrl(Astro.url)).process;
 ---
 
 <section

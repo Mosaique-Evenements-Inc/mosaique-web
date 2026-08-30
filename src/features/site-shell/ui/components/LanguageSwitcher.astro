@@ -1,0 +1,62 @@
+---
+import {
+  getLanguageTag,
+  getLocaleFromUrl,
+  supportedLocales,
+  switchLocaleUrl,
+} from "@/core/i18n";
+import { getSiteShellTranslations } from "@/features/site-shell/i18n";
+
+interface Props {
+  placement: "desktop" | "mobile";
+}
+
+const { placement } = Astro.props;
+const locale = getLocaleFromUrl(Astro.url);
+const shellText = getSiteShellTranslations(locale);
+---
+
+<nav
+  class:list={["site-navigation__language-switcher", `is-${placement}`]}
+  aria-label={shellText["navigation.language"]}
+  data-language-switcher
+>
+  <ul>
+    {
+      supportedLocales.map((targetLocale) => (
+        <li>
+          <a
+            href={switchLocaleUrl(Astro.url, targetLocale)}
+            hreflang={getLanguageTag(targetLocale)}
+            lang={getLanguageTag(targetLocale)}
+            aria-current={targetLocale === locale ? "page" : undefined}
+            aria-label={
+              targetLocale === locale
+                ? `${targetLocale.toUpperCase()}, ${shellText["navigation.currentLanguage"]}`
+                : targetLocale.toUpperCase()
+            }
+          >
+            {targetLocale.toUpperCase()}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<script>
+  const syncLanguageHashes = () => {
+    document.querySelectorAll<HTMLElement>("[data-language-switcher]").forEach((switcher) => {
+      switcher.querySelectorAll<HTMLAnchorElement>("a[href]").forEach((link) => {
+        const target = new URL(link.href, window.location.href);
+        target.search = window.location.search;
+        target.hash = window.location.hash;
+        link.href = `${target.pathname}${target.search}${target.hash}`;
+      });
+    });
+  };
+
+  window.addEventListener("hashchange", syncLanguageHashes);
+  document.addEventListener("astro:page-load", syncLanguageHashes);
+  syncLanguageHashes();
+</script>

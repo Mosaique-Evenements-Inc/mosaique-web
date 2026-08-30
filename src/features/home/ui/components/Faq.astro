@@ -3,10 +3,21 @@ import Container from "@/core/common/ui/components/Container.astro";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
 import Icon from "@/core/common/ui/components/Icon.astro";
-import { faqContent } from "@/features/home/content/faq";
+import { getHomeContentTranslations } from "@/features/home/i18n";
+import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
 
 import "@/features/home/ui/styles/faq.css";
 
+const faqContent = (() => {
+  const localized = getHomeContentTranslations(getLocaleFromUrl(Astro.url)).faq;
+  return {
+    eyebrow: localized.eyebrow,
+    title: localized.title,
+    items: localized.items,
+    contact: { prompt: localized.prompt, cta: { label: localized.ctaLabel, href: "/contact" } },
+  };
+})();
+const locale = getLocaleFromUrl(Astro.url);
 const columnSize = Math.ceil(faqContent.items.length / 2);
 const faqColumns = [faqContent.items.slice(0, columnSize), faqContent.items.slice(columnSize)];
 ---
@@ -45,7 +56,7 @@ const faqColumns = [faqContent.items.slice(0, columnSize), faqContent.items.slic
 
     <div class="faq__contact">
       <p>{faqContent.contact.prompt}</p>
-      <a class="faq__contact-link" href={faqContent.contact.cta.href}>
+      <a class="faq__contact-link" href={getLocalizedHref(faqContent.contact.cta.href, locale)}>
         {faqContent.contact.cta.label}
       </a>
     </div>

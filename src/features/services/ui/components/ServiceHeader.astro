@@ -3,12 +3,14 @@ import Button from "@/core/common/ui/components/Button";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
 import type { Service } from "@/features/services";
+import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
 
 interface Props {
   service: Service;
 }
 
 const { service } = Astro.props;
+const locale = getLocaleFromUrl(Astro.url);
 ---
 
 <header class="service-header" data-content-status="placeholder">
@@ -17,7 +19,11 @@ const { service } = Astro.props;
 
     <div class="service-header__narrative">
       <Text variant="body-lg" tone="inverse">{service.description}</Text>
-      <Button className="service-header__cta" href={service.cta.href} variant="light">
+      <Button
+        className="service-header__cta"
+        href={getLocalizedHref(service.cta.href, locale)}
+        variant="light"
+      >
         {service.cta.label}
       </Button>
     </div>

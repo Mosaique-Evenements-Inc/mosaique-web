@@ -90,6 +90,17 @@ The current public surface includes `/`, `/about`, `/gallery`, `/gallery/[catego
 those experiences; route files remain thin. A module or component existing on disk does not prove
 it is rendered.
 
+## Internationalization Contract
+
+The official locales are `es`, `en-CA`, and `fr-CA`; Spanish is the default and remains
+unprefixed. URL locale paths are ``, `en`, and `fr`. All new user-facing text must be localized,
+with translations owned by the feature that renders them. UI must not hardcode localized copy or
+use locale ternaries across components. Internal navigation must use the locale-aware helpers in
+`src/core/i18n/`, never manually concatenate locale prefixes. Domain IDs, slugs, and relationships
+remain locale-independent. New UI must be validated in all supported locales. The complete
+contract is documented in `docs/I18N.md`; a language switcher and full content migration are
+reserved for later responsibilities.
+
 ## Technology Principle
 
 **Static by default, interactive by exception.**

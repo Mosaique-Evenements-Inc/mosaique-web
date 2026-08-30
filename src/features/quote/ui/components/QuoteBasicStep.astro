@@ -1,5 +1,8 @@
 ---
-import { quoteContent } from "../../content/quote";
+import { getQuoteContent } from "../../content/quote";
+import { getLocaleFromUrl } from "@/core/i18n";
+
+const quoteContent = getQuoteContent(getLocaleFromUrl(Astro.url));
 import QuoteContactStep from "./QuoteContactStep.astro";
 import QuoteEventStep from "./QuoteEventStep.astro";
 ---

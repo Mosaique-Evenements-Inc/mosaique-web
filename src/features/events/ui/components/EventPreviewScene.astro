@@ -7,11 +7,13 @@ import {
   eventImageWidths,
 } from "@/assets/images/events/delivery";
 import {
-  eventDetailNavigationContent,
-  getEventCategory,
+  eventDetailTranslations,
   getEventHref,
+  getLocalizedEvent,
+  getLocalizedEventCategory,
   type Event,
 } from "@/features/events";
+import { getLocaleFromUrl } from "@/core/i18n";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
 
@@ -22,8 +24,11 @@ interface Props {
 }
 
 const { event, index, isLast } = Astro.props;
-const media = event.featuredMedia;
-const category = getEventCategory(event.categoryId);
+const locale = getLocaleFromUrl(Astro.url);
+const localizedEvent = getLocalizedEvent(event, locale);
+const media = localizedEvent.featuredMedia;
+const category = getLocalizedEventCategory(localizedEvent.categoryId, locale);
+const eventText = eventDetailTranslations[locale];
 ---
 
 <article
@@ -33,8 +38,8 @@ const category = getEventCategory(event.categoryId);
 >
   <a
     class="event-more-galleries__link"
-    href={getEventHref(event)}
-    aria-label={`${eventDetailNavigationContent.nextLabel}: ${event.title}`}
+    href={getEventHref(localizedEvent, locale)}
+    aria-label={`${eventText.nextExperience}: ${localizedEvent.title}`}
   >
     <div class="event-more-galleries__media" aria-hidden="true">
       <div class="event-more-galleries__media-inner">
@@ -74,7 +79,7 @@ const category = getEventCategory(event.categoryId);
       <Text as="span" variant="caption" tone="inverse" class="event-more-galleries__label">
         {category.label}
       </Text>
-      <Heading as="h3" variant="display-lg">{event.title}</Heading>
+      <Heading as="h3" variant="display-lg">{localizedEvent.title}</Heading>
     </div>
   </a>
 </article>

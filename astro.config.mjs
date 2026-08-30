@@ -12,6 +12,17 @@ const site = process.env.SITE_URL;
 
 export default defineConfig({
   site,
+  i18n: {
+    locales: [
+      "es",
+      { path: "en", codes: ["en", "en-CA"] },
+      { path: "fr", codes: ["fr", "fr-CA"] },
+    ],
+    defaultLocale: "es",
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   integrations: [react(), ...(site ? [sitemap()] : [])],
   vite: {
     plugins: [tailwindcss()],

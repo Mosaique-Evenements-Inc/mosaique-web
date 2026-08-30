@@ -10,12 +10,13 @@ import HomeServicesShowcase from "../components/HomeServicesShowcase.astro";
 import Marquee from "../components/Marquee.astro";
 import Process from "../components/Process.astro";
 import ProjectsExperiences from "../components/ProjectsExperiences.astro";
+import { getHomeTranslations } from "@/features/home/i18n";
+import { getLocaleFromUrl } from "@/core/i18n";
+
+const homeText = getHomeTranslations(getLocaleFromUrl(Astro.url));
 ---
 
-<BaseLayout
-  title="MOSAÏQUE EVENTS — Eventos en Montréal"
-  description="Empresa integral de eventos en Montréal especializada en organización, producción, montaje y experiencias."
->
+<BaseLayout title={homeText.metadataTitle} description={homeText.metadataDescription}>
   <Navigation />
   <main class="site-main" id="main-content" tabindex="-1">
     <PanelReveal>

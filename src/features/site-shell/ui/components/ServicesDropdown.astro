@@ -1,14 +1,18 @@
 ---
 import { serviceNavigationItems } from "@/features/site-shell/content/navigation";
+import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
 
 interface Props {
   label: string;
+  labels?: readonly string[];
 }
 
-const { label } = Astro.props;
+const { label, labels = [] } = Astro.props;
+const locale = getLocaleFromUrl(Astro.url);
 const panelId = "site-navigation-services-menu";
 const isCurrentPage = (href: string) =>
-  Astro.url.pathname === href || Astro.url.pathname.startsWith(`${href}/`);
+  Astro.url.pathname === getLocalizedHref(href, locale) ||
+  Astro.url.pathname.startsWith(`${getLocalizedHref(href, locale)}/`);
 ---
 
 <li class="site-navigation__services-dropdown" data-services-dropdown>
@@ -30,10 +34,13 @@ const isCurrentPage = (href: string) =>
   >
     <ul class="site-navigation__services-list">
       {
-        serviceNavigationItems.map((item) => (
+        serviceNavigationItems.map((item, index) => (
           <li>
-            <a href={item.href} aria-current={isCurrentPage(item.href) ? "page" : undefined}>
-              {item.label}
+            <a
+              href={getLocalizedHref(item.href, locale)}
+              aria-current={isCurrentPage(item.href) ? "page" : undefined}
+            >
+              {labels[index] ?? item.label}
             </a>
           </li>
         ))

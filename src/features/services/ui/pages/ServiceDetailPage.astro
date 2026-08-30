@@ -3,7 +3,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Footer from "@/features/site-shell/ui/components/Footer.astro";
 import Navigation from "@/features/site-shell/ui/components/Navigation.astro";
 import type { Event } from "@/features/events";
-import type { Service } from "@/features/services";
+import { getLocalizedService, type Service } from "@/features/services";
+import { getLocaleFromUrl } from "@/core/i18n";
 import ServiceContactMarquee from "../components/ServiceContactMarquee.astro";
 import ServiceGallery from "../components/ServiceGallery.astro";
 import ServiceHeader from "../components/ServiceHeader.astro";
@@ -17,22 +18,23 @@ interface Props {
 }
 
 const { relatedEvents, service } = Astro.props;
+const localizedService = getLocalizedService(service, getLocaleFromUrl(Astro.url));
 ---
 
 <BaseLayout
-  title={`${service.title} — MOSAÏQUE EVENTS`}
-  description={service.description}
+  title={`${localizedService.title} — MOSAÏQUE EVENTS`}
+  description={localizedService.description}
   surface="cinematic"
 >
   <Navigation surface="overlay" anchorPrefix="/" />
   <main class="service-detail" id="main-content" tabindex="-1" data-navigation-contrast="light">
     <div class="service-detail__chapter" data-content-status="placeholder">
-      <ServiceHeader {service} />
+      <ServiceHeader service={localizedService} />
       <ServiceGallery
-        featuredMedia={service.featuredMedia}
-        images={service.gallery}
-        slug={service.slug}
-        title={service.title}
+        featuredMedia={localizedService.featuredMedia}
+        images={localizedService.gallery}
+        slug={localizedService.slug}
+        title={localizedService.title}
       />
     </div>
     <ServiceRelatedEvents events={relatedEvents} />

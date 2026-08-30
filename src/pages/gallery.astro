@@ -1,6 +1,10 @@
 ---
-import { eventGalleryItems } from "@/features/gallery";
+import { getLocalizedEventGalleryItems } from "@/features/gallery";
 import GalleryPage from "@/features/gallery/ui/pages/GalleryPage.astro";
+import { galleryTranslations } from "@/features/gallery/i18n";
 ---
 
-<GalleryPage title="Galería de eventos — MOSAÏQUE EVENTS" items={eventGalleryItems} />
+<GalleryPage
+  title={`${galleryTranslations.es.archiveTitle} — MOSAÏQUE EVENTS`}
+  items={getLocalizedEventGalleryItems("es")}
+/>

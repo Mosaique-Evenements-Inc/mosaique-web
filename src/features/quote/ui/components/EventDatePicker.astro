@@ -1,5 +1,9 @@
 ---
 import Icon from "@/core/common/ui/components/Icon.astro";
+import { getQuoteTranslations } from "../../i18n";
+import { getLocaleFromUrl } from "@/core/i18n";
+
+const quoteText = getQuoteTranslations(getLocaleFromUrl(Astro.url));
 ---
 
 <dialog
@@ -10,19 +14,17 @@ import Icon from "@/core/common/ui/components/Icon.astro";
 >
   <div class="date-picker-dialog__panel">
     <header>
-      <button type="button" data-date-previous aria-label="Mes anterior">
+      <button type="button" data-date-previous aria-label={quoteText.previousMonth}>
         <Icon name="arrowLeft" size={20} />
       </button>
       <h2 id="date-picker-month" data-date-month aria-live="polite"></h2>
-      <button type="button" data-date-next aria-label="Mes siguiente">
+      <button type="button" data-date-next aria-label={quoteText.nextMonth}>
         <Icon name="arrowRight" size={20} />
       </button>
     </header>
 
     <div class="date-picker__weekdays" aria-hidden="true">
-      <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span
-        >D</span
-      >
+      {quoteText.weekdays.map((weekday) => <span>{weekday}</span>)}
     </div>
 
     <div

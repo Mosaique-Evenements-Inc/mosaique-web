@@ -3,8 +3,14 @@ import Button from "@/core/common/ui/components/Button";
 import Container from "@/core/common/ui/components/Container.astro";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import { heroContent } from "@/features/home/content/hero";
+import { getHomeContentTranslations, getHomeTranslations } from "@/features/home/i18n";
+import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
 
 import "@/features/site-shell/ui/styles/home-entry.css";
+
+const locale = getLocaleFromUrl(Astro.url);
+const homeText = getHomeTranslations(locale);
+const heroText = getHomeContentTranslations(locale);
 ---
 
 <section
@@ -29,20 +35,23 @@ import "@/features/site-shell/ui/styles/home-entry.css";
           </div>
         )
       }
-      <figcaption>{heroContent.overlay}</figcaption>
+      <figcaption>{homeText.heroOverlay}</figcaption>
     </figure>
 
     <Container class="home-hero__stage">
       <div class="home-hero__final-state">
         <Heading as="h1" variant="heading-lg" class="home-hero__title" id="home-hero-title">
           {
-            heroContent.titleSegments.map((segment) =>
+            heroText.heroSegments.map((segment) =>
               segment.emphasis ? <em>{segment.text}</em> : segment.text,
             )
           }
         </Heading>
-        <Button className="home-hero__primary-action" href={heroContent.actions.primary.href}>
-          {heroContent.actions.primary.label}
+        <Button
+          className="home-hero__primary-action"
+          href={getLocalizedHref(heroContent.actions.primary.href, locale)}
+        >
+          {homeText.planEvent}
         </Button>
       </div>
     </Container>

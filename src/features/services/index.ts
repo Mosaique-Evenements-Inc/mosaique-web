@@ -1,4 +1,5 @@
 export { services } from "./data/services";
-export { getServiceById, getServiceBySlug } from "./selectors";
+export { getLocalizedService, getServiceById, getServiceBySlug } from "./selectors";
+export { getServiceTranslation, serviceTranslations } from "./i18n";
 export { SERVICE_IDS } from "./types";
 export type { Service, ServiceId } from "./types";

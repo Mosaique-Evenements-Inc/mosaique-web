@@ -10,30 +10,42 @@ import Container from "@/core/common/ui/components/Container.astro";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
 import Icon from "@/core/common/ui/components/Icon.astro";
-import { eventGalleryContent, eventGalleryItems } from "@/features/gallery";
+import { eventGalleryContent, getLocalizedEventGalleryItems } from "@/features/gallery";
+import { getHomeContentTranslations, getHomeTranslations } from "@/features/home/i18n";
+import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
 
 import "@/features/home/ui/styles/projects-experiences.css";
+
+const locale = getLocaleFromUrl(Astro.url);
+const eventGalleryItems = getLocalizedEventGalleryItems(locale);
+const homeText = getHomeTranslations(locale);
+const projectsText = getHomeContentTranslations(locale).projects;
 ---
 
 <section
   class="projects-experiences"
   id="experiences"
   aria-labelledby="projects-experiences-title"
-  aria-roledescription="carousel"
+  aria-roledescription={homeText.carousel}
   data-content-status={eventGalleryContent.status}
+  data-home-text={JSON.stringify(homeText)}
+  data-event-status={homeText.eventStatus}
   data-navigation-contrast="dark"
 >
   <Container>
     <div class="projects-experiences__layout">
       <header class="projects-experiences__header">
         <Heading as="h2" variant="display-lg" id="projects-experiences-title">
-          {eventGalleryContent.title}
+          {projectsText.title}
         </Heading>
 
         <div class="projects-experiences__introduction">
-          <Text variant="body-lg" tone="primary">{eventGalleryContent.introduction}</Text>
-          <a class="projects-experiences__cta" href={eventGalleryContent.cta.href}>
-            {eventGalleryContent.cta.label}
+          <Text variant="body-lg" tone="primary">{projectsText.introduction}</Text>
+          <a
+            class="projects-experiences__cta"
+            href={getLocalizedHref(eventGalleryContent.cta.href, locale)}
+          >
+            {projectsText.ctaLabel}
           </a>
         </div>
       </header>
@@ -42,7 +54,7 @@ import "@/features/home/ui/styles/projects-experiences.css";
         <ol
           class="projects-experiences__track"
           data-projects-track
-          aria-label="Eventos realizados por Mosaïque"
+          aria-label={homeText.completedEvents}
           tabindex="0"
         >
           {
@@ -57,10 +69,13 @@ import "@/features/home/ui/styles/projects-experiences.css";
                   data-event-title={event.title}
                   data-content-status={event.status}
                   data-active={index === 0 ? "true" : "false"}
-                  aria-label={`${index + 1} de ${eventGalleryItems.length}`}
-                  aria-roledescription="slide"
+                  aria-label={`${index + 1} ${homeText.of} ${eventGalleryItems.length}`}
+                  aria-roledescription={homeText.slide}
                 >
-                  <a class="projects-experiences__link" href={event.href}>
+                  <a
+                    class="projects-experiences__link"
+                    href={getLocalizedHref(event.href, locale)}
+                  >
                     <article>
                       <div
                         class="projects-experiences__media"
@@ -106,22 +121,23 @@ import "@/features/home/ui/styles/projects-experiences.css";
 
       <div class="projects-experiences__controls">
         <p class="projects-experiences__status" aria-live="polite" aria-atomic="true">
-          Evento 1 de {eventGalleryItems.length}: {eventGalleryItems[0]?.title}
+          {homeText.eventStatus} 1 {homeText.of}
+          {eventGalleryItems.length}: {eventGalleryItems[0]?.title}
         </p>
         <div class="projects-experiences__buttons">
           <button
             type="button"
             data-projects-previous
-            aria-label="Evento anterior"
-            title="Anterior"
+            aria-label={homeText.previousEvent}
+            title={homeText.previous}
           >
             <Icon name="arrowLeft" size={20} />
           </button>
           <button
             type="button"
             data-projects-next
-            aria-label="Evento siguiente"
-            title="Siguiente"
+            aria-label={homeText.nextEvent}
+            title={homeText.next}
           >
             <Icon name="arrowRight" size={20} />
           </button>
@@ -142,6 +158,7 @@ import "@/features/home/ui/styles/projects-experiences.css";
     const previous = section.querySelector<HTMLButtonElement>("[data-projects-previous]");
     const next = section.querySelector<HTMLButtonElement>("[data-projects-next]");
     const status = section.querySelector<HTMLElement>(".projects-experiences__status");
+    const homeText = JSON.parse(section.dataset.homeText ?? "{}") as Record<string, string>;
 
     if (!track || !previous || !next || slides.length === 0) return;
 
@@ -180,7 +197,7 @@ import "@/features/home/ui/styles/projects-experiences.css";
       });
 
       if (status) {
-        status.textContent = `Evento ${activeIndex + 1} de ${slides.length}: ${slides[activeIndex].dataset.eventTitle ?? ""}`;
+        status.textContent = `${homeText.eventStatus ?? section.dataset.eventStatus ?? ""} ${activeIndex + 1} ${homeText.of ?? ""} ${slides.length}: ${slides[activeIndex].dataset.eventTitle ?? ""}`;
       }
     };
 

@@ -1,0 +1,9 @@
+---
+import ContactPage from "@/features/quote/ui/pages/ContactPage.astro";
+
+export function getStaticPaths() {
+  return ["en", "fr"].map((locale) => ({ params: { locale } }));
+}
+---
+
+<ContactPage />

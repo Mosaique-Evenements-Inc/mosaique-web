@@ -8,8 +8,13 @@ import {
 } from "@/assets/images/events/delivery";
 import Button from "@/core/common/ui/components/Button";
 import Container from "@/core/common/ui/components/Container.astro";
-import { eventGalleryItems, type EventGalleryItem } from "@/features/gallery";
-import { galleryCategories } from "@/features/gallery";
+import {
+  eventGalleryItems,
+  getLocalizedGalleryCategories,
+  type EventGalleryItem,
+} from "@/features/gallery";
+import { galleryTranslations } from "@/features/gallery/i18n";
+import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
 
 import "@/features/gallery/ui/styles/gallery-archive.css";
 
@@ -19,10 +24,13 @@ interface Props {
 }
 
 const { activeCategoryId, items } = Astro.props;
+const locale = getLocaleFromUrl(Astro.url);
+const galleryText = galleryTranslations[locale];
+const galleryCategories = getLocalizedGalleryCategories(locale);
 const activeCategory = galleryCategories.find((category) => category.id === activeCategoryId);
 const heading = activeCategory
-  ? `${activeCategory.label} — Galería de eventos realizados`
-  : "Galería de eventos realizados";
+  ? `${activeCategory.label} — ${galleryText.archiveHeading}`
+  : galleryText.archiveHeading;
 ---
 
 <section
@@ -36,20 +44,20 @@ const heading = activeCategory
 
     <div class="gallery-archive__layout">
       <aside class="gallery-archive__filters">
-        <nav class="gallery-archive__filter-list" aria-label="Categorías de eventos">
+        <nav class="gallery-archive__filter-list" aria-label={galleryText.eventCategories}>
           <Button
             className="gallery-archive__filter"
-            href="/gallery"
+            href={getLocalizedHref("/gallery", locale)}
             variant={activeCategoryId ? "transparent" : "light"}
             aria-current={activeCategoryId ? undefined : "page"}
           >
-            All
+            {galleryText.all}
           </Button>
           {
             galleryCategories.map((category) => (
               <Button
                 className="gallery-archive__filter"
-                href={category.href}
+                href={getLocalizedHref(category.href, locale)}
                 variant={category.id === activeCategoryId ? "light" : "transparent"}
                 aria-current={category.id === activeCategoryId ? "page" : undefined}
               >
@@ -63,10 +71,10 @@ const heading = activeCategory
       <div class="gallery-archive__events">
         <p class="gallery-archive__sr-only">
           {items.length}
-          {items.length === 1 ? "evento visible" : "eventos visibles"}
+          {items.length === 1 ? galleryText.visibleEvent : galleryText.visibleEvents}
         </p>
 
-        <ol class="gallery-archive__list" aria-label="Eventos realizados por Mosaïque">
+        <ol class="gallery-archive__list" aria-label={galleryText.eventsByBrand}>
           {
             items.map((event, index) => {
               const sourceIndex = eventGalleryItems.findIndex(
@@ -91,7 +99,10 @@ const heading = activeCategory
                   data-event-id={event.id}
                   data-content-status={event.status}
                 >
-                  <a class="gallery-archive__event-link" href={event.href}>
+                  <a
+                    class="gallery-archive__event-link"
+                    href={getLocalizedHref(event.href, locale)}
+                  >
                     <div
                       class="gallery-archive__media"
                       data-media-status={event.media.status}

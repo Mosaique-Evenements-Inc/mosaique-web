@@ -5,11 +5,21 @@ import QuoteBasicStep from "./QuoteBasicStep.astro";
 import QuoteReview from "./QuoteReview.astro";
 import Button from "@/core/common/ui/components/Button";
 import Icon from "@/core/common/ui/components/Icon.astro";
+import { getQuoteTranslations } from "../../i18n";
+import { getLanguageTag, getLocaleFromUrl } from "@/core/i18n";
+
+const locale = getLocaleFromUrl(Astro.url);
+const quoteText = getQuoteTranslations(locale);
 
 import "../styles/quote-form.css";
 ---
 
-<div class="quote-flow" data-quote-flow>
+<div
+  class="quote-flow"
+  data-quote-flow
+  data-quote-text={JSON.stringify(quoteText)}
+  data-language-tag={getLanguageTag(locale)}
+>
   <form class="quote-form" data-quote-form novalidate>
     <div class="quote-form__body">
       <QuoteBasicStep />
@@ -20,10 +30,10 @@ import "../styles/quote-form.css";
       <p data-quote-submit-status aria-live="polite"></p>
       <div>
         <Button type="button" className="quote-button" icon="arrow-left" data-quote-back hidden>
-          <span data-quote-back-label>Atrás</span>
+          <span data-quote-back-label>{quoteText.back}</span>
         </Button>
         <Button type="button" className="quote-button" data-quote-next variant="light" disabled>
-          <span data-quote-next-label>Enviar solicitud</span>
+          <span data-quote-next-label>{quoteText.submit}</span>
         </Button>
       </div>
     </footer>
@@ -42,10 +52,10 @@ import "../styles/quote-form.css";
   <span class="quote-toast__icon" aria-hidden="true"><Icon name="checkCircle" size={24} /></span
   >
   <div>
-    <strong>Solicitud enviada correctamente.</strong>
-    <p>Gracias. Nos pondremos en contacto contigo pronto.</p>
+    <strong>{quoteText.submissionSuccess}</strong>
+    <p>{quoteText.submissionThanks}</p>
   </div>
-  <button type="button" data-quote-toast-close aria-label="Cerrar confirmación">
+  <button type="button" data-quote-toast-close aria-label={quoteText.closeConfirmation}>
     <Icon name="xmark" size={20} />
   </button>
 </aside>
@@ -65,6 +75,8 @@ import "../styles/quote-form.css";
 
   if (quoteFlow && datePickerDialog && quoteForm && quoteFlow.dataset.ready !== "true") {
     quoteFlow.dataset.ready = "true";
+    const text = JSON.parse(quoteFlow.dataset.quoteText ?? "{}") as Record<string, string>;
+    const languageTag = quoteFlow.dataset.languageTag ?? "es";
 
     const step = quoteFlow.querySelector<HTMLElement>("[data-quote-step]");
     const backButton = quoteFlow.querySelector<HTMLButtonElement>("[data-quote-back]");
@@ -129,7 +141,7 @@ import "../styles/quote-form.css";
     };
 
     const formatDate = (date: Date) =>
-      new Intl.DateTimeFormat("es-CA", {
+      new Intl.DateTimeFormat(languageTag, {
         day: "numeric",
         month: "long",
         year: "numeric",
@@ -138,7 +150,7 @@ import "../styles/quote-form.css";
     const updateDateField = () => {
       const selectedDate = dateInput?.value ? parseIsoDate(dateInput.value) : null;
       if (dateValue)
-        dateValue.textContent = selectedDate ? formatDate(selectedDate) : "Seleccionar fecha";
+        dateValue.textContent = selectedDate ? formatDate(selectedDate) : text.selectDate;
     };
 
     const renderCalendar = (focusIso = "") => {
@@ -148,7 +160,7 @@ import "../styles/quote-form.css";
       const firstWeekday = (new Date(year, month, 1).getDay() + 6) % 7;
       const daysInMonth = new Date(year, month + 1, 0).getDate();
       const selectedIso = dateInput?.value ?? "";
-      const monthName = new Intl.DateTimeFormat("es-CA", { month: "long" }).format(
+      const monthName = new Intl.DateTimeFormat(languageTag, { month: "long" }).format(
         calendarMonth,
       );
 
@@ -234,7 +246,7 @@ import "../styles/quote-form.css";
         ? field.dataset.errorRequired
         : field.validity.valid
           ? ""
-          : (field.dataset.errorInvalid ?? "Revisa este campo.");
+          : (field.dataset.errorInvalid ?? text.genericInvalid);
 
       field.setAttribute("aria-invalid", String(!field.validity.valid));
       if (error) error.textContent = message ?? "";
@@ -271,12 +283,12 @@ import "../styles/quote-form.css";
       setButtonLabels(
         nextButtonLabels,
         reviewing
-          ? "Enviar solicitud"
+          ? text.submit
           : editingFromReview
-            ? "Guardar cambios"
+            ? text.saveChanges
             : formComplete
-              ? "Revisar información"
-              : "Enviar solicitud",
+              ? text.review
+              : text.submit,
       );
     };
 
@@ -285,10 +297,10 @@ import "../styles/quote-form.css";
       if (review) review.hidden = !reviewing;
       if (backButton) backButton.hidden = !reviewing && !editingFromReview;
       if (backButton) {
-        setButtonLabels(backButtonLabels, editingFromReview ? "Volver a revisión" : "Atrás");
+        setButtonLabels(backButtonLabels, editingFromReview ? text.backToReview : text.back);
         backButton.setAttribute(
           "aria-label",
-          editingFromReview ? "Volver a revisión" : "Volver al formulario",
+          editingFromReview ? text.backToReview : text.backToForm,
         );
       }
       updatePrimaryAction();
@@ -302,7 +314,7 @@ import "../styles/quote-form.css";
 
     const setReviewValue = (name: string, value: string) => {
       const target = review?.querySelector<HTMLElement>(`[data-review-value="${name}"]`);
-      if (target) target.textContent = value || "No indicado";
+      if (target) target.textContent = value || text.dateNotIndicated;
     };
 
     const populateReview = () => {
@@ -324,10 +336,10 @@ import "../styles/quote-form.css";
       setReviewValue(
         "eventDate",
         formData.get("dateUnknown")
-          ? "Aún no definida"
+          ? text.reviewDateMissing
           : selectedDate
             ? formatDate(selectedDate)
-            : "No indicada",
+            : text.dateNotIndicated,
       );
       setReviewValue("guestRange", String(formData.get("guestRange") ?? ""));
     };
@@ -436,8 +448,8 @@ import "../styles/quote-form.css";
       }
       submitting = true;
       nextButton.disabled = true;
-      setButtonLabels(nextButtonLabels, "Enviando…");
-      if (submitStatus) submitStatus.textContent = "Enviando tu solicitud.";
+      setButtonLabels(nextButtonLabels, text.submitting);
+      if (submitStatus) submitStatus.textContent = text.submitStatus;
       try {
         await submitQuote(createSubmission());
         resetFlow();
@@ -447,14 +459,11 @@ import "../styles/quote-form.css";
           ? reason
           : {
               error: "Submission error",
-              message: "No fue posible enviar la solicitud. Inténtalo nuevamente.",
+              message: text.submissionError,
             };
         showSubmissionError(error);
         nextButton.disabled = false;
-        setButtonLabels(
-          nextButtonLabels,
-          reviewing ? "Enviar solicitud" : "Revisar información",
-        );
+        setButtonLabels(nextButtonLabels, reviewing ? text.submit : text.review);
       } finally {
         submitting = false;
       }
