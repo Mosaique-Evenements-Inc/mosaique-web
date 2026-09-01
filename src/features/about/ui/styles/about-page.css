@@ -215,6 +215,12 @@
   }
 }
 
+@media (min-width: 80rem) and (max-width: 95.999rem) {
+  .about-mosaic__item[data-desktop-column-start="true"] {
+    break-before: column;
+  }
+}
+
 @media (min-width: 96rem) {
   .about-mosaic__list {
     column-count: 7;

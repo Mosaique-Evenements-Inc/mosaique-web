@@ -3,6 +3,7 @@ import * as eventImages from "@/assets/images/events";
 import { aboutContent } from "./overview";
 
 export type AboutMediaItem = {
+  desktopColumnStart: boolean;
   id: string;
   kind: "image" | "gif";
   label: string;
@@ -20,14 +21,59 @@ const getMediaLabel = (id: string) => {
   return "Mosaïque Events";
 };
 
-const mediaItems = Object.entries(eventImages)
-  .sort(([firstId], [secondId]) => firstId.localeCompare(secondId))
-  .map(([id, src]) => ({
-    id,
-    kind: src.format === "gif" ? ("gif" as const) : ("image" as const),
-    label: getMediaLabel(id),
-    src,
-  }));
+const mosaicMediaColumns = [
+  [
+    "babyShowerKarlaGino151",
+    "babyShowerKarlaGino152",
+    "babyShowerKarlaGino153",
+    "babyShowerKarlaGino156",
+  ],
+  [
+    "bailaDaZaza82",
+    "bailaDaZazaMain",
+    "cumpleanosAnaPaula48",
+    "cumpleanosAnaPaula49",
+    "cumpleanosAnaPaula50",
+    "cumpleanosAnaPaula51",
+  ],
+  [
+    "fanFestMexVsSouth128",
+    "fanFestMexVsSouth158",
+    "fanFestMexVsSouth3",
+    "fanFestMexVsSouth8",
+    "nossaCopa105",
+  ],
+  [
+    "nossaCopaBrzVsEsc170",
+    "nossaCopaBrzVsEsc199",
+    "nossaCopaBrzVsEsc27",
+    "nossaCopaBrzVsEsc4",
+    "nossaCopaBrzVsEsc81",
+  ],
+  [
+    "weddingEb53693",
+    "weddingEb59642",
+    "weddingEb59664",
+    "weddingEb59668Edit",
+    "weddingEb59670",
+    "weddingEb59673",
+  ],
+  ["weddingKt36", "weddingKt37", "weddingKt38", "weddingKt39", "weddingKt4"],
+] as const satisfies readonly (readonly (keyof typeof eventImages)[])[];
+
+const mediaItems = mosaicMediaColumns.flatMap((column, columnIndex) =>
+  column.map((id, itemIndex) => {
+    const src = eventImages[id];
+
+    return {
+      desktopColumnStart: columnIndex > 0 && itemIndex === 0,
+      id,
+      kind: src.format === "gif" ? ("gif" as const) : ("image" as const),
+      label: getMediaLabel(id),
+      src,
+    };
+  }),
+);
 
 export const aboutPageContent = {
   metadata: {
