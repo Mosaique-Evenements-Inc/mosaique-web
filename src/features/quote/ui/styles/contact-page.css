@@ -28,6 +28,20 @@
   opacity: 1;
 }
 
+.contact-page .quote-field input:-webkit-autofill,
+.contact-page .quote-field input:-webkit-autofill:hover,
+.contact-page .quote-field input:-webkit-autofill:focus,
+.contact-page .quote-field textarea:-webkit-autofill,
+.contact-page .quote-field textarea:-webkit-autofill:hover,
+.contact-page .quote-field textarea:-webkit-autofill:focus,
+.contact-page .quote-field select:-webkit-autofill,
+.contact-page .quote-field select:-webkit-autofill:hover,
+.contact-page .quote-field select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--color-background) inset;
+  -webkit-text-fill-color: var(--color-text-primary);
+  caret-color: var(--color-text-primary);
+}
+
 .contact-page .quote-button {
   --action-button-border: var(--color-white);
   --action-button-fill: var(--color-white);
@@ -125,6 +139,7 @@
 }
 
 .contact-page .quote-form {
+  color-scheme: dark;
   display: block;
 }
 
