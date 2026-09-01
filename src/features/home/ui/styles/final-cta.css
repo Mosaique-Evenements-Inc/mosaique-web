@@ -5,80 +5,9 @@
 }
 
 .final-cta__stage {
-  --cta-pointer-x: 50%;
-  --cta-pointer-y: 50%;
-  --cta-shift-x: 0px;
-  --cta-shift-y: 0px;
   background-color: var(--color-background-inverse);
   min-block-size: clamp(28rem, 36vw, 34rem);
   overflow: hidden;
-  position: relative;
-}
-
-.final-cta__stage::before {
-  background-image: radial-gradient(
-    circle,
-    color-mix(in oklab, var(--color-text-inverse) 22%, transparent) 0 1.15px,
-    transparent 1.35px
-  );
-  background-size: 10px 10px;
-  block-size: calc(100% + var(--space-4));
-  content: "";
-  inline-size: calc(100% + var(--space-4));
-  inset: calc(var(--space-2) * -1);
-  mask-image:
-    radial-gradient(ellipse 23% 31% at 18% 22%, black 0 16%, transparent 72%),
-    radial-gradient(ellipse 25% 34% at 33% 78%, black 0 12%, transparent 72%),
-    radial-gradient(ellipse 24% 32% at 82% 20%, black 0 14%, transparent 72%),
-    radial-gradient(ellipse 26% 34% at 67% 79%, black 0 12%, transparent 74%);
-  -webkit-mask-image:
-    radial-gradient(ellipse 23% 31% at 18% 22%, black 0 16%, transparent 72%),
-    radial-gradient(ellipse 25% 34% at 33% 78%, black 0 12%, transparent 72%),
-    radial-gradient(ellipse 24% 32% at 82% 20%, black 0 14%, transparent 72%),
-    radial-gradient(ellipse 26% 34% at 67% 79%, black 0 12%, transparent 74%);
-  opacity: 0.58;
-  pointer-events: none;
-  position: absolute;
-  transform: translate3d(var(--cta-shift-x), var(--cta-shift-y), 0);
-  transition: opacity var(--motion-duration-standard) var(--motion-easing-standard);
-  will-change: transform;
-}
-
-.final-cta__dots-interactive {
-  background-image: radial-gradient(
-    circle,
-    color-mix(in oklab, var(--color-text-inverse) 58%, var(--color-accent)) 0 1.75px,
-    transparent 2px
-  );
-  background-size: 10px 10px;
-  inset: 0;
-  mask-image: radial-gradient(
-    circle 9rem at var(--cta-pointer-x) var(--cta-pointer-y),
-    black 0,
-    color-mix(in srgb, black 52%, transparent) 42%,
-    transparent 100%
-  );
-  -webkit-mask-image: radial-gradient(
-    circle 9rem at var(--cta-pointer-x) var(--cta-pointer-y),
-    black 0,
-    color-mix(in srgb, black 52%, transparent) 42%,
-    transparent 100%
-  );
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
-  transform: translate3d(var(--cta-shift-x), var(--cta-shift-y), 0);
-  transition: opacity var(--motion-duration-standard) var(--motion-easing-standard);
-  will-change: mask-image, transform;
-  z-index: var(--primitive-z-content);
-}
-
-.final-cta__stage[data-pointer-active="true"]::before {
-  opacity: 0.7;
-}
-
-.final-cta__stage[data-pointer-active="true"] .final-cta__dots-interactive {
-  opacity: 0.76;
 }
 
 .final-cta__container {
@@ -231,25 +160,6 @@
     min-block-size: 36rem;
   }
 
-  .final-cta__stage::before {
-    block-size: 100%;
-    inline-size: 100%;
-    inset: 0;
-    mask-image:
-      radial-gradient(ellipse 48% 25% at 12% 14%, black 0 10%, transparent 72%),
-      radial-gradient(ellipse 50% 24% at 88% 22%, black 0 8%, transparent 74%),
-      radial-gradient(ellipse 64% 26% at 50% 92%, black 0 9%, transparent 74%);
-    -webkit-mask-image:
-      radial-gradient(ellipse 48% 25% at 12% 14%, black 0 10%, transparent 72%),
-      radial-gradient(ellipse 50% 24% at 88% 22%, black 0 8%, transparent 74%),
-      radial-gradient(ellipse 64% 26% at 50% 92%, black 0 9%, transparent 74%);
-    opacity: 0.5;
-  }
-
-  .final-cta__dots-interactive {
-    display: none;
-  }
-
   .final-cta__content {
     padding: var(--space-20) 0;
   }
@@ -273,22 +183,9 @@
   .final-cta__stage {
     padding-inline: clamp(var(--space-10), 10vw, var(--space-20));
   }
-
-  .final-cta__stage::before {
-    opacity: 0.46;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .final-cta__stage::before {
-    transform: none;
-    transition: none;
-  }
-
-  .final-cta__dots-interactive {
-    display: none;
-  }
-
   .final-cta__track {
     animation: none;
     inline-size: 100%;

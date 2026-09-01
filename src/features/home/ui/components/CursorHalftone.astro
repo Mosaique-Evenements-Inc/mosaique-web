@@ -1,0 +1,84 @@
+---
+import "@/features/home/ui/styles/cursor-halftone.css";
+---
+
+<div class="cursor-halftone__interactive" aria-hidden="true"></div>
+
+<script>
+  const halftoneSurfaces = document.querySelectorAll<HTMLElement>("[data-cursor-halftone]");
+
+  halftoneSurfaces.forEach((surface) => {
+    if (surface.dataset.cursorHalftoneReady === "true") return;
+
+    surface.dataset.cursorHalftoneReady = "true";
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const controller = new AbortController();
+    let bounds: DOMRect | null = null;
+    let pointerX = 0.5;
+    let pointerY = 0.5;
+    let frame = 0;
+
+    const renderPointer = () => {
+      frame = 0;
+      surface.style.setProperty("--cursor-halftone-x", `${pointerX * 100}%`);
+      surface.style.setProperty("--cursor-halftone-y", `${pointerY * 100}%`);
+      surface.style.setProperty("--cursor-halftone-shift-x", `${(pointerX - 0.5) * 8}px`);
+      surface.style.setProperty("--cursor-halftone-shift-y", `${(pointerY - 0.5) * 6}px`);
+    };
+
+    const schedulePointer = () => {
+      if (!frame) frame = requestAnimationFrame(renderPointer);
+    };
+
+    surface.addEventListener(
+      "pointerenter",
+      () => {
+        if (!finePointer.matches || reducedMotion.matches) return;
+        bounds = surface.getBoundingClientRect();
+        surface.dataset.pointerActive = "true";
+      },
+      { signal: controller.signal },
+    );
+
+    surface.addEventListener(
+      "pointermove",
+      (event) => {
+        if (!finePointer.matches || reducedMotion.matches || !bounds) return;
+        pointerX = Math.min(1, Math.max(0, (event.clientX - bounds.left) / bounds.width));
+        pointerY = Math.min(1, Math.max(0, (event.clientY - bounds.top) / bounds.height));
+        schedulePointer();
+      },
+      { passive: true, signal: controller.signal },
+    );
+
+    surface.addEventListener(
+      "pointerleave",
+      () => {
+        bounds = null;
+        pointerX = 0.5;
+        pointerY = 0.5;
+        surface.dataset.pointerActive = "false";
+        schedulePointer();
+      },
+      { signal: controller.signal },
+    );
+
+    window.addEventListener(
+      "resize",
+      () => {
+        bounds = null;
+      },
+      { passive: true, signal: controller.signal },
+    );
+
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        controller.abort();
+        if (frame) cancelAnimationFrame(frame);
+      },
+      { once: true },
+    );
+  });
+</script>

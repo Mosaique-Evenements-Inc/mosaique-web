@@ -15,6 +15,8 @@
 .home-services-showcase__intro-inner {
   inline-size: min(100%, 76rem);
   margin-inline: auto;
+  position: relative;
+  z-index: var(--primitive-z-content);
 }
 
 .home-services-showcase__intro h2 {
@@ -30,22 +32,6 @@
   color: color-mix(in oklab, var(--color-text-inverse) 76%, transparent);
   margin: var(--space-8) auto 0;
   max-inline-size: 62rem;
-}
-
-.home-services-showcase__intro-cta {
-  color: var(--color-accent);
-  display: inline-block;
-  font-family: var(--font-family-ui);
-  font-size: var(--text-caption-size);
-  font-weight: var(--text-caption-weight);
-  margin-block-start: var(--space-6);
-  text-decoration-thickness: 1px;
-  text-underline-offset: var(--space-2);
-}
-
-.home-services-showcase__intro-cta:focus-visible {
-  outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: var(--focus-ring-offset);
 }
 
 .home-service-preview {

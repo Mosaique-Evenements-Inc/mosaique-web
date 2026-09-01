@@ -1,0 +1,111 @@
+.cursor-halftone {
+  --cursor-halftone-x: 50%;
+  --cursor-halftone-y: 50%;
+  --cursor-halftone-shift-x: 0px;
+  --cursor-halftone-shift-y: 0px;
+  position: relative;
+}
+
+.cursor-halftone::before {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--color-text-inverse) 22%, transparent) 0 1.15px,
+    transparent 1.35px
+  );
+  background-size: 10px 10px;
+  block-size: calc(100% + var(--space-4));
+  content: "";
+  inline-size: calc(100% + var(--space-4));
+  inset: calc(var(--space-2) * -1);
+  mask-image:
+    radial-gradient(ellipse 23% 31% at 18% 22%, black 0 16%, transparent 72%),
+    radial-gradient(ellipse 25% 34% at 33% 78%, black 0 12%, transparent 72%),
+    radial-gradient(ellipse 24% 32% at 82% 20%, black 0 14%, transparent 72%),
+    radial-gradient(ellipse 26% 34% at 67% 79%, black 0 12%, transparent 74%);
+  -webkit-mask-image:
+    radial-gradient(ellipse 23% 31% at 18% 22%, black 0 16%, transparent 72%),
+    radial-gradient(ellipse 25% 34% at 33% 78%, black 0 12%, transparent 72%),
+    radial-gradient(ellipse 24% 32% at 82% 20%, black 0 14%, transparent 72%),
+    radial-gradient(ellipse 26% 34% at 67% 79%, black 0 12%, transparent 74%);
+  opacity: 0.58;
+  pointer-events: none;
+  position: absolute;
+  transform: translate3d(var(--cursor-halftone-shift-x), var(--cursor-halftone-shift-y), 0);
+  transition: opacity var(--motion-duration-standard) var(--motion-easing-standard);
+  will-change: transform;
+}
+
+.cursor-halftone__interactive {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--color-text-inverse) 58%, var(--color-accent)) 0 1.75px,
+    transparent 2px
+  );
+  background-size: 10px 10px;
+  inset: 0;
+  mask-image: radial-gradient(
+    circle 9rem at var(--cursor-halftone-x) var(--cursor-halftone-y),
+    black 0,
+    color-mix(in srgb, black 52%, transparent) 42%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle 9rem at var(--cursor-halftone-x) var(--cursor-halftone-y),
+    black 0,
+    color-mix(in srgb, black 52%, transparent) 42%,
+    transparent 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translate3d(var(--cursor-halftone-shift-x), var(--cursor-halftone-shift-y), 0);
+  transition: opacity var(--motion-duration-standard) var(--motion-easing-standard);
+  will-change: mask-image, transform;
+  z-index: var(--primitive-z-content);
+}
+
+.cursor-halftone[data-pointer-active="true"]::before {
+  opacity: 0.7;
+}
+
+.cursor-halftone[data-pointer-active="true"] .cursor-halftone__interactive {
+  opacity: 0.76;
+}
+
+@media (max-width: 39.99rem) {
+  .cursor-halftone::before {
+    block-size: 100%;
+    inline-size: 100%;
+    inset: 0;
+    mask-image:
+      radial-gradient(ellipse 48% 25% at 12% 14%, black 0 10%, transparent 72%),
+      radial-gradient(ellipse 50% 24% at 88% 22%, black 0 8%, transparent 74%),
+      radial-gradient(ellipse 64% 26% at 50% 92%, black 0 9%, transparent 74%);
+    -webkit-mask-image:
+      radial-gradient(ellipse 48% 25% at 12% 14%, black 0 10%, transparent 72%),
+      radial-gradient(ellipse 50% 24% at 88% 22%, black 0 8%, transparent 74%),
+      radial-gradient(ellipse 64% 26% at 50% 92%, black 0 9%, transparent 74%);
+    opacity: 0.5;
+  }
+
+  .cursor-halftone__interactive {
+    display: none;
+  }
+}
+
+@media (min-width: 40rem) and (max-width: 63.99rem) {
+  .cursor-halftone::before {
+    opacity: 0.46;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-halftone::before {
+    transform: none;
+    transition: none;
+  }
+
+  .cursor-halftone__interactive {
+    display: none;
+  }
+}
