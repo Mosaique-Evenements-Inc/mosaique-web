@@ -32,7 +32,7 @@ import "../styles/quote-form.css";
         <Button type="button" className="quote-button" icon="arrow-left" data-quote-back hidden>
           <span data-quote-back-label>{quoteText.back}</span>
         </Button>
-        <Button type="button" className="quote-button" data-quote-next variant="light" disabled>
+        <Button type="button" className="quote-button" data-quote-next variant="light">
           <span data-quote-next-label>{quoteText.submit}</span>
         </Button>
       </div>
@@ -277,9 +277,10 @@ import "../styles/quote-form.css";
     };
 
     const updatePrimaryAction = () => {
-      if (!nextButton || submitting) return;
+      if (!nextButton) return;
+      nextButton.disabled = submitting;
+      if (submitting) return;
       const formComplete = isFormComplete();
-      nextButton.disabled = reviewing ? false : !formComplete;
       setButtonLabels(
         nextButtonLabels,
         reviewing
