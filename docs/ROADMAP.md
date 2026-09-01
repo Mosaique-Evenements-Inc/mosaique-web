@@ -178,12 +178,14 @@ This document is the source of truth for implementation status. The existence of
 
 ### Marquee
 
-- **Implementation: complete.** A full-viewport Astro scene renders content from `src/content/home/marquee.ts` between Why Choose Us and Services.
+- **Implementation: complete.** A full-viewport Astro scene renders content from `src/features/home/content/marquee.ts` after Process in the current Home panel sequence.
 - **Fidelity Pass: complete.** The scene enters through a three-step media reveal and remains sticky for a bounded scroll interval, while its oversized ticker runs independently as a token-driven CSS autoplay loop.
 - The bounded reveal uses one passive scroll listener only while the scene is near the viewport, batches updates with requestAnimationFrame, and writes only transform and opacity styles without React hydration.
-- Approved photography remains pending, so the full-bleed media contract currently renders a lightweight branded placeholder.
+- **Photography integrated locally.** The full-bleed media contract now uses one approved Fan Fest photograph from the existing event inventory, delivered responsively through Astro Assets with its original overlay preserving text contrast. The former abstract placeholder shapes were removed without changing the sticky reveal, ticker, or reduced-motion contracts.
+- **Scroll-driven depth transition implemented locally.** During the existing bounded sticky interval, the approved photography now performs a reversible `1 → 1.18` desktop dolly-in with a subtle upward focal drift and smoothstep progress; compact viewports use a restrained `1 → 1.10` range. The independent horizontal ticker, copy, curtain reveal, native scrolling, and section geometry remain unchanged. The passive, requestAnimationFrame-batched controller writes only compositor-friendly transforms and opacity, and responds to live reduced-motion preference changes without per-frame framework state.
+- **Responsive browser validation complete; video fidelity comparison pending.** Forward/reverse progress, final scale, section handoff, zero horizontal overflow, and a clean browser console passed at `1280 × 720`, `900 × 900`, and `390 × 844`. The task attachment available in the workspace contains the written brief but not the referenced video, so exact start/end timing, final scale, and focal point cannot yet be certified against that source of truth. Runtime reduced-motion emulation is unavailable in the current browser; the CSS fallback and live media-query reset passed static review.
 - Reduced motion removes the sticky scroll distance and staged reveal, hides the visual duplicate, and presents the statement and ticker as a static full-viewport composition.
-- Desktop, tablet, mobile, document overflow, scroll-linked stability, section handoff, content duplication semantics, and reduced-motion behavior were validated.
+- Desktop, tablet, mobile, document overflow, scroll-linked stability, section handoff, and content duplication semantics were validated.
 
 ### Process
 

@@ -1,4 +1,12 @@
 ---
+import { Picture } from "astro:assets";
+
+import {
+  eventImageFallbackFormat,
+  eventImageFormats,
+  eventImageWidths,
+} from "@/assets/images/events/delivery";
+import { marqueeContent } from "@/features/home/content/marquee";
 import { getHomeTranslations } from "@/features/home/i18n";
 import { getHomeContentTranslations } from "@/features/home/i18n";
 import { getLocaleFromUrl } from "@/core/i18n";
@@ -18,10 +26,21 @@ const marqueeStatement = marqueeContentText.marqueeOptions[2];
   data-navigation-contrast="light"
 >
   <div class="marquee__scene">
-    <figure class="marquee__media" data-media-status="pending" aria-hidden="true">
-      <span></span>
-      <span></span>
-      <span></span>
+    <figure
+      class="marquee__media"
+      data-media-status={marqueeContent.media.status}
+      aria-hidden="true"
+    >
+      <Picture
+        src={marqueeContent.media.src}
+        alt=""
+        formats={eventImageFormats}
+        fallbackFormat={eventImageFallbackFormat}
+        widths={eventImageWidths}
+        sizes="100vw"
+        loading="lazy"
+        decoding="async"
+      />
     </figure>
 
     <div class="marquee__curtain" aria-hidden="true">
@@ -46,6 +65,27 @@ const marqueeStatement = marqueeContentText.marqueeOptions[2];
 
 <script>
   const clamp = (value: number) => Math.min(Math.max(value, 0), 1);
+  const smoothstep = (value: number) => value * value * (3 - 2 * value);
+
+  const depthMotion = {
+    progressStart: 0.06,
+    progressEnd: 0.94,
+    desktop: {
+      scaleStart: 1,
+      scaleEnd: 1.18,
+      translateYStart: 0,
+      translateYEnd: -1.5,
+    },
+    compact: {
+      scaleStart: 1,
+      scaleEnd: 1.1,
+      translateYStart: 0,
+      translateYEnd: -0.75,
+    },
+  } as const;
+
+  const interpolate = (start: number, end: number, progress: number) =>
+    start + (end - start) * progress;
 
   document.querySelectorAll<HTMLElement>(".marquee").forEach((section) => {
     if (section.dataset.motionReady === "true") return;
@@ -53,6 +93,7 @@ const marqueeStatement = marqueeContentText.marqueeOptions[2];
     section.dataset.motionReady = "true";
 
     const scene = section.querySelector<HTMLElement>(".marquee__scene");
+    const depthTarget = section.querySelector<HTMLElement>(".marquee__media img");
     const track = section.querySelector<HTMLElement>(".marquee__track");
     const intro = section.querySelector<HTMLElement>(".marquee__intro");
     const curtainPanels = Array.from(
@@ -60,9 +101,10 @@ const marqueeStatement = marqueeContentText.marqueeOptions[2];
     );
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    if (!scene || !track || !intro || reducedMotion.matches) return;
+    if (!scene || !depthTarget || !track || !intro) return;
 
-    section.classList.add("is-enhanced");
+    let motionAllowed = !reducedMotion.matches;
+    let depthConfig = window.innerWidth < 768 ? depthMotion.compact : depthMotion.desktop;
 
     let frameId = 0;
     let isNearby = false;
@@ -71,11 +113,26 @@ const marqueeStatement = marqueeContentText.marqueeOptions[2];
     const render = () => {
       frameId = 0;
 
-      if (!isNearby) return;
+      if (!isNearby || !motionAllowed) return;
 
       const rect = section.getBoundingClientRect();
       const scrollRange = Math.max(section.offsetHeight - window.innerHeight, 1);
       const pinnedProgress = clamp(-rect.top / scrollRange);
+      const depthProgress = clamp(
+        (pinnedProgress - depthMotion.progressStart) /
+          (depthMotion.progressEnd - depthMotion.progressStart),
+      );
+      const easedDepthProgress = smoothstep(depthProgress);
+      const depthScale = interpolate(
+        depthConfig.scaleStart,
+        depthConfig.scaleEnd,
+        easedDepthProgress,
+      );
+      const depthTranslateY = interpolate(
+        depthConfig.translateYStart,
+        depthConfig.translateYEnd,
+        easedDepthProgress,
+      );
       const revealProgress = clamp(
         (window.innerHeight - rect.top) / (window.innerHeight * 0.63),
       );
@@ -89,6 +146,7 @@ const marqueeStatement = marqueeContentText.marqueeOptions[2];
         panel.style.transform = `translate3d(0, ${-panelProgress * 100}%, 0)`;
       });
 
+      depthTarget.style.transform = `translate3d(0, ${depthTranslateY}%, 0) scale(${depthScale})`;
       intro.style.opacity = String(introOpacity);
       track.style.opacity = String(tickerOpacity);
     };
@@ -109,24 +167,51 @@ const marqueeStatement = marqueeContentText.marqueeOptions[2];
       }
     };
 
+    const resetMotionStyles = () => {
+      depthTarget.style.removeProperty("transform");
+      intro.style.removeProperty("opacity");
+      track.style.removeProperty("opacity");
+      curtainPanels.forEach((panel) => panel.style.removeProperty("transform"));
+    };
+
+    const syncMotionPreference = () => {
+      motionAllowed = !reducedMotion.matches;
+      section.classList.toggle("is-enhanced", motionAllowed);
+      section.classList.toggle("is-nearby", motionAllowed && isNearby);
+      setScrollListener(motionAllowed && isNearby);
+
+      if (motionAllowed) {
+        scheduleRender();
+      } else {
+        resetMotionStyles();
+      }
+    };
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         isNearby = entry?.isIntersecting ?? false;
-        setScrollListener(isNearby);
-        if (isNearby) scheduleRender();
+        section.classList.toggle("is-nearby", isNearby && motionAllowed);
+        setScrollListener(isNearby && motionAllowed);
+        if (isNearby && motionAllowed) scheduleRender();
       },
       { rootMargin: "100% 0px" },
     );
-    const resizeObserver = new ResizeObserver(scheduleRender);
+    const resizeObserver = new ResizeObserver(() => {
+      depthConfig = window.innerWidth < 768 ? depthMotion.compact : depthMotion.desktop;
+      scheduleRender();
+    });
 
     observer.observe(section);
     resizeObserver.observe(scene);
+    reducedMotion.addEventListener("change", syncMotionPreference);
+    syncMotionPreference();
 
     window.addEventListener(
       "pagehide",
       () => {
         observer.disconnect();
         resizeObserver.disconnect();
+        reducedMotion.removeEventListener("change", syncMotionPreference);
         setScrollListener(false);
         if (frameId) window.cancelAnimationFrame(frameId);
       },
