@@ -19,6 +19,7 @@ interface Props {
 }
 
 const { anchorPrefix = "", surface = "overlay" } = Astro.props;
+const isHomePage = Astro.url.pathname === getLocalizedHref("/", locale);
 const resolveHref = (href: string) =>
   href.startsWith("#")
     ? anchorPrefix
@@ -39,7 +40,7 @@ const isCurrentPage = (href: string) =>
   class:list={[
     "site-navigation",
     {
-      "site-navigation--home": Astro.url.pathname === getLocalizedHref("/", locale),
+      "site-navigation--home": isHomePage,
       "site-navigation--solid": surface === "solid",
     },
   ]}
@@ -49,6 +50,7 @@ const isCurrentPage = (href: string) =>
     <a
       class="site-navigation__logo"
       href={resolveHref("#top")}
+      data-home-reset={isHomePage ? "true" : undefined}
       aria-label={`${navigationContent.logo} — ${shellText.navigationLabels[0]}`}
     >
       <span
@@ -91,6 +93,51 @@ const isCurrentPage = (href: string) =>
 </header>
 
 <script>
+  document
+    .querySelectorAll<HTMLAnchorElement>('.site-navigation__logo[data-home-reset="true"]')
+    .forEach((logo) => {
+      if (logo.dataset.homeResetReady === "true") return;
+      logo.dataset.homeResetReady = "true";
+
+      logo.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        const cleanUrl = `${window.location.pathname}${window.location.search}`;
+        window.history.replaceState(window.history.state, "", cleanUrl);
+
+        const root = document.documentElement;
+        const previousScrollBehavior = root.style.getPropertyValue("scroll-behavior");
+        const previousScrollPriority = root.style.getPropertyPriority("scroll-behavior");
+        root.style.setProperty("scroll-behavior", "auto", "important");
+
+        const scrollingElement = document.scrollingElement;
+        const resetScrollPosition = () => {
+          if (scrollingElement) scrollingElement.scrollTop = 0;
+          root.scrollTop = 0;
+          document.body.scrollTop = 0;
+          window.dispatchEvent(new Event("scroll"));
+        };
+
+        resetScrollPosition();
+
+        window.requestAnimationFrame(() => {
+          resetScrollPosition();
+          window.requestAnimationFrame(() => {
+            if (previousScrollBehavior) {
+              root.style.setProperty(
+                "scroll-behavior",
+                previousScrollBehavior,
+                previousScrollPriority,
+              );
+              return;
+            }
+
+            root.style.removeProperty("scroll-behavior");
+          });
+        });
+      });
+    });
+
   document.querySelectorAll<HTMLElement>(".site-navigation").forEach((navigation) => {
     if (
       navigation.dataset.navigationReady === "true" ||
