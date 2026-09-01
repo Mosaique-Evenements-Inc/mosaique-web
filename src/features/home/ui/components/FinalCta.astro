@@ -3,6 +3,7 @@ import Button from "@/core/common/ui/components/Button";
 import Container from "@/core/common/ui/components/Container.astro";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
+import CursorHalftone from "./CursorHalftone.astro";
 import { finalCtaContent } from "@/features/quote/content/finalCta";
 import { getHomeTranslations } from "@/features/home/i18n";
 import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
@@ -15,8 +16,12 @@ const finalCtaText = getHomeTranslations(locale);
 ---
 
 <section class="final-cta" id="contact" aria-labelledby="final-cta-title">
-  <div class="final-cta__stage" data-final-cta-interactive data-navigation-contrast="light">
-    <div class="final-cta__dots-interactive" aria-hidden="true"></div>
+  <div
+    class="final-cta__stage cursor-halftone"
+    data-cursor-halftone
+    data-navigation-contrast="light"
+  >
+    <CursorHalftone />
     <Container class="final-cta__container">
       <div class="final-cta__content">
         <Heading as="h2" variant="heading-lg" id="final-cta-title">
@@ -60,80 +65,3 @@ const finalCtaText = getHomeTranslations(locale);
     </div>
   </div>
 </section>
-
-<script>
-  const interactiveCta = document.querySelector<HTMLElement>("[data-final-cta-interactive]");
-
-  if (interactiveCta && interactiveCta.dataset.ready !== "true") {
-    interactiveCta.dataset.ready = "true";
-    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const controller = new AbortController();
-    let bounds: DOMRect | null = null;
-    let pointerX = 0.5;
-    let pointerY = 0.5;
-    let frame = 0;
-
-    const renderPointer = () => {
-      frame = 0;
-      interactiveCta.style.setProperty("--cta-pointer-x", `${pointerX * 100}%`);
-      interactiveCta.style.setProperty("--cta-pointer-y", `${pointerY * 100}%`);
-      interactiveCta.style.setProperty("--cta-shift-x", `${(pointerX - 0.5) * 8}px`);
-      interactiveCta.style.setProperty("--cta-shift-y", `${(pointerY - 0.5) * 6}px`);
-    };
-
-    const schedulePointer = () => {
-      if (!frame) frame = requestAnimationFrame(renderPointer);
-    };
-
-    interactiveCta.addEventListener(
-      "pointerenter",
-      () => {
-        if (!finePointer.matches || reducedMotion.matches) return;
-        bounds = interactiveCta.getBoundingClientRect();
-        interactiveCta.dataset.pointerActive = "true";
-      },
-      { signal: controller.signal },
-    );
-
-    interactiveCta.addEventListener(
-      "pointermove",
-      (event) => {
-        if (!finePointer.matches || reducedMotion.matches || !bounds) return;
-        pointerX = Math.min(1, Math.max(0, (event.clientX - bounds.left) / bounds.width));
-        pointerY = Math.min(1, Math.max(0, (event.clientY - bounds.top) / bounds.height));
-        schedulePointer();
-      },
-      { passive: true, signal: controller.signal },
-    );
-
-    interactiveCta.addEventListener(
-      "pointerleave",
-      () => {
-        bounds = null;
-        pointerX = 0.5;
-        pointerY = 0.5;
-        interactiveCta.dataset.pointerActive = "false";
-        schedulePointer();
-      },
-      { signal: controller.signal },
-    );
-
-    window.addEventListener(
-      "resize",
-      () => {
-        bounds = null;
-      },
-      { passive: true, signal: controller.signal },
-    );
-
-    document.addEventListener(
-      "astro:before-swap",
-      () => {
-        controller.abort();
-        if (frame) cancelAnimationFrame(frame);
-      },
-      { once: true },
-    );
-  }
-</script>
