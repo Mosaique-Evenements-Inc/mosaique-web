@@ -71,7 +71,6 @@ const preferredLanguageValue = locale;
     <label class="quote-field quote-field--wide">
       <span>{quoteText.preferredLanguage}</span>
       <select name="preferredLanguage">
-        <option value="">{quoteText.noPreference}</option>
         {
           quoteContent.preferredLanguages.map((language) => (
             <option value={language.value} selected={language.value === preferredLanguageValue}>

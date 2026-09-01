@@ -11,7 +11,6 @@ export interface QuoteTranslations {
   email: string;
   phone: string;
   preferredLanguage: string;
-  noPreference: string;
   eventInfo: string;
   serviceInterest: string;
   eventType: string;
@@ -112,7 +111,6 @@ export const quoteTranslations = {
     email: "Email",
     phone: "Teléfono",
     preferredLanguage: "Idioma de preferencia",
-    noPreference: "Sin preferencia",
     eventInfo: "Información del evento",
     serviceInterest: "Servicio de interés",
     eventType: "Tipo de evento",
@@ -191,7 +189,6 @@ export const quoteTranslations = {
     email: "Email",
     phone: "Phone",
     preferredLanguage: "Preferred language",
-    noPreference: "No preference",
     eventInfo: "Event information",
     serviceInterest: "Service of interest",
     eventType: "Event type",
@@ -291,7 +288,6 @@ export const quoteTranslations = {
     email: "Courriel",
     phone: "Téléphone",
     preferredLanguage: "Langue préférée",
-    noPreference: "Aucune préférence",
     eventInfo: "Informations sur l’événement",
     serviceInterest: "Service d’intérêt",
     eventType: "Type d’événement",
