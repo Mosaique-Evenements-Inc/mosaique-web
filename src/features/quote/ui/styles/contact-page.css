@@ -204,7 +204,8 @@
 }
 
 .contact-media picture,
-.contact-media img {
+.contact-media img,
+.contact-media video {
   block-size: 100%;
   display: block;
   inline-size: 100%;

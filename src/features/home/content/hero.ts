@@ -1,4 +1,5 @@
 import type { ContentLink } from "@/core/common/types/content";
+import { heroVideo } from "@/assets/video/delivery";
 
 export const heroContent = {
   brand: "MOSAÏQUE ÉVÉNEMENTS",
@@ -17,11 +18,7 @@ export const heroContent = {
   overlay: "Every detail has its place.",
   media: {
     status: "ready",
-    sources: [
-      { src: "/media/video/hero.webm", type: "video/webm" },
-      { src: "/media/video/hero.mp4", type: "video/mp4" },
-    ],
-    poster: "/media/video/hero-poster.avif",
+    ...heroVideo,
     position: "center",
   },
 } as const;
