@@ -232,7 +232,25 @@ This document is the source of truth for implementation status. The existence of
 
 ### Footer
 
-- **Implementation: complete.** A semantic footer landmark renders the brand, seven navigation links, six service labels, contact details, closing statement, and legal copy from `src/content/home/footer.ts` after `main`.
+- **Implementation: complete.** A semantic footer landmark renders the brand, seven navigation
+  links, eight linked Service entries, contact details, closing statement, and legal copy from
+  `src/features/site-shell/content/footer.ts` after `main`.
+- **Route and action audit complete locally.** Inicio, Nosotros, Servicios, Eventos, Proceso,
+  FAQ, and Contacto now resolve to the implemented root page, About route, Home sections, Gallery
+  route, and Contact route in the active locale from every page that renders the Footer. The eight
+  Service options derive their destinations from the canonical Service catalog and are now real
+  links with current-page semantics. The superseded seven-label manual list remains commented in
+  its content source instead of being deleted.
+- **Footer action rhythm aligned locally.** Company, Resource, and Service links now reuse the
+  topbar's left-origin Champagne underline for hover and keyboard focus. Hover also shifts the
+  label to Champagne, while current-page semantics remain available through `aria-current`
+  without a persistent visual selection. Their vertical list rhythm is compacted by one spacing
+  step on desktop and mobile, while the native disclosure headers and their pointer targets remain
+  unchanged. Reduced motion keeps every interaction state immediate.
+- **Same-page Footer actions are immediate.** Root and section links now reuse the topbar logo's
+  instant reset behavior whenever their destination belongs to the current document, temporarily
+  overriding the global smooth-scroll rule without changing native cross-page, modifier-click, or
+  missing-target behavior.
 - **Email action surface refinement complete locally.** The framed Footer email CTA now uses the existing restrained medium radius while retaining its dimensions, arrow, verified destination, focus behavior, and responsive layout.
 - **Collaborator frame refinement complete locally.** The three-logo wall now shares the same medium radius as the Footer email action, with its internal tiles clipped to the outer frame while preserving separators, logo interactions, destinations, and responsive sizing.
 - On mobile, Compañía, Recursos, and Servicios use collapsed native disclosures to reduce scroll length; tablet and desktop keep all three groups expanded in the established grid.
