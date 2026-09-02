@@ -345,6 +345,11 @@ This document is the source of truth for implementation status. The existence of
   transforms, timelines, sticky takeover, and hover/lightbox motion; runtime media emulation was
   unavailable in the integrated browser, so that specific state is verified from compiled CSS
   rather than claimed as a runtime screenshot.
+- **Service header constraints refined locally.** The Service-owned desktop and tablet header now
+  constrains localized titles to its `28%` rail with width- and height-aware type scaling plus a
+  defensive wrapping boundary. Its narrative uses a smaller description scale and reserves the
+  remaining header space for the commercial CTA, keeping that action anchored above the bottom
+  divider without expanding the `100svh` chapter. Mobile retains natural-flow stacking.
 - **Visual roadmap:** Responsibility 4 is complete. The separate domain-normalization roadmap
   below now owns the next Service/Event data work.
 
@@ -427,6 +432,12 @@ This document is the source of truth for implementation status. The existence of
 ### Event Detail Reference Fidelity
 
 - **Current phase: Contact cinematic surface and Event Detail gallery-gap refinement complete locally.** The previous Event Detail motion and mobile QA remain accepted; the latest authorized changes are limited to page contrast and editorial media spacing.
+- **Event header constraints aligned locally.** Event Detail now mirrors the Service-owned header
+  organization while remaining physically separate: desktop and tablet titles stay inside the
+  `28%` rail through width- and height-aware scaling, the description uses the same smaller
+  reading scale, and the header remains bounded to its `100svh` chapter. Mobile keeps its existing
+  natural-flow stack, and gallery, lightbox, related-event motion, Navigation, and Footer remain
+  unchanged.
 - **Responsibility 1 — Diagnostic: complete.** At the measured desktop state, the reference uses the existing `28/72` rail/media split, a `16:9` featured frame, and one editorial gap as the media inset. The local production build preserved the correct outer row geometry but rendered source-ratio featured media, undersized gallery triggers, and no viewport-entry transform. The absent production motion was isolated to CSS optimization producing an invalid `animation` shorthand; it is not a Vercel, hydration, asset, or deployment issue.
 - **Responsibility 2 — Gallery Layout Fidelity: complete.** The featured frame now keeps the measured `16:9` editorial role and the featured, full-row, and paired gallery media share the same one-gap inset and leading alignment. At `1440 × 900`, rendered geometry measures `1022.39 × 575.09px` for the featured frame, `1022.39px` for full-row media, and approximately `504px` per paired medium inside the unchanged `28/72` composition. Tablet validation at `900 × 900` preserved the same proportional language with `639px` full media and `315px` paired media, no horizontal overflow, and no console warnings or errors.
 - **Responsibility 3 — Production-safe Viewport-entry Motion: complete.** The frame and compensating media animations retain their original named view timelines, ranges, and `0.8 → 1` / `1.2 → 1` transforms. Their animation shorthands now resolve through a local custom property so Astro's CSS optimizer cannot merge the timeline into an invalid shorthand. The production preview reports the expected animation names and named timelines; at `1280 × 720`, the first entering frame progressed `0.828 → 0.913 → 1.000` while its media progressed reciprocally `1.172 → 1.087 → 1.000`, and the next row entered from the same contract. Tablet retained the accepted geometry, no horizontal overflow, and a clean console. No listener, observer, hydration, dependency, asset, or layout change was introduced.
