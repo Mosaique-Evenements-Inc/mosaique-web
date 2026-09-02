@@ -1,12 +1,11 @@
 ---
-import EventDatePicker from "./EventDatePicker.astro";
 import LeadSubmissionTransport from "./LeadSubmissionTransport";
 import QuoteBasicStep from "./QuoteBasicStep.astro";
 import QuoteReview from "./QuoteReview.astro";
 import Button from "@/core/common/ui/components/Button";
 import Icon from "@/core/common/ui/components/Icon.astro";
 import { getQuoteTranslations } from "../../i18n";
-import { getLanguageTag, getLocaleFromUrl } from "@/core/i18n";
+import { getLanguageTag, getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
 
 const locale = getLocaleFromUrl(Astro.url);
 const quoteText = getQuoteTranslations(locale);
@@ -19,8 +18,21 @@ import "../styles/quote-form.css";
   data-quote-flow
   data-quote-text={JSON.stringify(quoteText)}
   data-language-tag={getLanguageTag(locale)}
+  data-back-href={getLocalizedHref("/", locale)}
 >
   <form class="quote-form" data-quote-form novalidate>
+    <div class="quote-form__navigation">
+      <button
+        type="button"
+        class="quote-form__back"
+        aria-label={quoteText.backToPreviousPage}
+        data-quote-back
+      >
+        <Icon name="arrowLeft" size={24} />
+        <span class="visually-hidden" data-quote-back-label>{quoteText.back}</span>
+      </button>
+    </div>
+
     <div class="quote-form__body">
       <QuoteBasicStep />
       <QuoteReview />
@@ -29,10 +41,7 @@ import "../styles/quote-form.css";
     <footer class="quote-form__actions" data-quote-actions>
       <p data-quote-submit-status aria-live="polite"></p>
       <div>
-        <Button type="button" className="quote-button" icon="arrow-left" data-quote-back hidden>
-          <span data-quote-back-label>{quoteText.back}</span>
-        </Button>
-        <Button type="button" className="quote-button" data-quote-next variant="light" disabled>
+        <Button type="button" className="quote-button" data-quote-next variant="light">
           <span data-quote-next-label>{quoteText.submit}</span>
         </Button>
       </div>
@@ -60,7 +69,6 @@ import "../styles/quote-form.css";
   </button>
 </aside>
 
-<EventDatePicker />
 <LeadSubmissionTransport client:load />
 
 <script>
@@ -68,15 +76,25 @@ import "../styles/quote-form.css";
   import { validatePhone } from "../../validators/leads";
 
   const quoteFlow = document.querySelector<HTMLElement>("[data-quote-flow]");
-  const datePickerDialog = document.querySelector<HTMLDialogElement>(
-    "[data-date-picker-dialog]",
-  );
+  const datePickerDialog = document.querySelector<HTMLElement>("[data-date-picker-dialog]");
   const quoteForm = quoteFlow?.querySelector<HTMLFormElement>("[data-quote-form]");
 
   if (quoteFlow && datePickerDialog && quoteForm && quoteFlow.dataset.ready !== "true") {
     quoteFlow.dataset.ready = "true";
     const text = JSON.parse(quoteFlow.dataset.quoteText ?? "{}") as Record<string, string>;
     const languageTag = quoteFlow.dataset.languageTag ?? "es";
+    const fallbackBackHref = quoteFlow.dataset.backHref ?? "/";
+    const hasNavigableReferrer = (() => {
+      try {
+        const referrer = new URL(document.referrer);
+        return (
+          (referrer.protocol === "http:" || referrer.protocol === "https:") &&
+          referrer.href !== window.location.href
+        );
+      } catch {
+        return false;
+      }
+    })();
 
     const step = quoteFlow.querySelector<HTMLElement>("[data-quote-step]");
     const backButton = quoteFlow.querySelector<HTMLButtonElement>("[data-quote-back]");
@@ -98,8 +116,13 @@ import "../styles/quote-form.css";
     const datePrevious =
       datePickerDialog.querySelector<HTMLButtonElement>("[data-date-previous]");
     const dateNext = datePickerDialog.querySelector<HTMLButtonElement>("[data-date-next]");
+    const calendarMonthSelect = quoteForm.elements.namedItem(
+      "calendarMonth",
+    ) as HTMLSelectElement | null;
+    const calendarYearSelect = quoteForm.elements.namedItem(
+      "calendarYear",
+    ) as HTMLSelectElement | null;
     const phone = quoteForm.elements.namedItem("phone") as HTMLInputElement | null;
-    const phoneCount = quoteFlow.querySelector<HTMLOutputElement>("[data-quote-phone-count]");
     const serviceSelect = quoteForm.elements.namedItem("service") as HTMLSelectElement | null;
     let validationAttempted = false;
     let reviewing = false;
@@ -115,7 +138,10 @@ import "../styles/quote-form.css";
       const matchingOption = Array.from(serviceSelect.options).find(
         (option) => option.dataset.serviceSlug === requestedService,
       );
-      if (matchingOption) serviceSelect.value = matchingOption.value;
+      if (matchingOption) {
+        serviceSelect.value = matchingOption.value;
+        serviceSelect.dispatchEvent(new Event("change", { bubbles: true }));
+      }
     }
 
     const setButtonLabels = (labels: NodeListOf<HTMLElement>, value: string) => {
@@ -165,6 +191,14 @@ import "../styles/quote-form.css";
       );
 
       dateMonth.textContent = `${monthName.charAt(0).toUpperCase()}${monthName.slice(1)} ${year}`;
+      const monthChanged = calendarMonthSelect?.value !== String(month);
+      const yearChanged = calendarYearSelect?.value !== String(year);
+      if (calendarMonthSelect) calendarMonthSelect.value = String(month);
+      if (calendarYearSelect) calendarYearSelect.value = String(year);
+      if (monthChanged)
+        calendarMonthSelect?.dispatchEvent(new Event("change", { bubbles: true }));
+      if (yearChanged)
+        calendarYearSelect?.dispatchEvent(new Event("change", { bubbles: true }));
       dateGrid.replaceChildren();
 
       for (let index = 0; index < 42; index += 1) {
@@ -206,19 +240,28 @@ import "../styles/quote-form.css";
 
     const openDatePicker = () => {
       if (!dateInput || dateTrigger?.disabled) return;
+      if (!datePickerDialog.hidden) {
+        closeDatePicker();
+        return;
+      }
       const selectedDate = dateInput.value ? parseIsoDate(dateInput.value) : null;
       calendarMonth = new Date(
         selectedDate?.getFullYear() ?? today.getFullYear(),
         selectedDate?.getMonth() ?? today.getMonth(),
         1,
       );
-      datePickerDialog.showModal();
+      datePickerDialog.hidden = false;
+      datePickerDialog.dataset.open = "true";
+      dateTrigger?.setAttribute("aria-expanded", "true");
       renderCalendar();
     };
 
-    const closeDatePicker = () => {
-      datePickerDialog.close();
-      dateTrigger?.focus();
+    const closeDatePicker = (restoreFocus = true) => {
+      if (datePickerDialog.hidden) return;
+      datePickerDialog.hidden = true;
+      delete datePickerDialog.dataset.open;
+      dateTrigger?.setAttribute("aria-expanded", "false");
+      if (restoreFocus) dateTrigger?.focus();
     };
 
     const moveCalendarFocus = (offset: number) => {
@@ -241,7 +284,9 @@ import "../styles/quote-form.css";
         field.setCustomValidity(field.value && !validatePhone(field.value) ? "invalid" : "");
       }
 
-      const error = field.closest("label")?.querySelector<HTMLElement>("[data-quote-error]");
+      const error = field
+        .closest(".quote-field")
+        ?.querySelector<HTMLElement>("[data-quote-error]");
       const message = field.validity.valueMissing
         ? field.dataset.errorRequired
         : field.validity.valid
@@ -253,33 +298,58 @@ import "../styles/quote-form.css";
       return field.validity.valid;
     };
 
-    const validateForm = () => {
+    const getFormFields = () =>
+      step
+        ? Array.from(
+            step.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
+              "input, select, textarea",
+            ),
+          ).filter((field) => !field.disabled && field.type !== "hidden")
+        : [];
+
+    const focusInvalidField = (
+      field: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
+    ) => {
+      const customTrigger = field
+        .closest("[data-custom-select]")
+        ?.querySelector<HTMLButtonElement>("[data-custom-select-trigger]");
+      const target = customTrigger ?? field;
+      target.focus({ preventScroll: true });
+      const bounds = target.getBoundingClientRect();
+      const navigationOffset =
+        document.querySelector<HTMLElement>(".site-navigation")?.getBoundingClientRect()
+          .bottom ?? 0;
+      if (bounds.top < navigationOffset || bounds.bottom > window.innerHeight) {
+        target.scrollIntoView({
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "auto"
+            : "smooth",
+          block: "center",
+        });
+      }
+    };
+
+    const getFirstInvalidField = () =>
+      getFormFields().find((field) => field.getAttribute("aria-invalid") === "true");
+
+    const validateForm = (focusFirstError = true) => {
       if (!step) return false;
       validationAttempted = true;
-      const fields = Array.from(
-        step.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
-          "input, select, textarea",
-        ),
-      ).filter((field) => !field.disabled && field.type !== "hidden");
+      const fields = getFormFields();
       const invalidFields = fields.filter((field) => !setFieldError(field));
-      invalidFields[0]?.focus();
+      if (focusFirstError && invalidFields[0]) focusInvalidField(invalidFields[0]);
       return invalidFields.length === 0;
     };
 
     const isFormComplete = () => {
       if (!step) return false;
-      const fields = Array.from(
-        step.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
-          "input, select, textarea",
-        ),
-      ).filter((field) => !field.disabled && field.type !== "hidden");
-      return fields.every((field) => field.validity.valid);
+      return getFormFields().every((field) => field.validity.valid);
     };
 
     const updatePrimaryAction = () => {
       if (!nextButton || submitting) return;
       const formComplete = isFormComplete();
-      nextButton.disabled = reviewing ? false : !formComplete;
+      nextButton.disabled = false;
       setButtonLabels(
         nextButtonLabels,
         reviewing
@@ -295,12 +365,15 @@ import "../styles/quote-form.css";
     const updateView = (focusHeading = true) => {
       if (step) step.hidden = reviewing;
       if (review) review.hidden = !reviewing;
-      if (backButton) backButton.hidden = !reviewing && !editingFromReview;
       if (backButton) {
         setButtonLabels(backButtonLabels, editingFromReview ? text.backToReview : text.back);
         backButton.setAttribute(
           "aria-label",
-          editingFromReview ? text.backToReview : text.backToForm,
+          editingFromReview
+            ? text.backToReview
+            : reviewing
+              ? text.backToForm
+              : text.backToPreviousPage,
         );
       }
       updatePrimaryAction();
@@ -354,12 +427,14 @@ import "../styles/quote-form.css";
 
     const resetFlow = () => {
       quoteForm.reset();
+      quoteForm.querySelectorAll<HTMLSelectElement>("select").forEach((select) => {
+        select.dispatchEvent(new Event("change", { bubbles: true }));
+      });
       reviewing = false;
       editingFromReview = false;
       validationAttempted = false;
       submitting = false;
       if (submitStatus) submitStatus.textContent = "";
-      if (phoneCount) phoneCount.textContent = "0 / 10";
       if (dateTrigger) dateTrigger.disabled = false;
       updateDateField();
       updateView(false);
@@ -412,12 +487,15 @@ import "../styles/quote-form.css";
 
       field.setAttribute("aria-invalid", "true");
       const fieldError = field
-        .closest("label")
+        .closest(".quote-field")
         ?.querySelector<HTMLElement>("[data-quote-error]");
       if (fieldError) fieldError.textContent = error.message;
       reviewing = false;
       updateView(false);
-      field.focus();
+      const customTrigger = field
+        .closest("[data-custom-select]")
+        ?.querySelector<HTMLButtonElement>("[data-custom-select-trigger]");
+      (customTrigger ?? field).focus();
     };
 
     const hideSuccessToast = () => {
@@ -441,9 +519,11 @@ import "../styles/quote-form.css";
 
     const submitReview = async () => {
       if (!nextButton || submitting) return;
-      if (!validateForm()) {
+      if (!validateForm(false)) {
         reviewing = false;
-        updateView();
+        updateView(false);
+        const firstInvalid = getFirstInvalidField();
+        if (firstInvalid) requestAnimationFrame(() => focusInvalidField(firstInvalid));
         return;
       }
       submitting = true;
@@ -470,7 +550,7 @@ import "../styles/quote-form.css";
     };
 
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && datePickerDialog.open) {
+      if (event.key === "Escape" && !datePickerDialog.hidden) {
         event.preventDefault();
         closeDatePicker();
       }
@@ -494,7 +574,15 @@ import "../styles/quote-form.css";
         updateView();
         return;
       }
-      if (editingFromReview) showReview();
+      if (editingFromReview) {
+        showReview();
+        return;
+      }
+      if (hasNavigableReferrer) {
+        window.history.back();
+      } else {
+        window.location.assign(fallbackBackHref);
+      }
     });
     review?.querySelectorAll<HTMLButtonElement>("[data-quote-edit-step]").forEach((button) => {
       button.addEventListener("click", () => {
@@ -514,6 +602,19 @@ import "../styles/quote-form.css";
       calendarMonth = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + 1, 1);
       renderCalendar();
     });
+    const selectCalendarPeriod = () => {
+      if (!calendarMonthSelect || !calendarYearSelect) return;
+      const nextMonth = new Date(
+        Number(calendarYearSelect.value),
+        Number(calendarMonthSelect.value),
+        1,
+      );
+      const currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+      calendarMonth = nextMonth < currentMonth ? currentMonth : nextMonth;
+      renderCalendar();
+    };
+    calendarMonthSelect?.addEventListener("change", selectCalendarPeriod);
+    calendarYearSelect?.addEventListener("change", selectCalendarPeriod);
     dateGrid?.addEventListener("click", (event) => {
       const target = event.target;
       if (!(target instanceof Element) || !dateInput) return;
@@ -535,19 +636,22 @@ import "../styles/quote-form.css";
       event.preventDefault();
       moveCalendarFocus(offset);
     });
-    datePickerDialog.addEventListener("click", (event) => {
-      if (event.target === datePickerDialog) closeDatePicker();
-    });
-    datePickerDialog.addEventListener("cancel", (event) => {
-      event.preventDefault();
-      closeDatePicker();
+    document.addEventListener("pointerdown", (event) => {
+      const target = event.target;
+      if (
+        !datePickerDialog.hidden &&
+        target instanceof Node &&
+        !datePickerDialog.contains(target) &&
+        !dateTrigger?.contains(target)
+      ) {
+        closeDatePicker(false);
+      }
     });
 
     quoteForm.addEventListener("input", (event) => {
       const field = event.target;
       if (phone && field === phone) {
-        phone.value = phone.value.replace(/\D/g, "").slice(0, 10);
-        if (phoneCount) phoneCount.textContent = `${phone.value.length} / 10`;
+        phone.value = phone.value.replace(/[^0-9]/g, "").slice(0, 10);
       }
       if (
         validationAttempted &&

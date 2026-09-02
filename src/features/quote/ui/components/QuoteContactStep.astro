@@ -2,6 +2,7 @@
 import { getQuoteContent } from "../../content/quote";
 import { getQuoteTranslations } from "../../i18n";
 import { getLocaleFromUrl } from "@/core/i18n";
+import CustomSelect from "./CustomSelect.astro";
 
 const locale = getLocaleFromUrl(Astro.url);
 const quoteText = getQuoteTranslations(locale);
@@ -45,7 +46,7 @@ const preferredLanguageValue = locale;
     <label class="quote-field">
       <span>{quoteText.phone} <strong aria-hidden="true">*</strong></span>
       <span class="quote-field__control quote-field__control--phone">
-        <span id="quote-phone-prefix" class="quote-field__phone-prefix">+1</span>
+        <span class="quote-field__phone-prefix" aria-hidden="true">🇨🇦 +1</span>
         <input
           type="tel"
           name="phone"
@@ -54,33 +55,28 @@ const preferredLanguageValue = locale;
           pattern="[0-9]{7,10}"
           maxlength="10"
           required
-          aria-describedby="quote-phone-prefix quote-phone-count quote-phone-error"
+          aria-describedby="quote-phone-error"
           data-error-required={quoteText.requiredPhone}
           data-error-invalid={quoteText.invalidPhone}
         />
-        <output
-          id="quote-phone-count"
-          class="quote-field__counter"
-          data-quote-phone-count
-          aria-live="polite">0 / 10</output
-        >
       </span>
       <small id="quote-phone-error" data-quote-error></small>
     </label>
 
-    <label class="quote-field quote-field--wide">
-      <span>{quoteText.preferredLanguage}</span>
-      <select name="preferredLanguage">
-        <option value="">{quoteText.noPreference}</option>
-        {
-          quoteContent.preferredLanguages.map((language) => (
-            <option value={language.value} selected={language.value === preferredLanguageValue}>
-              {language.label}
-            </option>
-          ))
-        }
-      </select>
+    <div class="quote-field quote-field--wide">
+      <span id="quote-preferred-language-label">{quoteText.preferredLanguage}</span>
+      <CustomSelect
+        id="quote-preferred-language"
+        name="preferredLanguage"
+        placeholder={quoteText.noPreference}
+        ariaLabel={quoteText.preferredLanguage}
+        options={quoteContent.preferredLanguages.map((language) => ({
+          value: language.value,
+          label: language.label,
+          selected: language.value === preferredLanguageValue,
+        }))}
+      />
       <small data-quote-error></small>
-    </label>
+    </div>
   </div>
 </section>

@@ -3,7 +3,7 @@ import Container from "@/core/common/ui/components/Container.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Footer from "@/features/site-shell/ui/components/Footer.astro";
 import Navigation from "@/features/site-shell/ui/components/Navigation.astro";
-import ContactMediaPlaceholder from "../components/ContactMediaPlaceholder.astro";
+import ContactMedia from "../components/ContactMedia.astro";
 import QuoteForm from "../components/QuoteForm.astro";
 import { getQuoteTranslations } from "../../i18n";
 import { getLocaleFromUrl } from "@/core/i18n";
@@ -27,7 +27,7 @@ const quoteText = getQuoteTranslations(getLocaleFromUrl(Astro.url));
           <QuoteForm />
         </div>
 
-        <ContactMediaPlaceholder />
+        <ContactMedia />
       </Container>
     </section>
   </main>

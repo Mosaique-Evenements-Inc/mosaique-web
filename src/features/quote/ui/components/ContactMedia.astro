@@ -1,0 +1,23 @@
+---
+import { Picture } from "astro:assets";
+
+import contactImage from "@/assets/images/events/baila-da-zaza/main.jpg";
+import {
+  eventImageFallbackFormat,
+  eventImageFormats,
+  eventImageWidths,
+} from "@/assets/images/events/delivery";
+---
+
+<figure class="contact-media" data-media-status="ready" aria-hidden="true">
+  <Picture
+    src={contactImage}
+    alt=""
+    formats={eventImageFormats}
+    fallbackFormat={eventImageFallbackFormat}
+    widths={eventImageWidths}
+    sizes="(min-width: 1024px) 58vw, (min-width: 768px) 50vw, 100vw"
+    loading="eager"
+    decoding="async"
+  />
+</figure>
