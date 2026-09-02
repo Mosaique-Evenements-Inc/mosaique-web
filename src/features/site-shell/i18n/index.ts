@@ -99,7 +99,7 @@ export const siteShellTranslations = {
     ],
     footerPurpose: "Cotizaciones y alianzas",
     footerClosing: "Every detail has its place.",
-    footerLegal: "©️ MOSAÏQUE EVENTS. All rights reserved.",
+    footerLegal: "Todos los derechos reservados.",
   },
   en: {
     "navigation.open": "Open navigation",
@@ -156,7 +156,7 @@ export const siteShellTranslations = {
     ],
     footerPurpose: "Quotes and partnerships",
     footerClosing: "Every detail has its place.",
-    footerLegal: "©️ MOSAÏQUE EVENTS. All rights reserved.",
+    footerLegal: "All rights reserved.",
   },
   fr: {
     "navigation.open": "Ouvrir la navigation",
@@ -222,7 +222,7 @@ export const siteShellTranslations = {
     ],
     footerPurpose: "Devis et partenariats",
     footerClosing: "Chaque détail a sa place.",
-    footerLegal: "©️ MOSAÏQUE EVENTS. Tous droits réservés.",
+    footerLegal: "Tous droits réservés.",
   },
 } satisfies LocaleDictionaries<SiteShellTranslations>;
 

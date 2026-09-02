@@ -235,6 +235,8 @@ This document is the source of truth for implementation status. The existence of
 
 ### Footer
 
+- Legal copy now composes the invariant copyright and company name from `footerContent.legal` with the existing localized `footerLegal` key: Spanish, English, and French rights-reserved text. Footer structure and styling remain unchanged.
+
 - **Implementation: complete.** A semantic footer landmark renders the brand, seven navigation
   links, eight linked Service entries, contact details, closing statement, and legal copy from
   `src/features/site-shell/content/footer.ts` after `main`.

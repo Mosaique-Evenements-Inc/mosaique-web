@@ -43,5 +43,5 @@ export const footerContent = {
     } satisfies ContentLink,
   },
   closingStatement: "Every detail has its place.",
-  legal: "©️ MOSAÏQUE EVENTS. All rights reserved.",
+  legal: "©️ MOSAÏQUE ÉVÉNEMENTS INC.",
 } as const;
