@@ -25,16 +25,21 @@ const heroText = getHomeContentTranslations(locale);
       data-media-status={heroContent.media.status}
       style={`--home-hero-media-position:${heroContent.media.position};`}
     >
-      {
-        heroContent.media.src ? (
-          <img src={heroContent.media.src} alt={heroContent.media.alt} loading="eager" />
-        ) : (
-          <div class="home-hero__media-placeholder" aria-hidden="true">
-            <span />
-            <span />
-          </div>
-        )
-      }
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster={heroContent.media.poster}
+        aria-hidden="true"
+      >
+        {
+          heroContent.media.sources.map((source) => (
+            <source src={source.src} type={source.type} />
+          ))
+        }
+      </video>
       <figcaption>{homeText.heroOverlay}</figcaption>
     </figure>
 

@@ -109,7 +109,8 @@
   position: absolute;
 }
 
-.home-hero__media img {
+.home-hero__media img,
+.home-hero__media video {
   block-size: 100%;
   inline-size: 100%;
   object-fit: cover;
