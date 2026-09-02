@@ -1,23 +1,55 @@
 ---
 import Icon from "@/core/common/ui/components/Icon.astro";
+import CustomSelect from "./CustomSelect.astro";
 import { getQuoteTranslations } from "../../i18n";
-import { getLocaleFromUrl } from "@/core/i18n";
+import { getLanguageTag, getLocaleFromUrl } from "@/core/i18n";
 
-const quoteText = getQuoteTranslations(getLocaleFromUrl(Astro.url));
+const locale = getLocaleFromUrl(Astro.url);
+const quoteText = getQuoteTranslations(locale);
+const languageTag = getLanguageTag(locale);
+const currentYear = new Date().getFullYear();
+const monthOptions = Array.from({ length: 12 }, (_, month) => ({
+  value: String(month),
+  label: new Intl.DateTimeFormat(languageTag, { month: "long" }).format(
+    new Date(currentYear, month, 1),
+  ),
+}));
+const yearOptions = Array.from({ length: 11 }, (_, index) => ({
+  value: String(currentYear + index),
+  label: String(currentYear + index),
+}));
 ---
 
-<dialog
+<section
   id="date-picker-dialog"
-  class="date-picker-dialog"
+  class="date-picker-popover"
   data-date-picker-dialog
   aria-labelledby="date-picker-month"
+  hidden
 >
-  <div class="date-picker-dialog__panel">
+  <div class="date-picker-popover__panel">
     <header>
       <button type="button" data-date-previous aria-label={quoteText.previousMonth}>
         <Icon name="arrowLeft" size={20} />
       </button>
-      <h2 id="date-picker-month" data-date-month aria-live="polite"></h2>
+      <div class="date-picker__selectors">
+        <h2 id="date-picker-month" class="visually-hidden" data-date-month aria-live="polite">
+        </h2>
+        <CustomSelect
+          id="date-picker-month-select"
+          name="calendarMonth"
+          placeholder={quoteText.selectMonth}
+          ariaLabel={quoteText.selectMonth}
+          options={monthOptions}
+        />
+        <CustomSelect
+          id="date-picker-year-select"
+          name="calendarYear"
+          placeholder={quoteText.selectYear}
+          ariaLabel={quoteText.selectYear}
+          options={yearOptions}
+        />
+      </div>
       <button type="button" data-date-next aria-label={quoteText.nextMonth}>
         <Icon name="arrowRight" size={20} />
       </button>
@@ -35,4 +67,4 @@ const quoteText = getQuoteTranslations(getLocaleFromUrl(Astro.url));
     >
     </div>
   </div>
-</dialog>
+</section>

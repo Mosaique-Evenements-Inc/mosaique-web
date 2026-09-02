@@ -17,7 +17,6 @@ export interface QuoteTranslations {
   selectOption: string;
   eventDate: string;
   selectDate: string;
-  dateOptional: string;
   noDate: string;
   guestRange: string;
   requiredFullName: string;
@@ -44,6 +43,7 @@ export interface QuoteTranslations {
   back: string;
   backToReview: string;
   backToForm: string;
+  backToPreviousPage: string;
   saveChanges: string;
   review: string;
   submit: string;
@@ -57,6 +57,8 @@ export interface QuoteTranslations {
   dateNotIndicated: string;
   previousMonth: string;
   nextMonth: string;
+  selectMonth: string;
+  selectYear: string;
   weekdays: readonly string[];
   quoteForm: string;
   pendingMedia: string;
@@ -117,7 +119,6 @@ export const quoteTranslations = {
     selectOption: "Selecciona una opción",
     eventDate: "Fecha del evento",
     selectDate: "Seleccionar fecha",
-    dateOptional: "Opcional si todavía no está definida.",
     noDate: "Aún no tengo fecha",
     guestRange: "Número aproximado de invitados",
     requiredFullName: "Ingresa tu nombre completo.",
@@ -145,6 +146,7 @@ export const quoteTranslations = {
     back: "Atrás",
     backToReview: "Volver a revisión",
     backToForm: "Volver al formulario",
+    backToPreviousPage: "Volver a la página anterior",
     saveChanges: "Guardar cambios",
     review: "Revisar información",
     submit: "Enviar solicitud",
@@ -158,6 +160,8 @@ export const quoteTranslations = {
     dateNotIndicated: "No indicada",
     previousMonth: "Mes anterior",
     nextMonth: "Mes siguiente",
+    selectMonth: "Seleccionar mes",
+    selectYear: "Seleccionar año",
     weekdays: ["L", "M", "M", "J", "V", "S", "D"],
     quoteForm: "Formulario de cotización",
     pendingMedia: "Media pendiente",
@@ -195,7 +199,6 @@ export const quoteTranslations = {
     selectOption: "Select an option",
     eventDate: "Event date",
     selectDate: "Select a date",
-    dateOptional: "Optional if it is not defined yet.",
     noDate: "I do not have a date yet",
     guestRange: "Approximate number of guests",
     requiredFullName: "Enter your full name.",
@@ -222,6 +225,7 @@ export const quoteTranslations = {
     back: "Back",
     backToReview: "Back to review",
     backToForm: "Back to form",
+    backToPreviousPage: "Return to the previous page",
     saveChanges: "Save changes",
     review: "Review information",
     submit: "Send request",
@@ -235,6 +239,8 @@ export const quoteTranslations = {
     dateNotIndicated: "Not indicated",
     previousMonth: "Previous month",
     nextMonth: "Next month",
+    selectMonth: "Select month",
+    selectYear: "Select year",
     weekdays: ["M", "T", "W", "T", "F", "S", "S"],
     quoteForm: "Quote request form",
     pendingMedia: "Media pending",
@@ -294,7 +300,6 @@ export const quoteTranslations = {
     selectOption: "Sélectionnez une option",
     eventDate: "Date de l’événement",
     selectDate: "Sélectionner une date",
-    dateOptional: "Facultatif si elle n’est pas encore définie.",
     noDate: "Je n’ai pas encore de date",
     guestRange: "Nombre approximatif d’invités",
     requiredFullName: "Entrez votre nom complet.",
@@ -323,6 +328,7 @@ export const quoteTranslations = {
     back: "Retour",
     backToReview: "Retour à la révision",
     backToForm: "Retour au formulaire",
+    backToPreviousPage: "Revenir à la page précédente",
     saveChanges: "Enregistrer les modifications",
     review: "Réviser les informations",
     submit: "Envoyer la demande",
@@ -336,6 +342,8 @@ export const quoteTranslations = {
     dateNotIndicated: "Non indiquée",
     previousMonth: "Mois précédent",
     nextMonth: "Mois suivant",
+    selectMonth: "Sélectionner le mois",
+    selectYear: "Sélectionner l’année",
     weekdays: ["L", "M", "M", "J", "V", "S", "D"],
     quoteForm: "Formulaire de demande de devis",
     pendingMedia: "Média à venir",
