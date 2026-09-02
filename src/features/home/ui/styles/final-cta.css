@@ -59,7 +59,7 @@
 
 .final-cta__gallery {
   background: var(--color-background);
-  block-size: clamp(17rem, 24vw, 24rem);
+  block-size: clamp(20rem, 29vw, 29rem);
   box-sizing: border-box;
   overflow: hidden;
   padding: var(--space-3) var(--space-4) var(--space-4);
@@ -75,77 +75,29 @@
 
 .final-cta__group {
   block-size: 100%;
-  display: grid;
+  display: flex;
   flex: none;
   gap: var(--space-1);
-  grid-auto-columns: clamp(11rem, 15vw, 16rem);
-  grid-auto-flow: column;
   padding-inline-end: var(--space-1);
 }
 
 .final-cta__media {
+  aspect-ratio: 9 / 16;
   background: var(--color-accent);
   block-size: 100%;
+  flex: none;
   margin: 0;
   min-inline-size: 0;
   overflow: hidden;
   position: relative;
 }
 
-.final-cta__media span {
+.final-cta__media picture,
+.final-cta__media img {
+  block-size: 100%;
   display: block;
-  position: absolute;
-}
-
-.final-cta__media span:first-child {
-  background: var(--color-primary);
-  block-size: 118%;
-  inline-size: 48%;
-  inset: -8% auto auto 20%;
-  opacity: 0.8;
-  transform: skewX(-12deg);
-}
-
-.final-cta__media span:last-child {
-  background: color-mix(in oklab, var(--color-primary) 68%, var(--color-accent));
-  block-size: 52%;
-  inline-size: 78%;
-  inset: auto -16% 0 auto;
-  opacity: 0.72;
-  transform: skewX(18deg);
-}
-
-.final-cta__media[data-tone="02"],
-.final-cta__media[data-tone="05"] {
-  background: var(--color-surface-muted);
-}
-
-.final-cta__media[data-tone="02"] span:first-child,
-.final-cta__media[data-tone="05"] span:first-child {
-  background: var(--color-accent);
-  inline-size: 68%;
-  inset-inline-start: -8%;
-  transform: skewX(14deg);
-}
-
-.final-cta__media[data-tone="02"] span:last-child,
-.final-cta__media[data-tone="05"] span:last-child {
-  background: var(--color-secondary);
-}
-
-.final-cta__media[data-tone="03"] {
-  background: var(--color-secondary);
-}
-
-.final-cta__media[data-tone="03"] span:first-child {
-  background: var(--color-surface-muted);
-  inset-inline-start: 42%;
-}
-
-.final-cta__media[data-tone="04"] span:first-child {
-  inline-size: 64%;
-  inset-inline-start: -10%;
-  transform: skewX(16deg);
+  inline-size: 100%;
+  object-fit: cover;
 }
 
 @keyframes final-cta-gallery-loop {
@@ -170,12 +122,8 @@
   }
 
   .final-cta__gallery {
-    block-size: 15rem;
+    block-size: 18rem;
     padding: var(--space-2);
-  }
-
-  .final-cta__group {
-    grid-auto-columns: 9.5rem;
   }
 }
 
@@ -194,7 +142,6 @@
   }
 
   .final-cta__group {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
     inline-size: 100%;
   }
 

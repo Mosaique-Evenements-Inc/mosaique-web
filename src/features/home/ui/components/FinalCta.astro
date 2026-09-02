@@ -1,4 +1,7 @@
 ---
+import { Picture } from "astro:assets";
+import { eventImageFormats, eventImageFallbackFormat } from "@/assets/images/events/delivery";
+import { finalCtaGalleryImages } from "@/features/home/content/final-cta-gallery";
 import Button from "@/core/common/ui/components/Button";
 import Container from "@/core/common/ui/components/Container.astro";
 import Heading from "@/core/common/ui/components/Heading.astro";
@@ -10,7 +13,6 @@ import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
 
 import "@/features/home/ui/styles/final-cta.css";
 
-const galleryTones = ["01", "02", "03", "04", "05"] as const;
 const locale = getLocaleFromUrl(Astro.url);
 const finalCtaText = getHomeTranslations(locale);
 ---
@@ -45,7 +47,7 @@ const finalCtaText = getHomeTranslations(locale);
 
   <div
     class="final-cta__gallery"
-    data-media-status="pending"
+    data-media-status="approved"
     data-navigation-contrast="dark"
     aria-hidden="true"
   >
@@ -53,10 +55,21 @@ const finalCtaText = getHomeTranslations(locale);
       {
         [false, true].map((duplicate) => (
           <div class="final-cta__group" data-duplicate={duplicate ? "true" : undefined}>
-            {galleryTones.map((tone) => (
-              <figure class="final-cta__media" data-tone={tone}>
-                <span />
-                <span />
+            {finalCtaGalleryImages.map((src) => (
+              <figure class="final-cta__media">
+                <Picture
+                  src={src}
+                  alt=""
+                  formats={eventImageFormats}
+                  fallbackFormat={eventImageFallbackFormat}
+                  width={360}
+                  height={640}
+                  widths={[180, 360, 540]}
+                  sizes="246px"
+                  fit="cover"
+                  loading="eager"
+                  decoding="async"
+                />
               </figure>
             ))}
           </div>
