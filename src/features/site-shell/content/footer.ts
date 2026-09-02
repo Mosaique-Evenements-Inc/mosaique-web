@@ -1,27 +1,35 @@
 import type { ContentLink } from "@/core/common/types/content";
+import { services as serviceCatalog } from "@/features/services";
+
+const serviceLinks = serviceCatalog.map(({ slug, title }) => ({
+  label: title,
+  href: `/services/${slug}`,
+})) satisfies ContentLink[];
 
 export const footerContent = {
   logo: "MOSAÏQUE EVENTS",
   description:
     "Empresa integral de eventos en Montréal especializada en producción, organización, montaje, logística, alquiler de mobiliario y creación de experiencias en alianza con venues.",
   links: [
-    { label: "Inicio", href: "#top" },
-    { label: "Nosotros", href: "#about" },
-    { label: "Servicios", href: "#services" },
-    { label: "Experiencias", href: "#experiences" },
-    { label: "Proceso", href: "#process" },
-    { label: "FAQ", href: "#faq" },
+    { label: "Inicio", href: "/" },
+    { label: "Nosotros", href: "/about" },
+    { label: "Servicios", href: "/#services" },
+    { label: "Eventos", href: "/gallery" },
+    { label: "Proceso", href: "/#process" },
+    { label: "FAQ", href: "/#faq" },
     { label: "Contacto", href: "/contact" },
   ] satisfies ContentLink[],
-  services: [
-    "Producción integral",
-    "Bodas",
-    "Celebraciones",
-    "Eventos corporativos",
-    "Alquiler de mobiliario",
-    "Montaje y desmontaje",
-    "Alianzas con venues",
-  ],
+  // Lista editorial anterior conservada como referencia; ya no controla las entradas visibles.
+  // services: [
+  //   "Producción integral",
+  //   "Bodas",
+  //   "Celebraciones",
+  //   "Eventos corporativos",
+  //   "Alquiler de mobiliario",
+  //   "Montaje y desmontaje",
+  //   "Alianzas con venues",
+  // ],
+  services: serviceLinks,
   contact: {
     location: "Montréal, Québec",
     purpose: "Cotizaciones y alianzas",

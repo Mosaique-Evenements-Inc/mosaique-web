@@ -31,6 +31,15 @@ const resolveHref = (href: string) =>
       ? `${getLocalizedHref(anchorPrefix, locale)}${href}`
       : href
     : getLocalizedHref(href, locale);
+const isCurrentPage = (href: string) => {
+  const localizedHref = resolveHref(href).split(/[?#]/)[0];
+
+  return (
+    localizedHref.startsWith("/") &&
+    (Astro.url.pathname === localizedHref ||
+      (localizedHref !== "/" && Astro.url.pathname.startsWith(`${localizedHref}/`)))
+  );
+};
 ---
 
 <footer
@@ -53,7 +62,12 @@ const resolveHref = (href: string) =>
             {
               localizedPrimaryLinks.map((link) => (
                 <li>
-                  <a href={resolveHref(link.href)}>{link.label}</a>
+                  <a
+                    href={resolveHref(link.href)}
+                    aria-current={isCurrentPage(link.href) ? "page" : undefined}
+                  >
+                    {link.label}
+                  </a>
                 </li>
               ))
             }
@@ -69,7 +83,12 @@ const resolveHref = (href: string) =>
             {
               localizedSecondaryLinks.map((link) => (
                 <li>
-                  <a href={resolveHref(link.href)}>{link.label}</a>
+                  <a
+                    href={resolveHref(link.href)}
+                    aria-current={isCurrentPage(link.href) ? "page" : undefined}
+                  >
+                    {link.label}
+                  </a>
                 </li>
               ))
             }
@@ -84,7 +103,14 @@ const resolveHref = (href: string) =>
           <ul>
             {
               footerContent.services.map((service, index) => (
-                <li>{shellText.footerServiceLabels[index] ?? service}</li>
+                <li>
+                  <a
+                    href={resolveHref(service.href)}
+                    aria-current={isCurrentPage(service.href) ? "page" : undefined}
+                  >
+                    {shellText.footerServiceLabels[index] ?? service.label}
+                  </a>
+                </li>
               ))
             }
           </ul>
@@ -160,6 +186,83 @@ const resolveHref = (href: string) =>
 </footer>
 
 <script>
+  document.querySelectorAll<HTMLElement>(".site-footer__navigation").forEach((navigation) => {
+    if (navigation.dataset.instantNavigationReady === "true") return;
+    navigation.dataset.instantNavigationReady = "true";
+
+    navigation.addEventListener("click", (event) => {
+      if (
+        !(event instanceof MouseEvent) ||
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
+
+      const link = (event.target as Element).closest<HTMLAnchorElement>("a[href]");
+      if (!link || link.target || link.hasAttribute("download")) return;
+
+      const destination = new URL(link.href, window.location.href);
+      if (
+        destination.origin !== window.location.origin ||
+        destination.pathname !== window.location.pathname ||
+        destination.search !== window.location.search
+      ) {
+        return;
+      }
+
+      const targetId = destination.hash.slice(1);
+      const target = targetId ? document.getElementById(decodeURIComponent(targetId)) : null;
+      if (targetId && !target) return;
+
+      event.preventDefault();
+      window.history.replaceState(
+        window.history.state,
+        "",
+        `${destination.pathname}${destination.search}${destination.hash}`,
+      );
+
+      const root = document.documentElement;
+      const previousScrollBehavior = root.style.getPropertyValue("scroll-behavior");
+      const previousScrollPriority = root.style.getPropertyPriority("scroll-behavior");
+      root.style.setProperty("scroll-behavior", "auto", "important");
+
+      const scrollingElement = document.scrollingElement;
+      const setInstantPosition = () => {
+        if (target) {
+          target.scrollIntoView({ block: "start" });
+        } else {
+          if (scrollingElement) scrollingElement.scrollTop = 0;
+          root.scrollTop = 0;
+          document.body.scrollTop = 0;
+        }
+
+        window.dispatchEvent(new Event("scroll"));
+      };
+
+      setInstantPosition();
+      window.requestAnimationFrame(() => {
+        setInstantPosition();
+        window.requestAnimationFrame(() => {
+          if (previousScrollBehavior) {
+            root.style.setProperty(
+              "scroll-behavior",
+              previousScrollBehavior,
+              previousScrollPriority,
+            );
+            return;
+          }
+
+          root.style.removeProperty("scroll-behavior");
+        });
+      });
+    });
+  });
+
   const footerGroups = Array.from(
     document.querySelectorAll<HTMLDetailsElement>("[data-footer-group]"),
   );
