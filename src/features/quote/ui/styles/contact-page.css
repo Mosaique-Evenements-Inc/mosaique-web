@@ -19,7 +19,7 @@
 
   background: var(--color-background-cinematic);
   color: var(--color-text-primary);
-  padding-block-start: 4rem;
+  padding-block-start: var(--site-navigation-height);
 }
 
 .contact-page .quote-field input::placeholder,
@@ -60,7 +60,7 @@
 }
 
 .contact-page__stage {
-  min-block-size: calc(100svh - 4rem);
+  min-block-size: calc(100svh - var(--site-navigation-height));
   padding-block: 0 var(--space-4);
 }
 
