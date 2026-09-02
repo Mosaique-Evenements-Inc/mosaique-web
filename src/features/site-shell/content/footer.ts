@@ -38,8 +38,8 @@ export const footerContent = {
       href: "tel:+14384590481",
     } satisfies ContentLink,
     email: {
-      label: "info@mosaique-events.com",
-      href: "mailto:info@mosaique-events.com",
+      label: "info@mosaiqueevenements.com",
+      href: "mailto:info@mosaiqueevenements.com",
     } satisfies ContentLink,
   },
   closingStatement: "Every detail has its place.",
