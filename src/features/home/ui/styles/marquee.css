@@ -1,7 +1,7 @@
 .marquee {
   background: var(--color-background-inverse);
   color: var(--color-text-inverse);
-  block-size: 260svh;
+  block-size: 310svh;
   overflow: clip;
   position: relative;
 }
@@ -138,7 +138,7 @@
 
 @media (max-width: 47.999rem) {
   .marquee {
-    block-size: 220svh;
+    block-size: 235svh;
   }
 
   .marquee__group {

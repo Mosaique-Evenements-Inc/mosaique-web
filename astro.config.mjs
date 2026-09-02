@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, envField } from "astro/config";
 import process from "node:process";
 
 import react from "@astrojs/react";
@@ -12,6 +12,16 @@ const site = process.env.SITE_URL;
 
 export default defineConfig({
   site,
+  env: {
+    schema: {
+      SUPABASE_URL: envField.string({ context: "client", access: "public", optional: true }),
+      SUPABASE_PUBLISHABLE_KEY: envField.string({
+        context: "client",
+        access: "public",
+        optional: true,
+      }),
+    },
+  },
   i18n: {
     locales: [
       "es",

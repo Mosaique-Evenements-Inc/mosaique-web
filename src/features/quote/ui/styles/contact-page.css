@@ -52,8 +52,8 @@
 .contact-page .quote-toast {
   background: color-mix(
     in oklab,
-    var(--color-background-cinematic) 88%,
-    var(--color-text-inverse)
+    color-mix(in oklab, var(--color-background-cinematic) 88%, var(--color-text-inverse)) 88%,
+    transparent
   );
   border-color: color-mix(in oklab, var(--color-text-inverse) 32%, transparent);
   color: var(--color-text-inverse);

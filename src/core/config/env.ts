@@ -1,4 +1,6 @@
+import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from "astro:env/client";
+
 export const getPublicSupabaseConfig = () => ({
-  url: import.meta.env.PUBLIC_SUPABASE_URL,
-  publishableKey: import.meta.env.PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+  url: SUPABASE_URL,
+  publishableKey: SUPABASE_PUBLISHABLE_KEY,
 });

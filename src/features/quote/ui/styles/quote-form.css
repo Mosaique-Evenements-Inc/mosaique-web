@@ -1000,7 +1000,7 @@
 
 .quote-toast {
   align-items: start;
-  background: var(--color-accent-muted);
+  background: color-mix(in srgb, var(--color-accent-muted) 88%, transparent);
   border: 0.3px solid var(--color-primary);
   border-radius: var(--primitive-radius-md);
   color: var(--color-primary);
@@ -1017,6 +1017,13 @@
     opacity var(--motion-duration-standard) var(--motion-easing-standard),
     transform var(--motion-duration-standard) var(--motion-easing-standard);
   z-index: var(--primitive-z-modal);
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .quote-toast {
+    -webkit-backdrop-filter: blur(var(--space-4));
+    backdrop-filter: blur(var(--space-4));
+  }
 }
 
 .quote-toast[data-state="open"] {
