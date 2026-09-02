@@ -1,6 +1,5 @@
 .quote-dialog,
-.venue-dialog,
-.date-picker-dialog {
+.venue-dialog {
   background: transparent;
   border: 0;
   color: var(--color-text-primary);
@@ -19,14 +18,8 @@
   max-inline-size: 46rem;
 }
 
-.date-picker-dialog {
-  max-block-size: 100dvh;
-  max-inline-size: 31rem;
-}
-
 .quote-dialog::backdrop,
-.venue-dialog::backdrop,
-.date-picker-dialog::backdrop {
+.venue-dialog::backdrop {
   background: var(--color-overlay-modal);
 }
 
@@ -208,8 +201,43 @@
 
 .quote-form {
   display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr) auto;
   min-block-size: 0;
+}
+
+.quote-form__navigation {
+  display: flex;
+  justify-content: flex-start;
+  padding: var(--space-5) clamp(var(--space-5), 4vw, var(--space-10)) 0;
+}
+
+.quote-form__back {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--color-border-default);
+  border-radius: 50%;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  block-size: 2.75rem;
+  inline-size: 2.75rem;
+  justify-content: center;
+  padding: 0;
+  transition:
+    background-color var(--motion-duration-fast) var(--motion-easing-standard),
+    border-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.quote-form__back:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .quote-form__back:hover {
+    background: var(--color-surface-muted);
+    border-color: var(--color-border-strong);
+  }
 }
 
 .quote-form__body {
@@ -329,6 +357,129 @@
   padding: var(--space-4) var(--space-6);
 }
 
+.custom-select {
+  position: relative;
+}
+
+.custom-select__trigger {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--primitive-radius-pill);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  inline-size: 100%;
+  justify-content: space-between;
+  min-block-size: 3.75rem;
+  padding: var(--space-4) var(--space-6);
+  text-align: start;
+}
+
+.custom-select__trigger:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.custom-select__trigger[aria-invalid="true"] {
+  border-color: var(--color-accent-text);
+}
+
+.custom-select__value {
+  min-inline-size: 0;
+}
+
+.custom-select__value.is-placeholder {
+  color: var(--color-text-secondary);
+}
+
+.custom-select__chevron {
+  flex: 0 0 auto;
+  margin-inline-start: var(--space-4);
+  transform: rotate(90deg);
+  transition: transform var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.custom-select[data-open="true"] .custom-select__chevron {
+  transform: rotate(-90deg);
+}
+
+.custom-select__panel {
+  -webkit-backdrop-filter: blur(var(--space-4));
+  backdrop-filter: blur(var(--space-4));
+  background: color-mix(in srgb, var(--color-background-cinematic) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-text-inverse) 24%, transparent);
+  border-radius: var(--primitive-radius-md);
+  color: var(--color-cream-100);
+  inline-size: 100%;
+  inset: calc(100% + var(--space-2)) auto auto 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: var(--primitive-z-overlay);
+  animation: custom-select-panel-in var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.custom-select[data-placement="top"] .custom-select__panel {
+  inset: auto auto calc(100% + var(--space-2)) 0;
+}
+
+.custom-select__listbox {
+  max-block-size: min(20rem, 56vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-block: var(--space-2);
+}
+
+.custom-select__option {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  gap: var(--space-4);
+  inline-size: 100%;
+  justify-content: space-between;
+  line-height: 1.35;
+  min-block-size: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+  text-align: start;
+}
+
+.custom-select__option:focus-visible,
+.custom-select__option:hover {
+  background: color-mix(in oklab, var(--color-tan-500) 14%, transparent);
+  outline: 0;
+}
+
+.custom-select__check {
+  flex: 0 0 auto;
+  opacity: 0;
+}
+
+.custom-select__option[aria-selected="true"] {
+  background: color-mix(in oklab, var(--color-tan-500) 18%, transparent);
+  font-weight: 600;
+}
+
+.custom-select__option[aria-selected="true"] .custom-select__check {
+  opacity: 1;
+}
+
+@keyframes custom-select-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--space-1) * -1));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .quote-field input:not([type="checkbox"]),
 .quote-field select {
   align-self: start;
@@ -365,16 +516,18 @@
 }
 
 .quote-field__control--phone input:not([type="checkbox"]) {
-  padding-inline-start: 3.75rem;
+  padding-inline: var(--space-4) var(--space-4);
+  padding-inline-start: 6rem;
 }
 
 .quote-field__phone-prefix {
   color: var(--color-text-primary);
   font: inherit;
   font-weight: 600;
-  inset: 50% auto auto var(--space-6);
+  inset: 50% auto auto var(--space-4);
   position: absolute;
   transform: translateY(-50%);
+  z-index: 1;
 }
 
 .quote-field__counter {
@@ -436,7 +589,7 @@
   display: grid;
   grid-column: 1 / -1;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto;
   row-gap: var(--space-2);
 }
 
@@ -452,6 +605,12 @@
 .quote-date-group__date > input {
   grid-column: 1;
   grid-row: 2;
+}
+
+.quote-date-control {
+  grid-column: 1;
+  grid-row: 2;
+  position: relative;
 }
 
 .quote-date-trigger {
@@ -481,33 +640,39 @@
   opacity: 0.5;
 }
 
-.quote-date-group__date > small {
-  grid-column: 1;
-  grid-row: 3;
-}
-
 .quote-date-group__unknown {
   align-self: center;
   grid-column: 2;
   grid-row: 2;
 }
 
-.date-picker-dialog__panel {
-  background: var(--color-background);
-  border: 1px solid var(--color-border-strong);
-  padding: var(--space-6);
+.date-picker-popover {
+  inline-size: min(22rem, calc(100vw - (var(--space-page-gutter) * 2)));
+  inset: calc(100% + var(--space-2)) auto auto 0;
+  position: absolute;
+  z-index: var(--primitive-z-overlay);
 }
 
-.date-picker-dialog__panel > header {
+.date-picker-popover__panel {
+  -webkit-backdrop-filter: blur(var(--space-4));
+  backdrop-filter: blur(var(--space-4));
+  background: color-mix(in srgb, var(--color-background-cinematic) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-text-inverse) 24%, transparent);
+  border-radius: var(--primitive-radius-md);
+  color: var(--color-text-inverse);
+  padding: var(--space-4);
+}
+
+.date-picker-popover__panel > header {
   align-items: center;
   border-block-end: 1px solid var(--color-border-default);
   display: grid;
-  gap: var(--space-4);
-  grid-template-columns: 2.75rem 1fr 2.75rem;
-  padding-block-end: var(--space-5);
+  gap: var(--space-2);
+  grid-template-columns: 2.5rem 1fr 2.5rem;
+  padding-block-end: var(--space-3);
 }
 
-.date-picker-dialog__panel h2 {
+.date-picker-popover__panel h2 {
   font-family: var(--font-family-display);
   font-size: var(--text-body-lg-size);
   font-weight: var(--text-body-lg-weight);
@@ -515,7 +680,29 @@
   text-align: center;
 }
 
-.date-picker-dialog__panel header button {
+.date-picker__selectors {
+  display: grid;
+  gap: var(--space-2);
+  grid-template-columns: minmax(0, 1.4fr) minmax(4.75rem, 0.8fr);
+  min-inline-size: 0;
+}
+
+.date-picker__selectors .custom-select__trigger {
+  min-block-size: 2.5rem;
+  padding: var(--space-2) var(--space-3);
+}
+
+.date-picker__selectors .custom-select__chevron {
+  block-size: 0.875rem;
+  inline-size: 0.875rem;
+  margin-inline-start: var(--space-2);
+}
+
+.date-picker__selectors .custom-select__panel {
+  min-inline-size: 8rem;
+}
+
+.date-picker-popover__panel header > button {
   align-items: center;
   background: transparent;
   border: 1px solid var(--color-border-default);
@@ -523,21 +710,21 @@
   color: var(--color-text-primary);
   cursor: pointer;
   display: inline-flex;
-  block-size: 2.75rem;
-  inline-size: 2.75rem;
+  block-size: 2.5rem;
+  inline-size: 2.5rem;
   justify-content: center;
 }
 
-.date-picker-dialog__panel header button:hover:not(:disabled) {
+.date-picker-popover__panel header > button:hover:not(:disabled) {
   background: var(--color-accent-muted);
   border-color: var(--color-accent);
 }
 
-.date-picker-dialog__panel header button:active:not(:disabled) {
+.date-picker-popover__panel header > button:active:not(:disabled) {
   background: var(--color-accent);
 }
 
-.date-picker-dialog__panel header button:disabled {
+.date-picker-popover__panel header > button:disabled {
   cursor: not-allowed;
   opacity: 0.3;
 }
@@ -552,12 +739,12 @@
   color: var(--color-text-secondary);
   font-size: var(--text-caption-size);
   font-weight: 600;
-  margin-block: var(--space-5) var(--space-3);
+  margin-block: var(--space-3) var(--space-2);
   text-align: center;
 }
 
 .date-picker__grid {
-  gap: var(--space-2);
+  gap: var(--space-1);
 }
 
 .date-picker__grid > span {
@@ -577,7 +764,8 @@
   cursor: pointer;
   display: inline-flex;
   font: inherit;
-  inline-size: min(100%, 2.75rem);
+  font-size: var(--text-caption-size);
+  inline-size: min(100%, 2.25rem);
   justify-content: center;
   padding: 0;
 }
@@ -1074,6 +1262,10 @@
     padding: var(--space-6) var(--space-5);
   }
 
+  .quote-form__navigation {
+    padding: var(--space-4) var(--space-5) 0;
+  }
+
   .quote-step > header {
     gap: var(--space-3);
     margin-block-end: var(--space-6);
@@ -1115,7 +1307,7 @@
 
   .quote-date-group {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: auto auto auto;
   }
 
   .quote-date-group__date > span {
@@ -1123,7 +1315,7 @@
   }
 
   .quote-date-group__date > input,
-  .quote-date-trigger {
+  .quote-date-control {
     grid-row: 2;
   }
 
@@ -1134,10 +1326,6 @@
     grid-row: 3;
     min-block-size: auto;
     padding: 0;
-  }
-
-  .quote-date-group__date > small {
-    grid-row: 4;
   }
 
   .quote-choice-group > div {
@@ -1152,23 +1340,11 @@
 
   .quote-form__actions > div {
     display: grid;
-    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .quote-form__actions .quote-button {
     padding-inline: var(--space-5);
-  }
-
-  .quote-form__actions [data-quote-back] {
-    inline-size: 100%;
-  }
-
-  .quote-form__actions [data-quote-back] .action-button__content {
-    gap: var(--space-2);
-  }
-
-  .quote-form__actions [data-quote-back] .action-button__icon {
-    inline-size: 1rem;
   }
 
   .quote-form__actions [data-quote-next] {
@@ -1178,20 +1354,15 @@
     justify-content: center;
   }
 
-  .quote-form__actions [data-quote-back][hidden] + [data-quote-next] {
-    grid-column: 1 / -1;
-  }
-
   .venue-upload__previews {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .date-picker-dialog {
-    inline-size: calc(100% - (var(--space-4) * 2));
-    padding: 0;
+  .date-picker-popover {
+    inline-size: calc(100vw - (var(--space-page-gutter) * 2));
   }
 
-  .date-picker-dialog__panel {
+  .date-picker-popover__panel {
     padding: var(--space-5) var(--space-4);
   }
 
@@ -1205,6 +1376,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .custom-select__panel {
+    animation: none;
+  }
+
+  .custom-select__chevron,
   .quote-close,
   .quote-text-action {
     transition: none;

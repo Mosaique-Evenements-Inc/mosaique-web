@@ -3,6 +3,8 @@ import { getQuoteContent } from "../../content/quote";
 import { getQuoteTranslations } from "../../i18n";
 import { getLocaleFromUrl } from "@/core/i18n";
 import Icon from "@/core/common/ui/components/Icon.astro";
+import CustomSelect from "./CustomSelect.astro";
+import EventDatePicker from "./EventDatePicker.astro";
 
 const locale = getLocaleFromUrl(Astro.url);
 const quoteContent = getQuoteContent(locale);
@@ -15,65 +17,63 @@ const quoteText = getQuoteTranslations(locale);
   </header>
 
   <div class="quote-fields">
-    <label class="quote-field quote-field--wide">
+    <div class="quote-field quote-field--wide">
       <span>{quoteText.serviceInterest} <strong aria-hidden="true">*</strong></span>
-      <select
+      <CustomSelect
+        id="quote-service"
         name="service"
         required
-        aria-describedby="quote-service-error"
-        data-error-required={quoteText.requiredService}
-      >
-        <option value="">{quoteText.selectOption}</option>
-        {
-          quoteContent.services.map((service) => (
-            <option value={service.value} data-service-slug={service.slug}>
-              {service.label}
-            </option>
-          ))
-        }
-      </select>
+        placeholder={quoteText.selectOption}
+        ariaLabel={quoteText.serviceInterest}
+        ariaDescribedby="quote-service-error"
+        errorRequired={quoteText.requiredService}
+        options={quoteContent.services.map((service) => ({
+          value: service.value,
+          label: service.label,
+          data: { "data-service-slug": service.slug },
+        }))}
+      />
       <small id="quote-service-error" data-quote-error></small>
-    </label>
+    </div>
 
-    <label class="quote-field quote-field--wide">
+    <div class="quote-field quote-field--wide">
       <span>{quoteText.eventType} <strong aria-hidden="true">*</strong></span>
-      <select
+      <CustomSelect
+        id="quote-event-type"
         name="eventType"
         required
-        aria-describedby="quote-event-type-error"
-        data-error-required={quoteText.requiredEventType}
-      >
-        <option value="">{quoteText.selectOption}</option>
-        {
-          quoteContent.eventTypes.map((eventType) => (
-            <option value={eventType.value}>{eventType.label}</option>
-          ))
-        }
-      </select>
+        placeholder={quoteText.selectOption}
+        ariaLabel={quoteText.eventType}
+        ariaDescribedby="quote-event-type-error"
+        errorRequired={quoteText.requiredEventType}
+        options={quoteContent.eventTypes}
+      />
       <small id="quote-event-type-error" data-quote-error></small>
-    </label>
+    </div>
 
     <div
       class="quote-date-group quote-field--wide"
       role="group"
       aria-labelledby="quote-event-date-label"
     >
-      <label class="quote-field quote-date-group__date">
+      <div class="quote-field quote-date-group__date">
         <span id="quote-event-date-label">{quoteText.eventDate}</span>
         <input type="hidden" name="eventDate" />
-        <button
-          type="button"
-          class="quote-date-trigger"
-          data-date-trigger
-          aria-haspopup="dialog"
-          aria-controls="date-picker-dialog"
-          aria-describedby="quote-event-date-help"
-        >
-          <span data-date-value>{quoteText.selectDate}</span>
-          <Icon name="calendar" size={20} />
-        </button>
-        <small id="quote-event-date-help">{quoteText.dateOptional}</small>
-      </label>
+        <div class="quote-date-control">
+          <button
+            type="button"
+            class="quote-date-trigger"
+            data-date-trigger
+            aria-controls="date-picker-dialog"
+            aria-expanded="false"
+          >
+            <span data-date-value>{quoteText.selectDate}</span>
+            <Icon name="calendar" size={20} />
+          </button>
+
+          <EventDatePicker />
+        </div>
+      </div>
 
       <label class="quote-check quote-date-group__unknown">
         <input type="checkbox" name="dateUnknown" />
@@ -81,22 +81,19 @@ const quoteText = getQuoteTranslations(locale);
       </label>
     </div>
 
-    <label class="quote-field quote-field--wide">
+    <div class="quote-field quote-field--wide">
       <span>{quoteText.guestRange} <strong aria-hidden="true">*</strong></span>
-      <select
+      <CustomSelect
+        id="quote-guest-range"
         name="guestRange"
         required
-        aria-describedby="quote-guests-error"
-        data-error-required={quoteText.requiredGuestRange}
-      >
-        <option value="">{quoteText.selectOption}</option>
-        {
-          quoteContent.guestRanges.map((range) => (
-            <option value={range.value}>{range.label}</option>
-          ))
-        }
-      </select>
+        placeholder={quoteText.selectOption}
+        ariaLabel={quoteText.guestRange}
+        ariaDescribedby="quote-guests-error"
+        errorRequired={quoteText.requiredGuestRange}
+        options={quoteContent.guestRanges}
+      />
       <small id="quote-guests-error" data-quote-error></small>
-    </label>
+    </div>
   </div>
 </section>

@@ -1,0 +1,215 @@
+---
+import Icon from "@/core/common/ui/components/Icon.astro";
+
+type Option = {
+  value: string;
+  label: string;
+  selected?: boolean;
+  data?: Record<string, string>;
+};
+
+interface Props {
+  id: string;
+  name: string;
+  options: readonly Option[];
+  placeholder?: string;
+  ariaDescribedby?: string;
+  ariaLabel?: string;
+  errorRequired?: string;
+  required?: boolean;
+  class?: string;
+}
+
+const {
+  id,
+  name,
+  options,
+  placeholder = "",
+  ariaDescribedby,
+  ariaLabel,
+  errorRequired,
+  required = false,
+  class: className,
+} = Astro.props;
+const listboxId = `${id}-listbox`;
+const selectedOption = options.find((option) => option.selected);
+---
+
+<div class:list={["custom-select", className]} data-custom-select>
+  <select
+    class="custom-select__native visually-hidden"
+    id={id}
+    name={name}
+    required={required}
+    aria-describedby={ariaDescribedby}
+    aria-label={ariaLabel}
+    tabindex="-1"
+    data-custom-select-native
+    data-error-required={errorRequired}
+  >
+    {placeholder && <option value="">{placeholder}</option>}
+    {
+      options.map((option) => (
+        <option value={option.value} selected={option.selected} {...option.data}>
+          {option.label}
+        </option>
+      ))
+    }
+  </select>
+
+  <button
+    type="button"
+    class="custom-select__trigger"
+    aria-expanded="false"
+    aria-haspopup="listbox"
+    aria-controls={listboxId}
+    aria-describedby={ariaDescribedby}
+    data-custom-select-trigger
+  >
+    <span
+      class:list={{ "custom-select__value": true, "is-placeholder": !selectedOption }}
+      data-custom-select-value
+    >
+      {selectedOption?.label ?? placeholder}
+    </span>
+    <Icon name="arrowRight" size={18} class="custom-select__chevron" />
+  </button>
+
+  <div class="custom-select__panel" data-custom-select-panel hidden>
+    <div id={listboxId} class="custom-select__listbox" role="listbox" tabindex="-1">
+      {
+        options.map((option, index) => (
+          <button
+            type="button"
+            class="custom-select__option"
+            role="option"
+            aria-selected={option.selected ? "true" : "false"}
+            data-custom-select-option
+            data-value={option.value}
+            data-index={index}
+            tabindex="-1"
+          >
+            <span>{option.label}</span>
+            <Icon name="check" size={18} class="custom-select__check" />
+          </button>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<script>
+  const closeCustomSelect = (root: HTMLElement, restoreFocus = false) => {
+    const trigger = root.querySelector<HTMLButtonElement>("[data-custom-select-trigger]");
+    const panel = root.querySelector<HTMLElement>("[data-custom-select-panel]");
+    if (!trigger || !panel || panel.hidden) return;
+    trigger.setAttribute("aria-expanded", "false");
+    root.dataset.open = "false";
+    panel.hidden = true;
+    if (restoreFocus) trigger.focus();
+  };
+
+  const closeOtherCustomSelects = (current: HTMLElement) => {
+    document.querySelectorAll<HTMLElement>("[data-custom-select]").forEach((root) => {
+      if (root !== current) closeCustomSelect(root);
+    });
+  };
+
+  document.querySelectorAll<HTMLElement>("[data-custom-select]").forEach((root) => {
+    if (root.dataset.ready === "true") return;
+    root.dataset.ready = "true";
+    const native = root.querySelector<HTMLSelectElement>("[data-custom-select-native]");
+    const trigger = root.querySelector<HTMLButtonElement>("[data-custom-select-trigger]");
+    const value = root.querySelector<HTMLElement>("[data-custom-select-value]");
+    const panel = root.querySelector<HTMLElement>("[data-custom-select-panel]");
+    const listbox = root.querySelector<HTMLElement>("[role='listbox']");
+    const options = Array.from(
+      root.querySelectorAll<HTMLButtonElement>("[data-custom-select-option]"),
+    );
+    if (!native || !trigger || !value || !panel || !listbox) return;
+    let activeIndex = Math.max(
+      0,
+      options.findIndex((option) => option.dataset.value === native.value),
+    );
+
+    const sync = () => {
+      const selected = native.selectedOptions[0];
+      value.textContent = selected?.textContent?.trim() || native.options[0]?.textContent || "";
+      value.classList.toggle("is-placeholder", !native.value);
+      options.forEach((option, index) => {
+        const isSelected = option.dataset.value === native.value;
+        option.setAttribute("aria-selected", String(isSelected));
+        if (isSelected) activeIndex = index;
+      });
+      trigger.setAttribute("aria-invalid", native.getAttribute("aria-invalid") ?? "false");
+    };
+
+    const focusOption = (index: number) => {
+      activeIndex = (index + options.length) % options.length;
+      options[activeIndex]?.focus();
+      options[activeIndex]?.scrollIntoView({ block: "nearest" });
+    };
+
+    const open = () => {
+      closeOtherCustomSelects(root);
+      const triggerRect = trigger.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - triggerRect.bottom;
+      root.dataset.placement =
+        spaceBelow < 280 && triggerRect.top > spaceBelow ? "top" : "bottom";
+      panel.hidden = false;
+      root.dataset.open = "true";
+      trigger.setAttribute("aria-expanded", "true");
+      requestAnimationFrame(() => focusOption(activeIndex));
+    };
+
+    const selectOption = (option: HTMLButtonElement) => {
+      native.value = option.dataset.value ?? "";
+      native.dispatchEvent(new Event("change", { bubbles: true }));
+      sync();
+      closeCustomSelect(root, true);
+    };
+
+    trigger.addEventListener("click", () => (panel.hidden ? open() : closeCustomSelect(root)));
+    trigger.addEventListener("keydown", (event) => {
+      if (["Enter", " ", "ArrowDown", "ArrowUp"].includes(event.key)) {
+        event.preventDefault();
+        open();
+        if (event.key === "ArrowUp") requestAnimationFrame(() => focusOption(activeIndex - 1));
+      }
+    });
+    options.forEach((option) => {
+      option.addEventListener("click", () => selectOption(option));
+      option.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+          event.preventDefault();
+          focusOption(activeIndex + (event.key === "ArrowDown" ? 1 : -1));
+        } else if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          selectOption(option);
+        } else if (event.key === "Escape") {
+          event.preventDefault();
+          closeCustomSelect(root, true);
+        } else if (event.key === "Tab") {
+          closeCustomSelect(root);
+        }
+      });
+    });
+    native.addEventListener("change", sync);
+    new MutationObserver(sync).observe(native, {
+      attributes: true,
+      attributeFilter: ["aria-invalid"],
+    });
+    sync();
+  });
+
+  if (document.documentElement.dataset.customSelectOutsideReady !== "true") {
+    document.documentElement.dataset.customSelectOutsideReady = "true";
+    document.addEventListener("pointerdown", (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      document.querySelectorAll<HTMLElement>("[data-custom-select]").forEach((root) => {
+        if (!root.contains(target)) closeCustomSelect(root);
+      });
+    });
+  }
+</script>

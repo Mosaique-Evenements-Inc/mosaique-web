@@ -1,5 +1,8 @@
 :root {
-  --site-navigation-height: 4rem;
+  --site-navigation-content-height: 4rem;
+  --site-navigation-height: calc(
+    var(--site-navigation-content-height) + var(--safe-area-inset-top)
+  );
 
   scroll-padding-top: var(--site-navigation-height);
 }
@@ -7,6 +10,7 @@
 .site-navigation {
   --site-navigation-fade-height: var(--space-12);
   --site-navigation-blur: var(--space-4);
+  block-size: var(--site-navigation-height);
   color: color-mix(
     in srgb,
     var(--color-text-primary) var(--navigation-color-progress, 0%),
@@ -47,6 +51,9 @@
   display: grid;
   gap: var(--space-3);
   grid-template-columns: minmax(0, 1fr) auto auto;
+  padding-block-start: var(--safe-area-inset-top);
+  padding-inline: max(var(--space-page-gutter), var(--safe-area-inset-left))
+    max(var(--space-page-gutter), var(--safe-area-inset-right));
   position: relative;
   z-index: 1;
 }

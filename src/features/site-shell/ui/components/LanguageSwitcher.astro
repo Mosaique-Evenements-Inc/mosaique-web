@@ -15,17 +15,16 @@ interface Props {
 const { placement } = Astro.props;
 const locale = getLocaleFromUrl(Astro.url);
 const shellText = getSiteShellTranslations(locale);
-const languageItems = supportedLocales.map((targetLocale) => ({
-  ariaLabel:
-    targetLocale === locale
-      ? `${targetLocale.toUpperCase()}, ${shellText["navigation.currentLanguage"]}`
-      : targetLocale.toUpperCase(),
-  current: targetLocale === locale,
-  href: switchLocaleUrl(Astro.url, targetLocale),
-  hreflang: getLanguageTag(targetLocale),
-  label: targetLocale.toUpperCase(),
-  lang: getLanguageTag(targetLocale),
-}));
+const languageItems = supportedLocales
+  .filter((targetLocale) => targetLocale !== locale)
+  .map((targetLocale) => ({
+    ariaLabel: targetLocale.toUpperCase(),
+    current: false,
+    href: switchLocaleUrl(Astro.url, targetLocale),
+    hreflang: getLanguageTag(targetLocale),
+    label: targetLocale.toUpperCase(),
+    lang: getLanguageTag(targetLocale),
+  }));
 ---
 
 <nav

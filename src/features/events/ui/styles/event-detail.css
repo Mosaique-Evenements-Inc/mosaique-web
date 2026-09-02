@@ -715,7 +715,8 @@
 
   .event-header {
     min-block-size: auto;
-    padding: calc(4rem + var(--space-12)) var(--space-page-gutter) var(--space-12);
+    padding: calc(var(--site-navigation-height) + var(--space-12)) var(--space-page-gutter)
+      var(--space-12);
   }
 
   .event-header__layout {
