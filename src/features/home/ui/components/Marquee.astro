@@ -84,6 +84,21 @@ const marqueeStatement = marqueeContentText.marqueeOptions[2];
     },
   } as const;
 
+  const revealMotion = {
+    desktop: {
+      preEntryDistance: 0.12,
+      revealDistance: 1.38,
+      postStickyDistance: 0.5,
+      curtainDelays: [0.28, 0.14, 0],
+    },
+    compact: {
+      preEntryDistance: 0.08,
+      revealDistance: 1.07,
+      postStickyDistance: 0.15,
+      curtainDelays: [0.18, 0.09, 0],
+    },
+  } as const;
+
   const interpolate = (start: number, end: number, progress: number) =>
     start + (end - start) * progress;
 
@@ -105,6 +120,7 @@ const marqueeStatement = marqueeContentText.marqueeOptions[2];
 
     let motionAllowed = !reducedMotion.matches;
     let depthConfig = window.innerWidth < 768 ? depthMotion.compact : depthMotion.desktop;
+    let revealConfig = window.innerWidth < 768 ? revealMotion.compact : revealMotion.desktop;
 
     let frameId = 0;
     let isNearby = false;
@@ -117,7 +133,12 @@ const marqueeStatement = marqueeContentText.marqueeOptions[2];
 
       const rect = section.getBoundingClientRect();
       const scrollRange = Math.max(section.offsetHeight - window.innerHeight, 1);
-      const pinnedProgress = clamp(-rect.top / scrollRange);
+      const postRevealScroll = -rect.top - window.innerHeight * revealConfig.postStickyDistance;
+      const existingMotionRange = Math.max(
+        scrollRange - window.innerHeight * revealConfig.postStickyDistance,
+        1,
+      );
+      const pinnedProgress = clamp(postRevealScroll / existingMotionRange);
       const depthProgress = clamp(
         (pinnedProgress - depthMotion.progressStart) /
           (depthMotion.progressEnd - depthMotion.progressStart),
@@ -134,14 +155,14 @@ const marqueeStatement = marqueeContentText.marqueeOptions[2];
         easedDepthProgress,
       );
       const revealProgress = clamp(
-        (window.innerHeight - rect.top) / (window.innerHeight * 0.63),
+        (window.innerHeight - rect.top - window.innerHeight * revealConfig.preEntryDistance) /
+          (window.innerHeight * revealConfig.revealDistance),
       );
       const introOpacity = clamp(pinnedProgress / 0.08);
       const tickerOpacity = clamp(pinnedProgress / 0.1);
-      const curtainDelays = [0.74, 0.62, 0];
 
       curtainPanels.forEach((panel, index) => {
-        const delay = curtainDelays[index] ?? 0;
+        const delay = revealConfig.curtainDelays[index] ?? 0;
         const panelProgress = clamp((revealProgress - delay) / (1 - delay));
         panel.style.transform = `translate3d(0, ${-panelProgress * 100}%, 0)`;
       });
@@ -198,6 +219,7 @@ const marqueeStatement = marqueeContentText.marqueeOptions[2];
     );
     const resizeObserver = new ResizeObserver(() => {
       depthConfig = window.innerWidth < 768 ? depthMotion.compact : depthMotion.desktop;
+      revealConfig = window.innerWidth < 768 ? revealMotion.compact : revealMotion.desktop;
       scheduleRender();
     });
 
