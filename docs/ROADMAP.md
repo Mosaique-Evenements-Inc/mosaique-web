@@ -299,6 +299,31 @@ This document is the source of truth for implementation status. The existence of
 
 ## Current
 
+### Localized Event Names and Collaboration
+
+- Events `event-slot-01` / `nossa-copa` and `event-slot-02` / `baila-da-zaza` now expose
+  localized public titles in ES, EN-CA, and FR-CA, including Home, Gallery, related previews,
+  About captions, media descriptions, accessibility labels, and inherited SEO/Open Graph titles.
+- Only those two canonical records declare the optional `Event.collaboration` flag. Event Detail
+  renders the localized collaborator notice between the title and description using the existing
+  Text primitive and caption, spacing, and accent tokens. Other events render no notice.
+- **Collaboration mark UI refinement complete locally:** the previous full-column rules are
+  replaced by a fit-content, thin accent outline with an existing Iconoir Sparks icon, caption
+  uppercase text, black surface, and the same rounded radius as action buttons (`--space-16`). The icon is decorative;
+  the mark has no interaction, hover treatment, or focus stop. Data and translations are unchanged.
+- Before/after Chromium checks passed for both collaborations and Baby Shower in ES/EN/FR at
+  1280, 900, 768, 390, and 320px. French wraps without reducing its caption size. Titles and media
+  dimensions are unchanged; the non-collaboration header geometry is identical. Reduced motion,
+  static hover appearance, and contrast were also verified. Structural dividers remain intact.
+- Chromium checks passed across 1280, 900, 390, and 320px widths in all three locales, plus
+  short-desktop/reduced-motion checks. Captures confirmed readable titles/notices without horizontal
+  overflow; Baby Shower header, title, and narrative geometry match the pre-change measurements.
+- The static build contains exactly six collaboration notices (two events times three locales),
+  with no old public event names remaining in `src/` or generated output. Technical slugs, IDs,
+  asset names, relationships, images, routing, global styles, and motion remain unchanged.
+- Scoped Prettier, lint, typecheck, build (72 pages), and diff-check passed. No automated test
+  script is configured; native Safari/device testing remains unverified. No commit or push.
+
 ### Home Service Contrast
 
 - Home service-preview media now uses `brightness(0.85)` for 15% additional darkening behind

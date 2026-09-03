@@ -2,7 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Footer from "@/features/site-shell/ui/components/Footer.astro";
 import Navigation from "@/features/site-shell/ui/components/Navigation.astro";
-import { getLocalizedEvent, type Event } from "@/features/events";
+import { eventDetailTranslations, getLocalizedEvent, type Event } from "@/features/events";
 import { getLocaleFromUrl } from "@/core/i18n";
 import EventContactMarquee from "../components/EventContactMarquee.astro";
 import EventGallery from "../components/EventGallery.astro";
@@ -31,6 +31,9 @@ const localizedEvent = getLocalizedEvent(event, locale);
     <div class="event-detail__chapter" data-content-status={localizedEvent.status}>
       <EventHeader
         title={localizedEvent.title}
+        collaborationLabel={localizedEvent.collaboration
+          ? eventDetailTranslations[locale].collaboration
+          : undefined}
         description={localizedEvent.description}
         status={localizedEvent.status}
       />

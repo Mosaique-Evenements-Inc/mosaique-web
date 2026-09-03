@@ -3,7 +3,7 @@ import PanelReveal from "@/core/common/ui/motion/PanelReveal.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Footer from "@/features/site-shell/ui/components/Footer.astro";
 import Navigation from "@/features/site-shell/ui/components/Navigation.astro";
-import { aboutPageContent } from "../../content/about";
+import { getLocalizedAboutMedia } from "../../content/about";
 import AboutHero from "../components/AboutHero.astro";
 import AboutMediaMosaic from "../components/AboutMediaMosaic.astro";
 import { getAboutTranslations } from "@/features/about/i18n";
@@ -11,7 +11,8 @@ import { getLocaleFromUrl } from "@/core/i18n";
 
 import "../styles/about-page.css";
 
-const aboutText = getAboutTranslations(getLocaleFromUrl(Astro.url));
+const locale = getLocaleFromUrl(Astro.url);
+const aboutText = getAboutTranslations(locale);
 ---
 
 <BaseLayout
@@ -23,7 +24,7 @@ const aboutText = getAboutTranslations(getLocaleFromUrl(Astro.url));
   <main id="main-content">
     <PanelReveal class="about-page__reveal">
       <AboutHero slot="lead" lines={aboutText.heroLines} caption={aboutText.heroCaption} />
-      <AboutMediaMosaic label={aboutText.mosaicLabel} items={aboutPageContent.mosaic.items} />
+      <AboutMediaMosaic label={aboutText.mosaicLabel} items={getLocalizedAboutMedia(locale)} />
     </PanelReveal>
   </main>
   <Footer />

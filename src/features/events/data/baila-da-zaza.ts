@@ -4,22 +4,23 @@ import type { Event } from "../types/event";
 
 export const bailaDaZazaEvent = {
   categoryId: "celebration",
+  collaboration: true,
   description: "Ritmo, baile y esencia brasileña en una experiencia hecha para celebrar.",
   featuredMedia: {
-    alt: "DJ compartiendo la cabina durante Baila da Zaza bajo una iluminación naranja.",
+    alt: "DJ compartiendo la cabina durante Celebración Brasileña bajo una iluminación naranja.",
     kind: "image",
     src: bailaDaZazaMain,
     status: "approved",
   },
   gallery: [
     {
-      alt: "Ambiente detrás de la cabina durante Baila da Zaza.",
+      alt: "Ambiente detrás de la cabina durante Celebración Brasileña.",
       layout: "pair-portrait",
       src: bailaDaZaza6,
       status: "approved",
     },
     {
-      alt: "Pista y asistentes de Baila da Zaza bajo luces rojas.",
+      alt: "Pista y asistentes de Celebración Brasileña bajo luces rojas.",
       layout: "full-landscape",
       src: bailaDaZaza82,
       status: "approved",
@@ -29,5 +30,5 @@ export const bailaDaZazaEvent = {
   serviceId: SERVICE_IDS.celebrations,
   slug: "baila-da-zaza",
   status: "approved",
-  title: "Baila da Zaza",
+  title: "Celebración Brasileña",
 } satisfies Event;
