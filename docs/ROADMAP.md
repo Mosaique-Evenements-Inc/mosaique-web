@@ -299,6 +299,27 @@ This document is the source of truth for implementation status. The existence of
 
 ## Current
 
+### Service Image Integration
+
+- **Implementation and local responsive validation: complete.** Seven service collections now
+  import their existing JPG sources through Astro Assets from `organization`, `weddings`,
+  `celebrations`, `venues`, `setup-and-logistics`, `furniture`, and `custom-packages`.
+  Four approved cover renames standardize `main.jpg`; all 49 source-image hashes are unchanged.
+- Canonical Service media feeds Home exclusively from each collection's `main.jpg`. Existing
+  Service Detail galleries consume the 42 numbered secondary images in natural order, excluding
+  the cover, through the existing gallery layouts and lightbox. Media labels reuse existing
+  localized service titles; no translation dictionary or business copy changed.
+- All eight IDs, slugs, ordering, descriptions, and CTAs remain unchanged. Corporate Events
+  retains its exact legacy `events/fan-fest-club/main.jpg` media and empty gallery. No component,
+  CSS, animation, zoom, sticky behavior, routing, Header, Footer, Hero, or Marquee was edited.
+- Chromium checks passed Home and all eight details at 1280×720, 900×900, 390×844, and 320×800:
+  image decoding, cover mapping, gallery order/counts, no horizontal overflow, and lightbox
+  navigation/Escape/focus restoration. ES/EN/FR route smoke and reduced-motion Home smoke passed.
+  Native Safari and physical-device validation remain unverified.
+- Scoped Prettier, lint, typecheck, build (72 pages with Astro-generated AVIF/WebP derivatives),
+  and diff-check passed. No stale cover names, obsolete folder references, or broken imports
+  remain. No test script, dependency, commit, or push was added.
+
 ### Custom 404
 
 - **Implementation and local visual validation: complete.** The thin `src/pages/404.astro`
