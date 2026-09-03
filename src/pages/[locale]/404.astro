@@ -1,0 +1,9 @@
+---
+import NotFoundPage from "@/features/site-shell/ui/pages/NotFoundPage.astro";
+
+export function getStaticPaths() {
+  return ["en", "fr"].map((locale) => ({ params: { locale } }));
+}
+---
+
+<NotFoundPage />

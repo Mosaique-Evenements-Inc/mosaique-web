@@ -1,0 +1,50 @@
+---
+import notFoundImage from "@/assets/images/404_not_found.png";
+import Button from "@/core/common/ui/components/Button";
+import { getLocaleFromUrl, getLocalizedPath } from "@/core/i18n";
+import { getSiteShellTranslations } from "@/features/site-shell/i18n";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "../components/Footer.astro";
+import Navigation from "../components/Navigation.astro";
+
+import "../styles/not-found-page.css";
+
+const locale = getLocaleFromUrl(Astro.url);
+const content = getSiteShellTranslations(locale).notFound;
+---
+
+<BaseLayout
+  title={`${content.metadataTitle} — MOSAÏQUE ÉVÉNEMENTS`}
+  description={content.description}
+  noindex
+  surface="cinematic"
+>
+  <Navigation surface="overlay" anchorPrefix="/" />
+
+  <main class="not-found-page" id="main-content" tabindex="-1" data-navigation-contrast="light">
+    <img
+      class="not-found-page__image"
+      src={notFoundImage.src}
+      width={notFoundImage.width}
+      height={notFoundImage.height}
+      alt={content.imageAlt}
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <div class="not-found-page__copy">
+      <h1>{content.title}</h1>
+      <p>{content.description}</p>
+      <Button
+        className="not-found-page__action"
+        href={getLocalizedPath("/", locale)}
+        variant="light"
+        icon="arrow-right"
+      >
+        {content.homeLabel}
+      </Button>
+    </div>
+  </main>
+
+  <Footer anchorPrefix="/" />
+</BaseLayout>

@@ -299,6 +299,37 @@ This document is the source of truth for implementation status. The existence of
 
 ## Current
 
+### Custom 404
+
+- **Implementation and local visual validation: complete.** The thin `src/pages/404.astro`
+  route renders Site Shell's `NotFoundPage.astro` through the existing cinematic BaseLayout,
+  Navigation, Footer, and shared Button. The supplied transparent `404_not_found.png` remains
+  unchanged, with intrinsic dimensions, natural aspect ratio, and a 704px maximum display
+  width (90% of the content width on compact screens), reduced at the user's request.
+  Localized message, CTA, alt text, and metadata live in the Site Shell dictionary.
+  No new runtime, hydration, dependency, animation, or global style was introduced.
+- **Reference comparison:** centered image, message, and capsule CTA follow the supplied
+  composition. The supplied asset differs from the mockup illustration; the real Navigation
+  and Footer intentionally retain their existing appearance and content rather than copying
+  the mockup's alternative shell.
+- **HTTP and localization boundary:** development and static preview return HTTP 404 without
+  redirects for `/lostpage`, `/random-path-that-does-not-exist`, `/en/lostpage`, and
+  `/fr/lostpage`. Development resolves the requested locale, but the static preview uses the
+  single Spanish `404.html` fallback for all unknown paths, consistent with Vercel's static
+  error-page contract. `/en/404/` and `/fr/404/` are localized static pages with their respective
+  home CTAs and `noindex, nofollow`; direct requests to those existing pages return HTTP 200.
+  Automatic locale-specific fallback in production remains pending hosting-level authorization.
+  Vercel configuration, existing routing helpers, and shared metadata were not changed; no
+  canonical points to Home. No deployed Vercel test was performed.
+- **Validation:** Chrome dev/production screenshots and geometry checked at 320, 390, 430,
+  768, 900, 1122, and 1440px in ES/EN-CA/FR-CA: full image, unchanged aspect ratio, zero
+  horizontal overflow. Production checks passed for all three home CTAs, desktop language
+  switching, mobile menu open/Escape-close, footer disclosure, visible keyboard focus,
+  semantic landmarks, localized image alternatives, zero measured layout shift, and no
+  JavaScript errors. Reduced motion preserves all content and the shared button's reduced
+  transition. Native iOS Safari and Lighthouse were not run. Baseline and final build, lint,
+  typecheck, scoped Prettier, and diff-check passed. No test script exists. No commit or push.
+
 ### Active Scope
 
 - **Home:** `Eventos que ya tomaron forma` and the Astro-only cinematic Services sequence.
