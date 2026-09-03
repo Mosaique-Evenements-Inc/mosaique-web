@@ -1,14 +1,16 @@
 ---
 import Heading from "@/core/common/ui/components/Heading.astro";
+import Icon from "@/core/common/ui/components/Icon.astro";
 import Text from "@/core/common/ui/components/Text.astro";
 
 interface Props {
+  collaborationLabel?: string;
   description: string;
   status: "approved" | "placeholder";
   title: string;
 }
 
-const { description, status, title } = Astro.props;
+const { collaborationLabel, description, status, title } = Astro.props;
 ---
 
 <header class="event-header" data-content-status={status}>
@@ -16,6 +18,14 @@ const { description, status, title } = Astro.props;
     <Heading as="h1" variant="display-lg">{title}</Heading>
 
     <div class="event-header__narrative">
+      {
+        collaborationLabel && (
+          <Text variant="caption" class="event-header__collaboration">
+            <Icon name="sparks" size={16} />
+            <span>{collaborationLabel}</span>
+          </Text>
+        )
+      }
       <Text variant="body-lg" tone="inverse">{description}</Text>
     </div>
 

@@ -1,17 +1,9 @@
-import {
-  babyShowerMain,
-  bailaDaZazaMain,
-  cumpleanosAnaPaula48,
-  fanFestMain,
-  nossaCopaMain,
-  nossaCopa92,
-  weddingEb59664,
-  weddingEb59673,
-} from "../../../assets/images/events";
+import { fanFestMain } from "../../../assets/images/events";
 import { assertUniqueValues } from "../../../core/common/utils/assert-unique-values";
 import type { FeaturedMedia } from "../../../core/common/types/media";
 import type { ContentLink } from "../../../core/common/types/content";
 import { SERVICE_IDS, type Service } from "../types";
+import { createServiceMedia } from "./media";
 
 const createFeaturedMedia = (
   src: Extract<FeaturedMedia, { kind: "image" }>["src"],
@@ -36,11 +28,10 @@ export const services = [
       label: "Cotizar producción integral",
       href: "/contact?service=organizacion-produccion-integral",
     } satisfies ContentLink,
-    featuredMedia: createFeaturedMedia(
-      nossaCopa92,
-      "Vista general de los asistentes reunidos para Nossa Copa.",
+    ...createServiceMedia(
+      SERVICE_IDS.organizationProductionIntegral,
+      "Organización y producción integral",
     ),
-    gallery: [],
   },
   {
     id: SERVICE_IDS.weddings,
@@ -55,11 +46,7 @@ export const services = [
       label: "Planear nuestra boda",
       href: "/contact?service=bodas",
     } satisfies ContentLink,
-    featuredMedia: createFeaturedMedia(
-      weddingEb59664,
-      "Mesas de la boda R&R dispuestas al aire libre entre árboles y vegetación.",
-    ),
-    gallery: [],
+    ...createServiceMedia(SERVICE_IDS.weddings, "Bodas"),
   },
   {
     id: SERVICE_IDS.celebrations,
@@ -74,11 +61,7 @@ export const services = [
       label: "Planear una celebración",
       href: "/contact?service=celebraciones",
     } satisfies ContentLink,
-    featuredMedia: createFeaturedMedia(
-      babyShowerMain,
-      "Decoración principal del baby shower con globos, flores y bloques de letras.",
-    ),
-    gallery: [],
+    ...createServiceMedia(SERVICE_IDS.celebrations, "Celebraciones"),
   },
   {
     id: SERVICE_IDS.corporateEvents,
@@ -110,11 +93,7 @@ export const services = [
       label: "Proponer una alianza",
       href: "/contact?service=alianzas-venues",
     } satisfies ContentLink,
-    featuredMedia: createFeaturedMedia(
-      bailaDaZazaMain,
-      "DJ compartiendo la cabina durante Baila da Zaza bajo una iluminación naranja.",
-    ),
-    gallery: [],
+    ...createServiceMedia(SERVICE_IDS.venuePartnerships, "Alianzas con venues"),
   },
   {
     id: SERVICE_IDS.setupLogistics,
@@ -128,11 +107,7 @@ export const services = [
       label: "Solicitar soporte logístico",
       href: "/contact?service=montaje-logistica",
     } satisfies ContentLink,
-    featuredMedia: createFeaturedMedia(
-      cumpleanosAnaPaula48,
-      "Arreglo de globos rosados y lilas para el cumpleaños de Ana Paula.",
-    ),
-    gallery: [],
+    ...createServiceMedia(SERVICE_IDS.setupLogistics, "Montaje y logística"),
   },
   {
     id: SERVICE_IDS.furnitureRental,
@@ -146,11 +121,7 @@ export const services = [
       label: "Ver opciones de alquiler",
       href: "/contact?service=alquiler-mobiliario",
     } satisfies ContentLink,
-    featuredMedia: createFeaturedMedia(
-      weddingEb59673,
-      "Mesa de dulces con detalles amarillos durante la recepción.",
-    ),
-    gallery: [],
+    ...createServiceMedia(SERVICE_IDS.furnitureRental, "Alquiler de mobiliario"),
   },
   {
     id: SERVICE_IDS.customPackages,
@@ -164,11 +135,7 @@ export const services = [
       label: "Crear mi paquete",
       href: "/contact?service=paquetes-personalizados",
     } satisfies ContentLink,
-    featuredMedia: createFeaturedMedia(
-      nossaCopaMain,
-      "Partida de billar durante Nossa Copa, rodeada de asistentes con camisetas de Brasil.",
-    ),
-    gallery: [],
+    ...createServiceMedia(SERVICE_IDS.customPackages, "Paquetes personalizados"),
   },
 ] as const satisfies readonly Service[];
 

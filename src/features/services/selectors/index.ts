@@ -1,5 +1,6 @@
 import { defaultLocale, type Locale } from "@/core/i18n";
 import { services } from "../data/services";
+import { createServiceMedia, serviceImageCollections } from "../data/media";
 import { serviceTranslations } from "../i18n";
 import type { Service, ServiceId } from "../types";
 
@@ -17,6 +18,9 @@ export const getLocalizedService = (
 
   return {
     ...service,
+    ...(serviceImageCollections[service.id]
+      ? createServiceMedia(service.id, translation.title)
+      : {}),
     title: translation.title,
     description: translation.description,
     idealFor: translation.idealFor,

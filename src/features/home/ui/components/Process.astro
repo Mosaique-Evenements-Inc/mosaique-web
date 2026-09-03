@@ -1,8 +1,15 @@
 ---
+import { Picture } from "astro:assets";
+import {
+  eventImageFallbackFormat,
+  eventImageFormats,
+  eventImageWidths,
+} from "@/assets/images/events/delivery";
+import { processImage } from "@/features/home/content/process";
 import Container from "@/core/common/ui/components/Container.astro";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
-import Testimonials from "./Testimonials.astro";
+// import Testimonials from "./Testimonials.astro";
 import { getHomeContentTranslations } from "@/features/home/i18n";
 import { getLocaleFromUrl } from "@/core/i18n";
 
@@ -19,10 +26,17 @@ const processContent = getHomeContentTranslations(getLocaleFromUrl(Astro.url)).p
 >
   <Container>
     <div class="process__layout">
-      <figure class="process__media" data-media-status="pending" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
+      <figure class="process__media" data-media-status="approved" aria-hidden="true">
+        <Picture
+          src={processImage}
+          alt=""
+          formats={eventImageFormats}
+          fallbackFormat={eventImageFallbackFormat}
+          widths={eventImageWidths}
+          sizes="(min-width: 1440px) 720px, 50vw"
+          loading="lazy"
+          decoding="async"
+        />
       </figure>
 
       <div class="process__content">
@@ -51,7 +65,7 @@ const processContent = getHomeContentTranslations(getLocaleFromUrl(Astro.url)).p
           }
         </ol>
 
-        <Testimonials />
+        {/* <Testimonials /> */}
       </div>
     </div>
   </Container>

@@ -54,8 +54,8 @@ This document is the source of truth for implementation status. The existence of
 
 - **Implementation and Fidelity Pass: complete.** The static `/contact` route reuses Navigation, Footer, the two-tab QuoteForm, approved quote labels, and the verified contact email from the existing content foundation.
 - **Cinematic surface refinement: complete locally.** `/contact` now selects the reusable `BaseLayout` cinematic surface and remaps its page-local form text, borders, placeholders, controls, focus ring, and action-button contrast to white over black. Navigation receives the existing light-contrast signal, the supporting media and Footer inherit the black handoff, and the shared QuoteForm remains unchanged for other consumers. Desktop `1440 × 900` and mobile `390 × 844` passed rendered contrast, zero-overflow, and console checks.
-- Desktop follows the supplied reference with an approximately 40/60 form-media split, compact form density, pill-shaped token-driven fields, existing select contracts, a strong full-width action, and large sticky supporting photography. The single-stage form begins directly with its content and retains a visually hidden accessible heading without a redundant page title or step indicator. Tablet preserves a readable split; mobile stacks form then media in natural flow.
-- The form's supporting photography is isolated in `ContactMedia.astro`, using an approved repository image without changing form behavior or page composition.
+- Desktop follows the supplied reference with an approximately 40/60 form-media split, compact form density, pill-shaped token-driven fields, existing select contracts, a strong full-width action, and large sticky supporting video. The single-stage form begins directly with its content and retains a visually hidden accessible heading without a redundant page title or step indicator. Below the existing 64 rem breakpoint, tablet and mobile hide the supporting media and show only the form without reserving a media column.
+- The supporting video is isolated in `ContactMedia.astro`, reusing the approved Hero video. Its source and playback configuration remain unchanged; compact-screen visibility is controlled by Contact CSS only.
 - The page introduces no complex motion. Labels, fieldsets, validation errors, keyboard navigation, focus states, loading status, review editing, auxiliary dialogs, and the accessible success toast remain available.
 - **Production submission behavior restored locally.** The primary action again follows the original validate → review → production-endpoint flow: incomplete fields and request failures remain inline for correction, while the accessible toast appears only after a confirmed successful response. Its manual and timed dismissal behavior remains unchanged.
 - **Form exit navigation added locally.** A compact, accessible left-arrow control now belongs to the form's normal flow at the upper-left, immediately above the `Contacto` heading, so it cannot cover fields or create a sticky black band while scrolling. It returns to the previous page with a locale-aware homepage fallback for direct entries; the lower action area retains one full-width primary action while form values and review behavior remain unchanged.
@@ -191,7 +191,7 @@ This document is the source of truth for implementation status. The existence of
 - **Implementation: complete.** A full-viewport Astro scene renders content from `src/features/home/content/marquee.ts` after Process in the current Home panel sequence.
 - **Fidelity Pass: complete.** The scene enters through a three-step media reveal and remains sticky for a bounded scroll interval, while its oversized ticker runs independently as a token-driven CSS autoplay loop.
 - The bounded reveal uses one passive scroll listener only while the scene is near the viewport, batches updates with requestAnimationFrame, and writes only transform and opacity styles without React hydration.
-- **Photography integrated locally.** The full-bleed media contract now uses one approved Fan Fest photograph from the existing event inventory, delivered responsively through Astro Assets with its original overlay preserving text contrast. The former abstract placeholder shapes were removed without changing the sticky reveal, ticker, or reduced-motion contracts.
+- **Photography integrated locally.** The full-bleed media contract now uses `src/assets/images/services/celebrations/main.jpg`, selected through Home Marquee content and delivered responsively through Astro Assets with its original overlay preserving text contrast. The sticky reveal, ticker, and reduced-motion contracts remain unchanged.
 - **Scroll-driven depth transition implemented locally.** During the existing bounded sticky interval, the approved photography now performs a reversible `1 → 1.18` desktop dolly-in with a subtle upward focal drift and smoothstep progress; compact viewports use a restrained `1 → 1.10` range. The independent horizontal ticker, copy, curtain reveal, native scrolling, and section geometry remain unchanged. The passive, requestAnimationFrame-batched controller writes only compositor-friendly transforms and opacity, and responds to live reduced-motion preference changes without per-frame framework state.
 - **Stepped reveal pacing aligned locally with Movra.** The desktop/tablet track increases from `260svh` to `310svh`: `12svh` of pre-entry leads into a `138svh` staggered curtain reveal that completes `50svh` into the sticky interval, then hands off to the original `160svh` motion range. Compact screens use a bounded `235svh` track with `8svh` pre-entry, `107svh` reveal, and the original `120svh` motion range. Curtain delays now overlap at `0.28 / 0.14 / 0` desktop and `0.18 / 0.09 / 0` compact so all three levels remain distinguishable without changing the existing depth values, smoothstep easing, copy timing, marquee loop, content, media, or neighboring sections.
 - **Responsive browser and reference validation complete.** The supplied recording and live Movra page were compared against the local pre-entry, intermediate stair, full-media handoff, and first depth checkpoint. Desktop preserves an identity media transform until the reveal completes and reproduces the previous `1.03588` depth scale at the equivalent internal progress. `1440 × 900`, `900 × 900`, `390 × 844`, and `320 × 800` retain the `100svh` sticky surface, clear stepped geometry, zero horizontal overflow, and a clean browser console. Runtime reduced-motion emulation remains unavailable in the current browser; the unchanged live media-query reset and compiled natural-flow CSS passed code inspection.
@@ -298,6 +298,96 @@ This document is the source of truth for implementation status. The existence of
 - Social image tags remain intentionally absent until an approved production image is available.
 
 ## Current
+
+### Localized Event Names and Collaboration
+
+- Events `event-slot-01` / `nossa-copa` and `event-slot-02` / `baila-da-zaza` now expose
+  localized public titles in ES, EN-CA, and FR-CA, including Home, Gallery, related previews,
+  About captions, media descriptions, accessibility labels, and inherited SEO/Open Graph titles.
+- Only those two canonical records declare the optional `Event.collaboration` flag. Event Detail
+  renders the localized collaborator notice between the title and description using the existing
+  Text primitive and caption, spacing, and accent tokens. Other events render no notice.
+- **Collaboration mark UI refinement complete locally:** the previous full-column rules are
+  replaced by a fit-content, thin accent outline with an existing Iconoir Sparks icon, caption
+  uppercase text, black surface, and the same rounded radius as action buttons (`--space-16`). The icon is decorative;
+  the mark has no interaction, hover treatment, or focus stop. Data and translations are unchanged.
+- Before/after Chromium checks passed for both collaborations and Baby Shower in ES/EN/FR at
+  1280, 900, 768, 390, and 320px. French wraps without reducing its caption size. Titles and media
+  dimensions are unchanged; the non-collaboration header geometry is identical. Reduced motion,
+  static hover appearance, and contrast were also verified. Structural dividers remain intact.
+- Chromium checks passed across 1280, 900, 390, and 320px widths in all three locales, plus
+  short-desktop/reduced-motion checks. Captures confirmed readable titles/notices without horizontal
+  overflow; Baby Shower header, title, and narrative geometry match the pre-change measurements.
+- The static build contains exactly six collaboration notices (two events times three locales),
+  with no old public event names remaining in `src/` or generated output. Technical slugs, IDs,
+  asset names, relationships, images, routing, global styles, and motion remain unchanged.
+- Scoped Prettier, lint, typecheck, build (72 pages), and diff-check passed. No automated test
+  script is configured; native Safari/device testing remains unverified. No commit or push.
+
+### Home Service Contrast
+
+- Home service-preview media now uses `brightness(0.85)` for 15% additional darkening behind
+  titles. Text, controls, source assets, overlay animation, zoom, and layout remain unchanged.
+
+### Testimonials Visibility
+
+- **Temporarily hidden at the user's request.** The Testimonials import and render in Home
+  Process are commented out. The component, content, translations, and styles remain intact
+  for later reactivation; testimonials are not rendered in any Home locale.
+
+### Process Photography
+
+- **Implementation and local validation: complete.** Home Process replaces its decorative
+  placeholder with `services/custom-packages/04.jpg`, owned by Home content and rendered through
+  Astro Assets. Existing frame dimensions, overlay, sticky behavior, copy, and mobile hiding
+  remain unchanged. The image is decorative and does not duplicate localized text.
+- Scoped CSS adds 2.5% hover zoom and up to 4% scroll-linked zoom on separate image layers.
+  Scroll zoom uses the existing native view-timeline pattern, with a static fallback in browsers
+  without support; reduced motion disables both effects. Chromium verified progressive scroll
+  scaling, hover reversal, unchanged frame geometry at 1280/900px, and unchanged hidden-media
+  behavior at 390/320px. ES/EN/FR rendering and reduced motion passed. Native Safari is unverified.
+- Scoped Prettier, lint, typecheck, build, and diff-check passed. No dependency, commit, or push.
+
+### Black Primary Palette
+
+- **Implementation and local visual validation: complete.** `--color-primary` now resolves to
+  the existing `--color-black` (`#000000`) primitive. Secondary text, inverse backgrounds,
+  accent foreground, and default/strong borders derive from primary rather than the removed,
+  unused green primitive. Warm Tan remains the independent accent; no validation-state rules
+  or media assets changed. No old green hex/RGB value, token consumer, or component hardcode
+  remains in `src/`.
+- Chromium before/after checks passed Home, About, Gallery, Service Detail, Event Detail,
+  Contact, and an unknown 404 route at 1280×720, 900×900, 390×844, and 320×800. Sampled layout
+  dimensions and visible labels are identical, with no horizontal overflow or runtime errors.
+  Mobile navigation, footer, CTAs, and form validation remain legible. Five shared-button
+  contexts pass resting/hover/keyboard-focus text contrast (18.7:1 or 21:1); focus outlines
+  remain visible. No component foreground adjustment was needed. ES/EN/FR primary propagation
+  and reduced-motion rendering passed. Physical devices and Safari remain unverified.
+- Only color tokens and palette documentation changed; layout, typography, content, routing,
+  assets, animation definitions, zoom, scroll behavior, and responsive rules remain untouched.
+  Scoped Prettier, lint, typecheck, build, and diff-check passed. No automated test script is
+  configured; no commit or push was performed.
+
+### Service Image Integration
+
+- **Implementation and local responsive validation: complete.** Seven service collections now
+  import their existing JPG sources through Astro Assets from `organization`, `weddings`,
+  `celebrations`, `venues`, `setup-and-logistics`, `furniture`, and `custom-packages`.
+  Four approved cover renames standardize `main.jpg`; all 49 source-image hashes are unchanged.
+- Canonical Service media feeds Home exclusively from each collection's `main.jpg`. Existing
+  Service Detail galleries consume the 42 numbered secondary images in natural order, excluding
+  the cover, through the existing gallery layouts and lightbox. Media labels reuse existing
+  localized service titles; no translation dictionary or business copy changed.
+- All eight IDs, slugs, ordering, descriptions, and CTAs remain unchanged. Corporate Events
+  retains its exact legacy `events/fan-fest-club/main.jpg` media and empty gallery. No component,
+  CSS, animation, zoom, sticky behavior, routing, Header, Footer, Hero, or Marquee was edited.
+- Chromium checks passed Home and all eight details at 1280×720, 900×900, 390×844, and 320×800:
+  image decoding, cover mapping, gallery order/counts, no horizontal overflow, and lightbox
+  navigation/Escape/focus restoration. ES/EN/FR route smoke and reduced-motion Home smoke passed.
+  Native Safari and physical-device validation remain unverified.
+- Scoped Prettier, lint, typecheck, build (72 pages with Astro-generated AVIF/WebP derivatives),
+  and diff-check passed. No stale cover names, obsolete folder references, or broken imports
+  remain. No test script, dependency, commit, or push was added.
 
 ### Custom 404
 

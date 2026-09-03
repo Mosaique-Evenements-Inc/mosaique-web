@@ -91,6 +91,11 @@
 }
 
 @media (min-width: 48rem) {
+  .process {
+    view-timeline-axis: block;
+    view-timeline-name: --process;
+  }
+
   .process__layout {
     align-items: start;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -113,31 +118,15 @@
     position: absolute;
   }
 
-  .process__media span {
-    position: absolute;
+  .process__media picture,
+  .process__media img {
+    block-size: 100%;
+    inline-size: 100%;
+    object-fit: cover;
   }
 
-  .process__media span:first-child {
-    background: var(--color-accent);
-    block-size: 76%;
-    clip-path: polygon(0 0, 100% 0, 78% 100%, 0 88%);
-    inline-size: 72%;
-    inset: 0 0 auto auto;
-  }
-
-  .process__media span:nth-child(2) {
-    background: color-mix(in oklab, var(--color-primary) 78%, var(--color-accent));
-    block-size: 58%;
-    clip-path: polygon(0 18%, 86% 0, 100% 100%, 0 100%);
-    inline-size: 64%;
-    inset: auto auto 0 0;
-  }
-
-  .process__media span:last-child {
-    border: 1px solid color-mix(in oklab, var(--color-text-inverse) 32%, transparent);
-    block-size: 68%;
-    inline-size: 62%;
-    inset: 16% auto auto 10%;
+  .process__media img {
+    transition: transform var(--motion-duration-slow) var(--motion-easing-cinematic);
   }
 
   .process__content {
@@ -151,6 +140,33 @@
 
   .process__step article {
     padding-block: clamp(var(--space-8), 4vw, var(--space-10));
+  }
+}
+
+@media (min-width: 48rem) and (hover: hover) and (pointer: fine) {
+  .process__media:hover img {
+    transform: scale(1.025);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (min-width: 48rem) {
+    .process__media picture {
+      animation: process-media-zoom linear both;
+      animation-duration: 1ms;
+      animation-range: contain 0% contain 100%;
+      animation-timeline: --process;
+    }
+  }
+}
+
+@keyframes process-media-zoom {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.04);
   }
 }
 
@@ -173,6 +189,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .process__media picture,
+  .process__media img,
+  .process__media:hover img {
+    animation: none;
+    transform: none;
+    transition: none;
+  }
+
   .process__media {
     position: relative;
     top: auto;

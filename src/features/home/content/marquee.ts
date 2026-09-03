@@ -1,8 +1,8 @@
-import { fanFestMain } from "@/assets/images/events";
+import celebrationsMain from "@/assets/images/services/celebrations/main.jpg";
 
 export const marqueeContent = {
   media: {
-    src: fanFestMain,
+    src: celebrationsMain,
     status: "approved",
   },
   options: [

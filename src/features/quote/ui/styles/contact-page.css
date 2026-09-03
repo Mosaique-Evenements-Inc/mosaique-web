@@ -216,9 +216,13 @@
 }
 
 @media (max-width: 63.999rem) {
+  .contact-media {
+    display: none;
+  }
+
   .contact-page__container {
     gap: var(--space-6);
-    grid-template-columns: minmax(20rem, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .contact-page__form-column {

@@ -1,5 +1,7 @@
 import type { ImageMetadata } from "astro";
 import * as eventImages from "@/assets/images/events";
+import type { Locale } from "@/core/i18n";
+import { eventTranslations } from "@/features/events/i18n";
 import { aboutContent } from "./overview";
 
 export type AboutMediaItem = {
@@ -10,12 +12,12 @@ export type AboutMediaItem = {
   src: ImageMetadata;
 };
 
-const getMediaLabel = (id: string) => {
+const getMediaLabel = (id: string, locale: Locale = "es") => {
   if (id.startsWith("babyShower")) return "Baby Shower";
-  if (id.startsWith("bailaDaZaza")) return "Baila da Zaza";
+  if (id.startsWith("bailaDaZaza")) return eventTranslations[locale]["event-slot-02"].title;
   if (id.startsWith("cumpleanosAnaPaula")) return "Cumpleaños Ana Paula";
   if (id.startsWith("fanFest")) return "Fan Fest Club";
-  if (id.startsWith("nossaCopa")) return "Nossa Copa";
+  if (id.startsWith("nossaCopa")) return eventTranslations[locale]["event-slot-01"].title;
   if (id.startsWith("wedding")) return "Boda";
 
   return "Mosaïque Events";
@@ -74,6 +76,9 @@ const mediaItems = mosaicMediaColumns.flatMap((column, columnIndex) =>
     };
   }),
 );
+
+export const getLocalizedAboutMedia = (locale: Locale): AboutMediaItem[] =>
+  mediaItems.map((item) => ({ ...item, label: getMediaLabel(item.id, locale) }));
 
 export const aboutPageContent = {
   metadata: {
