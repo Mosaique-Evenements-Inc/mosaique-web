@@ -23,6 +23,13 @@ export interface SiteShellTranslations {
   "navigation.skipToContent": string;
   "metadata.defaultTitle": string;
   "metadata.defaultDescription": string;
+  notFound: {
+    title: string;
+    description: string;
+    homeLabel: string;
+    imageAlt: string;
+    metadataTitle: string;
+  };
   navigationLabels: readonly string[];
   serviceLabels: readonly string[];
   footerLinkLabels: readonly string[];
@@ -36,6 +43,14 @@ export type SiteShellLocaleDictionaries = LocaleDictionaries<SiteShellTranslatio
 
 export const siteShellTranslations = {
   es: {
+    notFound: {
+      title: "¿Te perdiste?",
+      description: "Regresa al home.",
+      homeLabel: "Volver al home",
+      imageAlt:
+        "Caballo y perro vestidos de gala junto a un mensaje 404: página no encontrada.",
+      metadataTitle: "Página no encontrada",
+    },
     "navigation.open": "Abrir navegación",
     "navigation.close": "Cerrar navegación",
     "navigation.main": "Navegación principal",
@@ -99,9 +114,16 @@ export const siteShellTranslations = {
     ],
     footerPurpose: "Cotizaciones y alianzas",
     footerClosing: "Every detail has its place.",
-    footerLegal: "©️ MOSAÏQUE EVENTS. All rights reserved.",
+    footerLegal: "Todos los derechos reservados.",
   },
   en: {
+    notFound: {
+      title: "Lost your way?",
+      description: "Head back home.",
+      homeLabel: "Back to home",
+      imageAlt: "A horse and dog in formal attire beside a 404 page not found message.",
+      metadataTitle: "Page not found",
+    },
     "navigation.open": "Open navigation",
     "navigation.close": "Close navigation",
     "navigation.main": "Main navigation",
@@ -156,9 +178,17 @@ export const siteShellTranslations = {
     ],
     footerPurpose: "Quotes and partnerships",
     footerClosing: "Every detail has its place.",
-    footerLegal: "©️ MOSAÏQUE EVENTS. All rights reserved.",
+    footerLegal: "All rights reserved.",
   },
   fr: {
+    notFound: {
+      title: "Vous cherchez votre chemin?",
+      description: "Revenez à l’accueil.",
+      homeLabel: "Retour à l’accueil",
+      imageAlt:
+        "Un cheval et un chien en tenue de soirée avec un message 404 : page introuvable.",
+      metadataTitle: "Page introuvable",
+    },
     "navigation.open": "Ouvrir la navigation",
     "navigation.close": "Fermer la navigation",
     "navigation.main": "Navigation principale",
@@ -222,7 +252,7 @@ export const siteShellTranslations = {
     ],
     footerPurpose: "Devis et partenariats",
     footerClosing: "Chaque détail a sa place.",
-    footerLegal: "©️ MOSAÏQUE EVENTS. Tous droits réservés.",
+    footerLegal: "Tous droits réservés.",
   },
 } satisfies LocaleDictionaries<SiteShellTranslations>;
 
