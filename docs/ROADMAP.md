@@ -15,6 +15,7 @@ This document is the source of truth for implementation status. The existence of
 
 - **Implementation: complete for the current foundation.** Primitive and semantic color, typography, spacing, layout, z-index, and motion tokens exist in `src/styles/tokens/`.
 - Standard textual CTAs now render through one `Button.tsx` primitive with two inverse capsule variants and one transform-based vertical fill interaction: transparent to light, and light to transparent. Hero, Services, Final CTA, the quote form, and venue-dialog actions preserve their existing destinations, handlers, data attributes, disabled behavior, and contextual sizing. CTA labels use the display family; icon-only and low-chrome controls preserve their established contracts.
+- **Button glyph clipping fixed locally.** The filled label's `clip-path: inset(0)` previously clipped font ink outside its `line-height: 1` box. The shared `action-button.css` now gives only that masked layer a `0.25em` paint allowance with compensating negative margins, preserving button/text geometry, wrapping, typography, and transition duration/easing. Chromium before/after checks on venue-partnership and logistics CTAs passed at 320, 390, 430, 768, and 1280px in ES/EN/FR (30 cases): glyph pixels match an unclipped reference, with unchanged layout and no page overflow. Multiline P/p/Q/q/g/j/y, accents, both variants, hover/focus, hidden masks, and runtime reduced motion also passed. Native iOS Safari remains unverified. Scoped Prettier, build, lint, typecheck, and diff-check passed; no test script, dependency, commit, or push was added.
 - CSS and TypeScript runtime motion tokens are documented and synchronized.
 - UI primitives exist for Button, Container, Grid, Heading, Media, Section, Stack, and Text.
 - Iconoir is the shared interface-icon source for navigation, disclosures, directional controls, quote-flow states, editorial actions, and the four-icon “¿Por qué elegir MOSAÏQUE?” proof band; decorative media geometry and required-field marks remain outside that icon contract.
@@ -96,6 +97,8 @@ This document is the source of truth for implementation status. The existence of
 - **Fidelity Pass: complete.** Desktop label/description rows, sticky-media relationship, tablet split, and mobile linear flow were validated.
 
 ### Services
+
+- **Mobile intro gutters aligned.** Below the existing `48rem` breakpoint, the Home Services intro explicitly uses `--space-page-gutter` (20px at tested mobile widths), with a full-width heading inside that inset. This bypasses the base shorthand's unresolved `--space-28` token without changing desktop geometry. Before/after browser checks passed at 320, 390, and 430px, plus ES/EN/FR at 390px; 768px and 1280px geometry is unchanged. Scene media, motion, and vertical padding remain untouched. Build, lint, typecheck, scoped Prettier, and diff-check passed.
 
 - **Home cinematic refactor: implemented locally.** The former `28/72` React scene was replaced
   by an Astro-only intro followed by eight Service preview scenes copied from the validated Event

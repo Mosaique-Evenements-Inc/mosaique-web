@@ -64,10 +64,15 @@
 }
 
 .action-button__content--filled {
+  /* Extend the wipe mask beyond the line box without changing grid or text geometry. */
+  --action-button-glyph-allowance: 0.25em;
+
   clip-path: inset(
     var(--action-button-label-clip-top) 0 var(--action-button-label-clip-bottom)
   );
   color: var(--action-button-filled-text);
+  margin: calc(-1 * var(--action-button-glyph-allowance));
+  padding: var(--action-button-glyph-allowance);
 }
 
 .action-button__icon {

@@ -380,11 +380,12 @@
   .home-services-showcase__intro {
     min-block-size: 62svh;
     padding-block: var(--space-20);
+    padding-inline: var(--space-page-gutter);
   }
 
   .home-services-showcase__intro h2 {
     font-size: clamp(3rem, 15vw, 4.5rem);
-    inline-size: calc(100% - (2 * var(--space-3)));
+    inline-size: 100%;
   }
 
   .home-service-preview__copy {
