@@ -131,7 +131,7 @@ Executable tokens in `src/styles/tokens/` win over prose documentation.
 
 Current primitive palette:
 
-- Dark Green: `--color-green-900` (`#0b241c`)
+- Black: `--color-black` (`#000000`), mapped to `--color-primary`
 - Warm Tan: `--color-tan-500` (`#c49a6c`)
 - Cream: `--color-cream-100` (`#f6f1e8`)
 - Neutral Gray: `--color-gray-300` (`#c1c1c1`)

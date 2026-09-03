@@ -299,6 +299,50 @@ This document is the source of truth for implementation status. The existence of
 
 ## Current
 
+### Home Service Contrast
+
+- Home service-preview media now uses `brightness(0.85)` for 15% additional darkening behind
+  titles. Text, controls, source assets, overlay animation, zoom, and layout remain unchanged.
+
+### Testimonials Visibility
+
+- **Temporarily hidden at the user's request.** The Testimonials import and render in Home
+  Process are commented out. The component, content, translations, and styles remain intact
+  for later reactivation; testimonials are not rendered in any Home locale.
+
+### Process Photography
+
+- **Implementation and local validation: complete.** Home Process replaces its decorative
+  placeholder with `services/custom-packages/04.jpg`, owned by Home content and rendered through
+  Astro Assets. Existing frame dimensions, overlay, sticky behavior, copy, and mobile hiding
+  remain unchanged. The image is decorative and does not duplicate localized text.
+- Scoped CSS adds 2.5% hover zoom and up to 4% scroll-linked zoom on separate image layers.
+  Scroll zoom uses the existing native view-timeline pattern, with a static fallback in browsers
+  without support; reduced motion disables both effects. Chromium verified progressive scroll
+  scaling, hover reversal, unchanged frame geometry at 1280/900px, and unchanged hidden-media
+  behavior at 390/320px. ES/EN/FR rendering and reduced motion passed. Native Safari is unverified.
+- Scoped Prettier, lint, typecheck, build, and diff-check passed. No dependency, commit, or push.
+
+### Black Primary Palette
+
+- **Implementation and local visual validation: complete.** `--color-primary` now resolves to
+  the existing `--color-black` (`#000000`) primitive. Secondary text, inverse backgrounds,
+  accent foreground, and default/strong borders derive from primary rather than the removed,
+  unused green primitive. Warm Tan remains the independent accent; no validation-state rules
+  or media assets changed. No old green hex/RGB value, token consumer, or component hardcode
+  remains in `src/`.
+- Chromium before/after checks passed Home, About, Gallery, Service Detail, Event Detail,
+  Contact, and an unknown 404 route at 1280×720, 900×900, 390×844, and 320×800. Sampled layout
+  dimensions and visible labels are identical, with no horizontal overflow or runtime errors.
+  Mobile navigation, footer, CTAs, and form validation remain legible. Five shared-button
+  contexts pass resting/hover/keyboard-focus text contrast (18.7:1 or 21:1); focus outlines
+  remain visible. No component foreground adjustment was needed. ES/EN/FR primary propagation
+  and reduced-motion rendering passed. Physical devices and Safari remain unverified.
+- Only color tokens and palette documentation changed; layout, typography, content, routing,
+  assets, animation definitions, zoom, scroll behavior, and responsive rules remain untouched.
+  Scoped Prettier, lint, typecheck, build, and diff-check passed. No automated test script is
+  configured; no commit or push was performed.
+
 ### Service Image Integration
 
 - **Implementation and local responsive validation: complete.** Seven service collections now

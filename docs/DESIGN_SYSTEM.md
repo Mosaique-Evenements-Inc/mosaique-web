@@ -28,7 +28,7 @@ The approved Mosaïque identity is now represented in primitive and semantic tok
 
 Colors:
 
-- Dark Green: `#0B241C`
+- Black: `#000000`
 - Warm Tan: `#C49A6C`
 - Cream: `#F6F1E8`
 - Neutral Gray: `#C1C1C1`
@@ -41,7 +41,7 @@ Typography:
 
 Intent:
 
-- Dark Green functions as the primary dark color for text, inverse backgrounds, and high-contrast UI.
+- Black functions as the primary dark color for text, inverse backgrounds, and high-contrast UI.
 - Warm Tan functions primarily as the accent color.
 - Cream functions as the main warm page background.
 - Neutral Gray functions as the muted neutral.
@@ -63,7 +63,7 @@ The palette is official and intentionally limited. Do not introduce additional c
 
 Color architecture:
 
-- Primitive palette: Dark Green, Warm Tan, Cream, Neutral Gray, and White.
+- Primitive palette: Black, Warm Tan, Cream, Neutral Gray, and White.
 - Semantic colors: product-facing variables mapped to primitive values.
 - Background: page-level canvas.
 - Surface and elevated surface: clean content surfaces.

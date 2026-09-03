@@ -1,18 +1,18 @@
 @theme static {
-  --color-primary: var(--color-green-900);
-  --color-secondary: color-mix(in oklab, var(--color-green-900) 72%, var(--color-gray-300));
+  --color-primary: var(--color-black);
+  --color-secondary: color-mix(in oklab, var(--color-primary) 72%, var(--color-gray-300));
   --color-muted: var(--color-gray-300);
   --color-inverse: var(--color-cream-100);
   --color-background: var(--color-cream-100);
-  --color-background-inverse: var(--color-green-900);
+  --color-background-inverse: var(--color-primary);
   --color-background-cinematic: var(--color-black);
   --color-surface: var(--color-white);
   --color-surface-elevated: color-mix(in oklab, var(--color-white) 84%, var(--color-cream-100));
   --color-surface-muted: color-mix(in oklab, var(--color-gray-300) 32%, var(--color-cream-100));
   --color-accent: var(--color-tan-500);
-  --color-accent-contrast: var(--color-green-900);
-  --color-border-default: color-mix(in oklab, var(--color-green-900) 22%, transparent);
-  --color-border-strong: color-mix(in oklab, var(--color-green-900) 42%, transparent);
+  --color-accent-contrast: var(--color-primary);
+  --color-border-default: color-mix(in oklab, var(--color-primary) 22%, transparent);
+  --color-border-strong: color-mix(in oklab, var(--color-primary) 42%, transparent);
   --color-overlay: color-mix(in srgb, var(--color-primary) 72%, transparent);
 }
 

@@ -81,6 +81,7 @@
 .home-service-preview__media img,
 .home-service-preview__media video {
   display: block;
+  filter: brightness(0.85);
   object-fit: cover;
 }
 

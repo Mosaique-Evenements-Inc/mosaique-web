@@ -1,3 +1,5 @@
+export { default as processImage } from "@/assets/images/services/custom-packages/04.jpg";
+
 export const processContent = {
   title: "Nuestro proceso",
   introduction:
