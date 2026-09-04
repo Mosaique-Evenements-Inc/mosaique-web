@@ -406,8 +406,8 @@
 }
 
 .custom-select__panel {
-  -webkit-backdrop-filter: blur(var(--space-4));
-  backdrop-filter: blur(var(--space-4));
+  -webkit-backdrop-filter: blur(var(--effect-blur-md));
+  backdrop-filter: blur(var(--effect-blur-md));
   background: color-mix(in srgb, var(--color-background-cinematic) 78%, transparent);
   border: 1px solid color-mix(in srgb, var(--color-text-inverse) 24%, transparent);
   border-radius: var(--primitive-radius-md);
@@ -654,8 +654,8 @@
 }
 
 .date-picker-popover__panel {
-  -webkit-backdrop-filter: blur(var(--space-4));
-  backdrop-filter: blur(var(--space-4));
+  -webkit-backdrop-filter: blur(var(--effect-blur-md));
+  backdrop-filter: blur(var(--effect-blur-md));
   background: color-mix(in srgb, var(--color-background-cinematic) 78%, transparent);
   border: 1px solid color-mix(in srgb, var(--color-text-inverse) 24%, transparent);
   border-radius: var(--primitive-radius-md);
@@ -1021,8 +1021,8 @@
 
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .quote-toast {
-    -webkit-backdrop-filter: blur(var(--space-4));
-    backdrop-filter: blur(var(--space-4));
+    -webkit-backdrop-filter: blur(var(--effect-blur-md));
+    backdrop-filter: blur(var(--effect-blur-md));
   }
 }
 

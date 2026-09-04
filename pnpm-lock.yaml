@@ -14,6 +14,9 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.7.3
         version: 3.7.3
+      '@mosaique-evenements-inc/ui':
+        specifier: 0.1.0
+        version: 0.1.0
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@8.2.1(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.0))
@@ -796,6 +799,9 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@mosaique-evenements-inc/ui@0.1.0':
+    resolution: {integrity: sha512-rI5ATGEDnmwPQEpK50aNv0vG+8XJYNFRA0XtVRhNC8bo+zpol6j59qw0pINEwUluly6oiJhA3VWntes5/9HRNA==, tarball: https://npm.pkg.github.com/download/@mosaique-evenements-inc/ui/0.1.0/3dbe3c6e74202238e8b3dd06a672de305bc565bc}
 
   '@napi-rs/wasm-runtime@1.2.3':
     resolution: {integrity: sha512-UMduMbqO5s5zF2NkNacMT/yK5Y5QiKvWr2+50bzIIxFDwVJ2h49b+oyjaCGPhJxd2/gC2x39EHv/gHVuu36x2Q==}
@@ -3309,6 +3315,8 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  '@mosaique-evenements-inc/ui@0.1.0': {}
 
   '@napi-rs/wasm-runtime@1.2.3(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)':
     dependencies:

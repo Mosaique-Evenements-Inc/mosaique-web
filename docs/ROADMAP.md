@@ -299,6 +299,61 @@ This document is the source of truth for implementation status. The existence of
 
 ## Current
 
+### Registry Consumption (EP-07)
+
+- UI 0.1.0 is published on GitHub Packages; Web pins the registry version and no
+  longer resolves a sibling tarball. All nine CSS files match the approved artifact.
+- Actions read access was confirmed. A clean install with an empty store and frozen
+  lockfile passed, along with lint, typecheck, build (72 pages), and diff-check.
+- Integration is being completed on `temp/pre-library` by explicit user decision;
+  `main` and its existing design history remain unchanged. Earlier EP-05/06 entries
+  describe historical preparation states, superseded by this registry integration.
+- Registry runtime sanity passed on Home, About, Contact, Gallery, Event Detail
+  and Service Detail at 390/1440px. About gutters, Footer 160ms/standard easing,
+  Contact overrides, 12px/16px navigation blur and 16px form surface blur are intact;
+  `--space-28` remains undefined and no horizontal overflow was observed.
+
+### Shared Foundation Release Preparation (EP-06)
+
+- Release configuration and runbooks prepared; no publication, registry migration,
+  version change, commit, or push. Web retains its validated tarball dependency.
+- Both repositories route the organization scope through credential-free `.npmrc`
+  files. UI has a manual, main-only publish workflow; Web's future read-authenticated
+  CI setup and exact-version migration are documented in `SHARED_FOUNDATION.md`.
+- No CSS or token integration changes in this phase. EP-05's Chrome computed-style,
+  visual, and interaction evidence remains applicable; Safari/WebKit remains unverified.
+- Remote package visibility, version availability, and Actions access must be
+  verified during the authorized publication phase before switching Web to registry.
+
+### Shared Foundation Package Integration (EP-05)
+
+- **Implementation and local validation: complete.** EP-06 is not implemented.
+- Web consumes the real local `@mosaique-evenements-inc/ui@0.1.0` tarball through
+  `tokens.css`. Shared colors/focus, spacing, radii, layers, non-cinematic motion,
+  blur, and max-reading now come from the package. A reference-only Tailwind
+  adapter preserves utility names without runtime token duplication.
+- Typography, the existing reset, cinematic vocabulary, section rhythm,
+  max-content/grid/sticky geometry, and Contact overrides remain Web-owned.
+  Known unresolved `--space-28` and `--font-weight-regular` references are unchanged.
+- Chrome baseline/final validation covers Home, About, Contact, Gallery, Event
+  Detail, and Service Detail in ES/EN/FR at 390, 768, and 1440px (54 cases).
+  All 16,473 sampled elements preserve the measured computed styles, with no
+  runtime errors, broken loaded images, or horizontal overflow. Forty-five
+  screenshots match immediately; the nine video/entrance-sensitive cases also
+  match exactly with synchronized media and reduced motion enabled from load.
+- About gutters remain 20px / 30.72px / 57.6px. The installed package and build
+  retain Tailwind utility generation. Lint, typecheck, production build (72 pages),
+  and diff-check pass. WebKit is unavailable in the local Playwright installation.
+- Before/after interaction checks pass at all three widths: mobile menu/Escape,
+  custom select, calendar, Contact colors, footer timing, optical blur, reduced
+  motion, and sampled Home scroll states. Topbar blur remains 12px below 768px
+  and 16px at 768/1440px; select/calendar/toast remain 16px. No external form
+  submission was performed.
+- The dependency and lockfile intentionally reference a temporary sibling `.tgz`;
+  this is not a release-ready registry dependency. See
+  [Shared Foundation Integration](SHARED_FOUNDATION.md) for reproduction and release
+  handoff. No package source changes, version changes, publication, commit, or push.
+
 ### Service Detail Fluid Desktop
 
 - **Implemented and validated locally.** Only the existing Service-owned `min-width: 64rem`

@@ -1,6 +1,10 @@
 # Mosaïque Web Design System
 
-This document defines the technical and visual foundation for Mosaïque Web. It describes the system, but the executable CSS tokens in `src/styles/tokens/` are the final source of truth when documentation and implementation diverge.
+This document defines the technical and visual foundation for Mosaïque Web. Shared
+tokens come from `@mosaique-evenements-inc/ui/tokens.css`; Web-owned tokens remain
+in `src/styles/tokens/`. These executable sources take precedence over prose.
+See [Shared Foundation Integration](SHARED_FOUNDATION.md) for ownership, the
+Tailwind adapter, and the temporary tarball dependency.
 
 ## 1. Design Principles
 
