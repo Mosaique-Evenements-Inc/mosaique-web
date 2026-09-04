@@ -1,7 +1,9 @@
 # Shared Foundation Integration
 
-Web consumes `@mosaique-evenements-inc/ui@0.1.0/tokens.css` through the package's
+Web consumes `@mosaique-evenements-inc/ui@0.2.0/tokens.css` through the package's
 public CSS export. `foundation.css` is not imported: Web retains its existing reset.
+`recipes.css` is also not imported because Web's controls, forms, and marketing CTAs
+retain product-specific composition and behavior.
 
 ## Ownership
 
@@ -10,10 +12,15 @@ aliases, radius primitives, global layers, non-cinematic motion fundamentals, bl
 magnitudes, and max-reading. Responsive vocabulary remains documented in the package;
 Web retains its Tailwind breakpoint configuration.
 
-Web owns typography and font configuration, cinematic colors and image overlay,
-section rhythm, max-content/grid/sticky geometry, cinematic motion and motion recipes,
-scene stacking, and feature-specific overrides. The unresolved `--space-28` and
-`--font-weight-regular` references remain unchanged.
+The shared sans stack plus body and caption metrics now back Web's equivalent local
+roles without changing their rendered values. Quote controls map their existing 60px
+geometry to the shared `comfortable` density minimum, and real validation errors use
+shared error semantics with an accessible dark-surface foreground adaptation. Web owns
+display typography and font delivery, compact label/navigation roles, control padding
+and pill geometry, cinematic colors and image overlay, section rhythm,
+max-content/grid/sticky geometry, cinematic motion and motion recipes, scene stacking,
+marketing CTA recipes, and feature-specific overrides. The unresolved `--space-28`
+and `--font-weight-regular` references remain unchanged.
 
 ## Loading and Tailwind
 
@@ -44,24 +51,30 @@ release dependency and is not portable to CI without the sibling archive.
 The temporary archive was used only for EP-05/06. Current installs require registry
 authentication, not a sibling checkout or locally generated archive.
 
-## Current: GitHub Packages 0.1.0
+## Current: GitHub Packages 0.2.0
 
-EP-07 published and verified `@mosaique-evenements-inc/ui@0.1.0`. Web now pins
-exact `0.1.0` and its lockfile resolves the GitHub Packages archive with integrity.
+Web pins exact `@mosaique-evenements-inc/ui@0.2.0`, and its lockfile resolves the
+GitHub Packages archive with integrity. The installed public exports are `tokens.css`,
+`foundation.css`, and `recipes.css`.
 The historical tarball instructions above describe EP-05 only and are not required
 for current installs. The versioned `.npmrc` routes the scope without credentials.
-The nine installed CSS files match the approved tarball byte-for-byte. An isolated
+The 18 installed package files resolve from the published archive. An isolated
 install with an empty store and frozen lockfile downloaded all dependencies without
 the sibling archive. Package Actions access for Web is configured as Read.
 
 The registry migration was performed with runtime authentication using:
 
 ```sh
-pnpm add --save-exact @mosaique-evenements-inc/ui@0.1.0
+pnpm add --save-exact @mosaique-evenements-inc/ui@0.2.0
 ```
 
-This replaced the local artifact with exact `0.1.0`. pnpm regenerated importer,
+This replaced the previous package version with exact `0.2.0`. pnpm regenerated importer,
 resolution/integrity and snapshot records; the old local locator is gone.
+
+The Tailwind reference adapter is unchanged because UI-14 consumes the new roles
+through CSS custom properties rather than new utilities. The cinematic success toast
+also remains Web-owned; only genuine validation and submission errors adopt shared
+error semantics.
 
 Test `pnpm install --frozen-lockfile` in a fresh checkout without the sibling
 archive or existing node_modules. Inspect installed version, exports and CSS bytes

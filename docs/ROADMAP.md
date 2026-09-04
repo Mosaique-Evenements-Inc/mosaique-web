@@ -299,6 +299,21 @@ This document is the source of truth for implementation status. The existence of
 
 ## Current
 
+### UI 0.2.0 Web Migration (UI-14)
+
+- Web now pins the GitHub Packages release `@mosaique-evenements-inc/ui@0.2.0` and
+  continues to consume only its public `tokens.css` export. The package's optional
+  foundation and recipes remain unimported because Web already owns its reset, forms,
+  controls, and cinematic CTA behavior.
+- Shared sans, body, and caption contracts back equivalent Web roles. Cinzel/display,
+  editorial scale, navigation, compact labels, and marketing CTA typography remain
+  Web-owned. No font files or external delivery were added; actual rendering continues
+  through platform fallbacks until approved assets exist.
+- Quote controls identify their existing 60px minimum as shared `comfortable` density.
+  Validation borders and messages use shared error semantics with a dark-surface
+  contrast adaptation; form markup, validation, focus, and submission behavior are
+  unchanged.
+
 ### Registry Consumption (EP-07)
 
 - UI 0.1.0 is published on GitHub Packages; Web pins the registry version and no

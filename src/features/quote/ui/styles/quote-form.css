@@ -353,7 +353,7 @@
   color: var(--color-text-primary);
   font: inherit;
   inline-size: 100%;
-  min-block-size: 3.75rem;
+  min-block-size: var(--control-comfortable-min-height);
   padding: var(--space-4) var(--space-6);
 }
 
@@ -372,7 +372,7 @@
   font: inherit;
   inline-size: 100%;
   justify-content: space-between;
-  min-block-size: 3.75rem;
+  min-block-size: var(--control-comfortable-min-height);
   padding: var(--space-4) var(--space-6);
   text-align: start;
 }
@@ -383,7 +383,7 @@
 }
 
 .custom-select__trigger[aria-invalid="true"] {
-  border-color: var(--color-accent-text);
+  border-color: var(--color-status-error-border);
 }
 
 .custom-select__value {
@@ -483,7 +483,7 @@
 .quote-field input:not([type="checkbox"]),
 .quote-field select {
   align-self: start;
-  block-size: 3.75rem;
+  block-size: var(--control-comfortable-min-height);
   border-radius: var(--primitive-radius-pill);
 }
 
@@ -551,7 +551,7 @@
 .quote-field input[aria-invalid="true"],
 .quote-field select[aria-invalid="true"],
 .quote-choice-group[aria-invalid="true"] {
-  border-color: var(--color-accent-text);
+  border-color: var(--color-status-error-border);
 }
 
 .quote-field small,
@@ -571,7 +571,7 @@
 .quote-choice-group [data-quote-error]:not(:empty),
 [data-venue-name-error]:not(:empty),
 [data-venue-files-error]:not(:empty) {
-  color: var(--color-accent-text);
+  color: var(--color-status-error-foreground);
 }
 
 .quote-check {
@@ -580,7 +580,7 @@
   cursor: pointer;
   display: flex;
   gap: var(--space-3);
-  min-block-size: 3.75rem;
+  min-block-size: var(--control-comfortable-min-height);
   padding: var(--space-3) var(--space-2);
 }
 
@@ -626,7 +626,7 @@
   grid-row: 2;
   inline-size: 100%;
   justify-content: space-between;
-  min-block-size: 3.75rem;
+  min-block-size: var(--control-comfortable-min-height);
   padding: var(--space-4) var(--space-6);
   text-align: start;
 }

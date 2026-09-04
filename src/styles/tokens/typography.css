@@ -28,15 +28,15 @@
   --text-body-lg-weight: 400;
   --text-body-lg-letter-spacing: 0;
 
-  --text-body-size: 1rem;
-  --text-body-line-height: 1.6;
-  --text-body-weight: 400;
-  --text-body-letter-spacing: 0;
+  --text-body-size: var(--type-body-size);
+  --text-body-line-height: var(--type-body-line-height);
+  --text-body-weight: var(--type-body-weight);
+  --text-body-letter-spacing: var(--type-body-letter-spacing);
 
-  --text-caption-size: 0.8125rem;
-  --text-caption-line-height: 1.4;
-  --text-caption-weight: 500;
-  --text-caption-letter-spacing: 0;
+  --text-caption-size: var(--type-caption-size);
+  --text-caption-line-height: var(--type-caption-line-height);
+  --text-caption-weight: var(--type-caption-weight);
+  --text-caption-letter-spacing: var(--type-caption-letter-spacing);
 
   --text-navigation-size: 0.875rem;
   --text-navigation-line-height: 1.2;

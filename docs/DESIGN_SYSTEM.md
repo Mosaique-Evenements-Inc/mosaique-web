@@ -61,6 +61,12 @@ Font loading strategy:
 - Required files are still pending and should be added before production font loading is enabled:
   `Cinzel-Variable.woff2` or selected Cinzel weights, and `Montserrat-Variable.woff2` or selected Montserrat weights.
 
+UI 0.2.0 supplies the sans family contract and matching body/caption metrics but no
+font files. Web aliases its equivalent body and caption roles to those shared tokens.
+Display/headings, navigation, compact form labels, and marketing CTA typography remain
+Web-owned. Quote controls retain their established geometry while naming the 60px
+minimum as shared `comfortable` density; no global density mode is applied.
+
 ## 3. Colors
 
 The palette is official and intentionally limited. Do not introduce additional colors unless design approves a new primitive.
