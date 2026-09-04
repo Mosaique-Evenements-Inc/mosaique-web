@@ -299,6 +299,32 @@ This document is the source of truth for implementation status. The existence of
 
 ## Current
 
+### Service Detail Fluid Desktop
+
+- **Implemented and validated locally.** Only the existing Service-owned `min-width: 64rem`
+  rules change. The editorial rail now varies between 26% and the original 28%, with fluid
+  inline padding and a remaining-space media track. The title follows its actual content
+  container through `cqi`, retaining the wide type-to-column ratio and height-aware ceiling.
+- The fixed-height narrative previously sent all remaining space above the CTA through
+  `margin-block-start: auto`. A bounded, fluid narrative end margin now shares that space below
+  the action on compact desktops, while preserving the 1920px baseline. Title-to-description
+  spacing also follows the content width. At 1280px, the French organization CTA gap falls from
+  261px to 153px and featured media gains 26px; the title remains three lines. At 1920px,
+  media changes by less than 4px, title height by less than 2px, and CTA geometry is unchanged.
+- Chromium before/after comparison covered 108 cases across ES/EN/FR, long/short/medium service
+  titles, and 1920, 1680, 1536, 1440, 1366, 1280, 1024, 1023, 900, 768, 390, and 320px.
+  All 45 tablet/mobile cases preserve measured header, title, description, CTA, divider, and
+  media geometry exactly. A further 114 progressive resize checks from 1920 to 1024px at
+  900px/720px heights keep the French stress-test title on three lines without collisions.
+- All eight services passed 72 additional locale/desktop checks, including loaded featured
+  images and accessible CTA placement. Sticky scroll states, keyboard focus, gallery lightbox,
+  reduced motion, and browser console checks passed. Visual captures were compared at wide,
+  compact, tablet, and mobile sizes; native Safari/device testing remains unverified.
+- Existing breakpoints, 16:9 media framing, `object-fit: cover`, animation rules, assets,
+  content, translations, routing, Header, Footer, Home, and Event Detail remain unchanged.
+  Scoped Prettier, lint, typecheck, build (72 pages), and diff-check passed. No automated test
+  script is configured. No commit or push.
+
 ### Localized Event Names and Collaboration
 
 - Events `event-slot-01` / `nossa-copa` and `event-slot-02` / `baila-da-zaza` now expose

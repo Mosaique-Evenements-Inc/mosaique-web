@@ -10,7 +10,7 @@
   inset-block-start: 0;
   display: grid;
   block-size: 100svh;
-  padding: calc(var(--site-navigation-height) + var(--space-8)) var(--layout-page-gutter)
+  padding: calc(var(--site-navigation-height) + var(--space-8)) var(--space-page-gutter)
     var(--space-8);
   place-items: center;
   overflow: hidden;
