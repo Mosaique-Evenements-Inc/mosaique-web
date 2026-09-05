@@ -774,6 +774,20 @@ HTTP adapter`. The service receives the repository contract, while `submit-lead.
   unchanged `Enviar solicitud` state. The final external submission was intentionally not sent to
   avoid creating a production-like lead during architecture QA; endpoint and transport contracts
   were verified in code and the optimized client bundle built successfully.
+- **WEB-LEAD-01 public capture alignment: complete locally.** Quote now defines one explicit
+  public Leads V1 boundary with exactly `fullName`, `email`, `phone`, `service`, `eventType`,
+  `eventDate`, `guestRange`, and `preferredLanguage`. Web trims and normalizes client input for UX
+  parity with the backend limits, serializes the existing Canadian/North-American `+1` phone scope,
+  accepts `YYYY-MM-DD` or `null` event dates, and keeps Venue, Budget, `code`, `id`, `status`,
+  `source`, assignments, notes, history, normalized fields, and internal UUIDs out of the outbound
+  payload. The HTTP adapter now consumes only the canonical success response
+  `lead.code`, `lead.status: "NEW"`, and `lead.createdAt`; temporary backend aliases
+  `lead.id` and `lead.created_at` are no longer required by Web. API errors are parsed from the
+  sanitized `error.code/message/details/requestId` envelope and mapped to safe site-owned feedback
+  for 400, 413, 422, 500, unknown shapes, network failure, and timeout without logging submitted
+  PII. `WEB/API-LEAD-ANTIABUSE-01` remains the next hardening episode for Turnstile or equivalent,
+  honeypot, backend verification, rate limiting, idempotency/retry protection, and safe abuse
+  metrics before meaningful public campaign traffic.
 - React, Zustand, the custom-event transport, Quote component decomposition, shared presentation
   primitives, Event/Service UI duplication, Home cinematic composition, routes, copy, assets, and
   visual behavior remain otherwise unchanged in Responsibility 2.
