@@ -1,0 +1,23 @@
+/* Register utility names without emitting shared token definitions. */
+@theme reference {
+  --color-tan-500: var(--color-tan-500);
+  --color-cream-100: var(--color-cream-100);
+  --color-gray-300: var(--color-gray-300);
+  --color-white: var(--color-white);
+  --color-black: var(--color-black);
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-muted: var(--color-muted);
+  --color-inverse: var(--color-inverse);
+  --color-background: var(--color-background);
+  --color-background-inverse: var(--color-background-inverse);
+  --color-surface: var(--color-surface);
+  --color-surface-elevated: var(--color-surface-elevated);
+  --color-surface-muted: var(--color-surface-muted);
+  --color-accent: var(--color-accent);
+  --color-accent-contrast: var(--color-accent-contrast);
+  --color-border-default: var(--color-border-default);
+  --color-border-strong: var(--color-border-strong);
+  --color-overlay: var(--color-overlay);
+  --ease-standard: var(--ease-standard);
+}

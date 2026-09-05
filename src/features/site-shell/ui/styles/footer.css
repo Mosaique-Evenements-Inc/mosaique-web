@@ -172,8 +172,8 @@
   object-fit: contain;
   opacity: 0.9;
   transition:
-    opacity var(--motion-duration-fast) var(--motion-ease-standard),
-    transform var(--motion-duration-fast) var(--motion-ease-standard);
+    opacity var(--motion-duration-fast) var(--motion-easing-standard),
+    transform var(--motion-duration-fast) var(--motion-easing-standard);
 }
 
 .site-footer__collaborator-link:hover .site-footer__collaborator-logo,
@@ -349,7 +349,7 @@
     display: inline-flex;
     font-size: 1.25rem;
     justify-content: center;
-    transition: transform var(--motion-duration-fast) var(--motion-ease-standard);
+    transition: transform var(--motion-duration-fast) var(--motion-easing-standard);
   }
 
   .site-footer__navigation details[open] summary > span {

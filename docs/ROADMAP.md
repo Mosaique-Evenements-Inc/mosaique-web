@@ -299,6 +299,102 @@ This document is the source of truth for implementation status. The existence of
 
 ## Current
 
+### UI 0.2.0 Web Migration (UI-14)
+
+- Web now pins the GitHub Packages release `@mosaique-evenements-inc/ui@0.2.0` and
+  continues to consume only its public `tokens.css` export. The package's optional
+  foundation and recipes remain unimported because Web already owns its reset, forms,
+  controls, and cinematic CTA behavior.
+- Shared sans, body, and caption contracts back equivalent Web roles. Cinzel/display,
+  editorial scale, navigation, compact labels, and marketing CTA typography remain
+  Web-owned. No font files or external delivery were added; actual rendering continues
+  through platform fallbacks until approved assets exist.
+- Quote controls identify their existing 60px minimum as shared `comfortable` density.
+  Validation borders and messages use shared error semantics with a dark-surface
+  contrast adaptation; form markup, validation, focus, and submission behavior are
+  unchanged.
+
+### Registry Consumption (EP-07)
+
+- UI 0.1.0 is published on GitHub Packages; Web pins the registry version and no
+  longer resolves a sibling tarball. All nine CSS files match the approved artifact.
+- Actions read access was confirmed. A clean install with an empty store and frozen
+  lockfile passed, along with lint, typecheck, build (72 pages), and diff-check.
+- Integration is being completed on `temp/pre-library` by explicit user decision;
+  `main` and its existing design history remain unchanged. Earlier EP-05/06 entries
+  describe historical preparation states, superseded by this registry integration.
+- Registry runtime sanity passed on Home, About, Contact, Gallery, Event Detail
+  and Service Detail at 390/1440px. About gutters, Footer 160ms/standard easing,
+  Contact overrides, 12px/16px navigation blur and 16px form surface blur are intact;
+  `--space-28` remains undefined and no horizontal overflow was observed.
+
+### Shared Foundation Release Preparation (EP-06)
+
+- Release configuration and runbooks prepared; no publication, registry migration,
+  version change, commit, or push. Web retains its validated tarball dependency.
+- Both repositories route the organization scope through credential-free `.npmrc`
+  files. UI has a manual, main-only publish workflow; Web's future read-authenticated
+  CI setup and exact-version migration are documented in `SHARED_FOUNDATION.md`.
+- No CSS or token integration changes in this phase. EP-05's Chrome computed-style,
+  visual, and interaction evidence remains applicable; Safari/WebKit remains unverified.
+- Remote package visibility, version availability, and Actions access must be
+  verified during the authorized publication phase before switching Web to registry.
+
+### Shared Foundation Package Integration (EP-05)
+
+- **Implementation and local validation: complete.** EP-06 is not implemented.
+- Web consumes the real local `@mosaique-evenements-inc/ui@0.1.0` tarball through
+  `tokens.css`. Shared colors/focus, spacing, radii, layers, non-cinematic motion,
+  blur, and max-reading now come from the package. A reference-only Tailwind
+  adapter preserves utility names without runtime token duplication.
+- Typography, the existing reset, cinematic vocabulary, section rhythm,
+  max-content/grid/sticky geometry, and Contact overrides remain Web-owned.
+  Known unresolved `--space-28` and `--font-weight-regular` references are unchanged.
+- Chrome baseline/final validation covers Home, About, Contact, Gallery, Event
+  Detail, and Service Detail in ES/EN/FR at 390, 768, and 1440px (54 cases).
+  All 16,473 sampled elements preserve the measured computed styles, with no
+  runtime errors, broken loaded images, or horizontal overflow. Forty-five
+  screenshots match immediately; the nine video/entrance-sensitive cases also
+  match exactly with synchronized media and reduced motion enabled from load.
+- About gutters remain 20px / 30.72px / 57.6px. The installed package and build
+  retain Tailwind utility generation. Lint, typecheck, production build (72 pages),
+  and diff-check pass. WebKit is unavailable in the local Playwright installation.
+- Before/after interaction checks pass at all three widths: mobile menu/Escape,
+  custom select, calendar, Contact colors, footer timing, optical blur, reduced
+  motion, and sampled Home scroll states. Topbar blur remains 12px below 768px
+  and 16px at 768/1440px; select/calendar/toast remain 16px. No external form
+  submission was performed.
+- The dependency and lockfile intentionally reference a temporary sibling `.tgz`;
+  this is not a release-ready registry dependency. See
+  [Shared Foundation Integration](SHARED_FOUNDATION.md) for reproduction and release
+  handoff. No package source changes, version changes, publication, commit, or push.
+
+### Service Detail Fluid Desktop
+
+- **Implemented and validated locally.** Only the existing Service-owned `min-width: 64rem`
+  rules change. The editorial rail now varies between 26% and the original 28%, with fluid
+  inline padding and a remaining-space media track. The title follows its actual content
+  container through `cqi`, retaining the wide type-to-column ratio and height-aware ceiling.
+- The fixed-height narrative previously sent all remaining space above the CTA through
+  `margin-block-start: auto`. A bounded, fluid narrative end margin now shares that space below
+  the action on compact desktops, while preserving the 1920px baseline. Title-to-description
+  spacing also follows the content width. At 1280px, the French organization CTA gap falls from
+  261px to 153px and featured media gains 26px; the title remains three lines. At 1920px,
+  media changes by less than 4px, title height by less than 2px, and CTA geometry is unchanged.
+- Chromium before/after comparison covered 108 cases across ES/EN/FR, long/short/medium service
+  titles, and 1920, 1680, 1536, 1440, 1366, 1280, 1024, 1023, 900, 768, 390, and 320px.
+  All 45 tablet/mobile cases preserve measured header, title, description, CTA, divider, and
+  media geometry exactly. A further 114 progressive resize checks from 1920 to 1024px at
+  900px/720px heights keep the French stress-test title on three lines without collisions.
+- All eight services passed 72 additional locale/desktop checks, including loaded featured
+  images and accessible CTA placement. Sticky scroll states, keyboard focus, gallery lightbox,
+  reduced motion, and browser console checks passed. Visual captures were compared at wide,
+  compact, tablet, and mobile sizes; native Safari/device testing remains unverified.
+- Existing breakpoints, 16:9 media framing, `object-fit: cover`, animation rules, assets,
+  content, translations, routing, Header, Footer, Home, and Event Detail remain unchanged.
+  Scoped Prettier, lint, typecheck, build (72 pages), and diff-check passed. No automated test
+  script is configured. No commit or push.
+
 ### Localized Event Names and Collaboration
 
 - Events `event-slot-01` / `nossa-copa` and `event-slot-02` / `baila-da-zaza` now expose
@@ -678,6 +774,20 @@ HTTP adapter`. The service receives the repository contract, while `submit-lead.
   unchanged `Enviar solicitud` state. The final external submission was intentionally not sent to
   avoid creating a production-like lead during architecture QA; endpoint and transport contracts
   were verified in code and the optimized client bundle built successfully.
+- **WEB-LEAD-01 public capture alignment: complete locally.** Quote now defines one explicit
+  public Leads V1 boundary with exactly `fullName`, `email`, `phone`, `service`, `eventType`,
+  `eventDate`, `guestRange`, and `preferredLanguage`. Web trims and normalizes client input for UX
+  parity with the backend limits, serializes the existing Canadian/North-American `+1` phone scope,
+  accepts `YYYY-MM-DD` or `null` event dates, and keeps Venue, Budget, `code`, `id`, `status`,
+  `source`, assignments, notes, history, normalized fields, and internal UUIDs out of the outbound
+  payload. The HTTP adapter now consumes only the canonical success response
+  `lead.code`, `lead.status: "NEW"`, and `lead.createdAt`; temporary backend aliases
+  `lead.id` and `lead.created_at` are no longer required by Web. API errors are parsed from the
+  sanitized `error.code/message/details/requestId` envelope and mapped to safe site-owned feedback
+  for 400, 413, 422, 500, unknown shapes, network failure, and timeout without logging submitted
+  PII. `WEB/API-LEAD-ANTIABUSE-01` remains the next hardening episode for Turnstile or equivalent,
+  honeypot, backend verification, rate limiting, idempotency/retry protection, and safe abuse
+  metrics before meaningful public campaign traffic.
 - React, Zustand, the custom-event transport, Quote component decomposition, shared presentation
   primitives, Event/Service UI duplication, Home cinematic composition, routes, copy, assets, and
   visual behavior remain otherwise unchanged in Responsibility 2.
