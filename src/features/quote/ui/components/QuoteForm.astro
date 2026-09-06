@@ -150,10 +150,6 @@ import "../styles/quote-form.css";
       });
     };
 
-    const logFormAction = (action: string) => {
-      console.log(`QUOTE FORM ACTION: ${action.toUpperCase()} | STEP: INFORMACIÓN BÁSICA`);
-    };
-
     const toIsoDate = (date: Date) => {
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -557,21 +553,18 @@ import "../styles/quote-form.css";
       }
     });
 
-    logFormAction("open");
     nextButton?.addEventListener("click", () => {
       if (reviewing) {
         void submitReview();
         return;
       }
       if (!validateForm()) return;
-      logFormAction(editingFromReview ? "save changes" : "review");
       showReview();
     });
     toastClose?.addEventListener("click", hideSuccessToast);
     backButton?.addEventListener("click", () => {
       if (reviewing) {
         reviewing = false;
-        logFormAction("back");
         updateView();
         return;
       }
@@ -589,7 +582,6 @@ import "../styles/quote-form.css";
       button.addEventListener("click", () => {
         reviewing = false;
         editingFromReview = true;
-        logFormAction("edit");
         updateView();
       });
     });
