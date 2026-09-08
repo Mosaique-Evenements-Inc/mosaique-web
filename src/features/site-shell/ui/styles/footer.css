@@ -125,13 +125,20 @@
   overflow-wrap: anywhere;
 }
 
-.site-footer__logo-wall {
+.site-footer__collaborators {
   align-self: start;
+  display: grid;
+  gap: var(--space-4);
+  min-inline-size: 0;
+}
+
+.site-footer__logo-wall {
   border: 1px solid var(--footer-divider);
   border-radius: var(--primitive-radius-md);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  min-block-size: clamp(11rem, 16vw, 15rem);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  min-block-size: clamp(18rem, 26vw, 23rem);
   overflow: hidden;
 }
 
@@ -145,8 +152,12 @@
   text-align: center;
 }
 
-.site-footer__logo-tile + .site-footer__logo-tile {
+.site-footer__logo-tile:nth-child(even) {
   border-inline-start: 1px solid var(--footer-divider);
+}
+
+.site-footer__logo-tile:nth-child(n + 3) {
+  border-block-start: 1px solid var(--footer-divider);
 }
 
 .site-footer__collaborator-link {
@@ -193,6 +204,11 @@
 
 .site-footer__collaborator-logo--monogram {
   max-inline-size: clamp(4.5rem, 8vw, 7rem);
+}
+
+.site-footer__collaborator-logo--wordmark {
+  max-block-size: clamp(4.5rem, 7vw, 6rem);
+  max-inline-size: clamp(8rem, 14vw, 11rem);
 }
 
 .site-footer__middle {
@@ -362,7 +378,7 @@
   }
 
   .site-footer__logo-wall {
-    min-block-size: 7.5rem;
+    min-block-size: clamp(13.75rem, 64vw, 16rem);
   }
 
   .site-footer__logo-tile {
@@ -376,6 +392,11 @@
   .site-footer__collaborator-logo--portrait {
     max-block-size: 5rem;
     max-inline-size: 2.5rem;
+  }
+
+  .site-footer__collaborator-logo--wordmark {
+    max-block-size: 4rem;
+    max-inline-size: 7.5rem;
   }
 
   .site-footer__contact {

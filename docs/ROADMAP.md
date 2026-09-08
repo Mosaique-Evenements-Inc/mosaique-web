@@ -260,10 +260,15 @@ This document is the source of truth for implementation status. The existence of
   overriding the global smooth-scroll rule without changing native cross-page, modifier-click, or
   missing-target behavior.
 - **Email action surface refinement complete locally.** The framed Footer email CTA now uses the existing restrained medium radius while retaining its dimensions, arrow, verified destination, focus behavior, and responsive layout.
-- **Collaborator frame refinement complete locally.** The three-logo wall now shares the same medium radius as the Footer email action, with its internal tiles clipped to the outer frame while preserving separators, logo interactions, destinations, and responsive sizing.
+- **Collaborator mosaic complete locally.** A localized secondary heading now introduces four
+  configurable collaborator records in a balanced 2 × 2 grid. The frame retains the Footer email
+  action's medium radius and clipped internal dividers; the three verified destinations remain
+  interactive, while Latinova renders honestly without an invented link. A compact follow-up
+  reduces the heading gap and grid height by roughly one spacing step without changing logo scale
+  or cell equality.
 - On mobile, Compañía, Recursos, and Servicios use collapsed native disclosures to reduce scroll length; tablet and desktop keep all three groups expanded in the established grid.
-- **Fidelity Pass: complete.** Final CTA now hands off through a compact edge-padded visual strip into Movra's two-row footer composition: aligned 50/50 desktop grids, inset vertical dividers, full-width horizontal dividers, three navigation groups, the framed three-collaborator logo grid, contact CTA and verified contact details, a six-item service grid, and the closing copy at opposite lower edges.
-- Desktop uses paired information bands, tablet stacks those bands, and mobile follows a linear reading order without introducing reference-only newsletter, social links, or legal destinations. The three approved transparent collaborator assets are centered in equal framed tiles with uninterrupted dividers, contained without cropping, normalized to the footer's light monochrome treatment, and sourced from one typed collaborators module; each complete tile opens its approved external site in a separate, isolated tab.
+- **Fidelity Pass: complete.** Final CTA now hands off through a compact edge-padded visual strip into Movra's two-row footer composition: aligned 50/50 desktop grids, inset vertical dividers, full-width horizontal dividers, three navigation groups, the framed four-collaborator mosaic, contact CTA and verified contact details, an eight-item service grid, and the closing copy at opposite lower edges.
+- Desktop uses paired information bands, tablet stacks those bands, and mobile follows a linear reading order without introducing reference-only newsletter, social links, or legal destinations. The four approved transparent collaborator assets are centered in equal 2 × 2 framed tiles with uninterrupted dividers, contained without cropping, normalized to the footer's light monochrome treatment, and sourced from one typed collaborators module; records with approved destinations open their sites in separate, isolated tabs.
 - The footer is Astro-only; its only runtime behavior synchronizes the native mobile disclosures with the existing compact breakpoint. Reduced motion removes the collaborators' decorative hover transition without changing their links or content.
 - Handoff color, link destinations, mail link, content completeness, desktop, tablet, mobile, long-copy constraints, and document overflow were validated.
 

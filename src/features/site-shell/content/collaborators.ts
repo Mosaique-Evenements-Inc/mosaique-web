@@ -1,23 +1,24 @@
 import type { ImageMetadata } from "astro";
 
-import collaboratorGarcerant from "@/assets/logos/collaboraters/logo_sra_garcerant.png";
-import collaboratorPharus from "@/assets/logos/collaboraters/MONOGRAMA PHARUS (3).png";
-import collaboratorMicroverse from "@/assets/logos/collaboraters/Logo blanco sin fondo.png";
+import collaboratorPc from "@/assets/logos/collaboraters/logo_pc.png";
+import collaboratorPharus from "@/assets/logos/collaboraters/logo_pharus.png";
+import collaboratorMicroverse from "@/assets/logos/collaboraters/logo_microverse.png";
+import collaboratorLatinova from "@/assets/logos/collaboraters/logo_latinova.svg";
 
 export interface Collaborator {
   image: ImageMetadata;
-  link: string;
+  link?: string;
   nombre: string;
   path: string;
-  proportion: "landscape" | "portrait" | "monogram";
+  proportion: "landscape" | "portrait" | "monogram" | "wordmark";
 }
 
 export const collaborators = [
   {
     nombre: "Sra. Garcerant",
     link: "https://paula-contreras.vercel.app/tree",
-    image: collaboratorGarcerant,
-    path: collaboratorGarcerant.src,
+    image: collaboratorPc,
+    path: collaboratorPc.src,
     proportion: "landscape",
   },
   {
@@ -33,5 +34,11 @@ export const collaborators = [
     image: collaboratorMicroverse,
     path: collaboratorMicroverse.src,
     proportion: "monogram",
+  },
+  {
+    nombre: "Latinova",
+    image: collaboratorLatinova,
+    path: collaboratorLatinova.src,
+    proportion: "wordmark",
   },
 ] satisfies readonly Collaborator[];
