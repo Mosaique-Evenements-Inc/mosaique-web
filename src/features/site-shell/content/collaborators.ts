@@ -15,7 +15,7 @@ export interface Collaborator {
 
 export const collaborators = [
   {
-    nombre: "Sra. Garcerant",
+    nombre: "Hey PC",
     link: "https://paula-contreras.vercel.app/tree",
     image: collaboratorPc,
     path: collaboratorPc.src,
@@ -37,6 +37,7 @@ export const collaborators = [
   },
   {
     nombre: "Latinova",
+    link: "https://www.latinovamenage.com/",
     image: collaboratorLatinova,
     path: collaboratorLatinova.src,
     proportion: "wordmark",
