@@ -714,9 +714,31 @@
 }
 
 @media (min-width: 64rem) {
+  .service-detail__chapter {
+    grid-template-columns:
+      clamp(26%, calc(32% - var(--space-20)), 28%)
+      minmax(0, 1fr);
+  }
+
   .service-header {
+    padding-inline: clamp(var(--space-4), calc(2.5vw - var(--space-4)), 1.6vw);
     position: sticky;
     top: 0;
+  }
+
+  .service-header__layout {
+    container-type: inline-size;
+  }
+
+  .service-header h1 {
+    /* Match the wide 3.65 / (28 - 2 * 1.6) type-to-content ratio. */
+    font-size: clamp(2rem, min(14.72cqi, 8svh), 5.25rem);
+  }
+
+  .service-header__narrative {
+    /* Preserve the 1920px baseline; share compact-screen free space below the CTA. */
+    margin-block-end: clamp(0rem, calc((120rem - 100vw) / 4), min(var(--space-40), 16svh));
+    margin-block-start: clamp(var(--space-8), 17cqi, min(var(--space-20), 8svh));
   }
 }
 

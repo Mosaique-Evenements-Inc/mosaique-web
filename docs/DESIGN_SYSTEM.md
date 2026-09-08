@@ -1,6 +1,10 @@
 # Mosaïque Web Design System
 
-This document defines the technical and visual foundation for Mosaïque Web. It describes the system, but the executable CSS tokens in `src/styles/tokens/` are the final source of truth when documentation and implementation diverge.
+This document defines the technical and visual foundation for Mosaïque Web. Shared
+tokens come from `@mosaique-evenements-inc/ui/tokens.css`; Web-owned tokens remain
+in `src/styles/tokens/`. These executable sources take precedence over prose.
+See [Shared Foundation Integration](SHARED_FOUNDATION.md) for ownership, the
+Tailwind adapter, and the temporary tarball dependency.
 
 ## 1. Design Principles
 
@@ -56,6 +60,12 @@ Font loading strategy:
 - Load only the weights used by the current system.
 - Required files are still pending and should be added before production font loading is enabled:
   `Cinzel-Variable.woff2` or selected Cinzel weights, and `Montserrat-Variable.woff2` or selected Montserrat weights.
+
+UI 0.2.0 supplies the sans family contract and matching body/caption metrics but no
+font files. Web aliases its equivalent body and caption roles to those shared tokens.
+Display/headings, navigation, compact form labels, and marketing CTA typography remain
+Web-owned. Quote controls retain their established geometry while naming the 60px
+minimum as shared `comfortable` density; no global density mode is applied.
 
 ## 3. Colors
 

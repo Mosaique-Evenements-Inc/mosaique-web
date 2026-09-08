@@ -9,7 +9,7 @@
 
 .site-navigation {
   --site-navigation-fade-height: var(--space-12);
-  --site-navigation-blur: var(--space-4);
+  --site-navigation-blur: var(--effect-blur-md);
   block-size: var(--site-navigation-height);
   color: color-mix(
     in srgb,
@@ -252,7 +252,7 @@
 @media (max-width: 47.999rem) {
   .site-navigation {
     --site-navigation-fade-height: var(--space-8);
-    --site-navigation-blur: var(--space-3);
+    --site-navigation-blur: var(--effect-blur-sm);
   }
 }
 

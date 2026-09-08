@@ -1,4 +1,5 @@
 import type { LeadApiError, LeadFormInput, LeadRequest, LeadValidationResult } from "../types";
+import { publicLeadFieldLimits } from "../contracts/public-lead-capture.ts";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
@@ -40,20 +41,42 @@ export const validateLeadPayload = (input: LeadFormInput): LeadValidationResult 
       error: validationError("fullName", "Ingresa tu nombre completo."),
     };
   }
+  if (fullName.length > publicLeadFieldLimits.fullName) {
+    return {
+      success: false,
+      error: validationError("fullName", "El nombre es demasiado largo."),
+    };
+  }
 
   const email = getString(input, "email");
   if (!validateEmail(email)) {
     return { success: false, error: validationError("email", "Ingresa un email válido.") };
+  }
+  if (email.length > publicLeadFieldLimits.email) {
+    return { success: false, error: validationError("email", "El email es demasiado largo.") };
   }
 
   const phone = getString(input, "phone");
   if (!validatePhone(phone)) {
     return { success: false, error: validationError("phone", "Ingresa un teléfono válido.") };
   }
+  const normalizedPhone = `+1${phone}`;
+  if (normalizedPhone.length > publicLeadFieldLimits.phone) {
+    return {
+      success: false,
+      error: validationError("phone", "El teléfono es demasiado largo."),
+    };
+  }
 
   const service = getString(input, "service");
   if (!validateRequiredSelection(service)) {
     return { success: false, error: validationError("service", "Selecciona un servicio.") };
+  }
+  if (service.length > publicLeadFieldLimits.service) {
+    return {
+      success: false,
+      error: validationError("service", "El servicio es demasiado largo."),
+    };
   }
 
   const eventType = getString(input, "eventType");
@@ -61,6 +84,12 @@ export const validateLeadPayload = (input: LeadFormInput): LeadValidationResult 
     return {
       success: false,
       error: validationError("eventType", "Selecciona el tipo de evento."),
+    };
+  }
+  if (eventType.length > publicLeadFieldLimits.eventType) {
+    return {
+      success: false,
+      error: validationError("eventType", "El tipo de evento es demasiado largo."),
     };
   }
 
@@ -71,9 +100,20 @@ export const validateLeadPayload = (input: LeadFormInput): LeadValidationResult 
       error: validationError("guestRange", "Selecciona un rango de invitados."),
     };
   }
+  if (guestRange.length > publicLeadFieldLimits.guestRange) {
+    return {
+      success: false,
+      error: validationError("guestRange", "El rango de invitados es demasiado largo."),
+    };
+  }
 
   const rawEventDate = input.eventDate;
-  const eventDate = rawEventDate === null || rawEventDate === "" ? null : rawEventDate;
+  const eventDate =
+    typeof rawEventDate === "string"
+      ? rawEventDate.trim() || null
+      : rawEventDate === null || rawEventDate === undefined
+        ? null
+        : rawEventDate;
   if (typeof eventDate !== "string" && eventDate !== null) {
     return {
       success: false,
@@ -100,18 +140,31 @@ export const validateLeadPayload = (input: LeadFormInput): LeadValidationResult 
       error: validationError("preferredLanguage", "Revisa el idioma de preferencia."),
     };
   }
+  const normalizedPreferredLanguage = preferredLanguage?.trim().toLowerCase() || null;
+  if (
+    normalizedPreferredLanguage &&
+    normalizedPreferredLanguage.length > publicLeadFieldLimits.preferredLanguage
+  ) {
+    return {
+      success: false,
+      error: validationError(
+        "preferredLanguage",
+        "El idioma de preferencia es demasiado largo.",
+      ),
+    };
+  }
 
   return {
     success: true,
     data: {
       fullName,
-      email,
-      phone: `+1${phone}`,
+      email: email.toLowerCase(),
+      phone: normalizedPhone,
       service,
       eventType,
       eventDate,
       guestRange,
-      preferredLanguage: preferredLanguage?.trim() || null,
+      preferredLanguage: normalizedPreferredLanguage,
     },
   };
 };
