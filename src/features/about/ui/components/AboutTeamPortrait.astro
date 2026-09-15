@@ -1,0 +1,42 @@
+---
+import { Picture } from "astro:assets";
+
+import type { TeamMember } from "@/features/about/content/team";
+
+interface Props {
+  alt?: string;
+  member: TeamMember;
+  sizes: string;
+}
+
+const { alt = "", member, sizes } = Astro.props;
+const initials = member.name
+  .split(" ")
+  .map((part) => part[0])
+  .join("");
+---
+
+<span class="about-team__portrait">
+  {
+    member.image ? (
+      <Picture
+        src={member.image}
+        alt={alt}
+        formats={["avif", "webp"]}
+        fallbackFormat="jpg"
+        widths={[240, 305, 480, 640, 800]}
+        sizes={sizes}
+        loading="lazy"
+        decoding="async"
+      />
+    ) : (
+      <span
+        class="about-team__placeholder"
+        role={alt ? "img" : undefined}
+        aria-label={alt || undefined}
+      >
+        <span aria-hidden="true">{initials}</span>
+      </span>
+    )
+  }
+</span>
