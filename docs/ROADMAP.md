@@ -263,8 +263,8 @@ This document is the source of truth for implementation status. The existence of
 - **Email action surface refinement complete locally.** The framed Footer email CTA now uses the existing restrained medium radius while retaining its dimensions, arrow, verified destination, focus behavior, and responsive layout.
 - **Collaborator mosaic complete locally.** A localized secondary heading now introduces four
   configurable collaborator records in a balanced 2 × 2 grid. The frame retains the Footer email
-  action's medium radius and clipped internal dividers; the three verified destinations remain
-  interactive, while Latinova renders honestly without an invented link. A compact follow-up
+  action's medium radius and clipped internal dividers; all four verified destinations remain
+  interactive, including Latinova's approved site link. A compact follow-up
   reduces the heading gap and grid height by roughly one spacing step without changing logo scale
   or cell equality.
 - On mobile, Compañía, Recursos, and Servicios use collapsed native disclosures to reduce scroll length; tablet and desktop keep all three groups expanded in the established grid.
@@ -304,6 +304,72 @@ This document is the source of truth for implementation status. The existence of
 - Social image tags remain intentionally absent until an approved production image is available.
 
 ## Current
+
+### Tree Link V1
+
+- **✅ Step 1 — diagnostic complete.** The public link-in-bio surface was scoped against the
+  supplied Paula references, the existing Mosaïque architecture, confirmed business content,
+  locale routing, and native sharing/accessibility contracts before implementation.
+- **✅ Step 2 — implementation and sample reconciliation complete locally.** `/tree`, `/en/tree`,
+  and `/fr/tree` now render one feature-owned Astro composition with localized metadata and copy,
+  no shared Navigation or Footer, no React island, no `client:*` directive, and no hydrated runtime
+  dependency. The former temporary migration sample informed the product reconciliation without
+  becoming a production dependency and was removed in Step 4.
+- The implementation translates the sample's centered profile shell, prominent share trigger,
+  section hierarchy, disclosure, vertical action cards, and share preview into Mosaïque's semantic
+  cream/black/tan palette, Cinzel/Montserrat type roles, restrained radii, and approved logo. It
+  does not reuse Paula photography, social destinations, event claims, color system, React state,
+  or glassmorphism.
+- Step 2 initially limited Tree Link collaborators to Latinova. Step 3 supersedes that assumption;
+  Tree Link now consumes the Footer's complete canonical collaborator collection without copying
+  names, URLs, logo declarations, or identifiers.
+- Sharing uses one native modal `dialog`, canonical localized URLs, Clipboard API with a legacy
+  local fallback, Web Share with a copy fallback, and valid X, Facebook, WhatsApp, LinkedIn, and
+  email targets. Native focus containment, Escape/backdrop/close-button dismissal, scroll locking,
+  focus restoration, status announcements, and translated accessible names are preserved.
+- **✅ Step 3 — Content & Constants complete locally.** Structural configuration owns the
+  three pending event-slot IDs and the Instagram, TikTok, and Facebook IDs with explicit `null`
+  destinations. Feature i18n owns every localized heading, description, label, pending state,
+  sharing message, accessibility label, and metadata string for ES / EN-CA / FR-CA. Mosaïque
+  identity and location remain stable configuration, while Tree Link references the exact
+  `collaborators` collection used by Footer. The four current records—Hey PC, Pharus Creative,
+  Microverse Solution, and Latinova—retain their canonical logos and approved external URLs.
+  No real event, date, venue, media, ticket link, social URL, campaign copy, production domain, or
+  OG image was invented.
+- **✅ Step 4 — Visual Fidelity + UX/Performance Audit + Sample Cleanup + V1 Freeze complete
+  locally.** The final fidelity pass corrected narrow-mobile action-card density, collaborator list
+  semantics, vertical-logo containment, optimized collaborator delivery through Astro Assets,
+  active/hover feedback, copy-status reset, and natural EN-CA / FR-CA phrasing while preserving
+  the sample's composition, hierarchy, disclosure, card anatomy, and sharing model in Mosaïque's
+  visual language. The temporary sample and its ESLint/TypeScript exclusions are removed with zero
+  residual reference or production import.
+- **Post-freeze local theme enhancement complete.** Tree Link now keeps its approved light surface
+  on a dedicated night-green canvas and adds a mirrored 44 px light/dark control opposite Share.
+  Dark mode remaps the feature's semantic colors to the established Contact black/white treatment,
+  including cards, agenda, collaborators, and the share dialog. The explicit preference persists
+  through a local browser key and a minimal head script applies it before the Tree Link paints;
+  all three locales retain translated action labels with no island or duplicated
+  render tree.
+- **Post-freeze card and brand-icon refinement complete.** Social cards now render the official
+  Instagram, TikTok, and Facebook paths from the data-only `simple-icons` package; Instagram keeps
+  the approved brand gradient, Facebook its canonical blue, and TikTok a recognizable light/dark
+  treatment. Social marks and canonical collaborator logos sit on transparent wells. Collaborator
+  cards reuse the action-card column proportions, spacing, typography, trailing control, surface,
+  and border language, while a lower-amplitude standard-duration hover preserves clear feedback
+  without an abrupt lift. The website card is now the hierarchy's single warm-gradient highlight,
+  while the redundant Discover heading and its localization keys are removed without leaving an
+  orphaned labelled region.
+- Post-cleanup production-preview validation passed at `320 × 800`, `390 × 844`, `768 × 1024`,
+  `1440 × 900`, and `1920 × 1080` with zero measured horizontal overflow. ES / EN-CA / FR-CA,
+  agenda keyboard operation, modal sizing and scrolling, copy feedback and reset, backdrop and
+  Escape dismissal, focus restoration, Web Share cancellation, localized canonical sharing URLs,
+  touch targets, four optimized collaborator logos, and clean browser console passed. Runtime
+  reduced-motion emulation remains unavailable in the current browser; the compiled global and
+  feature media-query resets plus the immediate JavaScript close path passed source inspection.
+- Final scoped Prettier, tests (8/8), lint, typecheck, production build (75 pages / 1,213 optimized
+  image outputs), and diff-check pass. Tree Link V1 is frozen locally; official social URLs, real
+  event records, an approved OG image, and final `SITE_URL` remain honest non-blocking content or
+  deployment inputs.
 
 ### UI 0.2.0 Web Migration (UI-14)
 

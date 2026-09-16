@@ -1,0 +1,47 @@
+---
+import Icon from "@/core/common/ui/components/Icon.astro";
+import type { TreeLinkEventSlot } from "@/features/tree-link/content/tree-link";
+
+interface Props {
+  description: string;
+  pendingLabel: string;
+  slotLabels: readonly string[];
+  slots: readonly TreeLinkEventSlot[];
+  title: string;
+}
+
+const { description, pendingLabel, slotLabels, slots, title } = Astro.props;
+---
+
+<details class="tree-link-agenda">
+  <summary>
+    <span class="tree-link-card__icon" aria-hidden="true">
+      <Icon name="calendar" size={24} />
+    </span>
+    <span class="tree-link-card__copy">
+      <strong>{title}</strong>
+      <span>{description}</span>
+    </span>
+    <span class="tree-link-agenda__indicator" aria-hidden="true">
+      <Icon name="navArrowDown" size={20} />
+    </span>
+  </summary>
+
+  <div class="tree-link-agenda__content">
+    <ol>
+      {
+        slots.map((slot, index) => (
+          <li data-status={slot.status}>
+            <span class="tree-link-agenda__index" aria-hidden="true">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <span class="tree-link-agenda__event">
+              <strong>{slotLabels[index]}</strong>
+              <span>{pendingLabel}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</details>

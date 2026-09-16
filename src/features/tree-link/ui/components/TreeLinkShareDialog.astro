@@ -1,0 +1,394 @@
+---
+import topbarLogo from "@/assets/logos/logo_topbar.png";
+import Icon from "@/core/common/ui/components/Icon.astro";
+
+interface Props {
+  brandName: string;
+  canonicalPath: string;
+  canonicalUrl?: string;
+  closeLabel: string;
+  copyError: string;
+  copyLabel: string;
+  copiedLabel: string;
+  emailLabel: string;
+  emailOptionLabel: string;
+  facebookLabel: string;
+  fallbackCopied: string;
+  linkedinLabel: string;
+  moreLabel: string;
+  openLabel: string;
+  previewLabel: string;
+  shareOnLabel: string;
+  tagline: string;
+  title: string;
+  whatsappLabel: string;
+  xLabel: string;
+}
+
+const {
+  brandName,
+  canonicalPath,
+  canonicalUrl,
+  closeLabel,
+  copyError,
+  copyLabel,
+  copiedLabel,
+  emailLabel,
+  emailOptionLabel,
+  facebookLabel,
+  fallbackCopied,
+  linkedinLabel,
+  moreLabel,
+  openLabel,
+  previewLabel,
+  shareOnLabel,
+  tagline,
+  title,
+  whatsappLabel,
+  xLabel,
+} = Astro.props;
+
+const platforms = [
+  { id: "x", icon: "x", label: xLabel, visibleLabel: "X" },
+  { id: "facebook", icon: "facebook", label: facebookLabel, visibleLabel: "Facebook" },
+  { id: "whatsapp", icon: "whatsapp", label: whatsappLabel, visibleLabel: "WhatsApp" },
+  { id: "linkedin", icon: "linkedin", label: linkedinLabel, visibleLabel: "LinkedIn" },
+  { id: "email", icon: "sendMail", label: emailLabel, visibleLabel: emailOptionLabel },
+] as const;
+---
+
+<div
+  class="tree-link-share"
+  data-tree-share-root
+  data-canonical-path={canonicalPath}
+  data-canonical-url={canonicalUrl}
+  data-share-title={brandName}
+  data-copy-error={copyError}
+  data-copied-label={copiedLabel}
+  data-copy-label={copyLabel}
+  data-fallback-copied={fallbackCopied}
+>
+  <button
+    class="tree-link__control tree-link-share__trigger"
+    type="button"
+    aria-label={openLabel}
+    aria-controls="tree-link-share-dialog"
+    aria-expanded="false"
+    data-tree-share-open
+  >
+    <Icon name="shareIos" size={22} />
+  </button>
+
+  <dialog
+    class="tree-link-share__dialog"
+    id="tree-link-share-dialog"
+    aria-labelledby="tree-link-share-title"
+    aria-modal="true"
+    data-tree-share-dialog
+  >
+    <div class="tree-link-share__surface" data-tree-share-surface>
+      <header class="tree-link-share__header">
+        <span aria-hidden="true"></span>
+        <h2 id="tree-link-share-title">{title}</h2>
+        <button type="button" aria-label={closeLabel} data-tree-share-close>
+          <Icon name="xmark" size={22} />
+        </button>
+      </header>
+
+      <section class="tree-link-share__preview" aria-label={previewLabel}>
+        <div
+          class="tree-link-share__preview-mark"
+          style={`--tree-link-logo:url("${topbarLogo.src}");`}
+          aria-hidden="true"
+        >
+        </div>
+        <h3>{brandName}</h3>
+        <p>{tagline}</p>
+        <span data-tree-share-url-preview>{canonicalPath}</span>
+      </section>
+
+      <button
+        class="tree-link-share__copy"
+        type="button"
+        aria-label={copyLabel}
+        data-tree-share-copy
+      >
+        <Icon name="copy" size={20} />
+        <span data-tree-share-copy-label>{copyLabel}</span>
+      </button>
+
+      <p
+        class="tree-link-share__status"
+        aria-live="polite"
+        aria-atomic="true"
+        data-tree-share-status
+      >
+      </p>
+
+      <div class="tree-link-share__options">
+        <p>{shareOnLabel}</p>
+        <nav aria-label={shareOnLabel}>
+          {
+            platforms.map((platform) => (
+              <a
+                class="tree-link-share__option"
+                data-tree-share-platform={platform.id}
+                aria-label={platform.label}
+                target={platform.id === "email" ? undefined : "_blank"}
+                rel={platform.id === "email" ? undefined : "noopener noreferrer"}
+              >
+                <span aria-hidden="true">
+                  <Icon name={platform.icon} size={23} />
+                </span>
+                <small>{platform.visibleLabel}</small>
+              </a>
+            ))
+          }
+          <button
+            class="tree-link-share__option"
+            type="button"
+            aria-label={moreLabel}
+            data-tree-native-share
+          >
+            <span aria-hidden="true"><Icon name="moreHoriz" size={24} /></span>
+            <small>{moreLabel}</small>
+          </button>
+        </nav>
+      </div>
+    </div>
+  </dialog>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-tree-share-root]").forEach((root) => {
+    if (root.dataset.ready === "true") return;
+    root.dataset.ready = "true";
+
+    const trigger = root.querySelector<HTMLButtonElement>("[data-tree-share-open]");
+    const dialog = root.querySelector<HTMLDialogElement>("[data-tree-share-dialog]");
+    const surface = root.querySelector<HTMLElement>("[data-tree-share-surface]");
+    const closeButton = root.querySelector<HTMLButtonElement>("[data-tree-share-close]");
+    const copyButton = root.querySelector<HTMLButtonElement>("[data-tree-share-copy]");
+    const copyLabel = root.querySelector<HTMLElement>("[data-tree-share-copy-label]");
+    const status = root.querySelector<HTMLElement>("[data-tree-share-status]");
+    const urlPreview = root.querySelector<HTMLElement>("[data-tree-share-url-preview]");
+    const nativeShare = root.querySelector<HTMLButtonElement>("[data-tree-native-share]");
+    const platformLinks = Array.from(
+      root.querySelectorAll<HTMLAnchorElement>("[data-tree-share-platform]"),
+    );
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const controller = new AbortController();
+    const documentRoot = document.documentElement;
+    const body = document.body;
+    let previousRootOverflow = "";
+    let previousBodyOverflow = "";
+    let copyResetTimer = 0;
+    let closeTimer = 0;
+
+    if (!trigger || !dialog || !surface || !closeButton || !copyButton || !copyLabel) return;
+
+    const canonicalUrl =
+      root.dataset.canonicalUrl ||
+      new URL(root.dataset.canonicalPath || window.location.pathname, window.location.origin)
+        .href;
+    const shareTitle = root.dataset.shareTitle || document.title;
+
+    if (urlPreview) {
+      const url = new URL(canonicalUrl);
+      urlPreview.textContent = `${url.host}${url.pathname}`.replace(/\/$/, "");
+    }
+
+    const getPlatformUrl = (platform: string) => {
+      const encodedUrl = encodeURIComponent(canonicalUrl);
+      const encodedTitle = encodeURIComponent(shareTitle);
+
+      switch (platform) {
+        case "x":
+          return `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`;
+        case "facebook":
+          return `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+        case "whatsapp":
+          return `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`;
+        case "linkedin":
+          return `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
+        case "email":
+          return `mailto:?subject=${encodedTitle}&body=${encodedUrl}`;
+        default:
+          return canonicalUrl;
+      }
+    };
+
+    platformLinks.forEach((link) => {
+      link.href = getPlatformUrl(link.dataset.treeSharePlatform || "");
+    });
+
+    const announce = (message: string, kind: "success" | "error" = "success") => {
+      if (!status) return;
+      status.textContent = message;
+      status.dataset.kind = kind;
+    };
+
+    const resetCopyState = () => {
+      window.clearTimeout(copyResetTimer);
+      copyButton.removeAttribute("data-copied");
+      copyLabel.textContent = root.dataset.copyLabel || "";
+      copyButton.setAttribute("aria-label", root.dataset.copyLabel || "");
+      if (status) {
+        status.textContent = "";
+        status.removeAttribute("data-kind");
+      }
+    };
+
+    const copyWithFallback = () => {
+      const textarea = document.createElement("textarea");
+      textarea.value = canonicalUrl;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      const legacyDocument = document as unknown as {
+        execCommand: (commandId: string) => boolean;
+      };
+      const copied = legacyDocument.execCommand("copy");
+      textarea.remove();
+      if (!copied) throw new Error("Copy command failed");
+    };
+
+    const copyUrl = async (message = root.dataset.copiedLabel || "") => {
+      try {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(canonicalUrl);
+        } else {
+          copyWithFallback();
+        }
+
+        copyButton.setAttribute("data-copied", "true");
+        copyLabel.textContent = root.dataset.copiedLabel || "";
+        copyButton.setAttribute("aria-label", root.dataset.copiedLabel || "");
+        announce(message);
+        window.clearTimeout(copyResetTimer);
+        copyResetTimer = window.setTimeout(resetCopyState, 2400);
+        return true;
+      } catch {
+        try {
+          copyWithFallback();
+          copyButton.setAttribute("data-copied", "true");
+          copyLabel.textContent = root.dataset.copiedLabel || "";
+          copyButton.setAttribute("aria-label", root.dataset.copiedLabel || "");
+          announce(message);
+          window.clearTimeout(copyResetTimer);
+          copyResetTimer = window.setTimeout(resetCopyState, 2400);
+          return true;
+        } catch {
+          announce(root.dataset.copyError || "", "error");
+          return false;
+        }
+      }
+    };
+
+    const unlockScroll = () => {
+      documentRoot.style.overflow = previousRootOverflow;
+      body.style.overflow = previousBodyOverflow;
+    };
+
+    const finishClose = () => {
+      window.clearTimeout(closeTimer);
+      dialog.removeAttribute("data-closing");
+      if (dialog.open) dialog.close();
+    };
+
+    const closeDialog = () => {
+      if (!dialog.open) return;
+      if (reducedMotion.matches) {
+        finishClose();
+        return;
+      }
+
+      dialog.setAttribute("data-closing", "true");
+      closeTimer = window.setTimeout(finishClose, 340);
+    };
+
+    trigger.addEventListener(
+      "click",
+      () => {
+        previousRootOverflow = documentRoot.style.overflow;
+        previousBodyOverflow = body.style.overflow;
+        documentRoot.style.overflow = "hidden";
+        body.style.overflow = "hidden";
+        trigger.setAttribute("aria-expanded", "true");
+        resetCopyState();
+        dialog.showModal();
+        closeButton.focus({ preventScroll: true });
+      },
+      { signal: controller.signal },
+    );
+
+    closeButton.addEventListener("click", closeDialog, { signal: controller.signal });
+    copyButton.addEventListener("click", () => void copyUrl(), { signal: controller.signal });
+
+    nativeShare?.addEventListener(
+      "click",
+      () => {
+        void (async () => {
+          if (navigator.share) {
+            try {
+              await navigator.share({ title: shareTitle, url: canonicalUrl });
+              return;
+            } catch (error) {
+              if (error instanceof DOMException && error.name === "AbortError") return;
+            }
+          }
+
+          await copyUrl(root.dataset.fallbackCopied || root.dataset.copiedLabel || "");
+        })();
+      },
+      { signal: controller.signal },
+    );
+
+    dialog.addEventListener(
+      "cancel",
+      (event) => {
+        event.preventDefault();
+        closeDialog();
+      },
+      { signal: controller.signal },
+    );
+
+    dialog.addEventListener(
+      "click",
+      (event) => {
+        if (event.target === dialog) closeDialog();
+      },
+      { signal: controller.signal },
+    );
+
+    dialog.addEventListener(
+      "animationend",
+      (event) => {
+        if (event.target === surface && dialog.hasAttribute("data-closing")) finishClose();
+      },
+      { signal: controller.signal },
+    );
+
+    dialog.addEventListener(
+      "close",
+      () => {
+        unlockScroll();
+        trigger.setAttribute("aria-expanded", "false");
+        trigger.focus({ preventScroll: true });
+      },
+      { signal: controller.signal },
+    );
+
+    window.addEventListener(
+      "pagehide",
+      () => {
+        window.clearTimeout(copyResetTimer);
+        window.clearTimeout(closeTimer);
+        controller.abort();
+      },
+      { once: true, signal: controller.signal },
+    );
+  });
+</script>

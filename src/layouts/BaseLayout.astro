@@ -84,6 +84,7 @@ const structuredDataJson = JSON.stringify(structuredData).replace(/</g, "\\u003c
     <meta name="twitter:description" content={description} />
     {socialImageUrl && <meta name="twitter:image" content={socialImageUrl} />}
 
+    <slot name="head" />
     <script type="application/ld+json" set:html={structuredDataJson} is:inline />
     <title>{title}</title>
   </head>

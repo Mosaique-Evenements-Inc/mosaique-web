@@ -1,0 +1,9 @@
+---
+import TreeLinkPage from "@/features/tree-link/ui/pages/TreeLinkPage.astro";
+
+export function getStaticPaths() {
+  return ["en", "fr"].map((locale) => ({ params: { locale } }));
+}
+---
+
+<TreeLinkPage />

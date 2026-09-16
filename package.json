@@ -25,6 +25,7 @@
     "iconoir-react": "^7.12.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "simple-icons": "^16.31.0",
     "tailwindcss": "^4.3.3",
     "zustand": "^5.0.15"
   },

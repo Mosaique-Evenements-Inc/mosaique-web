@@ -1,0 +1,64 @@
+---
+import Icon from "@/core/common/ui/components/Icon.astro";
+
+interface Props {
+  switchToDarkLabel: string;
+  switchToLightLabel: string;
+}
+
+const { switchToDarkLabel, switchToLightLabel } = Astro.props;
+---
+
+<div class="tree-link-theme">
+  <button
+    class="tree-link__control tree-link-theme__trigger"
+    type="button"
+    aria-label={switchToDarkLabel}
+    aria-pressed="false"
+    data-tree-theme-toggle
+    data-switch-to-dark-label={switchToDarkLabel}
+    data-switch-to-light-label={switchToLightLabel}
+  >
+    <span class="tree-link-theme__moon" aria-hidden="true">
+      <Icon name="halfMoon" size={22} />
+    </span>
+    <span class="tree-link-theme__sun" aria-hidden="true">
+      <Icon name="sunLight" size={22} />
+    </span>
+  </button>
+</div>
+
+<script>
+  const storageKey = "mosaique-tree-link-theme";
+
+  document.querySelectorAll<HTMLButtonElement>("[data-tree-theme-toggle]").forEach((toggle) => {
+    if (toggle.dataset.ready === "true") return;
+    toggle.dataset.ready = "true";
+
+    const root = document.documentElement;
+    const syncToggle = () => {
+      const isDark = root.dataset.treeLinkTheme === "dark";
+      toggle.setAttribute("aria-pressed", String(isDark));
+      toggle.setAttribute(
+        "aria-label",
+        isDark
+          ? toggle.dataset.switchToLightLabel || ""
+          : toggle.dataset.switchToDarkLabel || "",
+      );
+    };
+
+    syncToggle();
+
+    toggle.addEventListener("click", () => {
+      const nextTheme = root.dataset.treeLinkTheme === "dark" ? "light" : "dark";
+      root.dataset.treeLinkTheme = nextTheme;
+      syncToggle();
+
+      try {
+        window.localStorage.setItem(storageKey, nextTheme);
+      } catch {
+        // The selected theme still applies for this page when storage is unavailable.
+      }
+    });
+  });
+</script>

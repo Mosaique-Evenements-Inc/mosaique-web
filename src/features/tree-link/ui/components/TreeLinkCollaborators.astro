@@ -1,0 +1,81 @@
+---
+import { Image } from "astro:assets";
+
+import Icon from "@/core/common/ui/components/Icon.astro";
+import type {
+  TreeLinkCollaborator,
+  TreeLinkCollaboratorName,
+} from "@/features/tree-link/content/tree-link";
+
+interface Props {
+  collaborators: readonly TreeLinkCollaborator[];
+  descriptions: Record<TreeLinkCollaboratorName, string>;
+  opensNewTab: string;
+  visitLabel: string;
+}
+
+const { collaborators, descriptions, opensNewTab, visitLabel } = Astro.props;
+
+const getLogoTone = (name: TreeLinkCollaboratorName) => (name === "Hey PC" ? "dark" : "light");
+---
+
+<ul class="tree-link-collaborators">
+  {
+    collaborators.map((collaborator) =>
+      collaborator.link ? (
+        <li>
+          <a
+            class="tree-link-collaborator"
+            href={collaborator.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${visitLabel} ${collaborator.nombre} (${opensNewTab})`}
+          >
+            <span
+              class="tree-link-collaborator__logo"
+              data-logo-tone={getLogoTone(collaborator.nombre)}
+            >
+              <Image
+                src={collaborator.image}
+                alt=""
+                widths={[64, 128]}
+                sizes="64px"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span class="tree-link-collaborator__copy">
+              <strong>{collaborator.nombre}</strong>
+              <span>{descriptions[collaborator.nombre]}</span>
+            </span>
+            <span class="tree-link-card__action" aria-hidden="true">
+              <Icon name="arrowRight" size={20} />
+            </span>
+          </a>
+        </li>
+      ) : (
+        <li>
+          <article class="tree-link-collaborator">
+            <span
+              class="tree-link-collaborator__logo"
+              data-logo-tone={getLogoTone(collaborator.nombre)}
+            >
+              <Image
+                src={collaborator.image}
+                alt=""
+                widths={[64, 128]}
+                sizes="64px"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span class="tree-link-collaborator__copy">
+              <strong>{collaborator.nombre}</strong>
+              <span>{descriptions[collaborator.nombre]}</span>
+            </span>
+          </article>
+        </li>
+      ),
+    )
+  }
+</ul>

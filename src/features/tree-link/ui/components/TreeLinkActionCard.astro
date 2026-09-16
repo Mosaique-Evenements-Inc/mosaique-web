@@ -1,0 +1,65 @@
+---
+import Icon, { type IconName } from "@/core/common/ui/components/Icon.astro";
+import type { TreeLinkSocialId } from "@/features/tree-link/content/tree-link";
+import TreeLinkSocialIcon from "./TreeLinkSocialIcon.astro";
+
+interface Props {
+  description: string;
+  href?: string | null;
+  highlight?: boolean;
+  icon?: IconName;
+  socialIcon?: TreeLinkSocialId;
+  label: string;
+  pendingLabel?: string;
+}
+
+const { description, highlight = false, href, icon, label, socialIcon } = Astro.props;
+---
+
+{
+  href ? (
+    <a
+      class:list={[
+        "tree-link-card",
+        "tree-link-card--link",
+        { "tree-link-card--highlight": highlight },
+      ]}
+      href={href}
+    >
+      <span
+        class:list={["tree-link-card__icon", { "tree-link-card__icon--social": socialIcon }]}
+        aria-hidden="true"
+      >
+        {socialIcon ? (
+          <TreeLinkSocialIcon name={socialIcon} />
+        ) : (
+          icon && <Icon name={icon} size={24} />
+        )}
+      </span>
+      <span class="tree-link-card__copy">
+        <strong>{label}</strong>
+        <span>{description}</span>
+      </span>
+      <span class="tree-link-card__action" aria-hidden="true">
+        <Icon name="arrowRight" size={20} />
+      </span>
+    </a>
+  ) : (
+    <article class="tree-link-card tree-link-card--pending">
+      <span
+        class:list={["tree-link-card__icon", { "tree-link-card__icon--social": socialIcon }]}
+        aria-hidden="true"
+      >
+        {socialIcon ? (
+          <TreeLinkSocialIcon name={socialIcon} />
+        ) : (
+          icon && <Icon name={icon} size={24} />
+        )}
+      </span>
+      <span class="tree-link-card__copy">
+        <strong>{label}</strong>
+        <span>{description}</span>
+      </span>
+    </article>
+  )
+}
