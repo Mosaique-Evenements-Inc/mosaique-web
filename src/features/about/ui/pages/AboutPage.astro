@@ -4,12 +4,15 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Footer from "@/features/site-shell/ui/components/Footer.astro";
 import Navigation from "@/features/site-shell/ui/components/Navigation.astro";
 import { getLocalizedAboutMedia } from "../../content/about";
+import { getLocalizedTeamContent } from "../../content/team";
 import AboutHero from "../components/AboutHero.astro";
 import AboutMediaMosaic from "../components/AboutMediaMosaic.astro";
+import AboutTeam from "../components/AboutTeam.astro";
 import { getAboutTranslations } from "@/features/about/i18n";
 import { getLocaleFromUrl } from "@/core/i18n";
 
 import "../styles/about-page.css";
+import "../styles/about-team.css";
 
 const locale = getLocaleFromUrl(Astro.url);
 const aboutText = getAboutTranslations(locale);
@@ -26,6 +29,7 @@ const aboutText = getAboutTranslations(locale);
       <AboutHero slot="lead" lines={aboutText.heroLines} caption={aboutText.heroCaption} />
       <AboutMediaMosaic label={aboutText.mosaicLabel} items={getLocalizedAboutMedia(locale)} />
     </PanelReveal>
+    <AboutTeam content={getLocalizedTeamContent(locale)} />
   </main>
   <Footer />
 </BaseLayout>

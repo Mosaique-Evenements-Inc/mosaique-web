@@ -1,0 +1,317 @@
+---
+import type { TeamContent } from "@/features/about/content/team";
+import AboutTeamPortrait from "./AboutTeamPortrait.astro";
+
+interface Props {
+  content: TeamContent;
+}
+
+const { content } = Astro.props;
+const firstMember = content.members[0];
+const previousMember = content.members.at(-1) ?? firstMember;
+const nextMember = content.members[1] ?? firstMember;
+---
+
+<section
+  class="about-team"
+  data-about-team
+  data-selected-prefix={content.selectedPrefix}
+  data-select-member-label={content.selectMemberLabel}
+  data-navigation-contrast="light"
+  aria-labelledby="about-team-title"
+>
+  <div class="about-team__inner">
+    <header class="about-team__header">
+      <h2 class="about-team__title" id="about-team-title">{content.eyebrow}</h2>
+      <p class="about-team__intro">{content.heading}</p>
+    </header>
+
+    <div class="about-team__showcase">
+      <button
+        class="about-team__side about-team__side--previous"
+        type="button"
+        aria-controls="active-member-panel"
+        aria-label={`${content.selectMemberLabel} ${previousMember.name}`}
+        data-team-step="-1"
+      >
+        <span class="about-team__side-media" aria-hidden="true">
+          {
+            content.members.map((member) => (
+              <span
+                class="about-team__portrait-layer"
+                data-team-previous-visual={member.id}
+                data-team-visible={member.id === previousMember.id ? "true" : "false"}
+                aria-hidden={member.id === previousMember.id ? "false" : "true"}
+              >
+                <AboutTeamPortrait member={member} sizes="(min-width: 1024px) 15vw, 30vw" />
+              </span>
+            ))
+          }
+        </span>
+        <span class="about-team__side-meta">
+          <span class="about-team__side-index" data-team-previous-index>
+            {String(content.members.length).padStart(2, "0")}
+          </span>
+          <span class="about-team__side-name" data-team-previous-name>
+            {previousMember.name}
+          </span>
+        </span>
+      </button>
+
+      <figure class="about-team__active-media">
+        {
+          content.members.map((member, index) => (
+            <span
+              class="about-team__portrait-layer"
+              data-team-active-visual={member.id}
+              data-team-visible={index === 0 ? "true" : "false"}
+              aria-hidden={index === 0 ? "false" : "true"}
+            >
+              <AboutTeamPortrait
+                member={member}
+                alt={member.name}
+                sizes="(min-width: 1024px) 28vw, (min-width: 768px) 44vw, 100vw"
+              />
+            </span>
+          ))
+        }
+        <figcaption class="sr-only" data-team-active-caption>{firstMember.name}</figcaption>
+      </figure>
+
+      <article
+        class="about-team__panel"
+        id="active-member-panel"
+        data-team-panel
+        aria-labelledby="active-member-name"
+      >
+        <div class="about-team__field about-team__field--name">
+          <p class="about-team__label">{content.labels.name}</p>
+          <h3 class="about-team__name" id="active-member-name" data-team-name>
+            {firstMember.name}
+          </h3>
+        </div>
+        <div class="about-team__details">
+          <div class="about-team__field">
+            <p class="about-team__label">{content.labels.role}</p>
+            <p class="about-team__value" data-team-role>{firstMember.role}</p>
+          </div>
+          <div class="about-team__field">
+            <p class="about-team__label">{content.labels.occupation}</p>
+            <p class="about-team__value" data-team-occupation>{firstMember.occupation}</p>
+          </div>
+        </div>
+        <p class="about-team__description" data-team-description>{firstMember.description}</p>
+      </article>
+
+      <button
+        class="about-team__side about-team__side--next"
+        type="button"
+        aria-controls="active-member-panel"
+        aria-label={`${content.selectMemberLabel} ${nextMember.name}`}
+        data-team-step="1"
+      >
+        <span class="about-team__side-media" aria-hidden="true">
+          {
+            content.members.map((member) => (
+              <span
+                class="about-team__portrait-layer"
+                data-team-next-visual={member.id}
+                data-team-visible={member.id === nextMember.id ? "true" : "false"}
+                aria-hidden={member.id === nextMember.id ? "false" : "true"}
+              >
+                <AboutTeamPortrait member={member} sizes="(min-width: 1024px) 15vw, 30vw" />
+              </span>
+            ))
+          }
+        </span>
+        <span class="about-team__side-meta">
+          <span class="about-team__side-index" data-team-next-index>02</span>
+          <span class="about-team__side-name" data-team-next-name>{nextMember.name}</span>
+        </span>
+      </button>
+    </div>
+
+    <ul class="about-team__roster" aria-label={content.eyebrow} data-team-roster>
+      {
+        content.members.map((member, index) => (
+          <li class="about-team__roster-item">
+            <button
+              class="about-team__member"
+              type="button"
+              aria-controls="active-member-panel"
+              aria-label={`${content.selectMemberLabel} ${member.name}`}
+              aria-pressed={index === 0 ? "true" : "false"}
+              data-team-member={member.id}
+              data-team-name-value={member.name}
+              data-team-role-value={member.role}
+              data-team-occupation-value={member.occupation}
+              data-team-description-value={member.description}
+            >
+              <span class="about-team__member-index" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span class="about-team__member-name">{member.role}</span>
+            </button>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="sr-only" aria-live="polite" aria-atomic="true" data-team-status>
+      {content.selectedPrefix}
+      {firstMember.name}
+    </p>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-about-team]").forEach((root) => {
+    if (root.dataset.teamReady === "true") return;
+    root.dataset.teamReady = "true";
+
+    const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-team-member]"));
+    const stepButtons = Array.from(
+      root.querySelectorAll<HTMLButtonElement>("[data-team-step]"),
+    );
+    const panel = root.querySelector<HTMLElement>("[data-team-panel]");
+    const name = root.querySelector<HTMLElement>("[data-team-name]");
+    const role = root.querySelector<HTMLElement>("[data-team-role]");
+    const occupation = root.querySelector<HTMLElement>("[data-team-occupation]");
+    const description = root.querySelector<HTMLElement>("[data-team-description]");
+    const caption = root.querySelector<HTMLElement>("[data-team-active-caption]");
+    const status = root.querySelector<HTMLElement>("[data-team-status]");
+    const previousName = root.querySelector<HTMLElement>("[data-team-previous-name]");
+    const previousIndex = root.querySelector<HTMLElement>("[data-team-previous-index]");
+    const nextName = root.querySelector<HTMLElement>("[data-team-next-name]");
+    const nextIndex = root.querySelector<HTMLElement>("[data-team-next-index]");
+    const selectedPrefix = root.dataset.selectedPrefix ?? "";
+    const selectMemberLabel = root.dataset.selectMemberLabel ?? "";
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let activeIndex = 0;
+
+    if (
+      !panel ||
+      !name ||
+      !role ||
+      !occupation ||
+      !description ||
+      !caption ||
+      !status ||
+      !previousName ||
+      !previousIndex ||
+      !nextName ||
+      !nextIndex ||
+      buttons.length === 0 ||
+      stepButtons.length !== 2
+    ) {
+      return;
+    }
+
+    const selectMember = (index: number, announce = true) => {
+      activeIndex = (index + buttons.length) % buttons.length;
+      const previousMemberIndex = (activeIndex - 1 + buttons.length) % buttons.length;
+      const nextMemberIndex = (activeIndex + 1) % buttons.length;
+      const button = buttons[activeIndex];
+      const previousButton = buttons[previousMemberIndex];
+      const nextButton = buttons[nextMemberIndex];
+      const memberId = button.dataset.teamMember;
+      const memberName = button.dataset.teamNameValue;
+      const previousMemberId = previousButton.dataset.teamMember;
+      const previousMemberName = previousButton.dataset.teamNameValue;
+      const nextMemberId = nextButton.dataset.teamMember;
+      const nextMemberName = nextButton.dataset.teamNameValue;
+
+      if (
+        !memberId ||
+        !memberName ||
+        !previousMemberId ||
+        !previousMemberName ||
+        !nextMemberId ||
+        !nextMemberName
+      ) {
+        return;
+      }
+
+      buttons.forEach((candidate, candidateIndex) => {
+        candidate.setAttribute("aria-pressed", String(candidateIndex === activeIndex));
+      });
+
+      root.querySelectorAll<HTMLElement>("[data-team-active-visual]").forEach((visual) => {
+        const isVisible = visual.dataset.teamActiveVisual === memberId;
+        visual.dataset.teamVisible = String(isVisible);
+        visual.setAttribute("aria-hidden", String(!isVisible));
+      });
+      root.querySelectorAll<HTMLElement>("[data-team-previous-visual]").forEach((visual) => {
+        const isVisible = visual.dataset.teamPreviousVisual === previousMemberId;
+        visual.dataset.teamVisible = String(isVisible);
+        visual.setAttribute("aria-hidden", String(!isVisible));
+      });
+      root.querySelectorAll<HTMLElement>("[data-team-next-visual]").forEach((visual) => {
+        const isVisible = visual.dataset.teamNextVisual === nextMemberId;
+        visual.dataset.teamVisible = String(isVisible);
+        visual.setAttribute("aria-hidden", String(!isVisible));
+      });
+
+      name.textContent = memberName;
+      role.textContent = button.dataset.teamRoleValue ?? "";
+      occupation.textContent = button.dataset.teamOccupationValue ?? "";
+      description.textContent = button.dataset.teamDescriptionValue ?? "";
+      caption.textContent = memberName;
+      previousName.textContent = previousMemberName;
+      previousIndex.textContent = String(previousMemberIndex + 1).padStart(2, "0");
+      nextName.textContent = nextMemberName;
+      nextIndex.textContent = String(nextMemberIndex + 1).padStart(2, "0");
+      stepButtons[0].setAttribute("aria-label", `${selectMemberLabel} ${previousMemberName}`);
+      stepButtons[1].setAttribute("aria-label", `${selectMemberLabel} ${nextMemberName}`);
+
+      if (announce) status.textContent = `${selectedPrefix} ${memberName}`.trim();
+
+      panel.removeAttribute("data-team-panel-updating");
+      if (!reducedMotion.matches) {
+        requestAnimationFrame(() => panel.setAttribute("data-team-panel-updating", "true"));
+      }
+    };
+
+    buttons.forEach((button, index) => {
+      button.addEventListener("click", () => selectMember(index));
+      button.addEventListener("keydown", (event) => {
+        let targetIndex: number | undefined;
+
+        if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+          targetIndex = (index + 1) % buttons.length;
+        } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+          targetIndex = (index - 1 + buttons.length) % buttons.length;
+        } else if (event.key === "Home") {
+          targetIndex = 0;
+        } else if (event.key === "End") {
+          targetIndex = buttons.length - 1;
+        }
+
+        if (targetIndex === undefined) return;
+        event.preventDefault();
+
+        const target = buttons[targetIndex];
+        target.focus();
+        selectMember(targetIndex);
+        target.scrollIntoView({
+          behavior: reducedMotion.matches ? "auto" : "smooth",
+          block: "nearest",
+          inline: "center",
+        });
+      });
+    });
+
+    stepButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const step = Number(button.dataset.teamStep);
+        if (!Number.isFinite(step)) return;
+        selectMember(activeIndex + step);
+        buttons[activeIndex].scrollIntoView({
+          behavior: reducedMotion.matches ? "auto" : "smooth",
+          block: "nearest",
+          inline: "center",
+        });
+      });
+    });
+  });
+</script>

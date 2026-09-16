@@ -1,0 +1,26 @@
+---
+import type { TreeLinkSocial } from "@/features/tree-link/content/tree-link";
+import TreeLinkActionCard from "./TreeLinkActionCard.astro";
+
+interface Props {
+  descriptions: Record<TreeLinkSocial["id"], string>;
+  pendingLabel: string;
+  socials: readonly TreeLinkSocial[];
+}
+
+const { descriptions, pendingLabel, socials } = Astro.props;
+---
+
+<div class="tree-link__card-list">
+  {
+    socials.map((social) => (
+      <TreeLinkActionCard
+        label={social.label}
+        description={descriptions[social.id]}
+        href={social.url}
+        socialIcon={social.id}
+        pendingLabel={pendingLabel}
+      />
+    ))
+  }
+</div>

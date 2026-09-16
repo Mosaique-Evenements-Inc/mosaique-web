@@ -10,6 +10,11 @@
   --color-border-default: color-mix(in oklab, var(--color-white) 24%, transparent);
   --color-border-strong: color-mix(in oklab, var(--color-white) 64%, transparent);
   --color-accent-text: var(--color-white);
+  --color-status-error-foreground: color-mix(
+    in oklab,
+    var(--color-status-error-border) 72%,
+    var(--color-white)
+  );
   --color-accent-muted: color-mix(
     in oklab,
     var(--color-white) 14%,

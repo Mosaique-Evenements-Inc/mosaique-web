@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "@mosaique-evenements-inc/ui/tokens.css";
+@import "./tokens/shared-theme.css";
 @import "./tokens/primitives.css";
 @import "./tokens/semantic.css";
 @import "./tokens/typography.css";

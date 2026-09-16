@@ -10,9 +10,9 @@ export type LeadRequest = {
 };
 
 export type LeadCreated = {
-  id: string;
-  status: string;
-  created_at: string;
+  code: string;
+  status: "NEW";
+  createdAt: string;
 };
 
 export type CreateLeadResponse = {
@@ -25,6 +25,8 @@ export type LeadApiError = {
   message: string;
   field?: string;
   status?: number;
+  requestId?: string;
+  retryable?: boolean;
 };
 
 export type LeadSubmissionStatus = "idle" | "submitting" | "success" | "error";

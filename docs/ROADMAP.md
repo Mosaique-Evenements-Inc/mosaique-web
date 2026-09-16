@@ -90,6 +90,7 @@ This document is the source of truth for implementation status. The existence of
 - **Compact-title and mosaic-spacing refinement complete locally.** The About title now follows Gallery's word-safe wrapping contract with inline-block words, `1.08` line height, intrinsic height, and no clipping mask, while retaining its line-stagger reveal. The mobile caption receives an explicit `16px` internal inline inset so it cannot touch the viewport edges. The full-bleed mosaic keeps zero page-edge gutters and adds only a `2px` inter-item column/row separation. In-browser validation at `375`, `430`, and `1440px` confirmed complete title glyphs, the caption inset, exact viewport-width surfaces, zero outer mosaic gutters, exact `2px` internal gaps, the expected two/six columns, and no horizontal overflow.
 - **Hero-to-mosaic scroll and title-motion alignment complete locally.** About now reuses the same shared `PanelReveal` composition as Home's Hero-to-Events handoff: its `145svh` lead contains one native `100svh` sticky scene while the full-bleed mosaic advances above it in document flow. The former automatic line reveal, caption fade, and perpetual drift are removed. The title now follows Gallery Archive's observed, one-time character reveal with word-safe spans, `22ms` stagger, shared motion tokens, and immediate final state under reduced motion. In-browser checks at `1440 × 900` and `375 × 844` confirmed the exact `145svh` / `100svh` geometry, sticky lead, progressive panel overlap, one-time 47-character reveal, complete mobile title, retained two/six-column mosaic, zero horizontal overflow, and no console warnings or errors. The current in-app browser cannot emulate reduced motion; the compiled immediate-state branch passed code inspection but fresh runtime emulation remains pending.
 - **Mosaic scope refined locally.** The About surface now renders exactly 31 approved photographs from the supplied visual span instead of the complete 91-asset inventory. Six explicit editorial groups preserve that desktop composition at the validated six-column breakpoint, while compact and ultra-wide layouts retain their existing natural responsive column flow.
+- **Team implementation and reference-layout refinement complete locally.** The dedicated About page now follows its media mosaic with a data-driven seven-member selector ordered by surname and one shared live profile panel. Six supplied portraits are connected through Astro Assets, while Christopher Salgado retains the explicit branded placeholder because no matching photograph is available. Desktop reproduces the supplied borderless, full-bleed horizontal editorial reference with previous portrait, dominant active portrait, integrated profile panel, and next portrait; tablet preserves that three-portrait rhythm above the panel, while mobile moves through active portrait, profile, paired adjacent portraits, and a compact horizontal roster. The roster identifies entries by localized role rather than repeating member names, and portrait changes use the shared cinematic duration with a linear crossfade so outgoing and incoming images overlap gradually. Native buttons, `aria-pressed`, circular previous/next navigation, arrow/Home/End keyboard support, one polite status, grayscale-to-active treatment, and reduced-motion fallbacks are included. Browser checks at `1496 × 761`, `900 × 900`, `390 × 844`, and `320 × 720` confirmed edge-to-edge geometry, all seven selections, wraparound navigation, isolated final portrait states, localized ES/EN/FR content, zero page-level horizontal overflow, and a clean console. The current browser cannot emulate reduced motion; the compiled no-animation branch passed code inspection.
 
 ### Milestones
 
@@ -260,10 +261,15 @@ This document is the source of truth for implementation status. The existence of
   overriding the global smooth-scroll rule without changing native cross-page, modifier-click, or
   missing-target behavior.
 - **Email action surface refinement complete locally.** The framed Footer email CTA now uses the existing restrained medium radius while retaining its dimensions, arrow, verified destination, focus behavior, and responsive layout.
-- **Collaborator frame refinement complete locally.** The three-logo wall now shares the same medium radius as the Footer email action, with its internal tiles clipped to the outer frame while preserving separators, logo interactions, destinations, and responsive sizing.
+- **Collaborator mosaic complete locally.** A localized secondary heading now introduces four
+  configurable collaborator records in a balanced 2 × 2 grid. The frame retains the Footer email
+  action's medium radius and clipped internal dividers; all four verified destinations remain
+  interactive, including Latinova's approved site link. A compact follow-up
+  reduces the heading gap and grid height by roughly one spacing step without changing logo scale
+  or cell equality.
 - On mobile, Compañía, Recursos, and Servicios use collapsed native disclosures to reduce scroll length; tablet and desktop keep all three groups expanded in the established grid.
-- **Fidelity Pass: complete.** Final CTA now hands off through a compact edge-padded visual strip into Movra's two-row footer composition: aligned 50/50 desktop grids, inset vertical dividers, full-width horizontal dividers, three navigation groups, the framed three-collaborator logo grid, contact CTA and verified contact details, a six-item service grid, and the closing copy at opposite lower edges.
-- Desktop uses paired information bands, tablet stacks those bands, and mobile follows a linear reading order without introducing reference-only newsletter, social links, or legal destinations. The three approved transparent collaborator assets are centered in equal framed tiles with uninterrupted dividers, contained without cropping, normalized to the footer's light monochrome treatment, and sourced from one typed collaborators module; each complete tile opens its approved external site in a separate, isolated tab.
+- **Fidelity Pass: complete.** Final CTA now hands off through a compact edge-padded visual strip into Movra's two-row footer composition: aligned 50/50 desktop grids, inset vertical dividers, full-width horizontal dividers, three navigation groups, the framed four-collaborator mosaic, contact CTA and verified contact details, an eight-item service grid, and the closing copy at opposite lower edges.
+- Desktop uses paired information bands, tablet stacks those bands, and mobile follows a linear reading order without introducing reference-only newsletter, social links, or legal destinations. The four approved transparent collaborator assets are centered in equal 2 × 2 framed tiles with uninterrupted dividers, contained without cropping, normalized to the footer's light monochrome treatment, and sourced from one typed collaborators module; records with approved destinations open their sites in separate, isolated tabs.
 - The footer is Astro-only; its only runtime behavior synchronizes the native mobile disclosures with the existing compact breakpoint. Reduced motion removes the collaborators' decorative hover transition without changing their links or content.
 - Handoff color, link destinations, mail link, content completeness, desktop, tablet, mobile, long-copy constraints, and document overflow were validated.
 
@@ -298,6 +304,168 @@ This document is the source of truth for implementation status. The existence of
 - Social image tags remain intentionally absent until an approved production image is available.
 
 ## Current
+
+### Tree Link V1
+
+- **✅ Step 1 — diagnostic complete.** The public link-in-bio surface was scoped against the
+  supplied Paula references, the existing Mosaïque architecture, confirmed business content,
+  locale routing, and native sharing/accessibility contracts before implementation.
+- **✅ Step 2 — implementation and sample reconciliation complete locally.** `/tree`, `/en/tree`,
+  and `/fr/tree` now render one feature-owned Astro composition with localized metadata and copy,
+  no shared Navigation or Footer, no React island, no `client:*` directive, and no hydrated runtime
+  dependency. The former temporary migration sample informed the product reconciliation without
+  becoming a production dependency and was removed in Step 4.
+- The implementation translates the sample's centered profile shell, prominent share trigger,
+  section hierarchy, disclosure, vertical action cards, and share preview into Mosaïque's semantic
+  cream/black/tan palette, Cinzel/Montserrat type roles, restrained radii, and approved logo. It
+  does not reuse Paula photography, social destinations, event claims, color system, React state,
+  or glassmorphism.
+- Step 2 initially limited Tree Link collaborators to Latinova. Step 3 supersedes that assumption;
+  Tree Link now consumes the Footer's complete canonical collaborator collection without copying
+  names, URLs, logo declarations, or identifiers.
+- Sharing uses one native modal `dialog`, canonical localized URLs, Clipboard API with a legacy
+  local fallback, Web Share with a copy fallback, and valid X, Facebook, WhatsApp, LinkedIn, and
+  email targets. Native focus containment, Escape/backdrop/close-button dismissal, scroll locking,
+  focus restoration, status announcements, and translated accessible names are preserved.
+- **✅ Step 3 — Content & Constants complete locally.** Structural configuration owns the
+  three pending event-slot IDs and the Instagram, TikTok, and Facebook IDs with explicit `null`
+  destinations. Feature i18n owns every localized heading, description, label, pending state,
+  sharing message, accessibility label, and metadata string for ES / EN-CA / FR-CA. Mosaïque
+  identity and location remain stable configuration, while Tree Link references the exact
+  `collaborators` collection used by Footer. The four current records—Hey PC, Pharus Creative,
+  Microverse Solution, and Latinova—retain their canonical logos and approved external URLs.
+  No real event, date, venue, media, ticket link, social URL, campaign copy, production domain, or
+  OG image was invented.
+- **✅ Step 4 — Visual Fidelity + UX/Performance Audit + Sample Cleanup + V1 Freeze complete
+  locally.** The final fidelity pass corrected narrow-mobile action-card density, collaborator list
+  semantics, vertical-logo containment, optimized collaborator delivery through Astro Assets,
+  active/hover feedback, copy-status reset, and natural EN-CA / FR-CA phrasing while preserving
+  the sample's composition, hierarchy, disclosure, card anatomy, and sharing model in Mosaïque's
+  visual language. The temporary sample and its ESLint/TypeScript exclusions are removed with zero
+  residual reference or production import.
+- **Post-freeze local theme enhancement complete.** Tree Link now keeps its approved light surface
+  on a dedicated night-green canvas and adds a mirrored 44 px light/dark control opposite Share.
+  Dark mode remaps the feature's semantic colors to the established Contact black/white treatment,
+  including cards, agenda, collaborators, and the share dialog. The explicit preference persists
+  through a local browser key and a minimal head script applies it before the Tree Link paints;
+  all three locales retain translated action labels with no island or duplicated
+  render tree.
+- **Post-freeze card and brand-icon refinement complete.** Social cards now render the official
+  Instagram, TikTok, and Facebook paths from the data-only `simple-icons` package; Instagram keeps
+  the approved brand gradient, Facebook its canonical blue, and TikTok a recognizable light/dark
+  treatment. Social marks and canonical collaborator logos sit on transparent wells. Collaborator
+  cards reuse the action-card column proportions, spacing, typography, trailing control, surface,
+  and border language, while a lower-amplitude standard-duration hover preserves clear feedback
+  without an abrupt lift. The website card is now the hierarchy's single warm-gradient highlight,
+  while the redundant Discover heading and its localization keys are removed without leaving an
+  orphaned labelled region.
+- Post-cleanup production-preview validation passed at `320 × 800`, `390 × 844`, `768 × 1024`,
+  `1440 × 900`, and `1920 × 1080` with zero measured horizontal overflow. ES / EN-CA / FR-CA,
+  agenda keyboard operation, modal sizing and scrolling, copy feedback and reset, backdrop and
+  Escape dismissal, focus restoration, Web Share cancellation, localized canonical sharing URLs,
+  touch targets, four optimized collaborator logos, and clean browser console passed. Runtime
+  reduced-motion emulation remains unavailable in the current browser; the compiled global and
+  feature media-query resets plus the immediate JavaScript close path passed source inspection.
+- Final scoped Prettier, tests (8/8), lint, typecheck, production build (75 pages / 1,213 optimized
+  image outputs), and diff-check pass. Tree Link V1 is frozen locally; official social URLs, real
+  event records, an approved OG image, and final `SITE_URL` remain honest non-blocking content or
+  deployment inputs.
+
+### UI 0.2.0 Web Migration (UI-14)
+
+- Web now pins the GitHub Packages release `@mosaique-evenements-inc/ui@0.2.0` and
+  continues to consume only its public `tokens.css` export. The package's optional
+  foundation and recipes remain unimported because Web already owns its reset, forms,
+  controls, and cinematic CTA behavior.
+- Shared sans, body, and caption contracts back equivalent Web roles. Cinzel/display,
+  editorial scale, navigation, compact labels, and marketing CTA typography remain
+  Web-owned. No font files or external delivery were added; actual rendering continues
+  through platform fallbacks until approved assets exist.
+- Quote controls identify their existing 60px minimum as shared `comfortable` density.
+  Validation borders and messages use shared error semantics with a dark-surface
+  contrast adaptation; form markup, validation, focus, and submission behavior are
+  unchanged.
+
+### Registry Consumption (EP-07)
+
+- UI 0.1.0 is published on GitHub Packages; Web pins the registry version and no
+  longer resolves a sibling tarball. All nine CSS files match the approved artifact.
+- Actions read access was confirmed. A clean install with an empty store and frozen
+  lockfile passed, along with lint, typecheck, build (72 pages), and diff-check.
+- Integration is being completed on `temp/pre-library` by explicit user decision;
+  `main` and its existing design history remain unchanged. Earlier EP-05/06 entries
+  describe historical preparation states, superseded by this registry integration.
+- Registry runtime sanity passed on Home, About, Contact, Gallery, Event Detail
+  and Service Detail at 390/1440px. About gutters, Footer 160ms/standard easing,
+  Contact overrides, 12px/16px navigation blur and 16px form surface blur are intact;
+  `--space-28` remains undefined and no horizontal overflow was observed.
+
+### Shared Foundation Release Preparation (EP-06)
+
+- Release configuration and runbooks prepared; no publication, registry migration,
+  version change, commit, or push. Web retains its validated tarball dependency.
+- Both repositories route the organization scope through credential-free `.npmrc`
+  files. UI has a manual, main-only publish workflow; Web's future read-authenticated
+  CI setup and exact-version migration are documented in `SHARED_FOUNDATION.md`.
+- No CSS or token integration changes in this phase. EP-05's Chrome computed-style,
+  visual, and interaction evidence remains applicable; Safari/WebKit remains unverified.
+- Remote package visibility, version availability, and Actions access must be
+  verified during the authorized publication phase before switching Web to registry.
+
+### Shared Foundation Package Integration (EP-05)
+
+- **Implementation and local validation: complete.** EP-06 is not implemented.
+- Web consumes the real local `@mosaique-evenements-inc/ui@0.1.0` tarball through
+  `tokens.css`. Shared colors/focus, spacing, radii, layers, non-cinematic motion,
+  blur, and max-reading now come from the package. A reference-only Tailwind
+  adapter preserves utility names without runtime token duplication.
+- Typography, the existing reset, cinematic vocabulary, section rhythm,
+  max-content/grid/sticky geometry, and Contact overrides remain Web-owned.
+  Known unresolved `--space-28` and `--font-weight-regular` references are unchanged.
+- Chrome baseline/final validation covers Home, About, Contact, Gallery, Event
+  Detail, and Service Detail in ES/EN/FR at 390, 768, and 1440px (54 cases).
+  All 16,473 sampled elements preserve the measured computed styles, with no
+  runtime errors, broken loaded images, or horizontal overflow. Forty-five
+  screenshots match immediately; the nine video/entrance-sensitive cases also
+  match exactly with synchronized media and reduced motion enabled from load.
+- About gutters remain 20px / 30.72px / 57.6px. The installed package and build
+  retain Tailwind utility generation. Lint, typecheck, production build (72 pages),
+  and diff-check pass. WebKit is unavailable in the local Playwright installation.
+- Before/after interaction checks pass at all three widths: mobile menu/Escape,
+  custom select, calendar, Contact colors, footer timing, optical blur, reduced
+  motion, and sampled Home scroll states. Topbar blur remains 12px below 768px
+  and 16px at 768/1440px; select/calendar/toast remain 16px. No external form
+  submission was performed.
+- The dependency and lockfile intentionally reference a temporary sibling `.tgz`;
+  this is not a release-ready registry dependency. See
+  [Shared Foundation Integration](SHARED_FOUNDATION.md) for reproduction and release
+  handoff. No package source changes, version changes, publication, commit, or push.
+
+### Service Detail Fluid Desktop
+
+- **Implemented and validated locally.** Only the existing Service-owned `min-width: 64rem`
+  rules change. The editorial rail now varies between 26% and the original 28%, with fluid
+  inline padding and a remaining-space media track. The title follows its actual content
+  container through `cqi`, retaining the wide type-to-column ratio and height-aware ceiling.
+- The fixed-height narrative previously sent all remaining space above the CTA through
+  `margin-block-start: auto`. A bounded, fluid narrative end margin now shares that space below
+  the action on compact desktops, while preserving the 1920px baseline. Title-to-description
+  spacing also follows the content width. At 1280px, the French organization CTA gap falls from
+  261px to 153px and featured media gains 26px; the title remains three lines. At 1920px,
+  media changes by less than 4px, title height by less than 2px, and CTA geometry is unchanged.
+- Chromium before/after comparison covered 108 cases across ES/EN/FR, long/short/medium service
+  titles, and 1920, 1680, 1536, 1440, 1366, 1280, 1024, 1023, 900, 768, 390, and 320px.
+  All 45 tablet/mobile cases preserve measured header, title, description, CTA, divider, and
+  media geometry exactly. A further 114 progressive resize checks from 1920 to 1024px at
+  900px/720px heights keep the French stress-test title on three lines without collisions.
+- All eight services passed 72 additional locale/desktop checks, including loaded featured
+  images and accessible CTA placement. Sticky scroll states, keyboard focus, gallery lightbox,
+  reduced motion, and browser console checks passed. Visual captures were compared at wide,
+  compact, tablet, and mobile sizes; native Safari/device testing remains unverified.
+- Existing breakpoints, 16:9 media framing, `object-fit: cover`, animation rules, assets,
+  content, translations, routing, Header, Footer, Home, and Event Detail remain unchanged.
+  Scoped Prettier, lint, typecheck, build (72 pages), and diff-check passed. No automated test
+  script is configured. No commit or push.
 
 ### Localized Event Names and Collaboration
 
@@ -678,6 +846,20 @@ HTTP adapter`. The service receives the repository contract, while `submit-lead.
   unchanged `Enviar solicitud` state. The final external submission was intentionally not sent to
   avoid creating a production-like lead during architecture QA; endpoint and transport contracts
   were verified in code and the optimized client bundle built successfully.
+- **WEB-LEAD-01 public capture alignment: complete locally.** Quote now defines one explicit
+  public Leads V1 boundary with exactly `fullName`, `email`, `phone`, `service`, `eventType`,
+  `eventDate`, `guestRange`, and `preferredLanguage`. Web trims and normalizes client input for UX
+  parity with the backend limits, serializes the existing Canadian/North-American `+1` phone scope,
+  accepts `YYYY-MM-DD` or `null` event dates, and keeps Venue, Budget, `code`, `id`, `status`,
+  `source`, assignments, notes, history, normalized fields, and internal UUIDs out of the outbound
+  payload. The HTTP adapter now consumes only the canonical success response
+  `lead.code`, `lead.status: "NEW"`, and `lead.createdAt`; temporary backend aliases
+  `lead.id` and `lead.created_at` are no longer required by Web. API errors are parsed from the
+  sanitized `error.code/message/details/requestId` envelope and mapped to safe site-owned feedback
+  for 400, 413, 422, 500, unknown shapes, network failure, and timeout without logging submitted
+  PII. `WEB/API-LEAD-ANTIABUSE-01` remains the next hardening episode for Turnstile or equivalent,
+  honeypot, backend verification, rate limiting, idempotency/retry protection, and safe abuse
+  metrics before meaningful public campaign traffic.
 - React, Zustand, the custom-event transport, Quote component decomposition, shared presentation
   primitives, Event/Service UI duplication, Home cinematic composition, routes, copy, assets, and
   visual behavior remain otherwise unchanged in Responsibility 2.

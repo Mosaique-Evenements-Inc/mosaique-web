@@ -1,0 +1,140 @@
+---
+import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
+import { treeLinkContent } from "@/features/tree-link/content/tree-link";
+import { getTreeLinkTranslations } from "@/features/tree-link/i18n";
+import CursorHalftone from "@/features/home/ui/components/CursorHalftone.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import TreeLinkActionCard from "../components/TreeLinkActionCard.astro";
+import TreeLinkAgenda from "../components/TreeLinkAgenda.astro";
+import TreeLinkCollaborators from "../components/TreeLinkCollaborators.astro";
+import TreeLinkIdentity from "../components/TreeLinkIdentity.astro";
+import TreeLinkShareDialog from "../components/TreeLinkShareDialog.astro";
+import TreeLinkSocials from "../components/TreeLinkSocials.astro";
+import TreeLinkThemeToggle from "../components/TreeLinkThemeToggle.astro";
+
+import "../styles/tree-link.css";
+
+const locale = getLocaleFromUrl(Astro.url);
+const treeText = getTreeLinkTranslations(locale);
+const treePath = getLocalizedHref("/tree", locale);
+const canonicalShareUrl = Astro.site ? new URL(treePath, Astro.site).href : undefined;
+---
+
+<BaseLayout title={treeText.metadataTitle} description={treeText.metadataDescription}>
+  <script slot="head" is:inline>
+    (() => {
+      const root = document.documentElement;
+
+      try {
+        root.dataset.treeLinkTheme =
+          window.localStorage.getItem("mosaique-tree-link-theme") === "dark" ? "dark" : "light";
+      } catch {
+        root.dataset.treeLinkTheme = "light";
+      }
+    })();
+  </script>
+
+  <main
+    class="tree-link-page cursor-halftone"
+    id="main-content"
+    tabindex="-1"
+    data-cursor-halftone
+  >
+    <CursorHalftone />
+    <article class="tree-link" aria-labelledby="tree-link-page-title">
+      <TreeLinkThemeToggle
+        switchToDarkLabel={treeText.theme.switchToDark}
+        switchToLightLabel={treeText.theme.switchToLight}
+      />
+
+      <TreeLinkShareDialog
+        brandName={`${treeLinkContent.brand.name} ${treeLinkContent.brand.qualifier}`}
+        canonicalPath={treePath}
+        canonicalUrl={canonicalShareUrl}
+        closeLabel={treeText.share.close}
+        copyError={treeText.share.copyError}
+        copyLabel={treeText.share.copy}
+        copiedLabel={treeText.share.copied}
+        emailLabel={treeText.share.withEmail}
+        emailOptionLabel={treeText.share.emailOption}
+        facebookLabel={treeText.share.withFacebook}
+        fallbackCopied={treeText.share.fallbackCopied}
+        linkedinLabel={treeText.share.withLinkedin}
+        moreLabel={treeText.share.more}
+        openLabel={treeText.share.open}
+        previewLabel={treeText.share.previewLabel}
+        shareOnLabel={treeText.share.shareOn}
+        tagline={treeText.identityTagline}
+        title={treeText.share.title}
+        whatsappLabel={treeText.share.withWhatsapp}
+        xLabel={treeText.share.withX}
+      />
+
+      <TreeLinkIdentity
+        headingId="tree-link-page-title"
+        name={treeLinkContent.brand.name}
+        qualifier={treeLinkContent.brand.qualifier}
+        tagline={treeText.identityTagline}
+        location={treeLinkContent.brand.location}
+      />
+
+      <div
+        class="tree-link__section tree-link__section--reveal"
+        style="--tree-link-section-index:0"
+      >
+        <TreeLinkActionCard
+          label={treeText.websiteLabel}
+          description={treeText.websiteDescription}
+          href={getLocalizedHref(treeLinkContent.website.href, locale)}
+          icon="globe"
+          highlight
+        />
+      </div>
+
+      <section
+        class="tree-link__section tree-link__section--reveal"
+        style="--tree-link-section-index:1"
+        aria-labelledby="tree-link-events-title"
+      >
+        <h2 id="tree-link-events-title">{treeText.eventsHeading}</h2>
+        <TreeLinkAgenda
+          title={treeText.agendaTitle}
+          description={treeText.agendaDescription}
+          slots={treeLinkContent.agenda.slots}
+          slotLabels={treeText.eventSlotLabels}
+          pendingLabel={treeText.eventPending}
+        />
+      </section>
+
+      <section
+        class="tree-link__section tree-link__section--reveal"
+        style="--tree-link-section-index:2"
+        aria-labelledby="tree-link-socials-title"
+      >
+        <h2 id="tree-link-socials-title">{treeText.socialsHeading}</h2>
+        <TreeLinkSocials
+          socials={treeLinkContent.socials}
+          descriptions={treeText.socialDescriptions}
+          pendingLabel={treeText.pendingLink}
+        />
+      </section>
+
+      <section
+        class="tree-link__section tree-link__section--reveal"
+        style="--tree-link-section-index:3"
+        aria-labelledby="tree-link-collaborators-title"
+      >
+        <div class="tree-link__section-heading">
+          <h2 id="tree-link-collaborators-title">{treeText.collaboratorsHeading}</h2>
+          <p>{treeText.collaboratorsDescription}</p>
+        </div>
+        <TreeLinkCollaborators
+          collaborators={treeLinkContent.collaborators}
+          descriptions={treeText.collaboratorDescriptions}
+          visitLabel={treeText.visitCollaborator}
+          opensNewTab={treeText.opensNewTab}
+        />
+      </section>
+    </article>
+  </main>
+</BaseLayout>
