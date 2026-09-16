@@ -24,13 +24,19 @@ const canonicalShareUrl = Astro.site ? new URL(treePath, Astro.site).href : unde
   <script slot="head" is:inline>
     (() => {
       const root = document.documentElement;
+      const systemTheme = window.matchMedia?.("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+      let initialTheme = systemTheme;
 
       try {
-        root.dataset.treeLinkTheme =
-          window.localStorage.getItem("mosaique-tree-link-theme") === "dark" ? "dark" : "light";
+        const storedTheme = window.localStorage.getItem("mosaique-tree-link-theme");
+        if (storedTheme === "light" || storedTheme === "dark") initialTheme = storedTheme;
       } catch {
-        root.dataset.treeLinkTheme = "light";
+        // The system preference remains available when browser storage is unavailable.
       }
+
+      root.dataset.treeLinkTheme = initialTheme;
     })();
   </script>
 

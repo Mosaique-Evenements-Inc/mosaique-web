@@ -346,10 +346,11 @@ This document is the source of truth for implementation status. The existence of
 - **Post-freeze local theme enhancement complete.** Tree Link now keeps its approved light surface
   on a dedicated night-green canvas and adds a mirrored 44 px light/dark control opposite Share.
   Dark mode remaps the feature's semantic colors to the established Contact black/white treatment,
-  including cards, agenda, collaborators, and the share dialog. The explicit preference persists
-  through a local browser key and a minimal head script applies it before the Tree Link paints;
-  all three locales retain translated action labels with no island or duplicated
-  render tree.
+  including cards, agenda, collaborators, and the share dialog. The system color-scheme preference
+  supplies the initial theme and remains live until the visitor makes an explicit choice; that
+  choice then persists through a local browser key. A minimal head script applies the resolved
+  theme before the Tree Link paints, and all three locales retain translated action labels with no
+  island or duplicated render tree.
 - **Post-freeze card and brand-icon refinement complete.** Social cards now render the official
   Instagram, TikTok, and Facebook paths from the data-only `simple-icons` package; Instagram keeps
   the approved brand gradient, Facebook its canonical blue, and TikTok a recognizable light/dark
