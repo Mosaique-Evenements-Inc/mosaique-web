@@ -111,7 +111,7 @@ html[data-tree-link-theme="dark"] .tree-link__brand-mark {
   max-inline-size: 36ch;
   margin: var(--space-6) 0 0;
   font-family: var(--font-family-display);
-  font-size: clamp(1rem, 3.8vw, 1.35rem);
+  font-size: clamp(0.95rem, 3.4vw, 1.22rem);
   font-weight: 500;
   line-height: 1.16;
 }
@@ -122,7 +122,7 @@ html[data-tree-link-theme="dark"] .tree-link__brand-mark {
   gap: var(--space-1);
   margin: var(--space-3) 0 0;
   color: var(--color-text-secondary);
-  font-size: var(--text-caption-size);
+  font-size: 0.6875rem;
   font-weight: var(--text-caption-weight);
   letter-spacing: 0.12em;
   line-height: var(--text-caption-line-height);
@@ -241,7 +241,7 @@ html[data-tree-link-theme="dark"] .tree-link__brand-mark {
     transparent 100%
   );
   transform: skewX(-12deg);
-  animation: tree-link-gold-shimmer 3s var(--motion-easing-standard) infinite;
+  animation: tree-link-gold-shimmer 5.6s var(--motion-easing-standard) infinite;
 }
 
 .tree-link-card--highlight > * {
@@ -700,10 +700,10 @@ html[data-tree-link-theme="dark"] .tree-link-theme__sun {
 
 .tree-link-share__preview-logo {
   display: block;
-  inline-size: min(14rem, 72%);
+  inline-size: min(22rem, 90%);
   margin: 0 auto;
   overflow: hidden;
-  aspect-ratio: 941 / 540;
+  aspect-ratio: 989 / 587;
 }
 
 .tree-link-share__preview-logo-crop {
@@ -711,15 +711,15 @@ html[data-tree-link-theme="dark"] .tree-link-theme__sun {
   display: block;
   inline-size: 100%;
   overflow: hidden;
-  aspect-ratio: 941 / 540;
+  aspect-ratio: 989 / 587;
 }
 
 .tree-link-share__preview-logo-image {
   position: absolute;
-  inset-block-start: calc(-201 / 540 * 100%);
-  inset-inline-start: calc(-280 / 941 * 100%);
+  inset-block-start: calc(-177 / 587 * 100%);
+  inset-inline-start: calc(-256 / 989 * 100%);
   display: block;
-  inline-size: calc(100% * 1501 / 941);
+  inline-size: calc(100% * 1501 / 989);
   max-inline-size: none;
   block-size: auto;
   filter: brightness(0);
@@ -731,7 +731,7 @@ html[data-tree-link-theme="dark"] .tree-link-share__preview-logo-image {
 
 .tree-link-share__preview p {
   max-inline-size: 30ch;
-  margin: var(--space-3) auto 0;
+  margin: var(--space-2) auto 0;
   color: var(--color-text-secondary);
   font-size: var(--text-caption-size);
   line-height: var(--text-body-line-height);
@@ -741,9 +741,7 @@ html[data-tree-link-theme="dark"] .tree-link-share__preview-logo-image {
   display: block;
   max-inline-size: 100%;
   margin-block-start: var(--space-4);
-  padding-block-start: var(--space-3);
   overflow: hidden;
-  border-block-start: 1px solid var(--color-border-default);
   color: var(--color-text-secondary);
   font-size: 0.75rem;
   text-overflow: ellipsis;
@@ -871,11 +869,11 @@ html[data-tree-link-theme="dark"] .tree-link-share__preview-logo-image {
 
 @keyframes tree-link-gold-shimmer {
   0%,
-  14% {
+  18% {
     transform: translateX(0) skewX(-12deg);
   }
 
-  72%,
+  68%,
   100% {
     transform: translateX(360%) skewX(-12deg);
   }
