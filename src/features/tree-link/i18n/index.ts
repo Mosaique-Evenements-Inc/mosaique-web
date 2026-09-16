@@ -70,7 +70,7 @@ export const treeLinkTranslations = {
     collaboratorsHeading: "Nuestros colaboradores",
     collaboratorsDescription: "Personas y marcas con las que creamos grandes experiencias.",
     collaboratorDescriptions: {
-      "Hey PC": "Promoción y producción de experiencias.",
+      "Paula Contreras": "Promoción y producción de experiencias.",
       "Pharus Creative": "Fotografía y producción audiovisual.",
       "Microverse Solution": "Soluciones tecnológicas para nuestras experiencias.",
       Latinova: "Servicios profesionales de limpieza.",

@@ -1,5 +1,8 @@
 ---
-import topbarLogo from "@/assets/logos/logo_topbar.png";
+import { Image } from "astro:assets";
+
+import completeLogo from "@/assets/logos/mosaique_logo_complete.png";
+import Icon from "@/core/common/ui/components/Icon.astro";
 
 interface Props {
   headingId: string;
@@ -13,13 +16,23 @@ const { headingId, name, qualifier, tagline, location } = Astro.props;
 ---
 
 <header class="tree-link__identity">
-  <div
-    class="tree-link__brand-mark"
-    style={`--tree-link-logo:url("${topbarLogo.src}");`}
-    aria-hidden="true"
-  >
-  </div>
+  <span class="tree-link__brand-frame" aria-hidden="true">
+    <span class="tree-link__brand-crop">
+      <Image
+        src={completeLogo}
+        alt=""
+        class="tree-link__brand-mark"
+        width={completeLogo.width}
+        height={completeLogo.height}
+        loading="eager"
+        decoding="async"
+      />
+    </span>
+  </span>
   <h1 id={headingId} class="visually-hidden">{name} {qualifier}</h1>
   <p class="tree-link__tagline">{tagline}</p>
-  <p class="tree-link__location">{location}</p>
+  <p class="tree-link__location">
+    <Icon name="mapPin" size={14} strokeWidth={1.7} />
+    <span>{location}</span>
+  </p>
 </header>

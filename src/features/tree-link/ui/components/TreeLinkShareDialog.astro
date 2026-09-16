@@ -1,5 +1,9 @@
 ---
-import topbarLogo from "@/assets/logos/logo_topbar.png";
+import { Image } from "astro:assets";
+import { siFacebook, siWhatsapp, siX } from "simple-icons";
+import type { SimpleIcon } from "simple-icons";
+
+import completeLogo from "@/assets/logos/mosaique_logo_complete.png";
 import Icon from "@/core/common/ui/components/Icon.astro";
 
 interface Props {
@@ -48,10 +52,16 @@ const {
   xLabel,
 } = Astro.props;
 
-const platforms = [
-  { id: "x", icon: "x", label: xLabel, visibleLabel: "X" },
-  { id: "facebook", icon: "facebook", label: facebookLabel, visibleLabel: "Facebook" },
-  { id: "whatsapp", icon: "whatsapp", label: whatsappLabel, visibleLabel: "WhatsApp" },
+const platforms: readonly {
+  id: "x" | "facebook" | "whatsapp" | "linkedin" | "email";
+  icon?: "linkedin" | "sendMail";
+  label: string;
+  simpleIcon?: SimpleIcon;
+  visibleLabel: string;
+}[] = [
+  { id: "x", label: xLabel, simpleIcon: siX, visibleLabel: "X" },
+  { id: "facebook", label: facebookLabel, simpleIcon: siFacebook, visibleLabel: "Facebook" },
+  { id: "whatsapp", label: whatsappLabel, simpleIcon: siWhatsapp, visibleLabel: "WhatsApp" },
   { id: "linkedin", icon: "linkedin", label: linkedinLabel, visibleLabel: "LinkedIn" },
   { id: "email", icon: "sendMail", label: emailLabel, visibleLabel: emailOptionLabel },
 ] as const;
@@ -96,13 +106,19 @@ const platforms = [
       </header>
 
       <section class="tree-link-share__preview" aria-label={previewLabel}>
-        <div
-          class="tree-link-share__preview-mark"
-          style={`--tree-link-logo:url("${topbarLogo.src}");`}
-          aria-hidden="true"
-        >
-        </div>
-        <h3>{brandName}</h3>
+        <span class="tree-link-share__preview-logo" aria-hidden="true">
+          <span class="tree-link-share__preview-logo-crop">
+            <Image
+              src={completeLogo}
+              alt=""
+              class="tree-link-share__preview-logo-image"
+              width={completeLogo.width}
+              height={completeLogo.height}
+              loading="lazy"
+              decoding="async"
+            />
+          </span>
+        </span>
         <p>{tagline}</p>
         <span data-tree-share-url-preview>{canonicalPath}</span>
       </section>
@@ -138,7 +154,18 @@ const platforms = [
                 rel={platform.id === "email" ? undefined : "noopener noreferrer"}
               >
                 <span aria-hidden="true">
-                  <Icon name={platform.icon} size={23} />
+                  {platform.simpleIcon ? (
+                    <svg
+                      class="tree-link-share__simple-icon"
+                      viewBox="0 0 24 24"
+                      focusable="false"
+                      aria-hidden="true"
+                    >
+                      <path d={platform.simpleIcon.path} />
+                    </svg>
+                  ) : (
+                    platform.icon && <Icon name={platform.icon} size={23} />
+                  )}
                 </span>
                 <small>{platform.visibleLabel}</small>
               </a>
