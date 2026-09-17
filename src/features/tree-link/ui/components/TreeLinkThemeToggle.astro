@@ -36,6 +36,16 @@ const { switchToDarkLabel, switchToLightLabel } = Astro.props;
     toggle.dataset.ready = "true";
 
     const root = document.documentElement;
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+    let hasExplicitPreference = false;
+
+    try {
+      const storedTheme = window.localStorage.getItem(storageKey);
+      hasExplicitPreference = storedTheme === "light" || storedTheme === "dark";
+    } catch {
+      // System preference remains the initial source when storage is unavailable.
+    }
+
     const syncToggle = () => {
       const isDark = root.dataset.treeLinkTheme === "dark";
       toggle.setAttribute("aria-pressed", String(isDark));
@@ -52,6 +62,7 @@ const { switchToDarkLabel, switchToLightLabel } = Astro.props;
     toggle.addEventListener("click", () => {
       const nextTheme = root.dataset.treeLinkTheme === "dark" ? "light" : "dark";
       root.dataset.treeLinkTheme = nextTheme;
+      hasExplicitPreference = true;
       syncToggle();
 
       try {
@@ -59,6 +70,12 @@ const { switchToDarkLabel, switchToLightLabel } = Astro.props;
       } catch {
         // The selected theme still applies for this page when storage is unavailable.
       }
+    });
+
+    systemTheme.addEventListener("change", (event) => {
+      if (hasExplicitPreference) return;
+      root.dataset.treeLinkTheme = event.matches ? "dark" : "light";
+      syncToggle();
     });
   });
 </script>

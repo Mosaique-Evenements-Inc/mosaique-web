@@ -15,7 +15,7 @@ export interface Collaborator {
 
 export const collaborators = [
   {
-    nombre: "Hey PC",
+    nombre: "Paula Contreras",
     link: "https://paula-contreras.vercel.app/tree",
     image: collaboratorPc,
     path: collaboratorPc.src,

@@ -69,7 +69,6 @@ html[data-tree-link-theme="dark"] .tree-link-page {
   text-align: center;
 }
 
-.tree-link__brand-mark,
 .tree-link-share__preview-mark {
   background: currentColor;
   mask-image: var(--tree-link-logo);
@@ -78,25 +77,52 @@ html[data-tree-link-theme="dark"] .tree-link-page {
   mask-size: contain;
 }
 
+.tree-link__brand-frame {
+  display: block;
+  inline-size: clamp(12rem, 48vw, 17rem);
+  overflow: hidden;
+  aspect-ratio: 941 / 540;
+}
+
+.tree-link__brand-crop {
+  position: relative;
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 941 / 540;
+  overflow: hidden;
+}
+
 .tree-link__brand-mark {
-  inline-size: clamp(18rem, 70vw, 30rem);
-  aspect-ratio: 1.5;
-  color: var(--color-text-primary);
+  position: absolute;
+  inset-block-start: calc(-201 / 540 * 100%);
+  inset-inline-start: calc(-280 / 941 * 100%);
+  display: block;
+  inline-size: calc(100% * 1501 / 941);
+  max-inline-size: none;
+  block-size: auto;
+  filter: brightness(0);
+}
+
+html[data-tree-link-theme="dark"] .tree-link__brand-mark {
+  filter: none;
 }
 
 .tree-link__tagline {
   max-inline-size: 36ch;
-  margin: calc(var(--space-4) * -1) 0 0;
+  margin: var(--space-6) 0 0;
   font-family: var(--font-family-display);
-  font-size: clamp(1rem, 3.8vw, 1.35rem);
+  font-size: clamp(0.95rem, 3.4vw, 1.22rem);
   font-weight: 500;
   line-height: 1.16;
 }
 
 .tree-link__location {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
   margin: var(--space-3) 0 0;
   color: var(--color-text-secondary);
-  font-size: var(--text-caption-size);
+  font-size: 0.6875rem;
   font-weight: var(--text-caption-weight);
   letter-spacing: 0.12em;
   line-height: var(--text-caption-line-height);
@@ -178,6 +204,9 @@ html[data-tree-link-theme="dark"] .tree-link-page {
 }
 
 .tree-link-card--highlight {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   border-color: color-mix(in srgb, var(--color-white) 80%, var(--color-border-default));
   background:
     radial-gradient(
@@ -193,6 +222,31 @@ html[data-tree-link-theme="dark"] .tree-link-page {
   box-shadow:
     0 0.75rem 2rem color-mix(in srgb, var(--color-accent) 10%, transparent),
     inset 0 1px color-mix(in srgb, var(--color-white) 90%, transparent);
+}
+
+.tree-link-card--highlight::before {
+  position: absolute;
+  z-index: 0;
+  inset-block: 0;
+  inset-inline-start: -48%;
+  inline-size: 42%;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(
+    108deg,
+    transparent 0%,
+    color-mix(in srgb, var(--color-accent) 20%, transparent) 30%,
+    color-mix(in srgb, var(--color-white) 72%, transparent) 50%,
+    color-mix(in srgb, var(--color-accent) 24%, transparent) 70%,
+    transparent 100%
+  );
+  transform: skewX(-12deg);
+  animation: tree-link-gold-shimmer 5.6s var(--motion-easing-standard) infinite;
+}
+
+.tree-link-card--highlight > * {
+  position: relative;
+  z-index: 1;
 }
 
 html[data-tree-link-theme="dark"] .tree-link-card--highlight {
@@ -213,6 +267,10 @@ html[data-tree-link-theme="dark"] .tree-link-card--highlight {
     inset 0 1px color-mix(in srgb, var(--color-white) 10%, transparent);
 }
 
+html[data-tree-link-theme="dark"] .tree-link-card--highlight::before {
+  opacity: 0.56;
+}
+
 .tree-link-card__icon {
   display: grid;
   place-items: center;
@@ -225,6 +283,33 @@ html[data-tree-link-theme="dark"] .tree-link-card--highlight {
 
 .tree-link-card__icon--social {
   background: transparent;
+}
+
+.tree-link-card__icon--brand {
+  overflow: hidden;
+}
+
+.tree-link-card__brand-icon-crop {
+  position: relative;
+  display: block;
+  inline-size: 0.875rem;
+  block-size: 2.25rem;
+  overflow: hidden;
+}
+
+.tree-link-card__brand-icon {
+  position: absolute;
+  inset-block-start: calc(-1190 / 1772 * 100%);
+  inset-inline-start: calc(-1771 / 626 * 100%);
+  display: block;
+  inline-size: calc(100% * 4169 / 626);
+  max-inline-size: none;
+  block-size: auto;
+  filter: brightness(0);
+}
+
+html[data-tree-link-theme="dark"] .tree-link-card__brand-icon {
+  filter: none;
 }
 
 .tree-link-social-icon {
@@ -613,18 +698,35 @@ html[data-tree-link-theme="dark"] .tree-link-theme__sun {
   text-align: center;
 }
 
-.tree-link-share__preview-mark {
-  inline-size: 7.5rem;
-  aspect-ratio: 1.5;
+.tree-link-share__preview-logo {
+  display: block;
+  inline-size: min(22rem, 90%);
   margin: 0 auto;
-  color: var(--color-text-primary);
+  overflow: hidden;
+  aspect-ratio: 989 / 587;
 }
 
-.tree-link-share__preview h3 {
-  margin: calc(var(--space-2) * -1) 0 0;
-  font-family: var(--font-family-display);
-  font-size: 1.125rem;
-  font-weight: 500;
+.tree-link-share__preview-logo-crop {
+  position: relative;
+  display: block;
+  inline-size: 100%;
+  overflow: hidden;
+  aspect-ratio: 989 / 587;
+}
+
+.tree-link-share__preview-logo-image {
+  position: absolute;
+  inset-block-start: calc(-177 / 587 * 100%);
+  inset-inline-start: calc(-256 / 989 * 100%);
+  display: block;
+  inline-size: calc(100% * 1501 / 989);
+  max-inline-size: none;
+  block-size: auto;
+  filter: brightness(0);
+}
+
+html[data-tree-link-theme="dark"] .tree-link-share__preview-logo-image {
+  filter: none;
 }
 
 .tree-link-share__preview p {
@@ -639,9 +741,7 @@ html[data-tree-link-theme="dark"] .tree-link-theme__sun {
   display: block;
   max-inline-size: 100%;
   margin-block-start: var(--space-4);
-  padding-block-start: var(--space-3);
   overflow: hidden;
-  border-block-start: 1px solid var(--color-border-default);
   color: var(--color-text-secondary);
   font-size: 0.75rem;
   text-overflow: ellipsis;
@@ -733,6 +833,13 @@ html[data-tree-link-theme="dark"] .tree-link-theme__sun {
   background: var(--color-surface);
 }
 
+.tree-link-share__simple-icon {
+  display: block;
+  inline-size: 1.35rem;
+  block-size: 1.35rem;
+  fill: currentColor;
+}
+
 .tree-link-share__option small {
   max-inline-size: 100%;
   overflow: hidden;
@@ -757,6 +864,18 @@ html[data-tree-link-theme="dark"] .tree-link-theme__sun {
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes tree-link-gold-shimmer {
+  0%,
+  18% {
+    transform: translateX(0) skewX(-12deg);
+  }
+
+  68%,
+  100% {
+    transform: translateX(360%) skewX(-12deg);
   }
 }
 
@@ -862,8 +981,13 @@ html[data-tree-link-theme="dark"] .tree-link-theme__sun {
   .tree-link-share__surface,
   .tree-link-share__dialog::backdrop,
   .tree-link-share__dialog[data-closing] .tree-link-share__surface,
-  .tree-link-share__dialog[data-closing]::backdrop {
+  .tree-link-share__dialog[data-closing]::backdrop,
+  .tree-link-card--highlight::before {
     animation: none;
+  }
+
+  .tree-link-card--highlight::before {
+    display: none;
   }
 
   .tree-link-page,
