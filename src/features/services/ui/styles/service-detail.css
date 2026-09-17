@@ -71,8 +71,19 @@
 }
 
 .service-header__cta {
+  --action-button-border: var(--color-region-text-primary);
+  --action-button-fill: var(--color-region-text-primary);
+  --action-button-filled-text: var(--color-region-page);
+  --action-button-transparent-text: var(--color-region-text-primary);
+
   justify-self: start;
   margin-block-start: auto;
+}
+
+.service-header__cta:active:not([aria-disabled="true"]) {
+  --action-button-fill-translate: -100%;
+  --action-button-label-clip-bottom: 100%;
+  --action-button-label-clip-top: 0%;
 }
 
 .service-header__divider {
