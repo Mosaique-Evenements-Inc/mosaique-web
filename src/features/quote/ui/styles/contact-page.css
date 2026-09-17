@@ -1,28 +1,29 @@
 .contact-page {
-  --color-background: var(--color-background-cinematic);
+  --color-background: var(--color-region-page);
   --color-surface-muted: color-mix(
     in oklab,
-    var(--color-white) 10%,
-    var(--color-background-cinematic)
+    var(--color-region-text-primary) 10%,
+    var(--color-region-page)
   );
-  --color-text-primary: var(--color-white);
-  --color-text-secondary: color-mix(in oklab, var(--color-white) 72%, transparent);
-  --color-border-default: color-mix(in oklab, var(--color-white) 24%, transparent);
-  --color-border-strong: color-mix(in oklab, var(--color-white) 64%, transparent);
-  --color-accent-text: var(--color-white);
+  --color-surface-elevated: color-mix(
+    in oklab,
+    var(--color-region-text-primary) 8%,
+    var(--color-region-page)
+  );
+  --color-text-primary: var(--color-region-text-primary);
+  --color-text-secondary: var(--color-region-text-secondary);
+  --color-border-default: var(--color-region-border-default);
+  --color-border-strong: var(--color-region-border-strong);
+  --color-accent-text: var(--color-accent);
   --color-status-error-foreground: color-mix(
     in oklab,
     var(--color-status-error-border) 72%,
-    var(--color-white)
+    var(--color-region-text-primary)
   );
-  --color-accent-muted: color-mix(
-    in oklab,
-    var(--color-white) 14%,
-    var(--color-background-cinematic)
-  );
-  --focus-ring-color: var(--color-white);
+  --color-accent-muted: color-mix(in oklab, var(--color-accent) 14%, var(--color-region-page));
+  --focus-ring-color: var(--color-accent);
 
-  background: var(--color-background-cinematic);
+  background: var(--color-region-page);
   color: var(--color-text-primary);
   padding-block-start: var(--site-navigation-height);
 }
@@ -48,20 +49,16 @@
 }
 
 .contact-page .quote-button {
-  --action-button-border: var(--color-white);
-  --action-button-fill: var(--color-white);
-  --action-button-filled-text: var(--color-background-cinematic);
-  --action-button-transparent-text: var(--color-white);
+  --action-button-border: var(--color-text-primary);
+  --action-button-fill: var(--color-text-primary);
+  --action-button-filled-text: var(--color-background);
+  --action-button-transparent-text: var(--color-text-primary);
 }
 
 .contact-page .quote-toast {
-  background: color-mix(
-    in oklab,
-    color-mix(in oklab, var(--color-background-cinematic) 88%, var(--color-text-inverse)) 88%,
-    transparent
-  );
-  border-color: color-mix(in oklab, var(--color-text-inverse) 32%, transparent);
-  color: var(--color-text-inverse);
+  background: color-mix(in oklab, var(--color-surface-elevated) 94%, transparent);
+  border-color: var(--color-border-strong);
+  color: var(--color-text-primary);
 }
 
 .contact-page__stage {
@@ -115,8 +112,8 @@
 }
 
 .contact-page .quote-stepper li[data-state="active"] > span {
-  background: var(--color-primary);
-  color: var(--color-text-inverse);
+  background: var(--color-text-primary);
+  color: var(--color-background);
 }
 
 .contact-page .quote-stepper li[data-state="complete"] > span {
@@ -144,7 +141,7 @@
 }
 
 .contact-page .quote-form {
-  color-scheme: dark;
+  color-scheme: var(--web-color-scheme);
   display: block;
 }
 

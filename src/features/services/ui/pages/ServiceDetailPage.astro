@@ -24,10 +24,9 @@ const localizedService = getLocalizedService(service, getLocaleFromUrl(Astro.url
 <BaseLayout
   title={`${localizedService.title} — MOSAÏQUE EVENTS`}
   description={localizedService.description}
-  surface="cinematic"
 >
   <Navigation surface="overlay" anchorPrefix="/" />
-  <main class="service-detail" id="main-content" tabindex="-1" data-navigation-contrast="light">
+  <main class="service-detail" id="main-content" tabindex="-1" data-navigation-contrast="theme">
     <div class="service-detail__chapter" data-content-status="placeholder">
       <ServiceHeader service={localizedService} />
       <ServiceGallery

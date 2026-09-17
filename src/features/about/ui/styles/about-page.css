@@ -1,8 +1,8 @@
 .about-hero {
   position: relative;
   min-block-size: 145svh;
-  background: var(--color-background-cinematic);
-  color: var(--color-text-inverse);
+  background: var(--color-region-editorial);
+  color: var(--color-region-text-primary);
 }
 
 .about-hero__scene {
@@ -94,7 +94,7 @@
 
 .about-mosaic {
   overflow: clip;
-  background: var(--color-background-cinematic);
+  background: var(--color-region-editorial);
 }
 
 .about-mosaic__list {
@@ -118,7 +118,7 @@
   position: relative;
   margin: 0;
   overflow: hidden;
-  background: var(--color-background-cinematic);
+  background: var(--color-region-editorial);
   color: var(--color-text-inverse);
   isolation: isolate;
 }

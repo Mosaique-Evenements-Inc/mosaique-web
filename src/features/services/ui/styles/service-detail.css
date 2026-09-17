@@ -1,11 +1,22 @@
 .service-detail {
-  background: var(--color-background-inverse);
-  color: var(--color-text-inverse);
+  --color-background: var(--color-region-page);
+  --color-background-inverse: var(--color-region-page);
+  --color-text-primary: var(--color-region-text-primary);
+  --color-text-secondary: var(--color-region-text-secondary);
+  --color-text-inverse: var(--color-region-text-primary);
+  --color-border-default: var(--color-region-border-default);
+  --color-border-strong: var(--color-region-border-strong);
+
+  background: var(--color-region-page);
+  color: var(--color-region-text-primary);
 }
 
 .service-contact-marquee {
-  background: var(--color-background-ivory);
-  color: var(--color-text-primary);
+  --color-background-inverse: var(--color-region-brand);
+  --color-text-inverse: var(--color-region-brand-text-primary);
+
+  background: var(--color-region-brand);
+  color: var(--color-region-brand-text-primary);
 }
 
 .service-detail__chapter {
@@ -325,6 +336,9 @@
 }
 
 .service-more-galleries__link {
+  --color-background-inverse: var(--color-background-cinematic);
+  --color-text-inverse: var(--color-cream-100);
+
   align-items: center;
   block-size: 100svh;
   color: inherit;
@@ -598,6 +612,10 @@
 }
 
 .service-lightbox {
+  --color-background-inverse: var(--color-background-cinematic);
+  --color-text-inverse: var(--color-cream-100);
+  --focus-ring-color: var(--color-accent);
+
   background: transparent;
   border: 0;
   block-size: 100dvh;

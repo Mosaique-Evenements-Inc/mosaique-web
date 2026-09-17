@@ -50,7 +50,7 @@
   block-size: var(--site-navigation-height);
   display: grid;
   gap: var(--space-3);
-  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
   padding-block-start: var(--safe-area-inset-top);
   padding-inline: max(var(--space-page-gutter), var(--safe-area-inset-left))
     max(var(--space-page-gutter), var(--safe-area-inset-right));
@@ -78,7 +78,7 @@
 }
 
 .home-hero {
-  background: var(--color-background-inverse);
+  background: var(--color-background-cinematic);
   color: var(--color-text-inverse);
   min-block-size: 145svh;
   position: relative;

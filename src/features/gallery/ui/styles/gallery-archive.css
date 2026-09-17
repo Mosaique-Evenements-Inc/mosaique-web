@@ -1,7 +1,13 @@
 .gallery-page,
 .gallery-archive {
-  background: var(--color-background);
-  color: var(--color-text-primary);
+  --color-background: var(--color-region-page);
+  --color-text-primary: var(--color-region-text-primary);
+  --color-text-secondary: var(--color-region-text-secondary);
+  --color-border-default: var(--color-region-border-default);
+  --color-border-strong: var(--color-region-border-strong);
+
+  background: var(--color-region-page);
+  color: var(--color-region-text-primary);
 }
 
 .gallery-archive {

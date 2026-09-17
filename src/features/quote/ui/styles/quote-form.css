@@ -185,8 +185,8 @@
 }
 
 .quote-stepper li[data-state="active"] > span {
-  background: var(--color-primary);
-  color: var(--color-text-inverse);
+  background: var(--color-text-primary);
+  color: var(--color-background);
 }
 
 .quote-stepper li[data-state="complete"] {
@@ -408,10 +408,10 @@
 .custom-select__panel {
   -webkit-backdrop-filter: blur(var(--effect-blur-md));
   backdrop-filter: blur(var(--effect-blur-md));
-  background: color-mix(in srgb, var(--color-background-cinematic) 78%, transparent);
-  border: 1px solid color-mix(in srgb, var(--color-text-inverse) 24%, transparent);
+  background: color-mix(in srgb, var(--color-surface-elevated) 94%, transparent);
+  border: 1px solid var(--color-border-default);
   border-radius: var(--primitive-radius-md);
-  color: var(--color-cream-100);
+  color: var(--color-text-primary);
   inline-size: 100%;
   inset: calc(100% + var(--space-2)) auto auto 0;
   overflow: hidden;
@@ -656,10 +656,10 @@
 .date-picker-popover__panel {
   -webkit-backdrop-filter: blur(var(--effect-blur-md));
   backdrop-filter: blur(var(--effect-blur-md));
-  background: color-mix(in srgb, var(--color-background-cinematic) 78%, transparent);
-  border: 1px solid color-mix(in srgb, var(--color-text-inverse) 24%, transparent);
+  background: color-mix(in srgb, var(--color-surface-elevated) 94%, transparent);
+  border: 1px solid var(--color-border-default);
   border-radius: var(--primitive-radius-md);
-  color: var(--color-text-inverse);
+  color: var(--color-text-primary);
   padding: var(--space-4);
 }
 
@@ -781,9 +781,9 @@
 }
 
 .date-picker__grid button[data-selected="true"] {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-  color: var(--color-text-inverse);
+  background: var(--color-text-primary);
+  border-color: var(--color-text-primary);
+  color: var(--color-background);
 }
 
 .date-picker__grid button:disabled {
@@ -794,7 +794,7 @@
 }
 
 .quote-check input {
-  accent-color: var(--color-primary);
+  accent-color: var(--color-text-primary);
   block-size: 1.25rem;
   inline-size: 1.25rem;
 }
@@ -825,8 +825,8 @@
 }
 
 .quote-choice-group input:checked + span {
-  background: var(--color-primary);
-  color: var(--color-text-inverse);
+  background: var(--color-text-primary);
+  color: var(--color-background);
 }
 
 .quote-venue-summary {

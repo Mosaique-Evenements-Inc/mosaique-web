@@ -3,6 +3,7 @@ import Container from "@/core/common/ui/components/Container.astro";
 import FullscreenNavigation from "./FullscreenNavigation.astro";
 import ServicesDropdown from "./ServicesDropdown.astro";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
+import ThemeToggle from "./ThemeToggle.astro";
 import topbarLogo from "@/assets/logos/logo_topbar.png";
 import { navigationContent } from "@/features/site-shell/content/navigation";
 import { getSiteShellTranslations } from "@/features/site-shell/i18n";
@@ -88,6 +89,7 @@ const isCurrentPage = (href: string) =>
     </nav>
 
     <LanguageSwitcher placement="desktop" />
+    <ThemeToggle placement="desktop" />
     <FullscreenNavigation anchorPrefix={anchorPrefix} />
   </Container>
 </header>
@@ -163,7 +165,13 @@ const isCurrentPage = (href: string) =>
         .filter((element) => element !== navigation && !navigation.contains(element))
         .map((element) => element.closest<HTMLElement>("[data-navigation-contrast]"))
         .find((element): element is HTMLElement => Boolean(element));
-      const contrast = surface?.dataset.navigationContrast ?? "dark";
+      const declaredContrast = surface?.dataset.navigationContrast ?? "dark";
+      const contrast =
+        declaredContrast === "theme"
+          ? document.documentElement.dataset.webTheme === "dark"
+            ? "light"
+            : "dark"
+          : declaredContrast;
 
       navigation.dataset.navigationActiveContrast = contrast;
       navigation.style.setProperty(
@@ -186,6 +194,9 @@ const isCurrentPage = (href: string) =>
       signal: controller.signal,
     });
     window.addEventListener("resize", requestUpdate, { signal: controller.signal });
+    window.addEventListener("mosaique:web-theme-change", requestUpdate, {
+      signal: controller.signal,
+    });
     document.addEventListener("astro:before-swap", resetContrast, {
       signal: controller.signal,
     });

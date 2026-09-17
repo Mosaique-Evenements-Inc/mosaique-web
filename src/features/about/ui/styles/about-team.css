@@ -1,6 +1,11 @@
 .about-team {
-  background: var(--color-background-cinematic);
-  color: var(--color-text-inverse);
+  --color-text-primary: var(--color-region-text-primary);
+  --color-text-secondary: var(--color-region-text-secondary);
+  --color-border-default: var(--color-region-border-default);
+  --color-border-strong: var(--color-region-border-strong);
+
+  background: var(--color-region-editorial);
+  color: var(--color-region-text-primary);
 }
 
 .about-team__inner {
@@ -64,12 +69,8 @@
   padding: 0;
   overflow: hidden;
   border: 0;
-  background: color-mix(
-    in srgb,
-    var(--color-surface-muted) 8%,
-    var(--color-background-cinematic)
-  );
-  color: inherit;
+  background: color-mix(in srgb, var(--color-surface-muted) 8%, var(--color-region-editorial));
+  color: var(--color-cream-100);
   cursor: pointer;
   text-align: start;
 }
@@ -163,11 +164,7 @@
   position: relative;
   margin: 0;
   overflow: hidden;
-  background: color-mix(
-    in srgb,
-    var(--color-surface-muted) 10%,
-    var(--color-background-cinematic)
-  );
+  background: color-mix(in srgb, var(--color-surface-muted) 10%, var(--color-region-editorial));
 }
 
 .about-team__active-media img {
@@ -202,7 +199,7 @@
       color-mix(in srgb, var(--color-accent) 15%, transparent),
       transparent 48%
     ),
-    var(--color-background-cinematic);
+    var(--color-region-editorial);
   flex-direction: column;
   justify-content: center;
 }
@@ -311,7 +308,7 @@
   }
 
   .about-team__member:not([aria-pressed="true"]):hover {
-    background: color-mix(in srgb, var(--color-text-inverse) 6%, transparent);
+    background: color-mix(in srgb, var(--color-region-text-primary) 6%, transparent);
   }
 }
 
