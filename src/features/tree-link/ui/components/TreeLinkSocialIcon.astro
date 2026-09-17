@@ -1,0 +1,52 @@
+---
+import {
+  TREE_LINK_INSTAGRAM_GRADIENT_STOPS,
+  TREE_LINK_SOCIAL_ICONS,
+  type TreeLinkSocialIconSlug,
+} from "@/features/tree-link/content/social-icons";
+
+interface Props {
+  name: TreeLinkSocialIconSlug;
+}
+
+const { name } = Astro.props;
+const icon = TREE_LINK_SOCIAL_ICONS[name];
+const instagramGradientId = "tree-link-instagram-gradient";
+---
+
+<svg
+  class:list={["tree-link-social-icon", `tree-link-social-icon--${name}`]}
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+  focusable="false"
+>
+  {
+    name === "instagram" && (
+      <defs>
+        <linearGradient id={instagramGradientId} x1="0" y1="24" x2="24" y2="0">
+          {TREE_LINK_INSTAGRAM_GRADIENT_STOPS.map((stop) => (
+            <stop offset={stop.offset} stop-color={stop.color} />
+          ))}
+        </linearGradient>
+      </defs>
+    )
+  }
+  {
+    name === "tiktok" && (
+      <>
+        <path
+          class="tree-link-social-icon__tiktok-shadow tree-link-social-icon__tiktok-shadow--cyan"
+          d={icon.path}
+        />
+        <path
+          class="tree-link-social-icon__tiktok-shadow tree-link-social-icon__tiktok-shadow--red"
+          d={icon.path}
+        />
+      </>
+    )
+  }
+  <path
+    class:list={{ "tree-link-social-icon__tiktok-mark": name === "tiktok" }}
+    d={icon.path}
+    fill={name === "instagram" ? `url(#${instagramGradientId})` : `#${icon.hex}`}></path>
+</svg>

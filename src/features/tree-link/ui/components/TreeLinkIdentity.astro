@@ -1,0 +1,25 @@
+---
+import topbarLogo from "@/assets/logos/logo_topbar.png";
+
+interface Props {
+  headingId: string;
+  name: string;
+  qualifier: string;
+  tagline: string;
+  location: string;
+}
+
+const { headingId, name, qualifier, tagline, location } = Astro.props;
+---
+
+<header class="tree-link__identity">
+  <div
+    class="tree-link__brand-mark"
+    style={`--tree-link-logo:url("${topbarLogo.src}");`}
+    aria-hidden="true"
+  >
+  </div>
+  <h1 id={headingId} class="visually-hidden">{name} {qualifier}</h1>
+  <p class="tree-link__tagline">{tagline}</p>
+  <p class="tree-link__location">{location}</p>
+</header>

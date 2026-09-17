@@ -1,5 +1,7 @@
 @theme static {
   --color-background-cinematic: var(--color-black);
+  --color-background-night: #0b241c;
+  --color-surface-night: #1c1c1c;
 }
 
 :root {
