@@ -13,12 +13,14 @@ import ProjectsExperiences from "../components/ProjectsExperiences.astro";
 import { getHomeTranslations } from "@/features/home/i18n";
 import { getLocaleFromUrl } from "@/core/i18n";
 
+import "../styles/home-page.css";
+
 const homeText = getHomeTranslations(getLocaleFromUrl(Astro.url));
 ---
 
 <BaseLayout title={homeText.metadataTitle} description={homeText.metadataDescription}>
   <Navigation />
-  <main class="site-main" id="main-content" tabindex="-1">
+  <main class="site-main home-page" id="main-content" tabindex="-1">
     <PanelReveal>
       <Hero slot="lead" />
       <ProjectsExperiences />

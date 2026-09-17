@@ -3,6 +3,11 @@
   color: var(--color-text-inverse);
 }
 
+.service-contact-marquee {
+  background: var(--color-background-ivory);
+  color: var(--color-text-primary);
+}
+
 .service-detail__chapter {
   display: grid;
   grid-template-columns: minmax(0, 28%) minmax(0, 72%);

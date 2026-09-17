@@ -1,0 +1,16 @@
+.home-page {
+  --color-background: var(--color-mosaique-green);
+  --color-background-inverse: var(--color-mosaique-green);
+  --color-surface-muted: var(--color-mosaique-green);
+  --color-text-primary: var(--color-text-inverse);
+  --color-text-secondary: color-mix(in oklab, var(--color-text-inverse) 76%, transparent);
+  --color-border-default: color-mix(in oklab, var(--color-text-inverse) 24%, transparent);
+  --color-border-strong: color-mix(in oklab, var(--color-text-inverse) 54%, transparent);
+  --color-accent-text: var(--color-accent);
+}
+
+.home-page .action-button {
+  --action-button-fill: var(--color-background-ivory);
+  --action-button-filled-text: var(--color-primary);
+  --action-button-transparent-text: var(--color-text-inverse);
+}

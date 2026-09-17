@@ -1,4 +1,10 @@
 .projects-experiences {
+  --color-background: var(--color-background-ivory);
+  --color-text-primary: var(--color-primary);
+  --color-text-secondary: color-mix(in oklab, var(--color-primary) 68%, transparent);
+  --color-border-default: color-mix(in oklab, var(--color-primary) 18%, transparent);
+  --color-border-strong: color-mix(in oklab, var(--color-primary) 58%, transparent);
+
   background: var(--color-background);
   color: var(--color-text-primary);
   overflow: clip;

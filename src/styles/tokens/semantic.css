@@ -3,5 +3,8 @@
 }
 
 :root {
+  --color-mosaique-green: #0b241c;
+  --color-background-ivory: var(--color-cream-100);
+  --color-footer-background: #0b241c;
   --color-overlay-image: color-mix(in srgb, var(--color-primary) 34%, transparent);
 }

@@ -14,6 +14,18 @@ This document is the source of truth for implementation status. The existence of
 ### Design System
 
 - **Implementation: complete for the current foundation.** Primitive and semantic color, typography, spacing, layout, z-index, and motion tokens exist in `src/styles/tokens/`.
+- **Controlled surface theming trial implemented locally.** Home now scopes its page-level
+  background, inverse background, muted surface, text, border, and action-button fill tokens to the
+  Mosaïque green surface without changing layout, copy, media, typography, animation, or global
+  primitives. Service Detail keeps the cinematic black surface, while its local contact marquee
+  opts into an ivory surface through the shared marquee's explicit class and navigation-contrast
+  variant.
+- **Home Events surface adjusted locally.** `ProjectsExperiences` now opts out of the green Home
+  scope and restores the project ivory surface with dark text and navigation contrast, preserving
+  its existing grid, carousel behavior, media, copy, controls, and responsive geometry.
+- **Home FAQ surface adjusted locally.** `Faq` now opts out of the green Home scope and restores
+  the project ivory surface with dark text and navigation contrast, preserving its native
+  disclosure structure, spacing, copy, responsive columns, and reduced-motion behavior.
 - Standard textual CTAs now render through one `Button.tsx` primitive with two inverse capsule variants and one transform-based vertical fill interaction: transparent to light, and light to transparent. Hero, Services, Final CTA, the quote form, and venue-dialog actions preserve their existing destinations, handlers, data attributes, disabled behavior, and contextual sizing. CTA labels use the display family; icon-only and low-chrome controls preserve their established contracts.
 - **Button glyph clipping fixed locally.** The filled label's `clip-path: inset(0)` previously clipped font ink outside its `line-height: 1` box. The shared `action-button.css` now gives only that masked layer a `0.25em` paint allowance with compensating negative margins, preserving button/text geometry, wrapping, typography, and transition duration/easing. Chromium before/after checks on venue-partnership and logistics CTAs passed at 320, 390, 430, 768, and 1280px in ES/EN/FR (30 cases): glyph pixels match an unclipped reference, with unchanged layout and no page overflow. Multiline P/p/Q/q/g/j/y, accents, both variants, hover/focus, hidden masks, and runtime reduced motion also passed. Native iOS Safari remains unverified. Scoped Prettier, build, lint, typecheck, and diff-check passed; no test script, dependency, commit, or push was added.
 - CSS and TypeScript runtime motion tokens are documented and synchronized.
@@ -84,8 +96,14 @@ This document is the source of truth for implementation status. The existence of
 
 - **Homepage status corrected against code.** `AboutMilestones.astro` and its typed content remain available, but the section is currently commented out of the homepage composition and is not a rendered homepage surface.
 - **Dedicated page implementation: complete locally.** `/about` reuses the shared Navigation and Footer, presents the approved About copy as a cinematic CSS-only line reveal, and follows it with a full-bleed, deterministic masonry mosaic sourced from a typed editorial selection of 31 available event photographs. The same media item supports future animated GIFs without sending them through static optimization.
-- The hero preserves the `2420 / 1080` desktop reference proportion from `lg` upward; tablet and mobile use `100svh` so the editorial title remains readable. The mosaic uses the existing `sm`, `md`, `lg`, `xl`, and `2xl` breakpoints to progress from two through seven columns with no gutters, captions, frames, hydration, listener, or new dependency.
-- **Fidelity and responsive validation: complete for the supplied references and local implementation.** Chrome measurements at `375`, `430`, `768`, `1024`, `1440`, and `1920px` confirmed two, two, four, five, six, and seven columns respectively, exact viewport-width sections, and zero horizontal overflow. Desktop captures preserve the `2420 / 1080` hero proportion and full-bleed mosaic handoff; compact layouts retain the title in a readable `100svh` composition. Runtime reduced-motion validation exposes the complete final title and caption with no reveal or drift.
+- **About mosaic desktop base aligned locally.** The media mosaic now preserves the content-owned
+  editorial columns as explicit desktop columns from 80 rem upward, equalizes their shared block
+  height, and lets each approved image crop with `object-fit: cover`, producing a straight bottom
+  edge. The shared desktop height was then increased further to give each image container more room and
+  reduce visible cropping without changing the image set, labels, hover caption contract, mobile
+  multi-column flow, hero, team section, navigation, or footer.
+- The hero preserves the `2420 / 1080` desktop reference proportion from `lg` upward; tablet and mobile use `100svh` so the editorial title remains readable. The mosaic uses the existing `sm`, `md`, `lg`, and `xl` breakpoints to progress from two through six columns with no gutters, captions, frames, hydration, listener, or new dependency.
+- **Fidelity and responsive validation: complete for the supplied references and local implementation.** Chrome measurements at `375`, `430`, `768`, `1024`, `1440`, and `1920px` confirmed the responsive mosaic progression and zero horizontal overflow. Desktop captures preserve the `2420 / 1080` hero proportion and full-bleed mosaic handoff; compact layouts retain the title in a readable `100svh` composition. Runtime reduced-motion validation exposes the complete final title and caption with no reveal or drift.
 - **Media hover refinement implemented locally.** Fine-pointer hover now applies a restrained zoom and contrast treatment, fades in a cinematic lower shade, and reveals an approved event or neutral category label through a masked vertical entrance. The unassigned K&T wedding photography deliberately uses `Boda` rather than being attributed to Wedding R&R. Touch layouts keep the photography unobstructed, reduced motion removes every transition, and no interactive semantics, runtime JavaScript, asset duplication, or new dependency was added.
 - **Compact-title and mosaic-spacing refinement complete locally.** The About title now follows Gallery's word-safe wrapping contract with inline-block words, `1.08` line height, intrinsic height, and no clipping mask, while retaining its line-stagger reveal. The mobile caption receives an explicit `16px` internal inline inset so it cannot touch the viewport edges. The full-bleed mosaic keeps zero page-edge gutters and adds only a `2px` inter-item column/row separation. In-browser validation at `375`, `430`, and `1440px` confirmed complete title glyphs, the caption inset, exact viewport-width surfaces, zero outer mosaic gutters, exact `2px` internal gaps, the expected two/six columns, and no horizontal overflow.
 - **Hero-to-mosaic scroll and title-motion alignment complete locally.** About now reuses the same shared `PanelReveal` composition as Home's Hero-to-Events handoff: its `145svh` lead contains one native `100svh` sticky scene while the full-bleed mosaic advances above it in document flow. The former automatic line reveal, caption fade, and perpetual drift are removed. The title now follows Gallery Archive's observed, one-time character reveal with word-safe spans, `22ms` stagger, shared motion tokens, and immediate final state under reduced motion. In-browser checks at `1440 × 900` and `375 × 844` confirmed the exact `145svh` / `100svh` geometry, sticky lead, progressive panel overlap, one-time 47-character reveal, complete mobile title, retained two/six-column mosaic, zero horizontal overflow, and no console warnings or errors. The current in-app browser cannot emulate reduced motion; the compiled immediate-state branch passed code inspection but fresh runtime emulation remains pending.
@@ -238,6 +256,11 @@ This document is the source of truth for implementation status. The existence of
 - Desktop, tablet, mobile, loop movement, action constraints, content completeness, document overflow, and reduced-motion code paths were validated.
 
 ### Footer
+
+- **Footer green surface restored locally.** The shared Footer now uses the approved historical
+  Mosaïque dark green (`#0b241c`) through a dedicated semantic footer background token, so every
+  page that renders the global Footer receives the green surface without changing global primary,
+  inverse backgrounds, content, layout, or interactions.
 
 - Legal copy now composes the invariant copyright and company name from `footerContent.legal` with the existing localized `footerLegal` key: Spanish, English, and French rights-reserved text. Footer structure and styling remain unchanged.
 

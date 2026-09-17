@@ -1,5 +1,5 @@
 .site-footer {
-  background: var(--color-background-inverse);
+  background: var(--color-footer-background);
   color: var(--color-text-inverse);
   overflow: clip;
 }

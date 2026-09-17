@@ -9,8 +9,10 @@ const ctaText = getHomeTranslations(locale);
 ---
 
 <ContactMarquee
+  class="service-contact-marquee"
   href={getLocalizedHref(finalCtaContent.action.href, locale)}
   label={ctaText.finalCtaAction}
   lead={ctaText.finalCtaText}
+  navigationContrast="dark"
   titleId="service-contact-marquee-title"
 />
