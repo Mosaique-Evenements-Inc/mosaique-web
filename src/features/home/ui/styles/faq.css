@@ -1,9 +1,9 @@
 .faq {
-  --color-background: var(--color-background-ivory);
-  --color-text-primary: var(--color-primary);
-  --color-text-secondary: color-mix(in oklab, var(--color-primary) 68%, transparent);
-  --color-border-default: color-mix(in oklab, var(--color-primary) 18%, transparent);
-  --color-border-strong: color-mix(in oklab, var(--color-primary) 58%, transparent);
+  --color-background: var(--color-region-editorial);
+  --color-text-primary: var(--color-region-text-primary);
+  --color-text-secondary: var(--color-region-text-secondary);
+  --color-border-default: var(--color-region-border-default);
+  --color-border-strong: var(--color-region-border-strong);
 
   background: var(--color-background);
   color: var(--color-text-primary);

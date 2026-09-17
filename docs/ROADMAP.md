@@ -1,6 +1,6 @@
 # Mosaïque Web Roadmap
 
-Last verified against code and git history: 2026-08-28.
+Last verified against code and git history: 2026-09-17.
 
 This document is the source of truth for implementation status. The existence of a module in `src/content/home/` does not mean its section has been implemented.
 
@@ -14,18 +14,18 @@ This document is the source of truth for implementation status. The existence of
 ### Design System
 
 - **Implementation: complete for the current foundation.** Primitive and semantic color, typography, spacing, layout, z-index, and motion tokens exist in `src/styles/tokens/`.
-- **Controlled surface theming trial implemented locally.** Home now scopes its page-level
-  background, inverse background, muted surface, text, border, and action-button fill tokens to the
-  Mosaïque green surface without changing layout, copy, media, typography, animation, or global
-  primitives. Service Detail keeps the cinematic black surface, while its local contact marquee
-  opts into an ivory surface through the shared marquee's explicit class and navigation-contrast
-  variant.
-- **Home Events surface adjusted locally.** `ProjectsExperiences` now opts out of the green Home
-  scope and restores the project ivory surface with dark text and navigation contrast, preserving
-  its existing grid, carousel behavior, media, copy, controls, and responsive geometry.
-- **Home FAQ surface adjusted locally.** `Faq` now opts out of the green Home scope and restores
-  the project ivory surface with dark text and navigation contrast, preserving its native
-  disclosure structure, spacing, copy, responsive columns, and reduced-motion behavior.
+- **Web Theme System V1 implemented.** The public Web surface now resolves `light` or `dark` before
+  first paint from the scoped `mosaique-web-theme` preference with a
+  `prefers-color-scheme` fallback. One Web-specific `data-web-theme` attribute controls semantic
+  page, editorial, brand, text, border, control, Footer, and navigation roles without React state,
+  hydration, or a theming dependency. Tree Link remains isolated on its existing attribute and
+  storage contract, and the Web resolver is omitted from all localized Tree Link routes.
+- **Theme distribution complete for current routes.** Light keeps Home Hero cinematic, Home
+  Projects and FAQ ivory, Home Services/Process/Marquee/CTA green, About/Gallery/Event
+  Detail/Contact ivory, Service Detail ivory, Service contact marquees green, and every Footer
+  green. Dark maps structural regions and Footer to Black while retaining intentional image and
+  lightbox treatments. Form controls, adaptive navigation contrast, and localized desktop/mobile
+  theme toggles follow the same semantic contract without changing existing layouts or content.
 - Standard textual CTAs now render through one `Button.tsx` primitive with two inverse capsule variants and one transform-based vertical fill interaction: transparent to light, and light to transparent. Hero, Services, Final CTA, the quote form, and venue-dialog actions preserve their existing destinations, handlers, data attributes, disabled behavior, and contextual sizing. CTA labels use the display family; icon-only and low-chrome controls preserve their established contracts.
 - **Button glyph clipping fixed locally.** The filled label's `clip-path: inset(0)` previously clipped font ink outside its `line-height: 1` box. The shared `action-button.css` now gives only that masked layer a `0.25em` paint allowance with compensating negative margins, preserving button/text geometry, wrapping, typography, and transition duration/easing. Chromium before/after checks on venue-partnership and logistics CTAs passed at 320, 390, 430, 768, and 1280px in ES/EN/FR (30 cases): glyph pixels match an unclipped reference, with unchanged layout and no page overflow. Multiline P/p/Q/q/g/j/y, accents, both variants, hover/focus, hidden masks, and runtime reduced motion also passed. Native iOS Safari remains unverified. Scoped Prettier, build, lint, typecheck, and diff-check passed; no test script, dependency, commit, or push was added.
 - CSS and TypeScript runtime motion tokens are documented and synchronized.

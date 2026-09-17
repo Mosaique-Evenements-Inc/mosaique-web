@@ -7,6 +7,61 @@
 :root {
   --color-mosaique-green: #0b241c;
   --color-background-ivory: var(--color-cream-100);
-  --color-footer-background: #0b241c;
   --color-overlay-image: color-mix(in srgb, var(--color-primary) 34%, transparent);
+
+  --color-region-page: var(--color-background-ivory);
+  --color-region-editorial: var(--color-background-ivory);
+  --color-region-brand: var(--color-mosaique-green);
+  --color-region-text-primary: var(--color-primary);
+  --color-region-text-secondary: color-mix(in oklab, var(--color-primary) 68%, transparent);
+  --color-region-border-default: color-mix(in oklab, var(--color-primary) 18%, transparent);
+  --color-region-border-strong: color-mix(in oklab, var(--color-primary) 58%, transparent);
+  --color-region-brand-text-primary: var(--color-text-inverse);
+  --color-region-brand-text-secondary: color-mix(
+    in oklab,
+    var(--color-text-inverse) 76%,
+    transparent
+  );
+  --color-region-brand-border-default: color-mix(
+    in oklab,
+    var(--color-text-inverse) 24%,
+    transparent
+  );
+  --color-region-brand-border-strong: color-mix(
+    in oklab,
+    var(--color-text-inverse) 54%,
+    transparent
+  );
+  --color-footer-background: var(--color-region-brand);
+  --web-color-scheme: light;
+}
+
+html[data-web-theme="dark"] {
+  --color-region-page: var(--color-black);
+  --color-region-editorial: var(--color-black);
+  --color-region-brand: var(--color-black);
+  --color-region-text-primary: var(--color-text-inverse);
+  --color-region-text-secondary: color-mix(
+    in oklab,
+    var(--color-text-inverse) 72%,
+    transparent
+  );
+  --color-region-border-default: color-mix(
+    in oklab,
+    var(--color-text-inverse) 24%,
+    transparent
+  );
+  --color-region-border-strong: color-mix(in oklab, var(--color-text-inverse) 64%, transparent);
+  --color-background: var(--color-region-page);
+  --color-surface: var(--color-surface-night);
+  --color-surface-elevated: var(--color-surface-night);
+  --color-surface-muted: color-mix(in oklab, var(--color-white) 10%, var(--color-black));
+  --color-text-primary: var(--color-region-text-primary);
+  --color-text-secondary: var(--color-region-text-secondary);
+  --color-border-default: var(--color-region-border-default);
+  --color-border-strong: var(--color-region-border-strong);
+  --color-accent-text: var(--color-accent);
+  --color-accent-muted: color-mix(in oklab, var(--color-accent) 18%, var(--color-black));
+  --focus-ring-color: var(--color-accent);
+  --web-color-scheme: dark;
 }

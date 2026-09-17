@@ -1,0 +1,127 @@
+---
+import Icon from "@/core/common/ui/components/Icon.astro";
+import { getLocaleFromUrl } from "@/core/i18n";
+import { getSiteShellTranslations } from "@/features/site-shell/i18n";
+
+interface Props {
+  placement: "desktop" | "mobile";
+}
+
+const { placement } = Astro.props;
+const shellText = getSiteShellTranslations(getLocaleFromUrl(Astro.url));
+---
+
+<button
+  class:list={["web-theme-toggle", `is-${placement}`]}
+  type="button"
+  aria-label={shellText["navigation.switchToDark"]}
+  aria-pressed="false"
+  data-web-theme-toggle
+  data-switch-to-dark-label={shellText["navigation.switchToDark"]}
+  data-switch-to-light-label={shellText["navigation.switchToLight"]}
+>
+  <span class="web-theme-toggle__moon" aria-hidden="true">
+    <Icon name="halfMoon" size={20} />
+  </span>
+  <span class="web-theme-toggle__sun" aria-hidden="true">
+    <Icon name="sunLight" size={20} />
+  </span>
+</button>
+
+<script>
+  const storageKey = "mosaique-web-theme";
+
+  const syncWebThemeToggles = () => {
+    const root = document.documentElement;
+    const isDark = root.dataset.webTheme === "dark";
+
+    document
+      .querySelectorAll<HTMLButtonElement>("[data-web-theme-toggle]")
+      .forEach((toggle) => {
+        toggle.setAttribute("aria-pressed", String(isDark));
+        toggle.setAttribute(
+          "aria-label",
+          isDark
+            ? toggle.dataset.switchToLightLabel || ""
+            : toggle.dataset.switchToDarkLabel || "",
+        );
+      });
+  };
+
+  document.querySelectorAll<HTMLButtonElement>("[data-web-theme-toggle]").forEach((toggle) => {
+    if (toggle.dataset.themeReady === "true") return;
+    toggle.dataset.themeReady = "true";
+
+    toggle.addEventListener("click", () => {
+      const root = document.documentElement;
+      const nextTheme = root.dataset.webTheme === "dark" ? "light" : "dark";
+
+      root.dataset.webTheme = nextTheme;
+      syncWebThemeToggles();
+
+      try {
+        window.localStorage.setItem(storageKey, nextTheme);
+      } catch {
+        root.dataset.webTheme = nextTheme;
+      }
+
+      window.dispatchEvent(new CustomEvent("mosaique:web-theme-change"));
+    });
+  });
+
+  syncWebThemeToggles();
+</script>
+
+<style>
+  .web-theme-toggle {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: currentColor;
+    cursor: pointer;
+    display: inline-flex;
+    flex: none;
+    inline-size: 2.75rem;
+    justify-content: center;
+    min-block-size: 2.75rem;
+    padding: 0;
+    transition:
+      color var(--motion-duration-fast) var(--motion-easing-standard),
+      transform var(--motion-duration-fast) var(--motion-easing-standard);
+  }
+
+  .web-theme-toggle.is-desktop {
+    display: none;
+  }
+
+  .web-theme-toggle__sun,
+  :global(html[data-web-theme="dark"]) .web-theme-toggle__moon {
+    display: none;
+  }
+
+  :global(html[data-web-theme="dark"]) .web-theme-toggle__sun {
+    display: block;
+  }
+
+  .web-theme-toggle:active {
+    transform: scale(0.94);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .web-theme-toggle:hover {
+      color: var(--color-accent);
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .web-theme-toggle.is-desktop {
+      display: inline-flex;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .web-theme-toggle {
+      transition: none;
+    }
+  }
+</style>

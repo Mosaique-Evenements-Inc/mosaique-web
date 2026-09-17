@@ -24,10 +24,9 @@ const localizedEvent = getLocalizedEvent(event, locale);
 <BaseLayout
   title={`${localizedEvent.title} — MOSAÏQUE EVENTS`}
   description={localizedEvent.description}
-  surface="cinematic"
 >
   <Navigation surface="overlay" anchorPrefix="/" />
-  <main class="event-detail" id="main-content" tabindex="-1" data-navigation-contrast="light">
+  <main class="event-detail" id="main-content" tabindex="-1" data-navigation-contrast="theme">
     <div class="event-detail__chapter" data-content-status={localizedEvent.status}>
       <EventHeader
         title={localizedEvent.title}

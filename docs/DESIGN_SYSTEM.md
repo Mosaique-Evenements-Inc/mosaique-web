@@ -85,6 +85,33 @@ Color architecture:
 
 Components must consume semantic tokens rather than primitive hex values. Tailwind utilities should be generated from the token layer, for example `bg-background`, `bg-primary`, `text-primary`, `text-secondary`, `text-inverse`, `text-accent`, and `border-border-default`.
 
+### Web Theme System V1
+
+The public Web surface supports `light` and `dark` through the Web-specific
+`data-web-theme` attribute on `<html>`. `BaseLayout.astro` resolves the persisted
+`mosaique-web-theme` preference before first paint and otherwise follows
+`prefers-color-scheme`. Tree Link keeps its independent `data-tree-link-theme`
+attribute and storage contract; the Web resolver is not rendered on Tree Link routes.
+
+Theme-aware sections consume regional semantic roles instead of branching on theme:
+
+- `--color-region-page`: the default page canvas;
+- `--color-region-editorial`: ivory editorial regions in Light;
+- `--color-region-brand`: Mosaïque night-green regions in Light;
+- regional text and border roles for editorial and brand surfaces;
+- `--web-color-scheme`: native form-control color-scheme alignment.
+
+Dark maps all structural regional surfaces to Black while preserving intentional
+cinematic media treatments. Home may compose editorial, brand, and cinematic regions
+in Light without page-specific Light/Dark selectors. The global Footer consumes the
+brand region, so it is night green in Light and Black in Dark.
+
+The Web theme toggle is an Astro component with one borderless icon button per active
+navigation mode. It updates the root attribute once, persists the explicit preference,
+synchronizes all rendered toggle instances, and exposes localized labels plus
+`aria-pressed`. It does not require a React provider, hydrated island, dependency, or
+continuous listener.
+
 ## 4. Typography
 
 The official typography pairing is Cinzel for display and headings, and Montserrat for body copy and functional UI.
