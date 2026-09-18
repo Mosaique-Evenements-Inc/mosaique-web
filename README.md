@@ -47,16 +47,23 @@ pnpm typecheck
 git diff --check
 ```
 
-El script de tests cubre el contrato público de captura de Leads sin tocar red ni credenciales.
+El script de tests construye el sitio y cubre el contrato público de captura de Leads y el contrato
+estático de locale/routing sin tocar red ni credenciales.
 
 ## Superficie pública
 
-- `/`: homepage editorial.
+- `/`: homepage editorial en English (EN-CA), idioma predeterminado.
+- `/es`: homepage Spanish; sus páginas usan el prefijo `/es/`.
+- `/fr`: homepage French; sus páginas usan el prefijo `/fr/`.
 - `/contact`: página dedicada con el formulario de cotización.
 - `/gallery`: archivo de eventos realizados.
 - `/gallery/[category]`: archivos estáticos derivados de las categorías aprobadas.
 - `/events/[slug]`: seis páginas estáticas de detalle de evento.
 - `/robots.txt`: directivas de rastreo; incluye el sitemap cuando existe `SITE_URL`.
+
+Los IDs y slugs se mantienen entre idiomas. Los paths históricos `/en/*` deben redirigir de forma
+permanente y en un solo salto al equivalente English sin prefijo mediante la configuración de
+Vercel; no se generan páginas `/en/*` ni redirects de JavaScript en el build estático.
 
 ## Captura pública de Leads
 
@@ -108,16 +115,17 @@ y métricas seguras antes de campañas públicas relevantes.
 
 ## Evidencia de ejecución
 
-Última verificación local: **2026-08-28**, Node.js `v22.22.3`.
+Última verificación local: **2026-09-18**, Node.js `v24.5.0`.
 
-| Comprobación                                      | Resultado                                                            |
-| ------------------------------------------------- | -------------------------------------------------------------------- |
-| `pnpm build`                                      | Correcto; 14 páginas y 407 variantes de imagen generadas             |
-| Build temporal con `SITE_URL`                     | Correcto; canonical, `robots.txt` y sitemap generados                |
-| Canonical de `/`, `/contact`, `/gallery` y evento | Correctos con la URL temporal usada exclusivamente para el preflight |
-| `pnpm lint`                                       | Correcto; 0 errores                                                  |
-| `pnpm typecheck`                                  | Correcto; 87 archivos, 0 errores, 0 warnings, 0 hints                |
-| `git diff --check`                                | Correcto                                                             |
+| Comprobación                  | Resultado                                                                       |
+| ----------------------------- | ------------------------------------------------------------------------------- |
+| `pnpm build`                  | Correcto; 75 páginas y 1.215 salidas de imagen generadas                        |
+| Build temporal con `SITE_URL` | Correcto; canonical, `robots.txt` y sitemap i18n con 72 URLs indexables         |
+| `pnpm test`                   | Correcto; 11/11 tests de Leads y contrato i18n/routing                          |
+| `pnpm lint`                   | Correcto; 0 errores                                                             |
+| `pnpm typecheck`              | Correcto; 166 archivos, 0 errores, 0 warnings, 0 hints                          |
+| QA local                      | EN/ES/FR, temas y viewports de 390, 430, 768, 1024, 1280 y 1600 px sin overflow |
+| `git diff --check`            | Correcto                                                                        |
 
 La URL pública actual todavía sirve una revisión antigua. No se creó un `.env`, no se fijó un
 dominio definitivo y no se ejecutó un despliegue durante esta verificación.

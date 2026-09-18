@@ -1,4 +1,4 @@
-import { getLocalizedHref, type Locale } from "@/core/i18n";
+import { defaultLocale, getLocalizedHref, type Locale } from "@/core/i18n";
 import type { ServiceId } from "../../services";
 import { eventCategoryTranslations } from "../i18n";
 import { EVENT_CATEGORIES } from "../data/categories";
@@ -16,11 +16,11 @@ export const getEventCategory = (categoryId: EventCategoryId) => EVENT_CATEGORIE
 
 export const getLocalizedEventCategory = (
   categoryId: EventCategoryId,
-  locale: keyof typeof eventCategoryTranslations = "es",
+  locale: keyof typeof eventCategoryTranslations = defaultLocale,
 ) => ({
   ...EVENT_CATEGORIES[categoryId],
   label: eventCategoryTranslations[locale][categoryId],
 });
 
-export const getEventHref = (event: Pick<Event, "slug">, locale: Locale = "es") =>
+export const getEventHref = (event: Pick<Event, "slug">, locale: Locale = defaultLocale) =>
   getLocalizedHref(`/events/${event.slug}`, locale);

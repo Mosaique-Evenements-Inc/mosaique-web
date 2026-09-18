@@ -18,11 +18,7 @@ const locale = getLocaleFromUrl(Astro.url);
 const aboutText = getAboutTranslations(locale);
 ---
 
-<BaseLayout
-  title={aboutText.metadataTitle}
-  description={aboutText.metadataDescription}
-  surface="cinematic"
->
+<BaseLayout title={aboutText.metadataTitle} description={aboutText.metadataDescription}>
   <Navigation anchorPrefix="/" />
   <main id="main-content">
     <PanelReveal class="about-page__reveal">

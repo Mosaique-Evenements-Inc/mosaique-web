@@ -1,4 +1,5 @@
 ---
+import { defaultLocale } from "@/core/i18n";
 import { galleryCategories, getGalleryEvents } from "@/features/gallery";
 import { getLocalizedEventCategory, type EventCategoryId } from "@/features/events";
 import { galleryTranslations } from "@/features/gallery/i18n";
@@ -12,12 +13,15 @@ export function getStaticPaths() {
 }
 
 const { category } = Astro.props;
-const events = getGalleryEvents(category.id);
-const localizedCategory = getLocalizedEventCategory(category.categoryId as EventCategoryId);
+const events = getGalleryEvents(category.id, defaultLocale);
+const localizedCategory = getLocalizedEventCategory(
+  category.categoryId as EventCategoryId,
+  defaultLocale,
+);
 ---
 
 <GalleryPage
   activeCategoryId={category.id}
   items={events}
-  title={`${localizedCategory.label} — ${galleryTranslations.es.archiveTitle} — MOSAÏQUE EVENTS`}
+  title={`${localizedCategory.label} — ${galleryTranslations[defaultLocale].archiveTitle} — MOSAÏQUE EVENTS`}
 />

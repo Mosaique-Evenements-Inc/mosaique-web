@@ -1,4 +1,4 @@
-import type { Locale, LocaleDictionaries } from "@/core/i18n";
+import { defaultLocale, type Locale, type LocaleDictionaries } from "@/core/i18n";
 
 interface AboutTranslations {
   metadataTitle: string;
@@ -100,4 +100,5 @@ export const aboutTranslations = {
   },
 } satisfies LocaleDictionaries<AboutTranslations>;
 
-export const getAboutTranslations = (locale: Locale = "es") => aboutTranslations[locale];
+export const getAboutTranslations = (locale: Locale = defaultLocale) =>
+  aboutTranslations[locale];

@@ -1,4 +1,4 @@
-import type { Locale, LocaleDictionaries } from "@/core/i18n";
+import { defaultLocale, type Locale, type LocaleDictionaries } from "@/core/i18n";
 import type {
   TreeLinkCollaboratorName,
   TreeLinkSocialId,
@@ -208,4 +208,5 @@ export const treeLinkTranslations = {
   },
 } satisfies LocaleDictionaries<TreeLinkTranslations>;
 
-export const getTreeLinkTranslations = (locale: Locale = "es") => treeLinkTranslations[locale];
+export const getTreeLinkTranslations = (locale: Locale = defaultLocale) =>
+  treeLinkTranslations[locale];

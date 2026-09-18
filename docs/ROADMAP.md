@@ -1,6 +1,6 @@
 # Mosaïque Web Roadmap
 
-Last verified against code and git history: 2026-08-28.
+Last verified against code and git history: 2026-09-17.
 
 This document is the source of truth for implementation status. The existence of a module in `src/content/home/` does not mean its section has been implemented.
 
@@ -14,8 +14,21 @@ This document is the source of truth for implementation status. The existence of
 ### Design System
 
 - **Implementation: complete for the current foundation.** Primitive and semantic color, typography, spacing, layout, z-index, and motion tokens exist in `src/styles/tokens/`.
+- **Web Theme System V1 implemented.** The public Web surface now resolves `light` or `dark` before
+  first paint from the scoped `mosaique-web-theme` preference with a
+  `prefers-color-scheme` fallback. One Web-specific `data-web-theme` attribute controls semantic
+  page, editorial, brand, text, border, control, Footer, and navigation roles without React state,
+  hydration, or a theming dependency. Tree Link remains isolated on its existing attribute and
+  storage contract, and the Web resolver is omitted from all localized Tree Link routes.
+- **Theme distribution complete for current routes.** Light keeps Home Hero cinematic, Home
+  Projects and FAQ ivory, Home Services/Process/Marquee/CTA green, About/Gallery/Event
+  Detail/Contact ivory, Service Detail ivory, Service contact marquees green, and every Footer
+  green. Dark maps structural regions and Footer to Black while retaining intentional image and
+  lightbox treatments. Form controls, adaptive navigation contrast, and localized desktop/mobile
+  theme toggles follow the same semantic contract without changing existing layouts or content.
 - Standard textual CTAs now render through one `Button.tsx` primitive with two inverse capsule variants and one transform-based vertical fill interaction: transparent to light, and light to transparent. Hero, Services, Final CTA, the quote form, and venue-dialog actions preserve their existing destinations, handlers, data attributes, disabled behavior, and contextual sizing. CTA labels use the display family; icon-only and low-chrome controls preserve their established contracts.
 - **Button glyph clipping fixed locally.** The filled label's `clip-path: inset(0)` previously clipped font ink outside its `line-height: 1` box. The shared `action-button.css` now gives only that masked layer a `0.25em` paint allowance with compensating negative margins, preserving button/text geometry, wrapping, typography, and transition duration/easing. Chromium before/after checks on venue-partnership and logistics CTAs passed at 320, 390, 430, 768, and 1280px in ES/EN/FR (30 cases): glyph pixels match an unclipped reference, with unchanged layout and no page overflow. Multiline P/p/Q/q/g/j/y, accents, both variants, hover/focus, hidden masks, and runtime reduced motion also passed. Native iOS Safari remains unverified. Scoped Prettier, build, lint, typecheck, and diff-check passed; no test script, dependency, commit, or push was added.
+- **Theme-aware Service and Gallery button interactions refined locally.** Service Detail header CTAs now map the existing filled wipe to semantic page foreground/background roles, producing a Black default with an Ivory interaction in Light while retaining the inverse Dark treatment. Gallery category filters use the same adaptive roles so Dark interactions reveal Ivory instead of Black. Hover, focus-visible, and press reuse the existing wipe and keep the 1 px stroke and control geometry unchanged. Chromium checks passed for two Service routes and Gallery in both themes, reduced motion, and 390, 430, 768, 1024, 1280, and 1600 px viewports without horizontal overflow.
 - CSS and TypeScript runtime motion tokens are documented and synchronized.
 - UI primitives exist for Button, Container, Grid, Heading, Media, Section, Stack, and Text.
 - Iconoir is the shared interface-icon source for navigation, disclosures, directional controls, quote-flow states, editorial actions, and the four-icon “¿Por qué elegir MOSAÏQUE?” proof band; decorative media geometry and required-field marks remain outside that icon contract.
@@ -84,8 +97,14 @@ This document is the source of truth for implementation status. The existence of
 
 - **Homepage status corrected against code.** `AboutMilestones.astro` and its typed content remain available, but the section is currently commented out of the homepage composition and is not a rendered homepage surface.
 - **Dedicated page implementation: complete locally.** `/about` reuses the shared Navigation and Footer, presents the approved About copy as a cinematic CSS-only line reveal, and follows it with a full-bleed, deterministic masonry mosaic sourced from a typed editorial selection of 31 available event photographs. The same media item supports future animated GIFs without sending them through static optimization.
-- The hero preserves the `2420 / 1080` desktop reference proportion from `lg` upward; tablet and mobile use `100svh` so the editorial title remains readable. The mosaic uses the existing `sm`, `md`, `lg`, `xl`, and `2xl` breakpoints to progress from two through seven columns with no gutters, captions, frames, hydration, listener, or new dependency.
-- **Fidelity and responsive validation: complete for the supplied references and local implementation.** Chrome measurements at `375`, `430`, `768`, `1024`, `1440`, and `1920px` confirmed two, two, four, five, six, and seven columns respectively, exact viewport-width sections, and zero horizontal overflow. Desktop captures preserve the `2420 / 1080` hero proportion and full-bleed mosaic handoff; compact layouts retain the title in a readable `100svh` composition. Runtime reduced-motion validation exposes the complete final title and caption with no reveal or drift.
+- **About mosaic desktop base aligned locally.** The media mosaic now preserves the content-owned
+  editorial columns as explicit desktop columns from 80 rem upward, equalizes their shared block
+  height, and lets each approved image crop with `object-fit: cover`, producing a straight bottom
+  edge. The shared desktop height was then increased further to give each image container more room and
+  reduce visible cropping without changing the image set, labels, hover caption contract, mobile
+  multi-column flow, hero, team section, navigation, or footer.
+- The hero preserves the `2420 / 1080` desktop reference proportion from `lg` upward; tablet and mobile use `100svh` so the editorial title remains readable. The mosaic uses the existing `sm`, `md`, `lg`, and `xl` breakpoints to progress from two through six columns with no gutters, captions, frames, hydration, listener, or new dependency.
+- **Fidelity and responsive validation: complete for the supplied references and local implementation.** Chrome measurements at `375`, `430`, `768`, `1024`, `1440`, and `1920px` confirmed the responsive mosaic progression and zero horizontal overflow. Desktop captures preserve the `2420 / 1080` hero proportion and full-bleed mosaic handoff; compact layouts retain the title in a readable `100svh` composition. Runtime reduced-motion validation exposes the complete final title and caption with no reveal or drift.
 - **Media hover refinement implemented locally.** Fine-pointer hover now applies a restrained zoom and contrast treatment, fades in a cinematic lower shade, and reveals an approved event or neutral category label through a masked vertical entrance. The unassigned K&T wedding photography deliberately uses `Boda` rather than being attributed to Wedding R&R. Touch layouts keep the photography unobstructed, reduced motion removes every transition, and no interactive semantics, runtime JavaScript, asset duplication, or new dependency was added.
 - **Compact-title and mosaic-spacing refinement complete locally.** The About title now follows Gallery's word-safe wrapping contract with inline-block words, `1.08` line height, intrinsic height, and no clipping mask, while retaining its line-stagger reveal. The mobile caption receives an explicit `16px` internal inline inset so it cannot touch the viewport edges. The full-bleed mosaic keeps zero page-edge gutters and adds only a `2px` inter-item column/row separation. In-browser validation at `375`, `430`, and `1440px` confirmed complete title glyphs, the caption inset, exact viewport-width surfaces, zero outer mosaic gutters, exact `2px` internal gaps, the expected two/six columns, and no horizontal overflow.
 - **Hero-to-mosaic scroll and title-motion alignment complete locally.** About now reuses the same shared `PanelReveal` composition as Home's Hero-to-Events handoff: its `145svh` lead contains one native `100svh` sticky scene while the full-bleed mosaic advances above it in document flow. The former automatic line reveal, caption fade, and perpetual drift are removed. The title now follows Gallery Archive's observed, one-time character reveal with word-safe spans, `22ms` stagger, shared motion tokens, and immediate final state under reduced motion. In-browser checks at `1440 × 900` and `375 × 844` confirmed the exact `145svh` / `100svh` geometry, sticky lead, progressive panel overlap, one-time 47-character reveal, complete mobile title, retained two/six-column mosaic, zero horizontal overflow, and no console warnings or errors. The current in-app browser cannot emulate reduced motion; the compiled immediate-state branch passed code inspection but fresh runtime emulation remains pending.
@@ -238,6 +257,11 @@ This document is the source of truth for implementation status. The existence of
 - Desktop, tablet, mobile, loop movement, action constraints, content completeness, document overflow, and reduced-motion code paths were validated.
 
 ### Footer
+
+- **Footer green surface restored locally.** The shared Footer now uses the approved historical
+  Mosaïque dark green (`#0b241c`) through a dedicated semantic footer background token, so every
+  page that renders the global Footer receives the green surface without changing global primary,
+  inverse backgrounds, content, layout, or interactions.
 
 - Legal copy now composes the invariant copyright and company name from `footerContent.legal` with the existing localized `footerLegal` key: Spanish, English, and French rights-reserved text. Footer structure and styling remain unchanged.
 
@@ -916,12 +940,10 @@ HTTP adapter`. The service receives the repository contract, while `submit-lead.
 
 ### Internationalization
 
-- **✅ R1 — Localization Foundation + Architecture Contract: complete locally.** Astro
-  native i18n is configured for `es`, `en-CA`, and `fr-CA`; Spanish remains the unprefixed default,
-  while `/en/` and `/fr/` are the reserved URL prefixes. No existing Spanish route, copy, design,
-  functionality, domain identity, or slug was changed.
+- **✅ R1 — Localization Foundation + Architecture Contract: complete locally.** Astro native i18n
+  supports `en-CA`, `es`, and `fr-CA` through the shared core helpers and feature dictionaries.
 - `src/core/i18n/` now owns locale configuration, URL locale/path helpers backed by `astro:i18n`,
-  typed dictionary contracts, explicit Spanish fallback behavior, and language-tag/alternate SEO
+  typed dictionary contracts, explicit fallback behavior, and language-tag/alternate SEO
   helpers. Feature translation ownership is defined with a minimal Site Shell contract under
   `src/features/site-shell/i18n/`; no complete translation inventory was started.
 - `docs/I18N.md` records the operational contract, fallback policy, glossary foundation, and
@@ -935,11 +957,19 @@ HTTP adapter`. The service receives the repository contract, while `submit-lead.
   feature-owned and localized. Canonical form values, IDs, slugs, payloads, routes, business rules,
   and Spanish visual behavior remain unchanged. The hardcoded-text classification is recorded in
   `docs/I18N.md`; remaining literals are intentional proper nouns or technical/internal values.
-- **🔄 CURRENT R3 — Locale Routing + Language Switcher + SEO: pending approval.** Generate localized
-  route surfaces and add the language selector without manual locale-prefix concatenation. Connect
-  locale-aware metadata, canonical URLs, `hreflang`, and sitemap behavior only after approval.
-- **⏳ R4 — Translation Fidelity + Full QA.** Validate multilingual content, responsive behavior,
-  metadata, accessibility, and visual fidelity.
+- **✅ R3 — Default English + Locale Routing + Language Switcher + SEO support: complete locally.**
+  English now renders without a prefix, Spanish under `/es`, and French under `/fr`; all static and
+  dynamic families preserve stable IDs and slugs. Shared helpers drive internal links and the
+  existing desktop/mobile switcher. Canonical URLs, language tags, reciprocal `hreflang`, English
+  `x-default`, and sitemap alternates follow the same route matrix. The general 404 is English;
+  localized `/es/404/` and `/fr/404/` pages remain non-indexable static pages. Tree Link participates
+  only in shared routing and retains its isolated design and theme contract. Legacy `/en/*` pages
+  are absent from the static build; production still requires one Vercel permanent redirect rule
+  from `/en/:path*` to `/:path*` because the repository has no hosting redirect configuration or
+  adapter and Astro would otherwise emit client-side meta-refresh pages.
+- **🔄 CURRENT R4 — Translation Fidelity + Full QA: ready for independent architecture audit.**
+  Validate the completed route contract, hosting redirects, multilingual content, responsive
+  behavior, metadata, accessibility, and visual fidelity before production acceptance.
 
 ### Production URL + Scoped SEO Acceptance
 

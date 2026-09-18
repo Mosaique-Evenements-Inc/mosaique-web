@@ -27,13 +27,29 @@ const {
   surface = "default",
 } = Astro.props;
 const contentPath = getContentPathFromUrl(Astro.url);
+const normalizedContentPath = contentPath.replace(/\/+$/, "");
+const webThemeEnabled = normalizedContentPath !== "tree";
+const webThemeResolver = `(() => {
+  const root = document.documentElement;
+  let theme;
+
+  try {
+    const savedTheme = window.localStorage.getItem("mosaique-web-theme");
+    if (savedTheme === "light" || savedTheme === "dark") theme = savedTheme;
+  } catch {
+    theme = undefined;
+  }
+
+  root.dataset.webTheme =
+    theme ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+})();`;
 const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : Astro.url.pathname;
 const socialImageUrl = image && Astro.site ? new URL(image, Astro.site) : undefined;
 const localeAlternates = getLocaleAlternates(contentPath).map((alternate) => ({
   ...alternate,
   href: Astro.site ? new URL(alternate.href, Astro.site) : alternate.href,
 }));
-const xDefaultHref = localeAlternates.find((alternate) => alternate.hreflang === "es")?.href;
+const xDefaultHref = localeAlternates.find((alternate) => alternate.hreflang === "en-CA")?.href;
 const robots = noindex ? "noindex, nofollow" : "index, follow";
 const structuredData = {
   "@context": "https://schema.org",
@@ -57,6 +73,7 @@ const structuredDataJson = JSON.stringify(structuredData).replace(/</g, "\\u003c
 >
   <head>
     <meta charset="utf-8" />
+    {webThemeEnabled && <script is:inline set:html={webThemeResolver} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />

@@ -1,4 +1,4 @@
-import type { Locale, LocaleDictionaries } from "@/core/i18n";
+import { defaultLocale, type Locale, type LocaleDictionaries } from "@/core/i18n";
 
 export interface SiteShellTranslations {
   "navigation.open": string;
@@ -6,6 +6,8 @@ export interface SiteShellTranslations {
   "navigation.main": string;
   "navigation.language": string;
   "navigation.currentLanguage": string;
+  "navigation.switchToDark": string;
+  "navigation.switchToLight": string;
   "footer.navigation": string;
   "footer.company": string;
   "footer.resources": string;
@@ -56,6 +58,8 @@ export const siteShellTranslations = {
     "navigation.main": "Navegación principal",
     "navigation.language": "Seleccionar idioma",
     "navigation.currentLanguage": "idioma actual",
+    "navigation.switchToDark": "Cambiar a modo oscuro",
+    "navigation.switchToLight": "Cambiar a modo claro",
     "footer.navigation": "Navegación del pie de página",
     "footer.company": "Compañía",
     "footer.resources": "Recursos",
@@ -129,6 +133,8 @@ export const siteShellTranslations = {
     "navigation.main": "Main navigation",
     "navigation.language": "Select language",
     "navigation.currentLanguage": "current language",
+    "navigation.switchToDark": "Switch to dark mode",
+    "navigation.switchToLight": "Switch to light mode",
     "footer.navigation": "Footer navigation",
     "footer.company": "Company",
     "footer.resources": "Resources",
@@ -194,6 +200,8 @@ export const siteShellTranslations = {
     "navigation.main": "Navigation principale",
     "navigation.language": "Choisir la langue",
     "navigation.currentLanguage": "langue actuelle",
+    "navigation.switchToDark": "Passer au mode sombre",
+    "navigation.switchToLight": "Passer au mode clair",
     "footer.navigation": "Navigation du pied de page",
     "footer.company": "Entreprise",
     "footer.resources": "Ressources",
@@ -256,5 +264,5 @@ export const siteShellTranslations = {
   },
 } satisfies LocaleDictionaries<SiteShellTranslations>;
 
-export const getSiteShellTranslations = (locale: Locale = "es") =>
+export const getSiteShellTranslations = (locale: Locale = defaultLocale) =>
   siteShellTranslations[locale];
