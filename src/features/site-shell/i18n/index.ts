@@ -1,4 +1,4 @@
-import type { Locale, LocaleDictionaries } from "@/core/i18n";
+import { defaultLocale, type Locale, type LocaleDictionaries } from "@/core/i18n";
 
 export interface SiteShellTranslations {
   "navigation.open": string;
@@ -264,5 +264,5 @@ export const siteShellTranslations = {
   },
 } satisfies LocaleDictionaries<SiteShellTranslations>;
 
-export const getSiteShellTranslations = (locale: Locale = "es") =>
+export const getSiteShellTranslations = (locale: Locale = defaultLocale) =>
   siteShellTranslations[locale];

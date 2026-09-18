@@ -1,3 +1,4 @@
+import { defaultLocale, type Locale } from "@/core/i18n";
 import { getLocalizedService, services } from "../../services";
 import { getQuoteTranslations } from "../i18n";
 
@@ -47,7 +48,7 @@ export const quoteContent = {
   ],
 } as const;
 
-export const getQuoteContent = (locale: "es" | "en" | "fr" = "es") => {
+export const getQuoteContent = (locale: Locale = defaultLocale) => {
   const translations = getQuoteTranslations(locale);
   return {
     ...quoteContent,

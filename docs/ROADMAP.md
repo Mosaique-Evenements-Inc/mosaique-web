@@ -940,12 +940,10 @@ HTTP adapter`. The service receives the repository contract, while `submit-lead.
 
 ### Internationalization
 
-- **✅ R1 — Localization Foundation + Architecture Contract: complete locally.** Astro
-  native i18n is configured for `es`, `en-CA`, and `fr-CA`; Spanish remains the unprefixed default,
-  while `/en/` and `/fr/` are the reserved URL prefixes. No existing Spanish route, copy, design,
-  functionality, domain identity, or slug was changed.
+- **✅ R1 — Localization Foundation + Architecture Contract: complete locally.** Astro native i18n
+  supports `en-CA`, `es`, and `fr-CA` through the shared core helpers and feature dictionaries.
 - `src/core/i18n/` now owns locale configuration, URL locale/path helpers backed by `astro:i18n`,
-  typed dictionary contracts, explicit Spanish fallback behavior, and language-tag/alternate SEO
+  typed dictionary contracts, explicit fallback behavior, and language-tag/alternate SEO
   helpers. Feature translation ownership is defined with a minimal Site Shell contract under
   `src/features/site-shell/i18n/`; no complete translation inventory was started.
 - `docs/I18N.md` records the operational contract, fallback policy, glossary foundation, and
@@ -959,11 +957,19 @@ HTTP adapter`. The service receives the repository contract, while `submit-lead.
   feature-owned and localized. Canonical form values, IDs, slugs, payloads, routes, business rules,
   and Spanish visual behavior remain unchanged. The hardcoded-text classification is recorded in
   `docs/I18N.md`; remaining literals are intentional proper nouns or technical/internal values.
-- **🔄 CURRENT R3 — Locale Routing + Language Switcher + SEO: pending approval.** Generate localized
-  route surfaces and add the language selector without manual locale-prefix concatenation. Connect
-  locale-aware metadata, canonical URLs, `hreflang`, and sitemap behavior only after approval.
-- **⏳ R4 — Translation Fidelity + Full QA.** Validate multilingual content, responsive behavior,
-  metadata, accessibility, and visual fidelity.
+- **✅ R3 — Default English + Locale Routing + Language Switcher + SEO support: complete locally.**
+  English now renders without a prefix, Spanish under `/es`, and French under `/fr`; all static and
+  dynamic families preserve stable IDs and slugs. Shared helpers drive internal links and the
+  existing desktop/mobile switcher. Canonical URLs, language tags, reciprocal `hreflang`, English
+  `x-default`, and sitemap alternates follow the same route matrix. The general 404 is English;
+  localized `/es/404/` and `/fr/404/` pages remain non-indexable static pages. Tree Link participates
+  only in shared routing and retains its isolated design and theme contract. Legacy `/en/*` pages
+  are absent from the static build; production still requires one Vercel permanent redirect rule
+  from `/en/:path*` to `/:path*` because the repository has no hosting redirect configuration or
+  adapter and Astro would otherwise emit client-side meta-refresh pages.
+- **🔄 CURRENT R4 — Translation Fidelity + Full QA: ready for independent architecture audit.**
+  Validate the completed route contract, hosting redirects, multilingual content, responsive
+  behavior, metadata, accessibility, and visual fidelity before production acceptance.
 
 ### Production URL + Scoped SEO Acceptance
 

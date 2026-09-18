@@ -12,7 +12,8 @@
     "preview": "astro preview",
     "lint": "eslint .",
     "format": "prettier . --write",
-    "test": "node --test \"src/features/quote/__tests__/*.test.ts\"",
+    "pretest": "pnpm build",
+    "test": "node --test \"src/**/__tests__/*.test.ts\"",
     "typecheck": "astro check",
     "astro": "astro"
   },

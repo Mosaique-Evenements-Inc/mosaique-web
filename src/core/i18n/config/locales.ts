@@ -1,11 +1,11 @@
 export const localeConfig = {
-  es: {
-    path: "",
-    languageTag: "es",
-  },
   en: {
-    path: "en",
+    path: "",
     languageTag: "en-CA",
+  },
+  es: {
+    path: "es",
+    languageTag: "es",
   },
   fr: {
     path: "fr",
@@ -13,8 +13,12 @@ export const localeConfig = {
   },
 } as const;
 
-export const defaultLocale = "es" as const;
-export const supportedLocales = ["es", "en", "fr"] as const;
+export const defaultLocale = "en" as const;
+export const supportedLocales = ["en", "es", "fr"] as const;
 
 export type Locale = (typeof supportedLocales)[number];
 export type LanguageTag = (typeof localeConfig)[Locale]["languageTag"];
+
+export const prefixedLocales = supportedLocales.filter(
+  (locale): locale is Exclude<Locale, typeof defaultLocale> => locale !== defaultLocale,
+);

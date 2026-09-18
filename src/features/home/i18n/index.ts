@@ -1,4 +1,4 @@
-import type { Locale, LocaleDictionaries } from "@/core/i18n";
+import { defaultLocale, type Locale, type LocaleDictionaries } from "@/core/i18n";
 
 export interface HomeTranslations {
   metadataTitle: string;
@@ -107,7 +107,7 @@ export const homeTranslations = {
   },
 } satisfies LocaleDictionaries<HomeTranslations>;
 
-export const getHomeTranslations = (locale: Locale = "es") => homeTranslations[locale];
+export const getHomeTranslations = (locale: Locale = defaultLocale) => homeTranslations[locale];
 
 export interface HomeContentTranslations {
   heroTitle: string;
@@ -513,5 +513,5 @@ export const homeContentTranslations = {
   },
 } satisfies LocaleDictionaries<HomeContentTranslations>;
 
-export const getHomeContentTranslations = (locale: Locale = "es") =>
+export const getHomeContentTranslations = (locale: Locale = defaultLocale) =>
   homeContentTranslations[locale];

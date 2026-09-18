@@ -1,9 +1,10 @@
 ---
+import { prefixedLocales } from "@/core/i18n";
 import { eventDetails } from "@/features/events";
 import EventDetailPage from "@/features/events/ui/pages/EventDetailPage.astro";
 
 export function getStaticPaths() {
-  return ["en", "fr"].flatMap((locale) =>
+  return prefixedLocales.flatMap((locale) =>
     eventDetails.map((event, index) => ({
       params: { locale, slug: event.slug },
       props: {

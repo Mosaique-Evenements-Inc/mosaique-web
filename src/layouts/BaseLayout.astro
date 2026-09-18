@@ -49,7 +49,7 @@ const localeAlternates = getLocaleAlternates(contentPath).map((alternate) => ({
   ...alternate,
   href: Astro.site ? new URL(alternate.href, Astro.site) : alternate.href,
 }));
-const xDefaultHref = localeAlternates.find((alternate) => alternate.hreflang === "es")?.href;
+const xDefaultHref = localeAlternates.find((alternate) => alternate.hreflang === "en-CA")?.href;
 const robots = noindex ? "noindex, nofollow" : "index, follow";
 const structuredData = {
   "@context": "https://schema.org",

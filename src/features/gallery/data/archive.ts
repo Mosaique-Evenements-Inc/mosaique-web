@@ -31,7 +31,7 @@ export const getLocalizedEventGalleryItems = (locale: Locale): EventGalleryItem[
       category: category.label,
       categoryId: event.categoryId,
       context: event.description,
-      href: getEventHref(event),
+      href: getEventHref(event, locale),
       id: event.id,
       media:
         media.kind === "image"

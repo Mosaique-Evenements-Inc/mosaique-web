@@ -1,8 +1,9 @@
 ---
+import { prefixedLocales } from "@/core/i18n";
 import ContactPage from "@/features/quote/ui/pages/ContactPage.astro";
 
 export function getStaticPaths() {
-  return ["en", "fr"].map((locale) => ({ params: { locale } }));
+  return prefixedLocales.map((locale) => ({ params: { locale } }));
 }
 ---
 
