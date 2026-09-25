@@ -12,11 +12,21 @@ import Process from "../components/Process.astro";
 import ProjectsExperiences from "../components/ProjectsExperiences.astro";
 import { getHomeTranslations } from "@/features/home/i18n";
 import { getLocaleFromUrl } from "@/core/i18n";
+import { heroVideo } from "@/assets/video/delivery";
 
 const homeText = getHomeTranslations(getLocaleFromUrl(Astro.url));
 ---
 
 <BaseLayout title={homeText.metadataTitle} description={homeText.metadataDescription}>
+  <link
+    slot="head"
+    rel="preload"
+    as="image"
+    href={heroVideo.poster}
+    imagesrcset={`${heroVideo.posterSmall} 960w, ${heroVideo.poster} 1920w`}
+    imagesizes="100vw"
+    fetchpriority="high"
+  />
   <Navigation />
   <main class="site-main" id="main-content" tabindex="-1">
     <PanelReveal>
