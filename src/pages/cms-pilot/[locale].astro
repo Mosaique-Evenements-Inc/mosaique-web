@@ -1,0 +1,112 @@
+---
+import { Picture } from "astro:assets";
+
+import {
+  eventImageFallbackFormat,
+  eventImageFormats,
+  eventImageWidths,
+} from "@/assets/images/events/delivery";
+import {
+  getPilotHomeSelection,
+  getCurrentTreeEvents,
+} from "@/features/publication-pilot/adapter";
+import { resolvePilotAsset } from "@/features/publication-pilot/media";
+import { pilotPublication, type PilotLocale } from "@/features/publication-pilot/snapshot";
+
+// The pilot route exists only in an explicitly opted-in local build.
+export function getStaticPaths() {
+  return process.env.CMS_PILOT === "1"
+    ? (["en", "es", "fr"] as const).map((locale) => ({ params: { locale } }))
+    : [];
+}
+
+const locale = Astro.params.locale as PilotLocale;
+const selection = getPilotHomeSelection(pilotPublication, locale);
+const treeEvents = getCurrentTreeEvents(pilotPublication, new Date());
+---
+
+<!doctype html>
+<html lang={locale === "en" ? "en-CA" : locale === "fr" ? "fr-CA" : "es"}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pilotPublication.publicationId}</title>
+    <style>
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <main data-publication-id={pilotPublication.publicationId}>
+      <section data-home-services>
+        {
+          selection.services.map((service) => (
+            <article data-content-code={service.code}>
+              <h1>{service.title}</h1>
+              <figure
+                data-media-code={service.mainImage.code}
+                data-media-version={service.mainImage.version}
+              >
+                <Picture
+                  src={resolvePilotAsset(service.mainImage)}
+                  alt={service.mainAlt}
+                  formats={eventImageFormats}
+                  fallbackFormat={eventImageFallbackFormat}
+                  widths={eventImageWidths}
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  loading="eager"
+                />
+              </figure>
+            </article>
+          ))
+        }
+      </section>
+      <section data-home-events>
+        {
+          selection.events.map((event) => (
+            <article data-content-code={event.code}>
+              <h2>{event.title}</h2>
+              <figure
+                data-media-code={event.mainImage.code}
+                data-media-version={event.mainImage.version}
+              >
+                <Picture
+                  src={resolvePilotAsset(event.mainImage)}
+                  alt={event.mainAlt}
+                  formats={eventImageFormats}
+                  fallbackFormat={eventImageFallbackFormat}
+                  widths={eventImageWidths}
+                  sizes="(min-width: 1024px) 42vw, 100vw"
+                  loading="lazy"
+                />
+              </figure>
+              {event.gallery.map((media) => (
+                <figure data-media-code={media.code} data-media-version={media.version}>
+                  <Picture
+                    src={resolvePilotAsset(media)}
+                    alt=""
+                    formats={eventImageFormats}
+                    fallbackFormat={eventImageFallbackFormat}
+                    widths={eventImageWidths}
+                    sizes="(min-width: 1024px) 42vw, 100vw"
+                    loading="lazy"
+                  />
+                </figure>
+              ))}
+            </article>
+          ))
+        }
+      </section>
+      <ol data-tree-events data-count={treeEvents.length}>
+        {
+          treeEvents.map((event) => (
+            <li data-content-code={event.code}>{event.locales[locale].title}</li>
+          ))
+        }
+      </ol>
+    </main>
+  </body>
+</html>
