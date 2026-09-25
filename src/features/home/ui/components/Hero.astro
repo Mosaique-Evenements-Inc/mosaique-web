@@ -25,15 +25,19 @@ const heroText = getHomeContentTranslations(locale);
       data-media-status={heroContent.media.status}
       style={`--home-hero-media-position:${heroContent.media.position};`}
     >
-      <video
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="metadata"
-        poster={heroContent.media.poster}
-        aria-hidden="true"
-      >
+      <img
+        class="home-hero__poster"
+        src={heroContent.media.poster}
+        srcset={`${heroContent.media.posterSmall} 960w, ${heroContent.media.poster} 1920w`}
+        sizes="100vw"
+        width="1920"
+        height="1080"
+        alt=""
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+      <video muted loop playsinline preload="none" aria-hidden="true">
         {
           heroContent.media.sources.map((source) => (
             <source src={source.src} type={source.type} />
@@ -75,6 +79,13 @@ const heroText = getHomeContentTranslations(locale);
 
     const scrollOrigin = hero.closest<HTMLElement>(".panel-reveal") ?? hero;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const poster = hero.querySelector<HTMLImageElement>(".home-hero__poster");
+    const video = hero.querySelector<HTMLVideoElement>("video");
+    const connection = (
+      navigator as Navigator & {
+        connection?: { saveData?: boolean; effectiveType?: string; downlink?: number };
+      }
+    ).connection;
     const controller = new AbortController();
     let heroTop = scrollOrigin.getBoundingClientRect().top + window.scrollY;
     let frameId = 0;
@@ -102,6 +113,80 @@ const heroText = getHomeContentTranslations(locale);
       heroTop = scrollOrigin.getBoundingClientRect().top + window.scrollY;
       requestUpdate();
     };
+
+    let posterReady = false;
+    let videoStartQueued = false;
+    const canPlayVideo = () =>
+      !reducedMotion.matches &&
+      !document.hidden &&
+      !connection?.saveData &&
+      (connection?.downlink === undefined || connection.downlink >= 10) &&
+      !["slow-2g", "2g", "3g"].includes(connection?.effectiveType ?? "");
+
+    const startVideo = () => {
+      if (!video || !posterReady || videoStartQueued || !canPlayVideo()) return;
+      videoStartQueued = true;
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          videoStartQueued = false;
+          if (canPlayVideo()) void video.play().catch(() => {});
+        });
+      });
+    };
+
+    const syncVideo = () => {
+      if (!video) return;
+      if (canPlayVideo()) startVideo();
+      else video.pause();
+    };
+
+    if (poster && video) {
+      const onPosterReady = async () => {
+        try {
+          if (poster.naturalWidth) await poster.decode();
+        } catch {
+          // A failed poster still allows the video to recover the visual.
+        }
+        posterReady = true;
+        startVideo();
+      };
+
+      if (poster.complete) void onPosterReady();
+      else {
+        poster.addEventListener("load", onPosterReady, {
+          once: true,
+          signal: controller.signal,
+        });
+        poster.addEventListener("error", onPosterReady, {
+          once: true,
+          signal: controller.signal,
+        });
+      }
+
+      video.addEventListener(
+        "playing",
+        () => {
+          hero.dataset.videoPlaying = "true";
+        },
+        { signal: controller.signal },
+      );
+      video.addEventListener(
+        "pause",
+        () => {
+          hero.dataset.videoPlaying = "false";
+        },
+        { signal: controller.signal },
+      );
+      video.addEventListener(
+        "error",
+        () => {
+          hero.dataset.videoPlaying = "false";
+        },
+        { signal: controller.signal },
+      );
+      document.addEventListener("visibilitychange", syncVideo, { signal: controller.signal });
+      reducedMotion.addEventListener("change", syncVideo, { signal: controller.signal });
+    }
 
     window.addEventListener("scroll", requestUpdate, {
       passive: true,

@@ -306,11 +306,11 @@ This document is the source of truth for implementation status. The existence of
 
 ### Performance - Audit
 
-- **Status: baseline complete.** The production build ships approximately 27 KB gzip of initial HTML and CSS and approximately 96 KB gzip for the complete core payload after the interactive Services scene hydrates.
-- Services now uses `client:visible`: its complete server-rendered content remains available immediately, while React and Motion hydration is deferred until the section approaches the viewport.
-- Desktop and mobile confirmed that Services remains unhydrated at the top of the page, hydrates correctly on entry, preserves all seven states, and produces no runtime console errors or horizontal overflow.
-- Scroll work remains bounded through passive listeners, requestAnimationFrame batching, IntersectionObserver, and transform/opacity updates. No additional runtime dependency was introduced.
-- Final Lighthouse and field Core Web Vitals conclusions remain pending approved production imagery, self-hosted fonts, and a production deployment.
+- **WEB-PERF-01 implementation complete locally; network certification pending.** The current Home build prerenders its navigation, hero, title, CTA, and Astro-only Services scenes. An earlier React/Motion `client:visible` Services audit no longer describes the rendered code.
+- All 24 formerly eager Home images belonged to the two decorative Final CTA gallery groups below the fold; they now load lazily. The only eager Home image is the hero poster. Home preloads that poster at high priority and serves a 960 px AVIF variant to compact viewports while retaining the 1920 px original for larger displays.
+- The Home hero keeps a poster-first visual and its video sources. Video preload is `none`; playback starts only after the poster resolves and a paint opportunity, and is skipped for reduced motion, Save-Data, reported 2G/3G, or an estimated downlink below 10 Mbps when the browser exposes Network Information. A failed video leaves the poster visible. No global loader or new dependency was added.
+- Build, lint, typecheck, tests, and local mobile browser checks passed. FCP, LCP, CLS, cold-cache Fast 3G/Slow 4G, and native Safari behavior remain unmeasured or unverified; do not treat implementation completion as field performance acceptance.
+- WEB-PERF-02 should assess broader asset delivery, CDN/cache behavior, CMS/Storage options, and image transformation without assuming a CMS improves critical loading.
 
 ### Accessibility - Audit
 

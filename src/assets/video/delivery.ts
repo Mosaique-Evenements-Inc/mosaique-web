@@ -4,4 +4,5 @@ export const heroVideo = {
     { src: "/media/video/hero.mp4", type: "video/mp4" },
   ],
   poster: "/media/video/hero-poster.avif",
+  posterSmall: "/media/video/hero-poster-960.avif",
 } as const;
