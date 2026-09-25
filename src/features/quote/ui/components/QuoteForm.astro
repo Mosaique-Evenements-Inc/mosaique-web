@@ -82,7 +82,7 @@ import "../styles/quote-form.css";
   if (quoteFlow && datePickerDialog && quoteForm && quoteFlow.dataset.ready !== "true") {
     quoteFlow.dataset.ready = "true";
     const text = JSON.parse(quoteFlow.dataset.quoteText ?? "{}") as Record<string, string>;
-    const languageTag = quoteFlow.dataset.languageTag ?? "es";
+    const languageTag = quoteFlow.dataset.languageTag ?? "en-CA";
     const fallbackBackHref = quoteFlow.dataset.backHref ?? "/";
     const hasNavigableReferrer = (() => {
       try {

@@ -1,11 +1,16 @@
 .site-footer {
-  background: var(--color-background-inverse);
-  color: var(--color-text-inverse);
+  --color-text-primary: var(--color-region-brand-text-primary);
+  --color-text-secondary: var(--color-region-brand-text-secondary);
+  --color-border-default: var(--color-region-brand-border-default);
+  --color-border-strong: var(--color-region-brand-border-strong);
+
+  background: var(--color-footer-background);
+  color: var(--color-region-brand-text-primary);
   overflow: clip;
 }
 
 .site-footer__container {
-  --footer-divider: color-mix(in oklab, var(--color-text-inverse) 20%, transparent);
+  --footer-divider: var(--color-region-brand-border-default);
 
   padding-inline: var(--space-page-gutter);
 }

@@ -1,4 +1,4 @@
-import type { Locale, LocaleDictionaries } from "@/core/i18n";
+import { defaultLocale, type Locale, type LocaleDictionaries } from "@/core/i18n";
 
 export interface QuoteTranslations {
   eyebrow: string;
@@ -388,4 +388,5 @@ export const quoteTranslations = {
   },
 } satisfies LocaleDictionaries<QuoteTranslations>;
 
-export const getQuoteTranslations = (locale: Locale = "es") => quoteTranslations[locale];
+export const getQuoteTranslations = (locale: Locale = defaultLocale) =>
+  quoteTranslations[locale];

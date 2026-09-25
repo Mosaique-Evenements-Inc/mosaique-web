@@ -92,14 +92,14 @@ it is rendered.
 
 ## Internationalization Contract
 
-The official locales are `es`, `en-CA`, and `fr-CA`; Spanish is the default and remains
-unprefixed. URL locale paths are ``, `en`, and `fr`. All new user-facing text must be localized,
+The official locales are `en-CA`, `es`, and `fr-CA`; English is the default and remains
+unprefixed. URL locale paths are ``, `es`, and `fr`. All new user-facing text must be localized,
 with translations owned by the feature that renders them. UI must not hardcode localized copy or
 use locale ternaries across components. Internal navigation must use the locale-aware helpers in
 `src/core/i18n/`, never manually concatenate locale prefixes. Domain IDs, slugs, and relationships
 remain locale-independent. New UI must be validated in all supported locales. The complete
-contract is documented in `docs/I18N.md`; a language switcher and full content migration are
-reserved for later responsibilities.
+contract is documented in `docs/I18N.md`. The language switcher preserves the current content path,
+query, and hash; legacy `/en/*` paths require one-hop permanent redirects at the hosting boundary.
 
 ## Technology Principle
 
@@ -423,6 +423,7 @@ pnpm astro dev stop
 
 pnpm build
 pnpm lint
+pnpm test
 pnpm typecheck
 pnpm format
 pnpm preview
@@ -432,9 +433,8 @@ pnpm preview
 dirty worktree, format only files owned by the task with `pnpm exec prettier --write <files>` so
 unrelated user changes remain untouched.
 
-No automated test script is currently configured. Do not invent one. If tests are introduced,
-use the script declared in `package.json` and update this section only if that becomes a durable
-workflow change.
+`pnpm test` builds the static site before running the existing Node test suites for the public Lead
+contract and the default-English locale/routing contract.
 
 ## Validation
 
@@ -443,6 +443,7 @@ Before and after implementation, run the checks appropriate to the task. Always 
 ```sh
 pnpm build
 pnpm lint
+pnpm test
 pnpm typecheck
 git diff --check
 ```
@@ -451,7 +452,7 @@ Also:
 
 - inspect the final diff and confirm only authorized files changed;
 - format/check the files owned by the task;
-- report errors, warnings, and the absence of a test script honestly;
+- report errors, warnings, and test results honestly;
 - render visual work at desktop, laptop/tablet, mobile, and narrow-mobile widths;
 - check horizontal and vertical overflow, long copy, focus behavior, and browser console errors;
 - test initial, intermediate, and final scroll states where applicable;

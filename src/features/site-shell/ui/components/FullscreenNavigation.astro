@@ -9,6 +9,7 @@ import {
 import { siteShellTranslations } from "@/features/site-shell/i18n";
 import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
+import ThemeToggle from "./ThemeToggle.astro";
 
 interface Props {
   anchorPrefix?: string;
@@ -135,7 +136,10 @@ const isCurrentPage = (href: string) =>
       </nav>
 
       <div class="site-navigation__dialog-footer">
-        <LanguageSwitcher placement="mobile" />
+        <div class="site-navigation__dialog-controls">
+          <LanguageSwitcher placement="mobile" />
+          <ThemeToggle placement="mobile" />
+        </div>
         <div class="site-navigation__dialog-meta">
           <span>{footerContent.contact.location}</span>
           <a href={footerContent.contact.email.href}>{footerContent.contact.email.label}</a>

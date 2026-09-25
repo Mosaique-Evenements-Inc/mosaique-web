@@ -1,18 +1,31 @@
 ---
 interface Props {
+  class?: string;
   href: string;
   label: string;
   lead: string;
+  navigationContrast?: "dark" | "light" | "theme";
   titleId: string;
 }
 
 import "../styles/contact-marquee.css";
 
-const { href, label, lead, titleId } = Astro.props;
+const {
+  class: className,
+  href,
+  label,
+  lead,
+  navigationContrast = "light",
+  titleId,
+} = Astro.props;
 const marqueeItems = Array.from({ length: 3 }, () => label);
 ---
 
-<section class="contact-marquee" aria-labelledby={titleId} data-navigation-contrast="light">
+<section
+  class:list={["contact-marquee", className]}
+  aria-labelledby={titleId}
+  data-navigation-contrast={navigationContrast}
+>
   <h2 id={titleId} class="sr-only">{label}</h2>
 
   <a class="contact-marquee__link" href={href} aria-label={label}>

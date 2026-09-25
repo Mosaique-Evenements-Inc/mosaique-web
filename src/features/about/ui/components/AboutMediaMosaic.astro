@@ -8,22 +8,37 @@ interface Props {
 }
 
 const { label, items } = Astro.props;
+
+const columns = items.reduce<MediaItem[][]>((groups, item) => {
+  if (groups.length === 0 || item.desktopColumnStart) {
+    groups.push([]);
+  }
+
+  groups[groups.length - 1].push(item);
+  return groups;
+}, []);
 ---
 
 <section
   id="about-mosaic"
   class="about-mosaic"
-  data-navigation-contrast="light"
+  data-navigation-contrast="theme"
   aria-label={label}
 >
   <ul class="about-mosaic__list" aria-hidden="true">
     {
-      items.map((item) => (
-        <li
-          class="about-mosaic__item"
-          data-desktop-column-start={item.desktopColumnStart || undefined}
-        >
-          <AboutMediaItem item={item} />
+      columns.map((column) => (
+        <li class="about-mosaic__column">
+          <ul class="about-mosaic__column-list">
+            {column.map((item) => (
+              <li
+                class="about-mosaic__item"
+                style={`--about-media-weight:${item.src.height / item.src.width};`}
+              >
+                <AboutMediaItem item={item} />
+              </li>
+            ))}
+          </ul>
         </li>
       ))
     }

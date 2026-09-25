@@ -1,0 +1,16 @@
+.home-page {
+  --color-background: var(--color-region-brand);
+  --color-background-inverse: var(--color-region-brand);
+  --color-surface-muted: var(--color-region-brand);
+  --color-text-primary: var(--color-region-brand-text-primary);
+  --color-text-secondary: var(--color-region-brand-text-secondary);
+  --color-border-default: var(--color-region-brand-border-default);
+  --color-border-strong: var(--color-region-brand-border-strong);
+  --color-accent-text: var(--color-accent);
+}
+
+.home-page .action-button {
+  --action-button-fill: var(--color-region-brand-text-primary);
+  --action-button-filled-text: var(--color-region-brand);
+  --action-button-transparent-text: var(--color-region-brand-text-primary);
+}

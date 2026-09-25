@@ -1,4 +1,4 @@
-import type { LocaleDictionaries } from "@/core/i18n";
+import { defaultLocale, type LocaleDictionaries } from "@/core/i18n";
 import type { EventCategoryId } from "../types/category";
 import type { Event } from "../types/event";
 
@@ -184,7 +184,7 @@ export const eventTranslations = { es, en, fr } satisfies LocaleDictionaries<Eve
 
 export const getLocalizedEvent = (
   event: Event,
-  locale: keyof typeof eventTranslations = "es",
+  locale: keyof typeof eventTranslations = defaultLocale,
 ): Event => {
   const { media, ...translation } = eventTranslations[locale][event.id] ?? {};
 

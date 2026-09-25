@@ -1,6 +1,7 @@
 export {
   defaultLocale,
   localeConfig,
+  prefixedLocales,
   supportedLocales,
   type LanguageTag,
   type Locale,

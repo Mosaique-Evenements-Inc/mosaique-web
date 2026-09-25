@@ -1,6 +1,22 @@
 .service-detail {
-  background: var(--color-background-inverse);
-  color: var(--color-text-inverse);
+  --color-background: var(--color-region-page);
+  --color-background-inverse: var(--color-region-page);
+  --color-text-primary: var(--color-region-text-primary);
+  --color-text-secondary: var(--color-region-text-secondary);
+  --color-text-inverse: var(--color-region-text-primary);
+  --color-border-default: var(--color-region-border-default);
+  --color-border-strong: var(--color-region-border-strong);
+
+  background: var(--color-region-page);
+  color: var(--color-region-text-primary);
+}
+
+.service-contact-marquee {
+  --color-background-inverse: var(--color-region-brand);
+  --color-text-inverse: var(--color-region-brand-text-primary);
+
+  background: var(--color-region-brand);
+  color: var(--color-region-brand-text-primary);
 }
 
 .service-detail__chapter {
@@ -55,8 +71,19 @@
 }
 
 .service-header__cta {
+  --action-button-border: var(--color-region-text-primary);
+  --action-button-fill: var(--color-region-text-primary);
+  --action-button-filled-text: var(--color-region-page);
+  --action-button-transparent-text: var(--color-region-text-primary);
+
   justify-self: start;
   margin-block-start: auto;
+}
+
+.service-header__cta:active:not([aria-disabled="true"]) {
+  --action-button-fill-translate: -100%;
+  --action-button-label-clip-bottom: 100%;
+  --action-button-label-clip-top: 0%;
 }
 
 .service-header__divider {
@@ -320,6 +347,9 @@
 }
 
 .service-more-galleries__link {
+  --color-background-inverse: var(--color-background-cinematic);
+  --color-text-inverse: var(--color-cream-100);
+
   align-items: center;
   block-size: 100svh;
   color: inherit;
@@ -593,6 +623,10 @@
 }
 
 .service-lightbox {
+  --color-background-inverse: var(--color-background-cinematic);
+  --color-text-inverse: var(--color-cream-100);
+  --focus-ring-color: var(--color-accent);
+
   background: transparent;
   border: 0;
   block-size: 100dvh;

@@ -1,4 +1,4 @@
-import type { Locale } from "@/core/i18n";
+import { defaultLocale, type Locale } from "@/core/i18n";
 import {
   EVENT_CATEGORIES,
   getLocalizedEventCategory,
@@ -38,7 +38,7 @@ export const getLocalizedGalleryCategories = (locale: Locale): GalleryCategory[]
     };
   });
 
-export const getGalleryEvents = (categoryId?: string, locale: Locale = "es") => {
+export const getGalleryEvents = (categoryId?: string, locale: Locale = defaultLocale) => {
   const items = getLocalizedEventGalleryItems(locale);
 
   return categoryId
