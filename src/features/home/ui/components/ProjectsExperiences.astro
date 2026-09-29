@@ -1,25 +1,19 @@
 ---
-import { Picture } from "astro:assets";
-
-import {
-  eventImageFallbackFormat,
-  eventImageFormats,
-  eventImageWidths,
-} from "@/assets/images/events/delivery";
 import Container from "@/core/common/ui/components/Container.astro";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
 import Icon from "@/core/common/ui/components/Icon.astro";
-import { eventGalleryContent, getLocalizedEventGalleryItems } from "@/features/gallery";
-import { getHomeContentTranslations, getHomeTranslations } from "@/features/home/i18n";
+import { getHomeTranslations } from "@/features/home/i18n";
 import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
+import { getPublication } from "@/features/publication/publication.mjs";
+import PublicationImage from "@/features/publication/ui/PublicationImage.astro";
 
 import "@/features/home/ui/styles/projects-experiences.css";
 
 const locale = getLocaleFromUrl(Astro.url);
-const eventGalleryItems = getLocalizedEventGalleryItems(locale);
+const home = getPublication(locale).home;
+const eventGalleryItems = home.selectedEvents;
 const homeText = getHomeTranslations(locale);
-const projectsText = getHomeContentTranslations(locale).projects;
 ---
 
 <section
@@ -27,7 +21,7 @@ const projectsText = getHomeContentTranslations(locale).projects;
   id="experiences"
   aria-labelledby="projects-experiences-title"
   aria-roledescription={homeText.carousel}
-  data-content-status={eventGalleryContent.status}
+  data-content-status="published"
   data-home-text={JSON.stringify(homeText)}
   data-event-status={homeText.eventStatus}
   data-navigation-contrast="theme"
@@ -36,16 +30,13 @@ const projectsText = getHomeContentTranslations(locale).projects;
     <div class="projects-experiences__layout">
       <header class="projects-experiences__header">
         <Heading as="h2" variant="display-lg" id="projects-experiences-title">
-          {projectsText.title}
+          {home.eventsTitle}
         </Heading>
 
         <div class="projects-experiences__introduction">
-          <Text variant="body-lg" tone="primary">{projectsText.introduction}</Text>
-          <a
-            class="projects-experiences__cta"
-            href={getLocalizedHref(eventGalleryContent.cta.href, locale)}
-          >
-            {projectsText.ctaLabel}
+          <Text variant="body-lg" tone="primary">{home.eventsIntroduction}</Text>
+          <a class="projects-experiences__cta" href={getLocalizedHref("/gallery", locale)}>
+            {home.eventsCtaLabel}
           </a>
         </div>
       </header>
@@ -65,41 +56,28 @@ const projectsText = getHomeContentTranslations(locale).projects;
                 <li
                   class="projects-experiences__slide"
                   data-projects-slide
-                  data-event-id={event.id}
+                  data-event-id={event.code}
                   data-event-title={event.title}
-                  data-content-status={event.status}
+                  data-content-status="published"
                   data-active={index === 0 ? "true" : "false"}
                   aria-label={`${index + 1} ${homeText.of} ${eventGalleryItems.length}`}
                   aria-roledescription={homeText.slide}
                 >
                   <a
                     class="projects-experiences__link"
-                    href={getLocalizedHref(event.href, locale)}
+                    href={getLocalizedHref(`/events/${event.slug}`, locale)}
                   >
                     <article>
                       <div
                         class="projects-experiences__media"
-                        data-media-status={event.media.status}
+                        data-media-status="approved"
                         data-tone={eventNumber}
-                        aria-hidden="true"
                       >
-                        {event.media.status === "approved" ? (
-                          <Picture
-                            src={event.media.src}
-                            alt=""
-                            formats={eventImageFormats}
-                            fallbackFormat={eventImageFallbackFormat}
-                            widths={eventImageWidths}
-                            sizes="(min-width: 1024px) 42vw, (min-width: 768px) 76vw, 100vw"
-                            loading="lazy"
-                            decoding="async"
-                          />
-                        ) : (
-                          <>
-                            <span />
-                            <span />
-                          </>
-                        )}
+                        <PublicationImage
+                          media={event.mainImage}
+                          sizes="(min-width: 1024px) 42vw, (min-width: 768px) 76vw, 100vw"
+                          loading="lazy"
+                        />
                       </div>
                       <div class="projects-experiences__meta">
                         <span>{eventNumber}</span>
@@ -107,7 +85,7 @@ const projectsText = getHomeContentTranslations(locale).projects;
                           <Heading as="h3" variant="heading-md">
                             {event.title}
                           </Heading>
-                          <Text>{event.context}</Text>
+                          <Text>{event.description}</Text>
                         </div>
                       </div>
                     </article>
@@ -119,30 +97,34 @@ const projectsText = getHomeContentTranslations(locale).projects;
         </ol>
       </div>
 
-      <div class="projects-experiences__controls">
-        <p class="projects-experiences__status" aria-live="polite" aria-atomic="true">
-          {homeText.eventStatus} 1 {homeText.of}
-          {eventGalleryItems.length}: {eventGalleryItems[0]?.title}
-        </p>
-        <div class="projects-experiences__buttons">
-          <button
-            type="button"
-            data-projects-previous
-            aria-label={homeText.previousEvent}
-            title={homeText.previous}
-          >
-            <Icon name="arrowLeft" size={20} />
-          </button>
-          <button
-            type="button"
-            data-projects-next
-            aria-label={homeText.nextEvent}
-            title={homeText.next}
-          >
-            <Icon name="arrowRight" size={20} />
-          </button>
-        </div>
-      </div>
+      {
+        eventGalleryItems.length > 0 && (
+          <div class="projects-experiences__controls">
+            <p class="projects-experiences__status" aria-live="polite" aria-atomic="true">
+              {homeText.eventStatus} 1 {homeText.of}
+              {eventGalleryItems.length}: {eventGalleryItems[0]?.title}
+            </p>
+            <div class="projects-experiences__buttons">
+              <button
+                type="button"
+                data-projects-previous
+                aria-label={homeText.previousEvent}
+                title={homeText.previous}
+              >
+                <Icon name="arrowLeft" size={20} />
+              </button>
+              <button
+                type="button"
+                data-projects-next
+                aria-label={homeText.nextEvent}
+                title={homeText.next}
+              >
+                <Icon name="arrowRight" size={20} />
+              </button>
+            </div>
+          </div>
+        )
+      }
     </div>
   </Container>
 </section>

@@ -8,16 +8,16 @@ import {
 } from "@/assets/images/events/delivery";
 import { marqueeContent } from "@/features/home/content/marquee";
 import { getHomeTranslations } from "@/features/home/i18n";
-import { getHomeContentTranslations } from "@/features/home/i18n";
 import { getLocaleFromUrl } from "@/core/i18n";
+import { getPublication } from "@/features/publication/publication.mjs";
 
 import "@/features/home/ui/styles/marquee.css";
 
 const locale = getLocaleFromUrl(Astro.url);
 const homeText = getHomeTranslations(locale);
-const marqueeContentText = getHomeContentTranslations(locale);
-const marqueeText = marqueeContentText.marqueeOptions[0];
-const marqueeStatement = marqueeContentText.marqueeOptions[2];
+const publicationHome = getPublication(locale).home;
+const marqueeText = publicationHome.marqueeText;
+const marqueeStatement = publicationHome.marqueeStatement;
 ---
 
 <section

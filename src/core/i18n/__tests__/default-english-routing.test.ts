@@ -97,40 +97,40 @@ test("built static routes localize root, dynamic paths, and language switches", 
       xDefault: "/about/",
     },
     {
-      path: "services/bodas/index.html",
+      path: "services/synthetic-service/index.html",
       lang: "en-CA",
-      title: "Weddings — MOSAÏQUE EVENTS",
-      canonical: "/services/bodas/",
+      title: "Service en",
+      canonical: "/services/synthetic-service/",
       alternates: {
-        en: "/services/bodas/",
-        es: "/es/services/bodas/",
-        fr: "/fr/services/bodas/",
+        en: "/services/synthetic-service/",
+        es: "/es/services/synthetic-service/",
+        fr: "/fr/services/synthetic-service/",
       },
-      xDefault: "/services/bodas/",
+      xDefault: "/services/synthetic-service/",
     },
     {
-      path: "es/events/nossa-copa/index.html",
+      path: "es/events/synthetic-event/index.html",
       lang: "es",
-      title: "Brasil en el Mundial 2026 — MOSAÏQUE EVENTS",
-      canonical: "/es/events/nossa-copa/",
+      title: "Event es",
+      canonical: "/es/events/synthetic-event/",
       alternates: {
-        en: "/events/nossa-copa/",
-        es: "/es/events/nossa-copa/",
-        fr: "/fr/events/nossa-copa/",
+        en: "/events/synthetic-event/",
+        es: "/es/events/synthetic-event/",
+        fr: "/fr/events/synthetic-event/",
       },
-      xDefault: "/events/nossa-copa/",
+      xDefault: "/events/synthetic-event/",
     },
     {
-      path: "fr/gallery/festival/index.html",
+      path: "fr/gallery/celebration/index.html",
       lang: "fr-CA",
-      title: "Festival — Galerie des événements réalisés — MOSAÏQUE EVENTS",
-      canonical: "/fr/gallery/festival/",
+      title: "Célébration — Galerie des événements réalisés — MOSAÏQUE EVENTS",
+      canonical: "/fr/gallery/celebration/",
       alternates: {
-        en: "/gallery/festival/",
-        es: "/es/gallery/festival/",
-        fr: "/fr/gallery/festival/",
+        en: "/gallery/celebration/",
+        es: "/es/gallery/celebration/",
+        fr: "/fr/gallery/celebration/",
       },
-      xDefault: "/gallery/festival/",
+      xDefault: "/gallery/celebration/",
     },
   ] as const;
 
@@ -138,17 +138,17 @@ test("built static routes localize root, dynamic paths, and language switches", 
     await expectMetadata(page.path, page);
   }
 
-  const englishService = await readBuiltPage("services/bodas/index.html");
-  assert.match(englishService, /href="\/es\/services\/bodas\/"/);
-  assert.match(englishService, /href="\/fr\/services\/bodas\/"/);
+  const englishService = await readBuiltPage("services/synthetic-service/index.html");
+  assert.match(englishService, /href="\/es\/services\/synthetic-service\/"/);
+  assert.match(englishService, /href="\/fr\/services\/synthetic-service\/"/);
 
-  const spanishService = await readBuiltPage("es/services/bodas/index.html");
-  assert.match(spanishService, /href="\/services\/bodas\/"/);
-  assert.match(spanishService, /href="\/fr\/services\/bodas\/"/);
+  const spanishService = await readBuiltPage("es/services/synthetic-service/index.html");
+  assert.match(spanishService, /href="\/services\/synthetic-service\/"/);
+  assert.match(spanishService, /href="\/fr\/services\/synthetic-service\/"/);
 
-  const frenchService = await readBuiltPage("fr/services/bodas/index.html");
-  assert.match(frenchService, /href="\/services\/bodas\/"/);
-  assert.match(frenchService, /href="\/es\/services\/bodas\/"/);
+  const frenchService = await readBuiltPage("fr/services/synthetic-service/index.html");
+  assert.match(frenchService, /href="\/services\/synthetic-service\/"/);
+  assert.match(frenchService, /href="\/es\/services\/synthetic-service\/"/);
 });
 
 test("legacy English pages are absent and the general 404 is English", async () => {

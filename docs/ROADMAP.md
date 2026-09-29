@@ -324,9 +324,15 @@ This document is the source of truth for implementation status. The existence of
 ### SEO / Metadata
 
 - **Implementation: complete for the current public surface.** Spanish document language, descriptive titles and descriptions, robots directives, Open Graph metadata, Twitter card metadata, favicons, and Organization JSON-LD are present.
-- `SITE_URL` is the single production URL source. Canonical, `og:url`, the Organization URL, sitemap generation, and the sitemap reference in robots are emitted only when it is configured, preventing localhost or speculative domains from entering production metadata.
+- The CMS-08D adapter pins `SITE_URL` to the approved canonical origin `https://mosaiqueevenements.com` for static publication; an inconsistent override now fails. Canonical, `og:url`, Organization URL, sitemap and robots reference that origin.
 - The official Astro sitemap integration generates the sitemap index and page sitemap. `robots.txt` remains valid without a configured domain and adds the absolute sitemap URL when one exists.
 - Social image tags remain intentionally absent until an approved production image is available.
+
+## CMS-08D static publication adapter — local implementation
+
+- **Implemented locally:** an explicit CMS materialization JSON plus sibling immutable public assets now drives the CMS-owned Home fields, Services, Website Events and galleries, and the public Tree agenda in EN/ES/FR. The existing Home sections, gallery archive and detail-page visual structures are retained. Build input is required; the synthetic fixture is opt-in only.
+- Astro emits the existing route families from the publication adapter. A post-build finalizer verifies immutable asset bytes, hashes required route output, and writes the 08C-compatible `cms-static-artifact-v1` marker. The canonical hash matches the 08C fixed vector.
+- Local certification uses the synthetic fixture. The preserved editorial composition was checked in browser at representative desktop, tablet and mobile widths with no measured horizontal overflow. Real CMS media fidelity and field Core Web Vitals remain unverified. Production promotion, scheduler/reconciliation, and CMS-08E/F/G remain outside this episode. See `docs/CMS_08D_WEB_STATIC_ADAPTER.md`.
 
 ## Current
 
@@ -335,10 +341,10 @@ This document is the source of truth for implementation status. The existence of
 - **✅ Step 1 — diagnostic complete.** The public link-in-bio surface was scoped against the
   supplied Paula references, the existing Mosaïque architecture, confirmed business content,
   locale routing, and native sharing/accessibility contracts before implementation.
-- **✅ Step 2 — implementation and sample reconciliation complete locally.** `/tree`, `/en/tree`,
+- **✅ Step 2 — implementation and sample reconciliation complete locally.** `/tree`, `/es/tree`,
   and `/fr/tree` now render one feature-owned Astro composition with localized metadata and copy,
   no shared Navigation or Footer, no React island, no `client:*` directive, and no hydrated runtime
-  dependency. The former temporary migration sample informed the product reconciliation without
+  dependency. CMS-08D subsequently activated its agenda from the static publication input. The former temporary migration sample informed the product reconciliation without
   becoming a production dependency and was removed in Step 4.
 - The implementation translates the sample's centered profile shell, prominent share trigger,
   section hierarchy, disclosure, vertical action cards, and share preview into Mosaïque's semantic

@@ -1,21 +1,23 @@
 ---
-import { servicesContent } from "@/features/home/content/services";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
 import HomeServicePreviewScene from "./HomeServicePreviewScene.astro";
 import CursorHalftone from "./CursorHalftone.astro";
-import { getHomeContentTranslations } from "@/features/home/i18n";
-import { getLocalizedService } from "@/features/services";
 import { getLocaleFromUrl } from "@/core/i18n";
+import { getPublication } from "@/features/publication/publication.mjs";
 
 import "@/features/home/ui/styles/home-services-showcase.css";
 
 const locale = getLocaleFromUrl(Astro.url);
-const services = [...servicesContent.items]
-  .sort((a, b) => a.index.localeCompare(b.index))
-  .map((service) => getLocalizedService(service, locale));
+const publication = getPublication(locale);
+const services = [...publication.services].sort(
+  (a, b) => a.order - b.order || a.code.localeCompare(b.code),
+);
 const titleId = "home-services-heading";
-const servicesPanel = getHomeContentTranslations(locale).servicesPanel;
+const servicesPanel = {
+  title: publication.home.servicesTitle,
+  text: publication.home.servicesText,
+};
 ---
 
 <section

@@ -1,7 +1,6 @@
 ---
 import { prefixedLocales } from "@/core/i18n";
 import HomePage from "@/features/home/ui/pages/HomePage.astro";
-
 export function getStaticPaths() {
   return prefixedLocales.map((locale) => ({ params: { locale } }));
 }

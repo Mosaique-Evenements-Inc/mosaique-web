@@ -9,7 +9,9 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
-const site = process.env.SITE_URL;
+const site = "https://mosaiqueevenements.com";
+if (process.env.SITE_URL && process.env.SITE_URL !== site)
+  throw new Error("CMS publication requires the canonical site origin");
 
 export default defineConfig({
   site,

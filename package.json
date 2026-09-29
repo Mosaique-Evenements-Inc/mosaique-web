@@ -7,13 +7,13 @@
   },
   "scripts": {
     "dev": "astro dev --background",
-    "build": "astro build",
+    "build": "astro build && node scripts/finalize-cms-publication.mjs",
     "images:prepare": "node scripts/prepare-images.mjs",
     "preview": "astro preview",
     "lint": "eslint .",
     "format": "prettier . --write",
-    "pretest": "pnpm build",
-    "test": "node --test \"src/**/__tests__/*.test.ts\"",
+    "pretest": "CMS_PUBLICATION_MODE=fixture pnpm build",
+    "test": "CMS_PUBLICATION_MODE=fixture node --test \"src/**/__tests__/*.test.ts\"",
     "typecheck": "astro check",
     "astro": "astro"
   },

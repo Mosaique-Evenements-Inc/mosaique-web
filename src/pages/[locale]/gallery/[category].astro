@@ -1,30 +1,20 @@
 ---
 import { prefixedLocales, type Locale } from "@/core/i18n";
+import { getGalleryCategoryIds, getPublication } from "@/features/publication/publication.mjs";
 import { getLocalizedEventCategory, type EventCategoryId } from "@/features/events";
-import { galleryCategories, getGalleryEvents } from "@/features/gallery";
 import { galleryTranslations } from "@/features/gallery/i18n";
 import GalleryPage from "@/features/gallery/ui/pages/GalleryPage.astro";
-
 export function getStaticPaths() {
   return prefixedLocales.flatMap((locale) =>
-    galleryCategories.map((category) => ({
-      params: { locale, category: category.id },
-      props: { category },
-    })),
+    getGalleryCategoryIds().map((category) => ({ params: { locale, category } })),
   );
 }
-
 const locale = Astro.params.locale as Locale;
-const { category } = Astro.props;
-const events = getGalleryEvents(category.id, locale);
-const localizedCategory = getLocalizedEventCategory(
-  category.categoryId as EventCategoryId,
-  locale,
+const activeCategoryId = Astro.params.category;
+const items = getPublication(locale).events.filter(
+  (event) => event.categoryId === activeCategoryId,
 );
+const title = `${getLocalizedEventCategory(activeCategoryId as EventCategoryId, locale).label} — ${galleryTranslations[locale].archiveTitle} — MOSAÏQUE EVENTS`;
 ---
 
-<GalleryPage
-  activeCategoryId={category.id}
-  items={events}
-  title={`${localizedCategory.label} — ${galleryTranslations[locale].archiveTitle} — MOSAÏQUE EVENTS`}
-/>
+<GalleryPage {items} {title} {activeCategoryId} />

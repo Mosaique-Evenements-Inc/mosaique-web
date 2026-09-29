@@ -1,21 +1,10 @@
 ---
-import { getEventsByServiceId } from "@/features/events";
-import { services, type Service } from "@/features/services";
-import ServiceDetailPage from "@/features/services/ui/pages/ServiceDetailPage.astro";
-
+import { getServiceSlugs } from "@/features/publication/publication.mjs";
+import PublicationDetail from "@/features/publication/ui/PublicationDetail.astro";
 export function getStaticPaths() {
-  return services.map((service) => ({
-    params: { slug: service.slug },
-    props: { service },
-  }));
+  return getServiceSlugs().map((slug) => ({ params: { slug } }));
 }
-
-interface Props {
-  service: Service;
-}
-
-const { service } = Astro.props;
-const relatedEvents = getEventsByServiceId(service.id);
+const slug = Astro.params.slug;
 ---
 
-<ServiceDetailPage {service} {relatedEvents} />
+<PublicationDetail kind="service" slug={slug} />

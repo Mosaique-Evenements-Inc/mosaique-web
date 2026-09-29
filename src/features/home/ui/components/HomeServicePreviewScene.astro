@@ -1,12 +1,6 @@
 ---
-import { Picture } from "astro:assets";
-
-import {
-  eventImageFallbackFormat,
-  eventImageFormats,
-  eventImageWidths,
-} from "@/assets/images/events/delivery";
-import type { Service } from "@/features/services";
+import type { CmsItem } from "@/features/publication/publication.mjs";
+import PublicationImage from "@/features/publication/ui/PublicationImage.astro";
 import Button from "@/core/common/ui/components/Button";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
@@ -16,11 +10,11 @@ import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
 interface Props {
   isLast: boolean;
   sceneIndex: number;
-  service: Service;
+  service: CmsItem;
 }
 
 const { isLast, sceneIndex, service } = Astro.props;
-const media = service.featuredMedia;
+const media = service.mainImage;
 const locale = getLocaleFromUrl(Astro.url);
 const detailHref = getLocalizedHref(`/services/${service.slug}`, locale);
 const homeText = getHomeTranslations(locale);
@@ -28,51 +22,24 @@ const homeText = getHomeTranslations(locale);
 
 <article
   class:list={["home-service-preview", { "is-last": isLast }]}
-  data-content-status={media.status}
+  data-content-status="published"
   style={`--home-service-scene-index: ${sceneIndex + 1}`}
-  aria-labelledby={`home-service-title-${service.id}`}
+  aria-labelledby={`home-service-title-${service.code}`}
 >
   <div class="home-service-preview__surface">
-    <div class="home-service-preview__media" aria-hidden="true">
+    <div class="home-service-preview__media">
       <div class="home-service-preview__media-inner">
-        {
-          media.kind === "image" ? (
-            <Picture
-              src={media.src}
-              alt=""
-              formats={eventImageFormats}
-              fallbackFormat={eventImageFallbackFormat}
-              widths={eventImageWidths}
-              sizes="100vw"
-              loading="lazy"
-              decoding="async"
-            />
-          ) : media.kind === "video" ? (
-            <video
-              src={media.src}
-              poster={media.poster}
-              muted
-              playsinline
-              preload="metadata"
-              tabindex="-1"
-            />
-          ) : (
-            <span class="home-service-preview__placeholder" data-tone={service.index}>
-              <span />
-              <span />
-            </span>
-          )
-        }
-        <span class="home-service-preview__overlay"></span>
+        <PublicationImage media={media} sizes="100vw" loading="lazy" />
+        <span class="home-service-preview__overlay" aria-hidden="true"></span>
       </div>
     </div>
 
     <div class="home-service-preview__copy">
       <Text as="span" variant="caption" tone="inverse" class="home-service-preview__label">
         {homeText.service}
-        {service.index}
+        {String(sceneIndex + 1).padStart(2, "0")}
       </Text>
-      <Heading as="h3" variant="display-lg" id={`home-service-title-${service.id}`}>
+      <Heading as="h3" variant="display-lg" id={`home-service-title-${service.code}`}>
         {service.title}
       </Heading>
       <Text variant="body-lg" tone="inverse" class="home-service-preview__description">
@@ -83,8 +50,8 @@ const homeText = getHomeTranslations(locale);
       </Text>
       <div class="home-service-preview__actions">
         <Button href={detailHref} variant="transparent">{homeText.viewMore}</Button>
-        <Button href={getLocalizedHref(service.cta.href, locale)} variant="light">
-          {homeText.quoteEvent}
+        <Button href={getLocalizedHref("/contact", locale)} variant="light">
+          {service.ctaLabel}
         </Button>
       </div>
     </div>

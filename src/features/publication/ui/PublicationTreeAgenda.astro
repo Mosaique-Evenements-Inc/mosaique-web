@@ -1,0 +1,58 @@
+---
+import Icon from "@/core/common/ui/components/Icon.astro";
+import { getPublication } from "../publication.mjs";
+interface Props {
+  title: string;
+  description: string;
+  empty: string;
+  locale: "en" | "es" | "fr";
+}
+const { title, description, empty, locale } = Astro.props;
+const events = getPublication(locale).tree;
+const language = locale === "en" ? "en-CA" : locale === "fr" ? "fr-CA" : "es";
+const format = (instant: string) =>
+  new Intl.DateTimeFormat(language, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: "UTC",
+    timeZoneName: "short",
+  }).format(new Date(instant));
+---
+
+<details class="tree-link-agenda">
+  <summary
+    ><span class="tree-link-card__icon" aria-hidden="true"
+      ><Icon name="calendar" size={24} /></span
+    ><span class="tree-link-card__copy"><strong>{title}</strong><span>{description}</span></span
+    ><span class="tree-link-agenda__indicator" aria-hidden="true"
+      ><Icon name="navArrowDown" size={20} /></span
+    ></summary
+  >
+  <div class="tree-link-agenda__content">
+    {
+      events.length ? (
+        <ol>
+          {events.map((event, index) => (
+            <li>
+              <span class="tree-link-agenda__index" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span class="tree-link-agenda__event">
+                <strong>{event.title}</strong>
+                <span>
+                  <time datetime={event.start}>{format(event.start)}</time> –{" "}
+                  <time datetime={event.end}>{format(event.end)}</time>
+                </span>
+              </span>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p style="padding:var(--space-3)">{empty}</p>
+      )
+    }
+  </div>
+</details>

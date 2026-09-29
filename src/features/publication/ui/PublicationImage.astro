@@ -1,0 +1,29 @@
+---
+import type { CmsMedia } from "../publication.mjs";
+interface Props {
+  media: CmsMedia;
+  sizes: string;
+  loading: "eager" | "lazy";
+  priority?: boolean;
+}
+const { media, sizes, loading, priority = false } = Astro.props;
+---
+
+<picture>
+  {
+    media.sources.map((source) => (
+      <source type={source.mime} srcset={source.srcset} sizes={sizes} />
+    ))
+  }
+  <img
+    src={media.src}
+    srcset={media.srcset}
+    sizes={sizes}
+    width={media.width}
+    height={media.height}
+    alt={media.alt}
+    loading={loading}
+    fetchpriority={priority ? "high" : undefined}
+    decoding="async"
+  />
+</picture>

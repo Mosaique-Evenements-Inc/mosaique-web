@@ -1,20 +1,13 @@
 ---
 import { prefixedLocales } from "@/core/i18n";
-import { getEventsByServiceId } from "@/features/events";
-import { services } from "@/features/services";
-import ServiceDetailPage from "@/features/services/ui/pages/ServiceDetailPage.astro";
-
+import { getServiceSlugs } from "@/features/publication/publication.mjs";
+import PublicationDetail from "@/features/publication/ui/PublicationDetail.astro";
 export function getStaticPaths() {
   return prefixedLocales.flatMap((locale) =>
-    services.map((service) => ({
-      params: { locale, slug: service.slug },
-      props: { service },
-    })),
+    getServiceSlugs().map((slug) => ({ params: { locale, slug } })),
   );
 }
-
-const { service } = Astro.props;
-const relatedEvents = getEventsByServiceId(service.id);
+const slug = Astro.params.slug;
 ---
 
-<ServiceDetailPage {service} {relatedEvents} />
+<PublicationDetail kind="service" slug={slug} />

@@ -10,12 +10,12 @@ import Container from "@/core/common/ui/components/Container.astro";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
 // import Testimonials from "./Testimonials.astro";
-import { getHomeContentTranslations } from "@/features/home/i18n";
 import { getLocaleFromUrl } from "@/core/i18n";
+import { getPublication } from "@/features/publication/publication.mjs";
 
 import "@/features/home/ui/styles/process.css";
 
-const processContent = getHomeContentTranslations(getLocaleFromUrl(Astro.url)).process;
+const home = getPublication(getLocaleFromUrl(Astro.url)).home;
 ---
 
 <section
@@ -42,18 +42,18 @@ const processContent = getHomeContentTranslations(getLocaleFromUrl(Astro.url)).p
       <div class="process__content">
         <header class="process__header">
           <Heading as="h2" variant="heading-md" id="process-title">
-            {processContent.title}
+            {home.processTitle}
           </Heading>
-          <Text>{processContent.introduction}</Text>
+          <Text>{home.processIntroduction}</Text>
         </header>
 
         <ol class="process__steps">
           {
-            processContent.steps.map((step) => (
+            home.processSteps.map((step, index) => (
               <li class="process__step">
                 <article>
                   <span class="process__index" aria-hidden="true">
-                    {step.index}
+                    {String(index + 1).padStart(2, "0")}
                   </span>
                   <Heading as="h3" variant="heading-md">
                     {step.title}
@@ -64,6 +64,8 @@ const processContent = getHomeContentTranslations(getLocaleFromUrl(Astro.url)).p
             ))
           }
         </ol>
+
+        <Text>{home.processClosing}</Text>
 
         {/* <Testimonials /> */}
       </div>
