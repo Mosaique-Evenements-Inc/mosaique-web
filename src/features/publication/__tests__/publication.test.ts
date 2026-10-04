@@ -1,30 +1,24 @@
 import assert from "node:assert/strict";
-import { spawnSync } from "node:child_process";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import test from "node:test";
 import { canonicalArtifactJson, finalizeArtifact, sha256 } from "../artifact.mjs";
 import {
-  cmsRoutePaths,
-  getPublication,
-  getTreeAtAsOf,
-  publicationInput,
-  validatePublicationInput,
-} from "../publication.mjs";
+  CmsUnavailableError,
+  cmsApiOrigin,
+  fetchCmsSite,
+  validateCmsSite,
+} from "../cms-client.ts";
+import { getGalleryCategoryIds, getPublication, mapCmsSite } from "../publication.ts";
+import { siteFixture } from "./fixture.ts";
 
-const root = process.cwd();
-const marker = JSON.parse(readFileSync(join(root, "dist/_cms/artifact.json"), "utf8"));
-
-test("08C canonical artifact fixed vector", () => {
-  const input = {
-    publicationCode: "PUB-00000001",
-    snapshotHash: "a".repeat(64),
-    webSha: "b".repeat(40),
-    technicalAsOf: "2026-09-29T12:00:00.000000Z",
-    assets: [],
-  };
+test("historical CMS-08C artifact helper retains its fixed vector", () => {
   const result = finalizeArtifact(
-    input,
+    {
+      publicationCode: "PUB-00000001",
+      snapshotHash: "a".repeat(64),
+      webSha: "b".repeat(40),
+      technicalAsOf: "2026-09-29T12:00:00.000000Z",
+      assets: [],
+    },
     [{ path: "/index.html", sha256: "c".repeat(64) }],
     ["/index.html"],
   );
@@ -38,132 +32,71 @@ test("08C canonical artifact fixed vector", () => {
   );
 });
 
-test("strict locale model and immutable media paths", () => {
-  const english = getPublication("en");
-  const spanish = getPublication("es");
-  const french = getPublication("fr");
-  assert.equal(english.home.seoTitle, "Mosaïque en");
-  assert.equal(spanish.home.seoTitle, "Mosaïque es");
-  assert.equal(french.home.seoTitle, "Mosaïque fr");
-  assert.deepEqual(english, getPublication("en"));
-  assert.match(english.services[0].mainImage.src, /^\/_cms\/assets\/[0-9a-f]{64}\.gif$/);
-  assert.equal(english.events[0].gallery[0].alt, "");
-  assert.equal(spanish.services[0].mainImage.alt, "Imagen sintética");
-  assert.throws(() => getPublication("de" as "en"), /unsupported locale/);
+test("public DTO validation rejects malformed content and private media paths", () => {
+  assert.deepEqual(validateCmsSite(siteFixture, "en"), siteFixture);
+  assert.throws(() => validateCmsSite(siteFixture, "fr"), CmsUnavailableError);
+  const broken = structuredClone(siteFixture);
+  broken.services[0].mainImage.src = "/storage/v1/object/private/key";
+  assert.throws(() => validateCmsSite(broken, "en"), CmsUnavailableError);
+  broken.services[0].mainImage.src = siteFixture.services[0].mainImage.src;
+  broken.home.content.heroOverlay = "";
+  assert.throws(() => validateCmsSite(broken, "en"), CmsUnavailableError);
+  broken.home.content.heroOverlay = null;
+  assert.equal(validateCmsSite(broken, "en").home.content.heroOverlay, null);
 });
 
-test("invalid localized content and media references fail before rendering", () => {
-  const missingFrench = structuredClone(publicationInput) as unknown as {
-    snapshot: { home: { locales: { fr: { heroOverlay: string } } } };
+test("client propagates locale, validates status, malformed JSON, and unavailable API", async () => {
+  let requested = "";
+  const fetcher: typeof fetch = async (input) => {
+    requested = String(input);
+    return Response.json({ ...siteFixture, locale: "es" });
   };
-  missingFrench.snapshot.home.locales.fr.heroOverlay = "";
-  assert.throws(
-    () => validatePublicationInput(missingFrench as never),
-    /home\.locales\.fr\.heroOverlay/,
+  const site = await fetchCmsSite("es", { origin: new URL("http://localhost:54321"), fetcher });
+  assert.equal(site.locale, "es");
+  assert.equal(new URL(requested).searchParams.get("locale"), "es");
+  await assert.rejects(
+    fetchCmsSite("en", {
+      origin: new URL("http://localhost:54321"),
+      fetcher: async () => new Response("", { status: 503 }),
+    }),
+    CmsUnavailableError,
   );
-
-  const wrongDerivative = structuredClone(publicationInput) as unknown as {
-    snapshot: { services: { mainImage: { derivatives: { sha256: string }[] } }[] };
-  };
-  wrongDerivative.snapshot.services[0].mainImage.derivatives[0].sha256 = "0".repeat(64);
-  assert.throws(
-    () => validatePublicationInput(wrongDerivative as never),
-    /missing exact derivative/,
+  await assert.rejects(
+    fetchCmsSite("en", {
+      origin: new URL("http://localhost:54321"),
+      fetcher: async () => new Response("oops"),
+    }),
+    CmsUnavailableError,
   );
+  await assert.rejects(
+    fetchCmsSite("en", {
+      origin: new URL("http://localhost:54321"),
+      fetcher: async () => {
+        throw new Error("offline");
+      },
+    }),
+    CmsUnavailableError,
+  );
+  assert.throws(() => cmsApiOrigin("https://example.com/secret"), CmsUnavailableError);
 });
 
-test("Tree uses supplied asOf, includes future ACTIVE, excludes expired and INACTIVE", () => {
-  const snapshot = publicationInput.snapshot as unknown as {
-    currentEvents: Parameters<typeof getTreeAtAsOf>[0];
-  };
-  const inactive = {
-    ...snapshot.currentEvents[0],
-    code: "CEV-00000003",
-    lifecycle: "INACTIVE",
-  };
-  const events = [...snapshot.currentEvents, inactive];
-  const before = getTreeAtAsOf(events, "2026-09-29T12:00:00.000000Z", "en");
+test("one DTO maps to a coherent generation, public derivatives, and server-filtered agenda", () => {
+  const origin = new URL("https://cms.example.test");
+  const publication = mapCmsSite(siteFixture, origin);
+  assert.equal(publication.generation, 7);
+  assert.equal(publication.home.selectedEvents[0], publication.events[0]);
+  assert.equal(getPublication({ cmsPublication: publication }, "en"), publication);
+  assert.throws(() => getPublication({ cmsPublication: publication }, "fr"));
+  assert.deepEqual(getGalleryCategoryIds(publication), ["celebration"]);
+  assert.match(
+    publication.services[0].mainImage.srcset,
+    /https:\/\/cms\.example\.test\/functions\/v1\/cms-public\/media\//,
+  );
   assert.deepEqual(
-    before.map((event) => event.code),
+    publication.tree.map((event) => event.code),
     ["CEV-00000001"],
   );
-  assert.deepEqual(before, getTreeAtAsOf(events, "2026-09-29T12:00:00.000000Z", "en"));
-  const originalNow = Date.now;
-  try {
-    Date.now = () => Date.parse("2035-01-01T00:00:00.000Z");
-    assert.deepEqual(before, getTreeAtAsOf(events, "2026-09-29T12:00:00.000000Z", "en"));
-  } finally {
-    Date.now = originalNow;
-  }
-  assert.deepEqual(getTreeAtAsOf(events, "2026-10-01T12:00:00.000000Z", "en"), []);
-});
-
-test("route inventory and exact public bytes finalize deterministically", () => {
-  const paths = cmsRoutePaths();
-  assert.deepEqual(paths, [...paths].sort());
-  assert.equal(new Set(paths).size, paths.length);
-  for (const locale of ["", "es/", "fr/"]) {
-    for (const route of [
-      "index.html",
-      "gallery/index.html",
-      "tree/index.html",
-      "services/synthetic-service/index.html",
-      "events/synthetic-event/index.html",
-    ]) {
-      assert.ok(paths.includes(`/${locale}${route}`));
-      const html = readFileSync(join(root, "dist", locale, route));
-      assert.equal(
-        marker.routes.find((item: { path: string }) => item.path === `/${locale}${route}`)
-          .sha256,
-        sha256(html),
-      );
-    }
-  }
-  const routes = paths.map((path) => ({
-    path,
-    sha256: sha256(readFileSync(join(root, "dist", path.slice(1)))),
-  }));
-  assert.deepEqual(finalizeArtifact(publicationInput, routes, paths).marker, marker);
-  assert.throws(
-    () => finalizeArtifact(publicationInput, routes.slice(1), paths),
-    /ARTIFACT_INCOMPLETE/,
-  );
-});
-
-test("rendered CMS pages have exact locale content and Tree eligibility", () => {
-  for (const [prefix, locale] of [
-    ["", "en"],
-    ["es/", "es"],
-    ["fr/", "fr"],
-  ]) {
-    const read = (path: string) => readFileSync(join(root, "dist", prefix, path), "utf8");
-    assert.match(read("index.html"), new RegExp(`Synthetic overlay ${locale}`));
-    assert.match(
-      read("services/synthetic-service/index.html"),
-      new RegExp(`Service ${locale}`),
-    );
-    assert.match(read("events/synthetic-event/index.html"), new RegExp(`Event ${locale}`));
-    assert.match(read("gallery/index.html"), new RegExp(`Event ${locale}`));
-    assert.match(read("tree/index.html"), new RegExp(`Future event ${locale}`));
-    assert.doesNotMatch(read("tree/index.html"), /Expired event/);
-  }
-});
-
-test("marker is safe and missing authoritative input fails closed", () => {
-  const bytes = JSON.stringify(marker);
-  assert.doesNotMatch(
-    bytes,
-    /service_role|Authorization|signed|\/Users\/|\/private\/|cms-publication-coordinator|supabase/i,
-  );
-  const child = spawnSync(
-    process.execPath,
-    ["--input-type=module", "-e", "import('./src/features/publication/publication.mjs')"],
-    {
-      cwd: root,
-      env: { ...process.env, CMS_PUBLICATION_MODE: "", CMS_PUBLICATION_INPUT: "" },
-      encoding: "utf8",
-    },
-  );
-  assert.notEqual(child.status, 0);
-  assert.match(child.stderr, /CMS_PUBLICATION_INPUT is required/);
+  const expiredAtApi = structuredClone(siteFixture);
+  expiredAtApi.currentEvents = [];
+  assert.deepEqual(mapCmsSite(expiredAtApi, origin).tree, []);
 });

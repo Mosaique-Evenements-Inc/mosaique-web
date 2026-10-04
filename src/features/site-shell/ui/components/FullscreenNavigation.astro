@@ -6,7 +6,7 @@ import { navigationContent } from "@/features/site-shell/content/navigation";
 import { siteShellTranslations } from "@/features/site-shell/i18n";
 import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
-import { getPublication } from "@/features/publication/publication.mjs";
+import { getPublication } from "@/features/publication/publication";
 import ThemeToggle from "./ThemeToggle.astro";
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
 const { anchorPrefix = "" } = Astro.props;
 const locale = getLocaleFromUrl(Astro.url);
 const shellText = siteShellTranslations[locale];
-const publicationServices = getPublication(locale).services;
+const publicationServices = getPublication(Astro.locals, locale).services;
 const resolveHref = (href: string) =>
   href.startsWith("#")
     ? anchorPrefix

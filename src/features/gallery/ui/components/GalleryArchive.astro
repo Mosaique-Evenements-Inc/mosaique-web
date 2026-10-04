@@ -1,8 +1,8 @@
 ---
 import Button from "@/core/common/ui/components/Button";
 import Container from "@/core/common/ui/components/Container.astro";
-import type { CmsItem } from "@/features/publication/publication.mjs";
-import { getGalleryCategoryIds } from "@/features/publication/publication.mjs";
+import type { CmsItem } from "@/features/publication/publication";
+import { getGalleryCategoryIds, getPublication } from "@/features/publication/publication";
 import PublicationImage from "@/features/publication/ui/PublicationImage.astro";
 import { getLocalizedEventCategory, type EventCategoryId } from "@/features/events";
 import { galleryTranslations } from "@/features/gallery/i18n";
@@ -18,11 +18,13 @@ interface Props {
 const { activeCategoryId, items } = Astro.props;
 const locale = getLocaleFromUrl(Astro.url);
 const galleryText = galleryTranslations[locale];
-const galleryCategories = getGalleryCategoryIds().map((id) => ({
-  id,
-  href: `/gallery/${id}`,
-  label: getLocalizedEventCategory(id as EventCategoryId, locale).label,
-}));
+const galleryCategories = getGalleryCategoryIds(getPublication(Astro.locals, locale)).map(
+  (id) => ({
+    id,
+    href: `/gallery/${id}`,
+    label: getLocalizedEventCategory(id as EventCategoryId, locale).label,
+  }),
+);
 const activeCategory = galleryCategories.find((category) => category.id === activeCategoryId);
 const heading = activeCategory
   ? `${activeCategory.label} — ${galleryText.archiveHeading}`

@@ -11,11 +11,11 @@ import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
 // import Testimonials from "./Testimonials.astro";
 import { getLocaleFromUrl } from "@/core/i18n";
-import { getPublication } from "@/features/publication/publication.mjs";
+import { getPublication } from "@/features/publication/publication";
 
 import "@/features/home/ui/styles/process.css";
 
-const home = getPublication(getLocaleFromUrl(Astro.url)).home;
+const home = getPublication(Astro.locals, getLocaleFromUrl(Astro.url)).home;
 ---
 
 <section

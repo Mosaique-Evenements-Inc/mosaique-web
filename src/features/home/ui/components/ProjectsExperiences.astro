@@ -5,13 +5,13 @@ import Text from "@/core/common/ui/components/Text.astro";
 import Icon from "@/core/common/ui/components/Icon.astro";
 import { getHomeTranslations } from "@/features/home/i18n";
 import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
-import { getPublication } from "@/features/publication/publication.mjs";
+import { getPublication } from "@/features/publication/publication";
 import PublicationImage from "@/features/publication/ui/PublicationImage.astro";
 
 import "@/features/home/ui/styles/projects-experiences.css";
 
 const locale = getLocaleFromUrl(Astro.url);
-const home = getPublication(locale).home;
+const home = getPublication(Astro.locals, locale).home;
 const eventGalleryItems = home.selectedEvents;
 const homeText = getHomeTranslations(locale);
 ---

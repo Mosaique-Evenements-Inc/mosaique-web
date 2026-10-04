@@ -1,10 +1,5 @@
 ---
-import { prefixedLocales } from "@/core/i18n";
 import NotFoundPage from "@/features/site-shell/ui/pages/NotFoundPage.astro";
-
-export function getStaticPaths() {
-  return prefixedLocales.map((locale) => ({ params: { locale } }));
-}
 ---
 
 <NotFoundPage />

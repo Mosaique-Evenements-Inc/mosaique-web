@@ -4,12 +4,12 @@ import Text from "@/core/common/ui/components/Text.astro";
 import HomeServicePreviewScene from "./HomeServicePreviewScene.astro";
 import CursorHalftone from "./CursorHalftone.astro";
 import { getLocaleFromUrl } from "@/core/i18n";
-import { getPublication } from "@/features/publication/publication.mjs";
+import { getPublication } from "@/features/publication/publication";
 
 import "@/features/home/ui/styles/home-services-showcase.css";
 
 const locale = getLocaleFromUrl(Astro.url);
-const publication = getPublication(locale);
+const publication = getPublication(Astro.locals, locale);
 const services = [...publication.services].sort(
   (a, b) => a.order - b.order || a.code.localeCompare(b.code),
 );

@@ -4,12 +4,12 @@ import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
 import Icon from "@/core/common/ui/components/Icon.astro";
 import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
-import { getPublication } from "@/features/publication/publication.mjs";
+import { getPublication } from "@/features/publication/publication";
 
 import "@/features/home/ui/styles/faq.css";
 
 const faqContent = (() => {
-  const localized = getPublication(getLocaleFromUrl(Astro.url)).home;
+  const localized = getPublication(Astro.locals, getLocaleFromUrl(Astro.url)).home;
   return {
     eyebrow: localized.faqEyebrow,
     title: localized.faqTitle,

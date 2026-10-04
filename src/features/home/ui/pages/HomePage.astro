@@ -10,13 +10,13 @@ import HomeServicesShowcase from "../components/HomeServicesShowcase.astro";
 import Marquee from "../components/Marquee.astro";
 import Process from "../components/Process.astro";
 import ProjectsExperiences from "../components/ProjectsExperiences.astro";
-import { getPublication } from "@/features/publication/publication.mjs";
+import { getPublication } from "@/features/publication/publication";
 import { getLocaleFromUrl } from "@/core/i18n";
 import { heroVideo } from "@/assets/video/delivery";
 
 import "../styles/home-page.css";
 
-const home = getPublication(getLocaleFromUrl(Astro.url)).home;
+const home = getPublication(Astro.locals, getLocaleFromUrl(Astro.url)).home;
 ---
 
 <BaseLayout title={home.seoTitle} description={home.seoDescription}>

@@ -9,13 +9,13 @@ import {
 import { marqueeContent } from "@/features/home/content/marquee";
 import { getHomeTranslations } from "@/features/home/i18n";
 import { getLocaleFromUrl } from "@/core/i18n";
-import { getPublication } from "@/features/publication/publication.mjs";
+import { getPublication } from "@/features/publication/publication";
 
 import "@/features/home/ui/styles/marquee.css";
 
 const locale = getLocaleFromUrl(Astro.url);
 const homeText = getHomeTranslations(locale);
-const publicationHome = getPublication(locale).home;
+const publicationHome = getPublication(Astro.locals, locale).home;
 const marqueeText = publicationHome.marqueeText;
 const marqueeStatement = publicationHome.marqueeStatement;
 ---

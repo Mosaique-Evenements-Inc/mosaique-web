@@ -1,6 +1,6 @@
 ---
 import Icon from "@/core/common/ui/components/Icon.astro";
-import { getPublication } from "../publication.mjs";
+import { getPublication } from "../publication";
 interface Props {
   title: string;
   description: string;
@@ -8,7 +8,7 @@ interface Props {
   locale: "en" | "es" | "fr";
 }
 const { title, description, empty, locale } = Astro.props;
-const events = getPublication(locale).tree;
+const events = getPublication(Astro.locals, locale).tree;
 const language = locale === "en" ? "en-CA" : locale === "fr" ? "fr-CA" : "es";
 const format = (instant: string) =>
   new Intl.DateTimeFormat(language, {

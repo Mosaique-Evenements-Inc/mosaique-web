@@ -12,7 +12,7 @@ import EventContactMarquee from "@/features/events/ui/components/EventContactMar
 import ServiceContactMarquee from "@/features/services/ui/components/ServiceContactMarquee.astro";
 import { eventDetailTranslations } from "@/features/events";
 import { galleryTranslations } from "@/features/gallery/i18n";
-import { getPublication } from "../publication.mjs";
+import { getPublication } from "../publication";
 import PublicationImage from "./PublicationImage.astro";
 import PublicationRelated from "./PublicationRelated.astro";
 import PublicationLightbox from "./PublicationLightbox.astro";
@@ -25,7 +25,7 @@ interface Props {
 }
 const { kind, slug } = Astro.props;
 const locale = getLocaleFromUrl(Astro.url);
-const publication = getPublication(locale);
+const publication = getPublication(Astro.locals, locale);
 const items = kind === "service" ? publication.services : publication.events;
 const item = items.find((entry) => entry.slug === slug);
 if (!item) throw new Error(`Missing CMS ${kind} route: ${slug}`);

@@ -328,6 +328,10 @@ This document is the source of truth for implementation status. The existence of
 - The official Astro sitemap integration generates the sitemap index and page sitemap. `robots.txt` remains valid without a configured domain and adds the absolute sitemap URL when one exists.
 - Social image tags remain intentionally absent until an approved production image is available.
 
+## CMS runtime Web integration — Episode 3
+
+- **Implemented locally on `feature/refact-CMS`:** Astro 7 server rendering with 30-second Vercel ISR uses the public `cms-site-v1` API for CMS-owned pages, shell navigation, and SEO. CMS publication no longer supplies a Web build input or Web SHA assertion. The API outage path is 503 and unknown CURRENT slugs return 404. Static robots/assets and the optional CMS-01 pilot remain independent of the API. Remote ISR, media, and CDN certification remains Episode 5 work. See `docs/CMS_RUNTIME_WEB.md`.
+
 ## CMS-08D static publication adapter — local implementation
 
 - **Implemented locally:** an explicit CMS materialization JSON plus sibling immutable public assets now drives the CMS-owned Home fields, Services, Website Events and galleries, and the public Tree agenda in EN/ES/FR. The existing Home sections, gallery archive and detail-page visual structures are retained. Build input is required; the synthetic fixture is opt-in only.

@@ -1,15 +1,12 @@
 ---
-import { prefixedLocales } from "@/core/i18n";
-import { getEventSlugs } from "@/features/publication/publication.mjs";
+import { getLocaleFromUrl } from "@/core/i18n";
+import { getPublication } from "@/features/publication/publication";
 import PublicationDetail from "@/features/publication/ui/PublicationDetail.astro";
-export function getStaticPaths() {
-  return prefixedLocales.flatMap((locale) =>
-    getEventSlugs().map((slug) => ({
-      params: { locale, slug },
-    })),
-  );
-}
-const slug = Astro.params.slug;
+import NotFoundPage from "@/features/site-shell/ui/pages/NotFoundPage.astro";
+const locale = getLocaleFromUrl(Astro.url);
+const slug = Astro.params.slug ?? "";
+const found = getPublication(Astro.locals, locale).events.some((item) => item.slug === slug);
+if (!found) Astro.response.status = 404;
 ---
 
-<PublicationDetail kind="event" slug={slug} />
+{found ? <PublicationDetail kind="event" slug={slug} /> : <NotFoundPage />}

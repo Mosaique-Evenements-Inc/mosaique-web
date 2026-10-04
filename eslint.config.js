@@ -5,7 +5,7 @@ import astro from "eslint-plugin-astro";
 
 export default [
   {
-    ignores: ["dist/**", ".astro/**", "node_modules/**"],
+    ignores: ["dist/**", ".vercel/**", ".astro/**", "node_modules/**"],
   },
   js.configs.recommended,
   ...astro.configs["flat/recommended"],

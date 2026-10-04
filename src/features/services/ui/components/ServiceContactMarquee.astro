@@ -1,11 +1,11 @@
 ---
 import ContactMarquee from "@/core/common/ui/components/ContactMarquee.astro";
 import { finalCtaContent } from "@/features/quote/content/finalCta";
-import { getPublication } from "@/features/publication/publication.mjs";
+import { getPublication } from "@/features/publication/publication";
 import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
 
 const locale = getLocaleFromUrl(Astro.url);
-const ctaText = getPublication(locale).home;
+const ctaText = getPublication(Astro.locals, locale).home;
 ---
 
 <ContactMarquee

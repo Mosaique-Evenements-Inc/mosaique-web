@@ -1,4 +1,6 @@
-# CMS-08D Web static adapter
+# CMS-08D Web static adapter (historical)
+
+This describes the former static Web integration. Episode 3 replaced its production build and runtime path; see `docs/CMS_RUNTIME_WEB.md`. The materialization workflow below is retained as historical context only.
 
 The Web build consumes an explicit, deterministic local materialization package. It makes no CMS network calls. The input is a JSON file supplied through `CMS_PUBLICATION_INPUT`, containing the 08C materialization's `publicationCode`, `snapshotHash`, `webSha`, `technicalAsOf`, exact `cms-publication-v1` snapshot, public `assets` metadata, and public `usages` map. Verified derivative bytes are sibling files at `_cms/assets/<sha256>.<ext>` relative to the JSON file's directory. The input path and private work identity are build-only and never emitted.
 
