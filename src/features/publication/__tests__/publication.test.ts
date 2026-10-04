@@ -100,3 +100,20 @@ test("one DTO maps to a coherent generation, public derivatives, and server-filt
   expiredAtApi.currentEvents = [];
   assert.deepEqual(mapCmsSite(expiredAtApi, origin).tree, []);
 });
+
+test("service galleries retain the main site's localized alt and orientation layout", () => {
+  const site = structuredClone(siteFixture);
+  site.services[0].content.title = "Mariages";
+  site.services[0].gallery = [
+    { ...site.services[0].mainImage, galleryPosition: 2, width: 600, height: 900 },
+    { ...site.services[0].mainImage, galleryPosition: 1, width: 900, height: 600 },
+  ];
+  const gallery = mapCmsSite(site, new URL("https://cms.example.test")).services[0].gallery;
+  assert.deepEqual(
+    gallery.map(({ alt, layout }) => ({ alt, layout })),
+    [
+      { alt: "Mariages 1", layout: "full-landscape" },
+      { alt: "Mariages 2", layout: "pair-portrait" },
+    ],
+  );
+});

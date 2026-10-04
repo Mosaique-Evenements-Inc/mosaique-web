@@ -1,4 +1,6 @@
 import type { Locale } from "@/core/i18n";
+import { EVENT_CATEGORIES } from "../events/data/categories.ts";
+import type { EventCategoryId } from "../events/types/category.ts";
 import {
   cmsApiOrigin,
   fetchCmsSite,
@@ -165,7 +167,17 @@ export function getGalleryCategoryIds(publication: CmsPublication): string[] {
     ...new Set(
       publication.events.map((event) => event.categoryId).filter((id): id is string => !!id),
     ),
-  ].sort();
+  ];
+}
+
+export function getGalleryCategorySlug(id: EventCategoryId): string {
+  return EVENT_CATEGORIES[id].slug;
+}
+
+export function getGalleryCategoryIdFromSlug(slug: string): EventCategoryId | undefined {
+  return (Object.entries(EVENT_CATEGORIES) as [EventCategoryId, { slug: string }][]).find(
+    ([, category]) => category.slug === slug,
+  )?.[0];
 }
 
 export async function loadPublication(

@@ -2,7 +2,11 @@
 import Button from "@/core/common/ui/components/Button";
 import Container from "@/core/common/ui/components/Container.astro";
 import type { CmsItem } from "@/features/publication/publication";
-import { getGalleryCategoryIds, getPublication } from "@/features/publication/publication";
+import {
+  getGalleryCategoryIds,
+  getGalleryCategorySlug,
+  getPublication,
+} from "@/features/publication/publication";
 import PublicationImage from "@/features/publication/ui/PublicationImage.astro";
 import { getLocalizedEventCategory, type EventCategoryId } from "@/features/events";
 import { galleryTranslations } from "@/features/gallery/i18n";
@@ -21,7 +25,7 @@ const galleryText = galleryTranslations[locale];
 const galleryCategories = getGalleryCategoryIds(getPublication(Astro.locals, locale)).map(
   (id) => ({
     id,
-    href: `/gallery/${id}`,
+    href: `/gallery/${getGalleryCategorySlug(id as EventCategoryId)}`,
     label: getLocalizedEventCategory(id as EventCategoryId, locale).label,
   }),
 );

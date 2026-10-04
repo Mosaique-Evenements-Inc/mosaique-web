@@ -1,0 +1,1137 @@
+{
+  "sourceRepository": "mosaique-web",
+  "sourceRef": "main",
+  "sourceCommit": "e04b99e8ef58b5de0c9c7d35a873d6a43997c01d",
+  "targetSupabaseProject": "fwiquietxxvozyktaxyp",
+  "editorialSources": {
+    "home": ["src/features/home/i18n/index.ts", "src/features/home/content"],
+    "services": [
+      "src/features/services/data/services.ts",
+      "src/features/services/i18n/index.ts"
+    ],
+    "events": ["src/features/events/data", "src/features/events/i18n/index.ts"],
+    "tree": ["src/features/tree-link/content/tree-link.ts"]
+  },
+  "services": [
+    {
+      "id": "organizationProductionIntegral",
+      "slug": "organizacion-produccion-integral",
+      "main": "src/assets/images/services/organization/main.jpg",
+      "gallery": [
+        "src/assets/images/services/organization/01.jpg",
+        "src/assets/images/services/organization/02.jpg",
+        "src/assets/images/services/organization/03.jpg",
+        "src/assets/images/services/organization/04.jpg",
+        "src/assets/images/services/organization/05.jpg",
+        "src/assets/images/services/organization/06.jpg",
+        "src/assets/images/services/organization/07.jpg",
+        "src/assets/images/services/organization/08.jpg",
+        "src/assets/images/services/organization/09.jpg",
+        "src/assets/images/services/organization/10.jpg",
+        "src/assets/images/services/organization/11.jpg",
+        "src/assets/images/services/organization/12.jpg",
+        "src/assets/images/services/organization/13.jpg",
+        "src/assets/images/services/organization/14.jpg"
+      ]
+    },
+    {
+      "id": "weddings",
+      "slug": "bodas",
+      "main": "src/assets/images/services/weddings/main.jpg",
+      "gallery": [
+        "src/assets/images/services/weddings/01.jpg",
+        "src/assets/images/services/weddings/02.jpg",
+        "src/assets/images/services/weddings/03.jpg",
+        "src/assets/images/services/weddings/04.jpg",
+        "src/assets/images/services/weddings/05.jpg"
+      ]
+    },
+    {
+      "id": "celebrations",
+      "slug": "celebraciones",
+      "main": "src/assets/images/services/celebrations/main.jpg",
+      "gallery": [
+        "src/assets/images/services/celebrations/01.jpg",
+        "src/assets/images/services/celebrations/02.jpg",
+        "src/assets/images/services/celebrations/03.jpg",
+        "src/assets/images/services/celebrations/04.jpg",
+        "src/assets/images/services/celebrations/05.jpg",
+        "src/assets/images/services/celebrations/06.jpg",
+        "src/assets/images/services/celebrations/07.jpg",
+        "src/assets/images/services/celebrations/08.jpg",
+        "src/assets/images/services/celebrations/09.jpg",
+        "src/assets/images/services/celebrations/10.jpg",
+        "src/assets/images/services/celebrations/11.jpg"
+      ]
+    },
+    {
+      "id": "corporateEvents",
+      "slug": "eventos-corporativos",
+      "main": "src/assets/images/events/fan-fest-club/main.jpg",
+      "gallery": []
+    },
+    {
+      "id": "venuePartnerships",
+      "slug": "alianzas-venues",
+      "main": "src/assets/images/services/venues/main.jpg",
+      "gallery": [
+        "src/assets/images/services/venues/01.jpg",
+        "src/assets/images/services/venues/02.jpg"
+      ]
+    },
+    {
+      "id": "setupLogistics",
+      "slug": "montaje-logistica",
+      "main": "src/assets/images/services/setup-and-logistics/main.jpg",
+      "gallery": [
+        "src/assets/images/services/setup-and-logistics/01.jpg",
+        "src/assets/images/services/setup-and-logistics/02.jpg",
+        "src/assets/images/services/setup-and-logistics/03.jpg"
+      ]
+    },
+    {
+      "id": "furnitureRental",
+      "slug": "alquiler-mobiliario",
+      "main": "src/assets/images/services/furniture/main.jpg",
+      "gallery": [
+        "src/assets/images/services/furniture/01.jpg",
+        "src/assets/images/services/furniture/02.jpg",
+        "src/assets/images/services/furniture/03.jpg",
+        "src/assets/images/services/furniture/04.jpg"
+      ]
+    },
+    {
+      "id": "customPackages",
+      "slug": "paquetes-personalizados",
+      "main": "src/assets/images/services/custom-packages/main.jpg",
+      "gallery": [
+        "src/assets/images/services/custom-packages/01.jpg",
+        "src/assets/images/services/custom-packages/02.jpg",
+        "src/assets/images/services/custom-packages/03.jpg"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": "event-slot-01",
+      "slug": "nossa-copa",
+      "category": "festival",
+      "relatedService": "celebraciones",
+      "collaboration": true,
+      "main": "src/assets/images/events/nossa-copa/main.jpg",
+      "gallery": [
+        {
+          "path": "src/assets/images/events/nossa-copa/NossaCopa-92.jpg",
+          "layout": "full-landscape"
+        },
+        {
+          "path": "src/assets/images/events/nossa-copa/BRZVSESC-199.jpg",
+          "layout": "pair-portrait"
+        },
+        {
+          "path": "src/assets/images/events/nossa-copa/BRZVSESC-16.jpg",
+          "layout": "pair-portrait"
+        },
+        {
+          "path": "src/assets/images/events/nossa-copa/NossaCopa-60.jpg",
+          "layout": "pair-landscape"
+        },
+        {
+          "path": "src/assets/images/events/nossa-copa/NossaCopa-71.jpg",
+          "layout": "pair-landscape"
+        },
+        {
+          "path": "src/assets/images/events/nossa-copa/NossaCopa-11.jpg",
+          "layout": "full-landscape"
+        }
+      ]
+    },
+    {
+      "id": "event-slot-02",
+      "slug": "baila-da-zaza",
+      "category": "celebration",
+      "relatedService": "celebraciones",
+      "collaboration": true,
+      "main": "src/assets/images/events/baila-da-zaza/main.jpg",
+      "gallery": [
+        {
+          "path": "src/assets/images/events/baila-da-zaza/Bailedazaza-6.jpg",
+          "layout": "pair-portrait"
+        },
+        {
+          "path": "src/assets/images/events/baila-da-zaza/Bailedazaza-82.jpg",
+          "layout": "full-landscape"
+        }
+      ]
+    },
+    {
+      "id": "event-slot-03",
+      "slug": "baby-shower",
+      "category": "privateCelebration",
+      "relatedService": "celebraciones",
+      "collaboration": false,
+      "main": "src/assets/images/events/baby-shower/main.jpg",
+      "gallery": [
+        {
+          "path": "src/assets/images/events/baby-shower/Karla&Gino-190.jpg",
+          "layout": "full-landscape"
+        },
+        {
+          "path": "src/assets/images/events/baby-shower/Karla&Gino-151.jpg",
+          "layout": "pair-portrait"
+        },
+        {
+          "path": "src/assets/images/events/baby-shower/Karla&Gino-153.jpg",
+          "layout": "pair-portrait"
+        },
+        {
+          "path": "src/assets/images/events/baby-shower/Karla&Gino-21.jpg",
+          "layout": "pair-landscape"
+        },
+        {
+          "path": "src/assets/images/events/baby-shower/Karla&Gino-7.jpg",
+          "layout": "pair-landscape"
+        },
+        {
+          "path": "src/assets/images/events/baby-shower/Karla&Gino-6.jpg",
+          "layout": "full-landscape"
+        }
+      ]
+    },
+    {
+      "id": "event-slot-04",
+      "slug": "wedding-r-r",
+      "category": "wedding",
+      "relatedService": "bodas",
+      "collaboration": false,
+      "main": "src/assets/images/events/wedding-r-r/_EB59664.jpg",
+      "gallery": [
+        {
+          "path": "src/assets/images/events/wedding-r-r/DSC08265.jpg",
+          "layout": "full-landscape"
+        },
+        {
+          "path": "src/assets/images/events/wedding-r-r/_EB50054.jpg",
+          "layout": "pair-portrait"
+        },
+        {
+          "path": "src/assets/images/events/wedding-r-r/_EB50055.jpg",
+          "layout": "pair-portrait"
+        },
+        {
+          "path": "src/assets/images/events/wedding-r-r/_EB53654.jpg",
+          "layout": "pair-portrait"
+        },
+        {
+          "path": "src/assets/images/events/wedding-r-r/_EB53673.jpg",
+          "layout": "pair-portrait"
+        },
+        {
+          "path": "src/assets/images/events/wedding-r-r/_EB59673.jpg",
+          "layout": "full-landscape"
+        },
+        {
+          "path": "src/assets/images/events/wedding-r-r/_EB59675.jpg",
+          "layout": "full-landscape"
+        }
+      ]
+    },
+    {
+      "id": "event-slot-05",
+      "slug": "cumpleanos-ana-paula",
+      "category": "birthday",
+      "relatedService": "celebraciones",
+      "collaboration": false,
+      "main": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-48.jpg",
+      "gallery": [
+        {
+          "path": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-49.jpg",
+          "layout": "pair-portrait"
+        },
+        {
+          "path": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-50.jpg",
+          "layout": "pair-landscape"
+        },
+        {
+          "path": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-51.jpg",
+          "layout": "pair-landscape"
+        },
+        {
+          "path": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-70.jpg",
+          "layout": "full-landscape"
+        }
+      ]
+    },
+    {
+      "id": "event-slot-06",
+      "slug": "fan-fest-club",
+      "category": "festival",
+      "relatedService": "celebraciones",
+      "collaboration": false,
+      "main": "src/assets/images/events/fan-fest-club/main.jpg",
+      "gallery": [
+        {
+          "path": "src/assets/images/events/fan-fest-club/ColvsPor-41.jpg",
+          "layout": "pair-portrait"
+        },
+        {
+          "path": "src/assets/images/events/fan-fest-club/ColvsPor-48.jpg",
+          "layout": "pair-portrait"
+        },
+        {
+          "path": "src/assets/images/events/fan-fest-club/FANFESTCOLVSCON-3.jpg",
+          "layout": "pair-landscape"
+        },
+        {
+          "path": "src/assets/images/events/fan-fest-club/FANFESTCOLVSUZB-64.jpg",
+          "layout": "pair-landscape"
+        },
+        {
+          "path": "src/assets/images/events/fan-fest-club/FANFESTCOLVSUZB-16.jpg",
+          "layout": "full-landscape"
+        },
+        {
+          "path": "src/assets/images/events/fan-fest-club/FanfestMEXvsSOUTH-128.jpg",
+          "layout": "full-landscape"
+        }
+      ]
+    }
+  ],
+  "homeVisualMedia": {
+    "marquee": "src/assets/images/services/celebrations/main.jpg",
+    "process": "src/assets/images/services/custom-packages/04.jpg",
+    "finalCtaGallery": [
+      "src/assets/images/events/wedding-r-r/_EB50054.jpg",
+      "src/assets/images/events/nossa-copa/BRZVSESC-199.jpg",
+      "src/assets/images/events/baby-shower/Karla&Gino-151.jpg",
+      "src/assets/images/events/baila-da-zaza/Bailedazaza-6.jpg",
+      "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-48.jpg",
+      "src/assets/images/events/fan-fest-club/ColvsPor-41.jpg",
+      "src/assets/images/events/wedding-r-r/_EB53654.jpg",
+      "src/assets/images/events/nossa-copa/BRZVSESC-16.jpg",
+      "src/assets/images/events/baby-shower/Karla&Gino-189.jpg",
+      "src/assets/images/events/baila-da-zaza/Bailedazaza-82.jpg",
+      "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-70.jpg",
+      "src/assets/images/events/fan-fest-club/FANFESTCOLVSUZB-64.jpg"
+    ]
+  },
+  "assets": [
+    {
+      "path": "src/assets/images/events/baby-shower/Karla&Gino-151.jpg",
+      "filename": "Karla&Gino-151.jpg",
+      "sha256": "c4a0c42e2c597b8b2331ce1618588527aa2a6ae8cae544b263bf0e30b05ee5f6",
+      "bytes": 1764289,
+      "width": 2403,
+      "height": 3600,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/baby-shower/Karla&Gino-153.jpg",
+      "filename": "Karla&Gino-153.jpg",
+      "sha256": "4879d7ac8e8e3b431833b74a2bf3c6305b7351ffab35ed86664d3a2367919d59",
+      "bytes": 823106,
+      "width": 2403,
+      "height": 3600,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/baby-shower/Karla&Gino-189.jpg",
+      "filename": "Karla&Gino-189.jpg",
+      "sha256": "d20eb91df9cb9e816d5d73a157c3a396d716222b2f7d2470a44654f9df3acd6a",
+      "bytes": 1197724,
+      "width": 2403,
+      "height": 3600,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/baby-shower/Karla&Gino-190.jpg",
+      "filename": "Karla&Gino-190.jpg",
+      "sha256": "bf618d172af74147b7a6ed2258eefac43db789d16a05fa4add0de33907efe185",
+      "bytes": 1746821,
+      "width": 3600,
+      "height": 2403,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/baby-shower/Karla&Gino-21.jpg",
+      "filename": "Karla&Gino-21.jpg",
+      "sha256": "5f60e51c1ea9d51ec3fb3cc715aa6c65ab8b1880063174e942e6fad2eddfefca",
+      "bytes": 1903353,
+      "width": 3600,
+      "height": 2400,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/baby-shower/Karla&Gino-6.jpg",
+      "filename": "Karla&Gino-6.jpg",
+      "sha256": "3965df31999e5cfb9bee216aa10c5c51af63393dbcab8b6b64ce83965d7ab012",
+      "bytes": 1457052,
+      "width": 3600,
+      "height": 2400,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/baby-shower/Karla&Gino-7.jpg",
+      "filename": "Karla&Gino-7.jpg",
+      "sha256": "ea27d81a5eab25fc35eefb0aeab51b6de654f9e34263d0bdb42a77a5d30886cc",
+      "bytes": 1579907,
+      "width": 3600,
+      "height": 2400,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/baby-shower/main.jpg",
+      "filename": "main.jpg",
+      "sha256": "fced077f6752a51eff0093ba6fd5a7db8aab8247999b48763171f2b91d6ca807",
+      "bytes": 1513760,
+      "width": 2400,
+      "height": 3600,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/baila-da-zaza/Bailedazaza-6.jpg",
+      "filename": "Bailedazaza-6.jpg",
+      "sha256": "cf0f8c75d178687814e33935686c917c31fad69115092ef6c2e31bf507885a42",
+      "bytes": 953659,
+      "width": 2403,
+      "height": 3600,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/baila-da-zaza/Bailedazaza-82.jpg",
+      "filename": "Bailedazaza-82.jpg",
+      "sha256": "84ad01eb60f3c8fbf05afeceed1be41ff6abd99782b89145de57a55d26a2983e",
+      "bytes": 1449668,
+      "width": 3600,
+      "height": 2403,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/baila-da-zaza/main.jpg",
+      "filename": "main.jpg",
+      "sha256": "f4b4a167ed98898a339ddd093d1bb006ea818771df1274385b639395056e4690",
+      "bytes": 1447170,
+      "width": 3600,
+      "height": 2403,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-48.jpg",
+      "filename": "ANAPAULA-48.jpg",
+      "sha256": "28b92e96688b7f45eef82358f9145fe30204156b850eb4ae61a9b6561c7aadbd",
+      "bytes": 881834,
+      "width": 2403,
+      "height": 3600,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-49.jpg",
+      "filename": "ANAPAULA-49.jpg",
+      "sha256": "aeed8d941b34a626e208d43da7619901177334b9108dfe3d20b94212ad9b01b2",
+      "bytes": 940276,
+      "width": 2403,
+      "height": 3600,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-50.jpg",
+      "filename": "ANAPAULA-50.jpg",
+      "sha256": "e9768286263cb38aaa17e28134a44b189ed48e3683dad93b58ffe75b94f68b5e",
+      "bytes": 797391,
+      "width": 3600,
+      "height": 2403,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-51.jpg",
+      "filename": "ANAPAULA-51.jpg",
+      "sha256": "e63d7f068c1b7619308e3f671590a2dcb33f3d1b73657d36c748b807a567ce70",
+      "bytes": 1202718,
+      "width": 3600,
+      "height": 2403,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-70.jpg",
+      "filename": "ANAPAULA-70.jpg",
+      "sha256": "64dff192ec22ebac77b1b2277810063a21ad90f51e9c59d76f57296f83652282",
+      "bytes": 1157574,
+      "width": 3600,
+      "height": 2403,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/fan-fest-club/ColvsPor-41.jpg",
+      "filename": "ColvsPor-41.jpg",
+      "sha256": "a658d81d0b63477ae916cbef26888e20e039c9ae2be76bfdda84b6a2232891d4",
+      "bytes": 2183211,
+      "width": 2403,
+      "height": 3600,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/fan-fest-club/ColvsPor-48.jpg",
+      "filename": "ColvsPor-48.jpg",
+      "sha256": "ca8569e3c888d648517ca53298914f800bd349cf5505b6a9b6baf20c384ebb72",
+      "bytes": 1337721,
+      "width": 2403,
+      "height": 3600,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/fan-fest-club/FANFESTCOLVSCON-3.jpg",
+      "filename": "FANFESTCOLVSCON-3.jpg",
+      "sha256": "c650461d17f531522108cc205b269d80eb88917e7cf59dac5f9484b799169f09",
+      "bytes": 1175576,
+      "width": 2403,
+      "height": 3600,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/fan-fest-club/FANFESTCOLVSUZB-16.jpg",
+      "filename": "FANFESTCOLVSUZB-16.jpg",
+      "sha256": "a42f9ff0f8b95b810b84a8cedee5d669895545da22149809b9d40e92aeb3946c",
+      "bytes": 2185340,
+      "width": 3600,
+      "height": 2403,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/fan-fest-club/FANFESTCOLVSUZB-64.jpg",
+      "filename": "FANFESTCOLVSUZB-64.jpg",
+      "sha256": "06608f4183f9f34883b65c82b20c46a51175cadf4b8bf84b1b69a310598752fc",
+      "bytes": 2090772,
+      "width": 3600,
+      "height": 2403,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/fan-fest-club/FanfestMEXvsSOUTH-128.jpg",
+      "filename": "FanfestMEXvsSOUTH-128.jpg",
+      "sha256": "39bbec49c3c67db621d67c70b103a627b61baea822bb363f02793076236d36e7",
+      "bytes": 1077860,
+      "width": 3600,
+      "height": 2403,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/fan-fest-club/main.jpg",
+      "filename": "main.jpg",
+      "sha256": "4ef3cf8496bf9687d27b9cb98dfa9f067dae156235a0ad5a635f9e57b51e55ef",
+      "bytes": 970499,
+      "width": 3600,
+      "height": 2403,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/nossa-copa/BRZVSESC-16.jpg",
+      "filename": "BRZVSESC-16.jpg",
+      "sha256": "6b01263c1505cdd5cb3f5661c7741ef49c42b1521d5edd50b756d47d1b64bdef",
+      "bytes": 569691,
+      "width": 2403,
+      "height": 3600,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/nossa-copa/BRZVSESC-199.jpg",
+      "filename": "BRZVSESC-199.jpg",
+      "sha256": "4c38d275cd209fd6f33e4447f27a5220cd8f942b418a7c5644335e06e50dc296",
+      "bytes": 2457033,
+      "width": 2403,
+      "height": 3600,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/nossa-copa/NossaCopa-11.jpg",
+      "filename": "NossaCopa-11.jpg",
+      "sha256": "099302b13e15533fea9e850f93b660f8a115f0a255c17ae17b8a5d433db6e6cd",
+      "bytes": 2318431,
+      "width": 3600,
+      "height": 2403,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/nossa-copa/NossaCopa-60.jpg",
+      "filename": "NossaCopa-60.jpg",
+      "sha256": "79ed04192286192822032d9e7d49d5bc993d129ed0aa63a21941663b87939e79",
+      "bytes": 1501124,
+      "width": 3600,
+      "height": 2403,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/nossa-copa/NossaCopa-71.jpg",
+      "filename": "NossaCopa-71.jpg",
+      "sha256": "fc489b8729aeaf6d43a27466ded5403e13ecf34b6064ca3f9b499a376f1b7f7e",
+      "bytes": 953868,
+      "width": 3600,
+      "height": 2403,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/nossa-copa/NossaCopa-92.jpg",
+      "filename": "NossaCopa-92.jpg",
+      "sha256": "9a73807a388933cf8800ae6cf959c0aa7de8e16bac3b05b9f7d6346900432c14",
+      "bytes": 2232496,
+      "width": 3600,
+      "height": 2403,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/nossa-copa/main.jpg",
+      "filename": "main.jpg",
+      "sha256": "50153cdfa88f1495cb1f3d0e5c15c738c309f40b030aa8337bddb0e11c512ba8",
+      "bytes": 1151549,
+      "width": 2403,
+      "height": 3600,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/wedding-r-r/DSC08265.jpg",
+      "filename": "DSC08265.jpg",
+      "sha256": "ab4dd02920bc683a8f309257568eed3e90ddf6728e6fcb55c42f574a56591470",
+      "bytes": 965599,
+      "width": 3600,
+      "height": 2026,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/wedding-r-r/_EB50054.jpg",
+      "filename": "_EB50054.jpg",
+      "sha256": "b60bb07f4e6ac493f187cc1b531207c5478126f32c8f1b4ebe9afc3bbae4356b",
+      "bytes": 1665132,
+      "width": 2639,
+      "height": 3600,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/wedding-r-r/_EB50055.jpg",
+      "filename": "_EB50055.jpg",
+      "sha256": "f3bf560cb14709c7ec779e746baac9d51204bc7865a47cbed2459eeeed501de1",
+      "bytes": 1108424,
+      "width": 2403,
+      "height": 3600,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/wedding-r-r/_EB53654.jpg",
+      "filename": "_EB53654.jpg",
+      "sha256": "7ecea5694ead3b4d622b0e317ff767ffc4446658c962720192ea658037bd7053",
+      "bytes": 616895,
+      "width": 2403,
+      "height": 3600,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/wedding-r-r/_EB53673.jpg",
+      "filename": "_EB53673.jpg",
+      "sha256": "ce88467b58b2a262d96cc28a8b429a525e3d2c4d2225507a56796c0838c05207",
+      "bytes": 1234201,
+      "width": 2403,
+      "height": 3600,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/wedding-r-r/_EB59664.jpg",
+      "filename": "_EB59664.jpg",
+      "sha256": "0e5129741313b5de9bb01097238912995c0610739fc0390532e422f5eefd4764",
+      "bytes": 887854,
+      "width": 3600,
+      "height": 2251,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/wedding-r-r/_EB59673.jpg",
+      "filename": "_EB59673.jpg",
+      "sha256": "4f19ac7ebca8b00433fbe415d38ae715d7eac1a26e2232169c4960c32b39f194",
+      "bytes": 1536670,
+      "width": 3600,
+      "height": 2403,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/events/wedding-r-r/_EB59675.jpg",
+      "filename": "_EB59675.jpg",
+      "sha256": "1ffabfaa249a1895e17a2dd1a9c8b553a0c640e54b8de499694c76faf8d45f84",
+      "bytes": 906120,
+      "width": 2403,
+      "height": 3600,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/celebrations/01.jpg",
+      "filename": "01.jpg",
+      "sha256": "6b78bb1fb4d5d273c3d5a03b17551a0e130071458bffe50c171fc0fa22c29ca6",
+      "bytes": 9262259,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/celebrations/02.jpg",
+      "filename": "02.jpg",
+      "sha256": "c340a936576fdb9328d87459f61b25d71c41e4c9ed06d3d11e79a30e5b3db49d",
+      "bytes": 8524388,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/celebrations/03.jpg",
+      "filename": "03.jpg",
+      "sha256": "d855f54c7b48fc8db926fc11f0eef7d6cfac96d5bf452ce68cbcca5675ee2c51",
+      "bytes": 7105724,
+      "width": 4016,
+      "height": 6016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/celebrations/04.jpg",
+      "filename": "04.jpg",
+      "sha256": "49e575dcc905f972ad9751750b22cd8b3d96ad4b34ecc6d0d12c7586486e958c",
+      "bytes": 12494819,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/celebrations/05.jpg",
+      "filename": "05.jpg",
+      "sha256": "3f7fee2e0428240c08db37a4896983cfd606134439486caf18f73ba372763614",
+      "bytes": 12611885,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/celebrations/06.jpg",
+      "filename": "06.jpg",
+      "sha256": "effd1f6dc769ccb11626dc752e4f656a634ab7b20d0d4e106f3939100430d5d7",
+      "bytes": 8905859,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/celebrations/07.jpg",
+      "filename": "07.jpg",
+      "sha256": "3babe49656a4264d334f8402c211abac0d50a1caeddbc7703feb1ab56bf69800",
+      "bytes": 5328153,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/celebrations/08.jpg",
+      "filename": "08.jpg",
+      "sha256": "e27b37bac6cc24511e7adcdd0919a0308f4ed601b6e6492bbd9c975a49222b3c",
+      "bytes": 9321712,
+      "width": 5021,
+      "height": 3352,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/celebrations/09.jpg",
+      "filename": "09.jpg",
+      "sha256": "860fb7d914644d344cf728cdc5c1c4e8fcfcff2175b3ee26bfc83bd550d742cd",
+      "bytes": 7382606,
+      "width": 4016,
+      "height": 6016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/celebrations/10.jpg",
+      "filename": "10.jpg",
+      "sha256": "88e01b2dd060fb85ecc28b3f6051e4c0a3b7d22549745256dd6b08f197f1f322",
+      "bytes": 7543051,
+      "width": 4016,
+      "height": 6016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/celebrations/11.jpg",
+      "filename": "11.jpg",
+      "sha256": "f7d06b420bd53d8bf19e6aba6e2ffeb4193ae84b2504424e9e7be4660e075996",
+      "bytes": 8587047,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/celebrations/main.jpg",
+      "filename": "main.jpg",
+      "sha256": "8740e1701ce0dc134bf6d0994d458a4d14c325cf6075d012d06e1c19a2c3cbf0",
+      "bytes": 7348285,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/custom-packages/01.jpg",
+      "filename": "01.jpg",
+      "sha256": "08a60687b79c684c3565cfc9b395d9ed60b4a3ca4f5ae05a96ce97315478aeb1",
+      "bytes": 9736607,
+      "width": 4016,
+      "height": 5478,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/custom-packages/02.jpg",
+      "filename": "02.jpg",
+      "sha256": "55bc3420b6a295d07ced6eea8fa84c2e15918c8280d55bc45d08c6adc5511c4a",
+      "bytes": 6072056,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/custom-packages/03.jpg",
+      "filename": "03.jpg",
+      "sha256": "007b7fc12a132280473f90121176721ad14dc3c3ffa1e2746e7fbe38b3a703d1",
+      "bytes": 1926154,
+      "width": 4016,
+      "height": 6016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/custom-packages/04.jpg",
+      "filename": "04.jpg",
+      "sha256": "751b5f0df06d8782db2652186c7391f77ff9b6f9fcdcb838379942d771ace8e7",
+      "bytes": 758841,
+      "width": 2268,
+      "height": 4032,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/custom-packages/main.jpg",
+      "filename": "main.jpg",
+      "sha256": "515bad05107f014850db45058eda4355019fb46a0fd7c88194e10b58e187a89f",
+      "bytes": 579008,
+      "width": 1440,
+      "height": 884,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/furniture/01.jpg",
+      "filename": "01.jpg",
+      "sha256": "8911a1916dd4fdd7e2fc70ff49227c14c1f7de538d1960549698b434e3300f03",
+      "bytes": 8646224,
+      "width": 5616,
+      "height": 3749,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/furniture/02.jpg",
+      "filename": "02.jpg",
+      "sha256": "55bc3420b6a295d07ced6eea8fa84c2e15918c8280d55bc45d08c6adc5511c4a",
+      "bytes": 6072056,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/furniture/03.jpg",
+      "filename": "03.jpg",
+      "sha256": "6273e1dc9577790579b97ee7938272943e78e0b642f517698e7a6a3b6439ec50",
+      "bytes": 8566533,
+      "width": 4495,
+      "height": 2997,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/furniture/04.jpg",
+      "filename": "04.jpg",
+      "sha256": "1314d956e697bcdef0bb8bdcaac99a454047d2bf842587e27c71b05afa7adb57",
+      "bytes": 6713168,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/furniture/main.jpg",
+      "filename": "main.jpg",
+      "sha256": "8e755ac65514a210e3eedef5d5613e615f708225553873a3a51f5d8c9d1e76aa",
+      "bytes": 11799222,
+      "width": 6000,
+      "height": 3376,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/organization/01.jpg",
+      "filename": "01.jpg",
+      "sha256": "8911a1916dd4fdd7e2fc70ff49227c14c1f7de538d1960549698b434e3300f03",
+      "bytes": 8646224,
+      "width": 5616,
+      "height": 3749,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/organization/02.jpg",
+      "filename": "02.jpg",
+      "sha256": "d589f046be4d77334791a8ce0cebc3d564b9f9b3c8f00697eba7f1aa02107530",
+      "bytes": 10445156,
+      "width": 4016,
+      "height": 6016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/organization/03.jpg",
+      "filename": "03.jpg",
+      "sha256": "f17aa100a51bbee6e3c648877b79b0becbac27223727e38b926e2dff2eeac20f",
+      "bytes": 13324796,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/organization/04.jpg",
+      "filename": "04.jpg",
+      "sha256": "6273e1dc9577790579b97ee7938272943e78e0b642f517698e7a6a3b6439ec50",
+      "bytes": 8566533,
+      "width": 4495,
+      "height": 2997,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/organization/05.jpg",
+      "filename": "05.jpg",
+      "sha256": "e6485772f5d6651d09776f3a75ffb92b8d4551165738af1e120ce46858fba13d",
+      "bytes": 9715997,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/organization/06.jpg",
+      "filename": "06.jpg",
+      "sha256": "1314d956e697bcdef0bb8bdcaac99a454047d2bf842587e27c71b05afa7adb57",
+      "bytes": 6713168,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/organization/07.jpg",
+      "filename": "07.jpg",
+      "sha256": "873c8ce85d08bdccda40eb5d61e3a1b54c5b3002d3f7580c9476f35d267c945d",
+      "bytes": 10355894,
+      "width": 4016,
+      "height": 6016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/organization/08.jpg",
+      "filename": "08.jpg",
+      "sha256": "3e9063aa47d626228ca747005bc73e7a23e1bd3b7bdaa0b4a54b58a22061b171",
+      "bytes": 9621402,
+      "width": 4016,
+      "height": 4847,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/organization/09.jpg",
+      "filename": "09.jpg",
+      "sha256": "007b7fc12a132280473f90121176721ad14dc3c3ffa1e2746e7fbe38b3a703d1",
+      "bytes": 1926154,
+      "width": 4016,
+      "height": 6016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/organization/10.jpg",
+      "filename": "10.jpg",
+      "sha256": "6fce184c0c6929d53783defe42f01e26bd1a06386be8fc8791fc56a4da3ba724",
+      "bytes": 2132827,
+      "width": 4016,
+      "height": 6016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/organization/11.jpg",
+      "filename": "11.jpg",
+      "sha256": "ffa29132cf8308bb76986323b840cef1ae77d255c6a599424df3116b9a99309a",
+      "bytes": 1708435,
+      "width": 4016,
+      "height": 6016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/organization/12.jpg",
+      "filename": "12.jpg",
+      "sha256": "e45fd02f8332f7e143845bf84782d68e95e9d703cf832ce63e34331bf5a63404",
+      "bytes": 1472640,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/organization/13.jpg",
+      "filename": "13.jpg",
+      "sha256": "97e187147b697a27090f9eff7476a495d121fda36bee4c224d70cf5e4f43167b",
+      "bytes": 1436607,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/organization/14.jpg",
+      "filename": "14.jpg",
+      "sha256": "28665e33bf6e7c45631803c98ebc65a7b57795af0264391166e11471460b0349",
+      "bytes": 3257841,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/organization/main.jpg",
+      "filename": "main.jpg",
+      "sha256": "8fd95ecbfd311c5404a66285787cf112775b21c48f005ae238252a32e700ecbb",
+      "bytes": 12366870,
+      "width": 4608,
+      "height": 3072,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/setup-and-logistics/01.jpg",
+      "filename": "01.jpg",
+      "sha256": "b7e790a1725bd6d8d105e9eba128979005b4b6cbd25fdb34ba8f4fa19f30d834",
+      "bytes": 2132829,
+      "width": 4016,
+      "height": 6016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/setup-and-logistics/02.jpg",
+      "filename": "02.jpg",
+      "sha256": "6273e1dc9577790579b97ee7938272943e78e0b642f517698e7a6a3b6439ec50",
+      "bytes": 8566533,
+      "width": 4495,
+      "height": 2997,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/setup-and-logistics/03.jpg",
+      "filename": "03.jpg",
+      "sha256": "1314d956e697bcdef0bb8bdcaac99a454047d2bf842587e27c71b05afa7adb57",
+      "bytes": 6713168,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/setup-and-logistics/main.jpg",
+      "filename": "main.jpg",
+      "sha256": "8911a1916dd4fdd7e2fc70ff49227c14c1f7de538d1960549698b434e3300f03",
+      "bytes": 8646224,
+      "width": 5616,
+      "height": 3749,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/venues/01.jpg",
+      "filename": "01.jpg",
+      "sha256": "7478cc3a0e0a067b42cb2c867dc671c11db3509bc1643f3a167f58a12acf74c8",
+      "bytes": 2427870,
+      "width": 2681,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/venues/02.jpg",
+      "filename": "02.jpg",
+      "sha256": "742ba975a8a84e4541e270da2f3b91f2685d28ebe00521fee432e140789ec0e0",
+      "bytes": 11943744,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/venues/main.jpg",
+      "filename": "main.jpg",
+      "sha256": "87f9eec983ebd24baa521435d937bef14d0cedc8e2ed61afef0110edad2ffa9d",
+      "bytes": 8114119,
+      "width": 5220,
+      "height": 3485,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/weddings/01.jpg",
+      "filename": "01.jpg",
+      "sha256": "2c8718128b630cfb38b7ad6685a01099d4e07b5d49587252c8f51747aebb8917",
+      "bytes": 15739351,
+      "width": 4931,
+      "height": 3562,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/weddings/02.jpg",
+      "filename": "02.jpg",
+      "sha256": "0ad1a13919fcd7b7c43626c65d9056f1757633b276b288b8949f819117510bae",
+      "bytes": 12976475,
+      "width": 5447,
+      "height": 3641,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/weddings/03.jpg",
+      "filename": "03.jpg",
+      "sha256": "f1b87eedd2de715a8d9d328f3f2f5f84d22ea15a80abf6b501caf2b85ef643df",
+      "bytes": 9691349,
+      "width": 6016,
+      "height": 4016,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/weddings/04.jpg",
+      "filename": "04.jpg",
+      "sha256": "babcca77e18d9133b8852f7e2d2f2a7632b3d831e8af2ee44ec9b8a354c8e48b",
+      "bytes": 15024201,
+      "width": 6016,
+      "height": 3933,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/weddings/05.jpg",
+      "filename": "05.jpg",
+      "sha256": "bf610a5c1ce3ac90e9832988cfb94cbe2c4c2257e4f587c7c03157a5da02e945",
+      "bytes": 19761964,
+      "width": 6016,
+      "height": 3650,
+      "mimeType": "image/jpeg"
+    },
+    {
+      "path": "src/assets/images/services/weddings/main.jpg",
+      "filename": "main.jpg",
+      "sha256": "2e92e1375b1e3a18a5b3b4f9e0ce8874ec893e4e7001d07a6f27da406bae4dca",
+      "bytes": 14553136,
+      "width": 5776,
+      "height": 3514,
+      "mimeType": "image/jpeg"
+    }
+  ],
+  "duplicateBinaries": [
+    [
+      "src/assets/images/services/custom-packages/02.jpg",
+      "src/assets/images/services/furniture/02.jpg"
+    ],
+    [
+      "src/assets/images/services/custom-packages/03.jpg",
+      "src/assets/images/services/organization/09.jpg"
+    ],
+    [
+      "src/assets/images/services/furniture/01.jpg",
+      "src/assets/images/services/organization/01.jpg",
+      "src/assets/images/services/setup-and-logistics/main.jpg"
+    ],
+    [
+      "src/assets/images/services/furniture/03.jpg",
+      "src/assets/images/services/organization/04.jpg",
+      "src/assets/images/services/setup-and-logistics/02.jpg"
+    ],
+    [
+      "src/assets/images/services/furniture/04.jpg",
+      "src/assets/images/services/organization/06.jpg",
+      "src/assets/images/services/setup-and-logistics/03.jpg"
+    ]
+  ]
+}

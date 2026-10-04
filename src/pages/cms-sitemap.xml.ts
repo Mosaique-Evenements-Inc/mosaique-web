@@ -1,5 +1,10 @@
 import type { APIRoute } from "astro";
-import { getGalleryCategoryIds, getPublication } from "@/features/publication/publication";
+import {
+  getGalleryCategoryIds,
+  getGalleryCategorySlug,
+  getPublication,
+} from "@/features/publication/publication";
+import type { EventCategoryId } from "@/features/events";
 
 export const GET: APIRoute = ({ locals, site }) => {
   if (!site) return new Response("Site origin unavailable", { status: 503 });
@@ -13,7 +18,9 @@ export const GET: APIRoute = ({ locals, site }) => {
     "/tree/",
     ...publication.services.map((service) => `/services/${service.slug}/`),
     ...publication.events.map((event) => `/events/${event.slug}/`),
-    ...getGalleryCategoryIds(publication).map((category) => `/gallery/${category}/`),
+    ...getGalleryCategoryIds(publication).map(
+      (category) => `/gallery/${getGalleryCategorySlug(category as EventCategoryId)}/`,
+    ),
   ];
   const urls = ["", "es/", "fr/"].flatMap((prefix) =>
     paths.map((path) => new URL(`/${prefix}${path.slice(1)}`, site).href),

@@ -50,8 +50,11 @@ const homeText = getHomeTranslations(locale);
       </Text>
       <div class="home-service-preview__actions">
         <Button href={detailHref} variant="transparent">{homeText.viewMore}</Button>
-        <Button href={getLocalizedHref("/contact", locale)} variant="light">
-          {service.ctaLabel}
+        <Button
+          href={getLocalizedHref(`/contact?service=${service.slug}`, locale)}
+          variant="light"
+        >
+          {homeText.quoteEvent}
         </Button>
       </div>
     </div>

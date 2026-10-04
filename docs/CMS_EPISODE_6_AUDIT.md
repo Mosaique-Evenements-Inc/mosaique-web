@@ -1,6 +1,6 @@
 # CMS Episode 6 — source and DEV audit
 
-Status: **inventory, migration plans, Web service-gallery parity, and DEV Media ingestion prepared; editorial migration blocked by CMS-03 processing failures**.
+Status: **DEV Media v2 certified; real editorial dataset migrated and Preview verified; final visual parity and publication pending**.
 This document records the source at `mosaique-web/main` commit
 `e04b99e8ef58b5de0c9c7d35a873d6a43997c01d`. The feature branch is not a
 source for editorial values. The generated [source manifest](./CMS_EPISODE_6_SOURCE_MANIFEST.json)
@@ -8,6 +8,8 @@ records every selected photo path, order, SHA-256, dimensions, byte size and reu
 The [content plan](./CMS_EPISODE_6_CONTENT_PLAN.json),
 [Media plan](./CMS_EPISODE_6_MEDIA_PLAN.json), and
 [DEV Media mapping](./CMS_EPISODE_6_MEDIA_IMPORTED.json) pin the same source commit and DEV project.
+The [DEV editorial mapping](./CMS_EPISODE_6_EDITORIAL_IMPORTED.json) records the
+real Home revision and Service/Event codes created after Media certification.
 Regenerate it from an export of that commit with:
 
 ```sh
@@ -75,45 +77,71 @@ so they must not become factual CMS testimonials.
 
 ## DEV baseline and safe migration boundary
 
-Read-only Supabase checks targeted **`fwiquietxxvozyktaxyp`** only. DEV CURRENT
-is `PUB-00000002`, generation 3. Its immutable snapshot contains four Services,
-three Website Events and six Current Events with certification slugs, not the
-real `main` dataset. DEV has 13 Service roots, nine Website Event roots, 16
-Current Event roots, one Home root, and only two Media assets (one active).
-Historical `PUB-00000003` must remain historical. Existing certification roots
-must be made inactive through supported editorial lifecycle commands, not by
-rewriting publication tables. A real publication must wait for all 78 editorial
-photos to be verified/processed, all 14 real Service/Event roots to be closed,
-the Home selection to resolve, certification content to be excluded, and
-Preview/review to have zero blockers.
+All remote changes targeted **`fwiquietxxvozyktaxyp`** only. DEV CURRENT
+remains `PUB-00000002`, generation 3, containing the old certification snapshot.
+Historical `PUB-00000003` remains historical. The scheduled DEV v1 worker was
+disabled with `CMS_MEDIA_DEV_WORKER_ENABLED=false` before the additive v2
+profile migration was applied. The workflow still checks out `development`
+(v1); keep it disabled until a durable v2 worker deployment replaces it.
 
-The Admin DEV session was verified against the exact project origin
-`https://fwiquietxxvozyktaxyp.supabase.co`. Two images were uploaded manually;
-the remaining 76 were uploaded through the same authenticated CMS Media
-upload/finalize flow using a SHA-256-checked, resumable importer. The canonical
-CMS-03 worker processed the originals. No publication or editorial revision was
-created, and CURRENT remains `PUB-00000002` generation 3.
+### CMS-03 v2 cutover and verification
 
-### Processing blocker at the Git/deployment boundary
+Supabase MCP confirmed the exact DEV project and applied **only**
+`20261110160000_cms_media_profile_v2.sql` to DEV. Two local v2 worker
+processes finished the new queue and were stopped. All 78 editorial originals
+are SHA/byte verified and READY under `cms03-v2-sharp0353`; the three historical
+versions are also READY (81/81 total). Orientation is 1, oriented dimensions
+match the pinned source manifest, and all 778 expected derivatives have the
+expected geometry, MIME, byte size and private Storage object. Landscape and
+portrait 1920 px WebP samples were independently decoded and compared with
+the main sources (MAE about 3; PSNR about 34.5 dB). Both Media buckets remain
+private. No failed v2 jobs remain.
 
-After all jobs settled, the 78 editorial assets had **16 READY, 26 FAILED with
-`RESOURCE_LIMIT`, and 36 FAILED with `OUTPUT_INVALID`**. The two pre-existing
-Media assets are separate. The 26 resource failures are the source JPEGs at
-6016 × 4016 or 4016 × 6016 (24,160,256 pixels), exceeding CMS-03's fixed
-24,000,000-pixel limit despite being below its 25 MB byte limit. An example
-`OUTPUT_INVALID` is `events/baby-shower/Karla&Gino-151.jpg` at 2403 × 3600:
-the current recipe predicts a 480 × 719 variant while Sharp emits 480 × 720.
-The worker rejects it before READY. This is a reproducible processor/profile
-incompatibility with approved source media, not a network timeout or missing
-asset. The Media originals remain private; no derivative rows were fabricated.
+### Editorial and Preview checkpoint
 
-A local API patch adds the `cms03-v2-sharp0353` profile, raises the static
-pixel ceiling to 25 MP, requests exact output dimensions from Sharp, and adds
-an additive SQL migration that enqueues new profile jobs for verified versions.
-The profile's recipe and its processing rows remain separate from v1. A real
-source from each failure class and 20 worker tests passed locally. The patch
-requires the user's Git checkpoint and coordinated migration/worker deployment
-to DEV; neither was applied remotely. Only then can the new profile process
-all originals. Creating partial editorial revisions or publishing a subset
-would misrepresent the site; Preview, publication, cms-public, Web parity, and
-the controlled edit proof remain pending.
+Only after the Media gate, 8 real Services and 6 real Website Events were
+created and CLOSED, and Home revision 8 was CLOSED with all six real Event
+slots. The 13 old Service roots, 9 old Website Event roots and 15 active old
+Current Event roots were retired via Editorial API. Supabase MCP confirmed the
+latest CLOSED active set is exactly 8 real Services, 6 real Events and zero
+Current Events. Preview's publication selection for Home revision 8 has zero
+blockers and zero warnings in EN/ES/FR. The three locales match the pinned
+content plan in Home, catalog and all 14 detail views; the referenced main
+images and galleries are available. Generic catalog Previews separately
+report `WORKING_REVISION` for 15 inactive certification drafts; they are not
+part of the Home publication selection. Admin visual Preview has not yet been
+verified because the local Admin opens at login and the authenticated Admin
+URL is pending. CURRENT, public Web parity, publication and the controlled
+edit proof remain pending.
+
+### Pre-publication local Web parity
+
+The authenticated DEV Preview payload was rendered through the feature Web
+against a localhost-only `cms-site-v1` stand-in, with its media paths resolved
+to the SHA-pinned `main` originals. The reference was the static build of the
+exact `main` commit above. Desktop Home, Gallery, Service Detail and Event
+Detail were compared in Chrome; the feature's main layout geometry and
+selected photographs match the reference. The Gallery at 390 px had no
+horizontal overflow. This revealed and corrected local Web deviations:
+Home Service scenes now retain `main`'s generic quote label and service query
+destination, Process does not render its unused closing field, Service Detail
+omits `idealFor` from its header and retains the service query destination,
+and Gallery restores the original category order and public URL slugs in
+EN/ES/FR (including sitemap). Localized routes and representative images
+returned 200; the former English category path returns 404 as expected.
+These Web corrections are local working-tree changes and are **not yet on the
+deployed DEV Web**. The stand-in validates presentation of Preview content;
+it is not evidence that `cms-public/site`, public derivative delivery, ISR or
+the final deployed Web have passed. DEV CURRENT remains unchanged pending
+that deployment-level check.
+
+Web validation after these local corrections: `pnpm build`, `pnpm lint`,
+`pnpm typecheck` (188 files, zero diagnostics), `pnpm test` (22/22), and
+`git diff --check` passed. Admin's importer and Preview scripts were formatted;
+Admin `pnpm build`, `pnpm lint`, `pnpm typecheck` and `pnpm test` (538/538)
+passed. The current deployed Web still displays the certification content.
+The attempted DEV publish command was rejected by automatic approval review
+because the required final visual/parity validation had not been completed at
+that point; it made no mutation. Local parity was completed subsequently, but
+the corrected Web code has not been deployed, so publication has not been
+retried. No PROD operation was performed.

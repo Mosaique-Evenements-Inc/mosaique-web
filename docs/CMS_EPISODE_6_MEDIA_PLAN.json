@@ -1,0 +1,1817 @@
+{
+  "sourceCommit": "e04b99e8ef58b5de0c9c7d35a873d6a43997c01d",
+  "targetSupabaseProject": "fwiquietxxvozyktaxyp",
+  "eventAlts": {
+    "nossa-copa": {
+      "en": {
+        "main": "A game of pool at Brazil at the 2026 World Cup, surrounded by attendees wearing Brazil jerseys.",
+        "gallery": [
+          "An overview of attendees gathered for Brazil at the 2026 World Cup.",
+          "A family posing in Brazil jerseys at Brazil at the 2026 World Cup.",
+          "Attendees playing foosball at Brazil at the 2026 World Cup.",
+          "A stall selling Brazilian products at Brazil at the 2026 World Cup.",
+          "A musical performance for attendees at Brazil at the 2026 World Cup.",
+          "Attendees sharing tables at Brazil at the 2026 World Cup."
+        ]
+      },
+      "es": {
+        "main": "Partida de billar durante Brasil en el Mundial 2026, rodeada de asistentes con camisetas de Brasil.",
+        "gallery": [
+          "Vista general de los asistentes reunidos para Brasil en el Mundial 2026.",
+          "Familia con camisetas brasileñas posando durante Brasil en el Mundial 2026.",
+          "Asistentes jugando futbolín durante Brasil en el Mundial 2026.",
+          "Puesto de productos brasileños dentro de Brasil en el Mundial 2026.",
+          "Presentación musical frente a los asistentes de Brasil en el Mundial 2026.",
+          "Asistentes compartiendo alrededor de las mesas durante Brasil en el Mundial 2026."
+        ]
+      },
+      "fr": {
+        "main": "Une partie de billard lors de l’événement « Le Brésil à la Coupe du monde 2026 », entourée de participants portant des maillots du Brésil.",
+        "gallery": [
+          "Vue d’ensemble des participants réunis pour l’événement « Le Brésil à la Coupe du monde 2026 ».",
+          "Une famille posant en maillots du Brésil lors de l’événement « Le Brésil à la Coupe du monde 2026 ».",
+          "Des participants jouant au baby-foot lors de l’événement « Le Brésil à la Coupe du monde 2026 ».",
+          "Un kiosque de produits brésiliens lors de l’événement « Le Brésil à la Coupe du monde 2026 ».",
+          "Une prestation musicale devant les participants de l’événement « Le Brésil à la Coupe du monde 2026 ».",
+          "Des participants réunis autour des tables lors de l’événement « Le Brésil à la Coupe du monde 2026 »."
+        ]
+      }
+    },
+    "baila-da-zaza": {
+      "en": {
+        "main": "A DJ sharing the booth at Brazilian Celebration under orange lighting.",
+        "gallery": [
+          "The atmosphere behind the DJ booth at Brazilian Celebration.",
+          "The dance floor and attendees at Brazilian Celebration under red lights."
+        ]
+      },
+      "es": {
+        "main": "DJ compartiendo la cabina durante Celebración Brasileña bajo una iluminación naranja.",
+        "gallery": [
+          "Ambiente detrás de la cabina durante Celebración Brasileña.",
+          "Pista y asistentes de Celebración Brasileña bajo luces rojas."
+        ]
+      },
+      "fr": {
+        "main": "Un DJ partageant la cabine lors de Célébration brésilienne sous un éclairage orangé.",
+        "gallery": [
+          "L’ambiance derrière la cabine du DJ lors de Célébration brésilienne.",
+          "La piste de danse et les participants de Célébration brésilienne sous des lumières rouges."
+        ]
+      }
+    },
+    "baby-shower": {
+      "en": {
+        "main": "Decoración principal del baby shower con globos, flores y bloques de letras.",
+        "gallery": [
+          "Mesa de regalos enmarcada por un arco floral durante el baby shower.",
+          "Regalos dispuestos junto a la decoración floral del baby shower.",
+          "Arreglo alto de flores blancas y follaje en el baby shower.",
+          "Vista amplia de la mesa de regalos y el arco floral del baby shower.",
+          "Mesa principal decorada con flores, globos y un oso de peluche.",
+          "Detalle frontal de la mesa principal y su arreglo floral."
+        ]
+      },
+      "es": {
+        "main": "Decoración principal del baby shower con globos, flores y bloques de letras.",
+        "gallery": [
+          "Mesa de regalos enmarcada por un arco floral durante el baby shower.",
+          "Regalos dispuestos junto a la decoración floral del baby shower.",
+          "Arreglo alto de flores blancas y follaje en el baby shower.",
+          "Vista amplia de la mesa de regalos y el arco floral del baby shower.",
+          "Mesa principal decorada con flores, globos y un oso de peluche.",
+          "Detalle frontal de la mesa principal y su arreglo floral."
+        ]
+      },
+      "fr": {
+        "main": "Decoración principal del baby shower con globos, flores y bloques de letras.",
+        "gallery": [
+          "Mesa de regalos enmarcada por un arco floral durante el baby shower.",
+          "Regalos dispuestos junto a la decoración floral del baby shower.",
+          "Arreglo alto de flores blancas y follaje en el baby shower.",
+          "Vista amplia de la mesa de regalos y el arco floral del baby shower.",
+          "Mesa principal decorada con flores, globos y un oso de peluche.",
+          "Detalle frontal de la mesa principal y su arreglo floral."
+        ]
+      }
+    },
+    "wedding-r-r": {
+      "en": {
+        "main": "Mesas de la boda R&R dispuestas al aire libre entre árboles y vegetación.",
+        "gallery": [
+          "Iniciales R&R colocadas sobre una mesa de madera en la boda.",
+          "Letrero de bienvenida rodeado de vegetación en la boda R&R.",
+          "Detalle decorativo con limones y un mensaje para la pareja.",
+          "Mesa de invitados preparada con vajilla blanca y cristalería.",
+          "Montaje de mesa en tonos claros para la recepción de la boda.",
+          "Mesa de dulces con detalles amarillos durante la recepción.",
+          "Bola de espejos suspendida sobre el espacio exterior de la celebración."
+        ]
+      },
+      "es": {
+        "main": "Mesas de la boda R&R dispuestas al aire libre entre árboles y vegetación.",
+        "gallery": [
+          "Iniciales R&R colocadas sobre una mesa de madera en la boda.",
+          "Letrero de bienvenida rodeado de vegetación en la boda R&R.",
+          "Detalle decorativo con limones y un mensaje para la pareja.",
+          "Mesa de invitados preparada con vajilla blanca y cristalería.",
+          "Montaje de mesa en tonos claros para la recepción de la boda.",
+          "Mesa de dulces con detalles amarillos durante la recepción.",
+          "Bola de espejos suspendida sobre el espacio exterior de la celebración."
+        ]
+      },
+      "fr": {
+        "main": "Mesas de la boda R&R dispuestas al aire libre entre árboles y vegetación.",
+        "gallery": [
+          "Iniciales R&R colocadas sobre una mesa de madera en la boda.",
+          "Letrero de bienvenida rodeado de vegetación en la boda R&R.",
+          "Detalle decorativo con limones y un mensaje para la pareja.",
+          "Mesa de invitados preparada con vajilla blanca y cristalería.",
+          "Montaje de mesa en tonos claros para la recepción de la boda.",
+          "Mesa de dulces con detalles amarillos durante la recepción.",
+          "Bola de espejos suspendida sobre el espacio exterior de la celebración."
+        ]
+      }
+    },
+    "cumpleanos-ana-paula": {
+      "en": {
+        "main": "Arreglo de globos rosados y lilas para el cumpleaños de Ana Paula.",
+        "gallery": [
+          "Pastel y decoración de cumpleaños inspirados en música pop.",
+          "Vasos personalizados dispuestos sobre la mesa del cumpleaños.",
+          "Recuerdos personalizados preparados para los invitados.",
+          "Ana Paula compartiendo la mesa con sus invitados durante la celebración."
+        ]
+      },
+      "es": {
+        "main": "Arreglo de globos rosados y lilas para el cumpleaños de Ana Paula.",
+        "gallery": [
+          "Pastel y decoración de cumpleaños inspirados en música pop.",
+          "Vasos personalizados dispuestos sobre la mesa del cumpleaños.",
+          "Recuerdos personalizados preparados para los invitados.",
+          "Ana Paula compartiendo la mesa con sus invitados durante la celebración."
+        ]
+      },
+      "fr": {
+        "main": "Arreglo de globos rosados y lilas para el cumpleaños de Ana Paula.",
+        "gallery": [
+          "Pastel y decoración de cumpleaños inspirados en música pop.",
+          "Vasos personalizados dispuestos sobre la mesa del cumpleaños.",
+          "Recuerdos personalizados preparados para los invitados.",
+          "Ana Paula compartiendo la mesa con sus invitados durante la celebración."
+        ]
+      }
+    },
+    "fan-fest-club": {
+      "en": {
+        "main": "Presentación musical frente a la afición reunida en Fan Fest Club.",
+        "gallery": [
+          "Músico con acordeón animando al público de Fan Fest Club.",
+          "Acordeonista interpretando música entre asistentes con camisetas de Colombia.",
+          "Cantantes y músicos durante una presentación de Fan Fest Club.",
+          "Asistentes celebrando juntos durante un partido en Fan Fest Club.",
+          "Aficionados de Colombia celebrando frente a la pantalla del partido.",
+          "Aficionados de México disfrutando la música y el partido en Fan Fest Club."
+        ]
+      },
+      "es": {
+        "main": "Presentación musical frente a la afición reunida en Fan Fest Club.",
+        "gallery": [
+          "Músico con acordeón animando al público de Fan Fest Club.",
+          "Acordeonista interpretando música entre asistentes con camisetas de Colombia.",
+          "Cantantes y músicos durante una presentación de Fan Fest Club.",
+          "Asistentes celebrando juntos durante un partido en Fan Fest Club.",
+          "Aficionados de Colombia celebrando frente a la pantalla del partido.",
+          "Aficionados de México disfrutando la música y el partido en Fan Fest Club."
+        ]
+      },
+      "fr": {
+        "main": "Presentación musical frente a la afición reunida en Fan Fest Club.",
+        "gallery": [
+          "Músico con acordeón animando al público de Fan Fest Club.",
+          "Acordeonista interpretando música entre asistentes con camisetas de Colombia.",
+          "Cantantes y músicos durante una presentación de Fan Fest Club.",
+          "Asistentes celebrando juntos durante un partido en Fan Fest Club.",
+          "Aficionados de Colombia celebrando frente a la pantalla del partido.",
+          "Aficionados de México disfrutando la música y el partido en Fan Fest Club."
+        ]
+      }
+    }
+  },
+  "media": [
+    {
+      "sha256": "c4a0c42e2c597b8b2331ce1618588527aa2a6ae8cae544b263bf0e30b05ee5f6",
+      "sourcePath": "src/assets/images/events/baby-shower/Karla&Gino-151.jpg",
+      "bytes": 1764289,
+      "decorative": false,
+      "alt": {
+        "en": "Regalos dispuestos junto a la decoración floral del baby shower.",
+        "es": "Regalos dispuestos junto a la decoración floral del baby shower.",
+        "fr": "Regalos dispuestos junto a la decoración floral del baby shower."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/baby-shower/Karla&Gino-151.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "baby-shower",
+          "position": 2
+        },
+        {
+          "path": "src/assets/images/events/baby-shower/Karla&Gino-151.jpg",
+          "kind": "HOME_DECORATIVE",
+          "owner": "final-cta",
+          "position": 3
+        }
+      ]
+    },
+    {
+      "sha256": "4879d7ac8e8e3b431833b74a2bf3c6305b7351ffab35ed86664d3a2367919d59",
+      "sourcePath": "src/assets/images/events/baby-shower/Karla&Gino-153.jpg",
+      "bytes": 823106,
+      "decorative": false,
+      "alt": {
+        "en": "Arreglo alto de flores blancas y follaje en el baby shower.",
+        "es": "Arreglo alto de flores blancas y follaje en el baby shower.",
+        "fr": "Arreglo alto de flores blancas y follaje en el baby shower."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/baby-shower/Karla&Gino-153.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "baby-shower",
+          "position": 3
+        }
+      ]
+    },
+    {
+      "sha256": "d20eb91df9cb9e816d5d73a157c3a396d716222b2f7d2470a44654f9df3acd6a",
+      "sourcePath": "src/assets/images/events/baby-shower/Karla&Gino-189.jpg",
+      "bytes": 1197724,
+      "decorative": true,
+      "alt": { "en": null, "es": null, "fr": null },
+      "usages": [
+        {
+          "path": "src/assets/images/events/baby-shower/Karla&Gino-189.jpg",
+          "kind": "HOME_DECORATIVE",
+          "owner": "final-cta",
+          "position": 9
+        }
+      ]
+    },
+    {
+      "sha256": "bf618d172af74147b7a6ed2258eefac43db789d16a05fa4add0de33907efe185",
+      "sourcePath": "src/assets/images/events/baby-shower/Karla&Gino-190.jpg",
+      "bytes": 1746821,
+      "decorative": false,
+      "alt": {
+        "en": "Mesa de regalos enmarcada por un arco floral durante el baby shower.",
+        "es": "Mesa de regalos enmarcada por un arco floral durante el baby shower.",
+        "fr": "Mesa de regalos enmarcada por un arco floral durante el baby shower."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/baby-shower/Karla&Gino-190.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "baby-shower",
+          "position": 1
+        }
+      ]
+    },
+    {
+      "sha256": "5f60e51c1ea9d51ec3fb3cc715aa6c65ab8b1880063174e942e6fad2eddfefca",
+      "sourcePath": "src/assets/images/events/baby-shower/Karla&Gino-21.jpg",
+      "bytes": 1903353,
+      "decorative": false,
+      "alt": {
+        "en": "Vista amplia de la mesa de regalos y el arco floral del baby shower.",
+        "es": "Vista amplia de la mesa de regalos y el arco floral del baby shower.",
+        "fr": "Vista amplia de la mesa de regalos y el arco floral del baby shower."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/baby-shower/Karla&Gino-21.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "baby-shower",
+          "position": 4
+        }
+      ]
+    },
+    {
+      "sha256": "3965df31999e5cfb9bee216aa10c5c51af63393dbcab8b6b64ce83965d7ab012",
+      "sourcePath": "src/assets/images/events/baby-shower/Karla&Gino-6.jpg",
+      "bytes": 1457052,
+      "decorative": false,
+      "alt": {
+        "en": "Detalle frontal de la mesa principal y su arreglo floral.",
+        "es": "Detalle frontal de la mesa principal y su arreglo floral.",
+        "fr": "Detalle frontal de la mesa principal y su arreglo floral."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/baby-shower/Karla&Gino-6.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "baby-shower",
+          "position": 6
+        }
+      ]
+    },
+    {
+      "sha256": "ea27d81a5eab25fc35eefb0aeab51b6de654f9e34263d0bdb42a77a5d30886cc",
+      "sourcePath": "src/assets/images/events/baby-shower/Karla&Gino-7.jpg",
+      "bytes": 1579907,
+      "decorative": false,
+      "alt": {
+        "en": "Mesa principal decorada con flores, globos y un oso de peluche.",
+        "es": "Mesa principal decorada con flores, globos y un oso de peluche.",
+        "fr": "Mesa principal decorada con flores, globos y un oso de peluche."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/baby-shower/Karla&Gino-7.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "baby-shower",
+          "position": 5
+        }
+      ]
+    },
+    {
+      "sha256": "fced077f6752a51eff0093ba6fd5a7db8aab8247999b48763171f2b91d6ca807",
+      "sourcePath": "src/assets/images/events/baby-shower/main.jpg",
+      "bytes": 1513760,
+      "decorative": false,
+      "alt": {
+        "en": "Decoración principal del baby shower con globos, flores y bloques de letras.",
+        "es": "Decoración principal del baby shower con globos, flores y bloques de letras.",
+        "fr": "Decoración principal del baby shower con globos, flores y bloques de letras."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/baby-shower/main.jpg",
+          "kind": "EVENT_MAIN",
+          "owner": "baby-shower",
+          "position": 0
+        }
+      ]
+    },
+    {
+      "sha256": "cf0f8c75d178687814e33935686c917c31fad69115092ef6c2e31bf507885a42",
+      "sourcePath": "src/assets/images/events/baila-da-zaza/Bailedazaza-6.jpg",
+      "bytes": 953659,
+      "decorative": false,
+      "alt": {
+        "en": "The atmosphere behind the DJ booth at Brazilian Celebration.",
+        "es": "Ambiente detrás de la cabina durante Celebración Brasileña.",
+        "fr": "L’ambiance derrière la cabine du DJ lors de Célébration brésilienne."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/baila-da-zaza/Bailedazaza-6.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "baila-da-zaza",
+          "position": 1
+        },
+        {
+          "path": "src/assets/images/events/baila-da-zaza/Bailedazaza-6.jpg",
+          "kind": "HOME_DECORATIVE",
+          "owner": "final-cta",
+          "position": 4
+        }
+      ]
+    },
+    {
+      "sha256": "84ad01eb60f3c8fbf05afeceed1be41ff6abd99782b89145de57a55d26a2983e",
+      "sourcePath": "src/assets/images/events/baila-da-zaza/Bailedazaza-82.jpg",
+      "bytes": 1449668,
+      "decorative": false,
+      "alt": {
+        "en": "The dance floor and attendees at Brazilian Celebration under red lights.",
+        "es": "Pista y asistentes de Celebración Brasileña bajo luces rojas.",
+        "fr": "La piste de danse et les participants de Célébration brésilienne sous des lumières rouges."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/baila-da-zaza/Bailedazaza-82.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "baila-da-zaza",
+          "position": 2
+        },
+        {
+          "path": "src/assets/images/events/baila-da-zaza/Bailedazaza-82.jpg",
+          "kind": "HOME_DECORATIVE",
+          "owner": "final-cta",
+          "position": 10
+        }
+      ]
+    },
+    {
+      "sha256": "f4b4a167ed98898a339ddd093d1bb006ea818771df1274385b639395056e4690",
+      "sourcePath": "src/assets/images/events/baila-da-zaza/main.jpg",
+      "bytes": 1447170,
+      "decorative": false,
+      "alt": {
+        "en": "A DJ sharing the booth at Brazilian Celebration under orange lighting.",
+        "es": "DJ compartiendo la cabina durante Celebración Brasileña bajo una iluminación naranja.",
+        "fr": "Un DJ partageant la cabine lors de Célébration brésilienne sous un éclairage orangé."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/baila-da-zaza/main.jpg",
+          "kind": "EVENT_MAIN",
+          "owner": "baila-da-zaza",
+          "position": 0
+        }
+      ]
+    },
+    {
+      "sha256": "28b92e96688b7f45eef82358f9145fe30204156b850eb4ae61a9b6561c7aadbd",
+      "sourcePath": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-48.jpg",
+      "bytes": 881834,
+      "decorative": false,
+      "alt": {
+        "en": "Arreglo de globos rosados y lilas para el cumpleaños de Ana Paula.",
+        "es": "Arreglo de globos rosados y lilas para el cumpleaños de Ana Paula.",
+        "fr": "Arreglo de globos rosados y lilas para el cumpleaños de Ana Paula."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-48.jpg",
+          "kind": "EVENT_MAIN",
+          "owner": "cumpleanos-ana-paula",
+          "position": 0
+        },
+        {
+          "path": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-48.jpg",
+          "kind": "HOME_DECORATIVE",
+          "owner": "final-cta",
+          "position": 5
+        }
+      ]
+    },
+    {
+      "sha256": "aeed8d941b34a626e208d43da7619901177334b9108dfe3d20b94212ad9b01b2",
+      "sourcePath": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-49.jpg",
+      "bytes": 940276,
+      "decorative": false,
+      "alt": {
+        "en": "Pastel y decoración de cumpleaños inspirados en música pop.",
+        "es": "Pastel y decoración de cumpleaños inspirados en música pop.",
+        "fr": "Pastel y decoración de cumpleaños inspirados en música pop."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-49.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "cumpleanos-ana-paula",
+          "position": 1
+        }
+      ]
+    },
+    {
+      "sha256": "e9768286263cb38aaa17e28134a44b189ed48e3683dad93b58ffe75b94f68b5e",
+      "sourcePath": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-50.jpg",
+      "bytes": 797391,
+      "decorative": false,
+      "alt": {
+        "en": "Vasos personalizados dispuestos sobre la mesa del cumpleaños.",
+        "es": "Vasos personalizados dispuestos sobre la mesa del cumpleaños.",
+        "fr": "Vasos personalizados dispuestos sobre la mesa del cumpleaños."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-50.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "cumpleanos-ana-paula",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "sha256": "e63d7f068c1b7619308e3f671590a2dcb33f3d1b73657d36c748b807a567ce70",
+      "sourcePath": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-51.jpg",
+      "bytes": 1202718,
+      "decorative": false,
+      "alt": {
+        "en": "Recuerdos personalizados preparados para los invitados.",
+        "es": "Recuerdos personalizados preparados para los invitados.",
+        "fr": "Recuerdos personalizados preparados para los invitados."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-51.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "cumpleanos-ana-paula",
+          "position": 3
+        }
+      ]
+    },
+    {
+      "sha256": "64dff192ec22ebac77b1b2277810063a21ad90f51e9c59d76f57296f83652282",
+      "sourcePath": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-70.jpg",
+      "bytes": 1157574,
+      "decorative": false,
+      "alt": {
+        "en": "Ana Paula compartiendo la mesa con sus invitados durante la celebración.",
+        "es": "Ana Paula compartiendo la mesa con sus invitados durante la celebración.",
+        "fr": "Ana Paula compartiendo la mesa con sus invitados durante la celebración."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-70.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "cumpleanos-ana-paula",
+          "position": 4
+        },
+        {
+          "path": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-70.jpg",
+          "kind": "HOME_DECORATIVE",
+          "owner": "final-cta",
+          "position": 11
+        }
+      ]
+    },
+    {
+      "sha256": "a658d81d0b63477ae916cbef26888e20e039c9ae2be76bfdda84b6a2232891d4",
+      "sourcePath": "src/assets/images/events/fan-fest-club/ColvsPor-41.jpg",
+      "bytes": 2183211,
+      "decorative": false,
+      "alt": {
+        "en": "Músico con acordeón animando al público de Fan Fest Club.",
+        "es": "Músico con acordeón animando al público de Fan Fest Club.",
+        "fr": "Músico con acordeón animando al público de Fan Fest Club."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/fan-fest-club/ColvsPor-41.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "fan-fest-club",
+          "position": 1
+        },
+        {
+          "path": "src/assets/images/events/fan-fest-club/ColvsPor-41.jpg",
+          "kind": "HOME_DECORATIVE",
+          "owner": "final-cta",
+          "position": 6
+        }
+      ]
+    },
+    {
+      "sha256": "ca8569e3c888d648517ca53298914f800bd349cf5505b6a9b6baf20c384ebb72",
+      "sourcePath": "src/assets/images/events/fan-fest-club/ColvsPor-48.jpg",
+      "bytes": 1337721,
+      "decorative": false,
+      "alt": {
+        "en": "Acordeonista interpretando música entre asistentes con camisetas de Colombia.",
+        "es": "Acordeonista interpretando música entre asistentes con camisetas de Colombia.",
+        "fr": "Acordeonista interpretando música entre asistentes con camisetas de Colombia."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/fan-fest-club/ColvsPor-48.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "fan-fest-club",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "sha256": "c650461d17f531522108cc205b269d80eb88917e7cf59dac5f9484b799169f09",
+      "sourcePath": "src/assets/images/events/fan-fest-club/FANFESTCOLVSCON-3.jpg",
+      "bytes": 1175576,
+      "decorative": false,
+      "alt": {
+        "en": "Cantantes y músicos durante una presentación de Fan Fest Club.",
+        "es": "Cantantes y músicos durante una presentación de Fan Fest Club.",
+        "fr": "Cantantes y músicos durante una presentación de Fan Fest Club."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/fan-fest-club/FANFESTCOLVSCON-3.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "fan-fest-club",
+          "position": 3
+        }
+      ]
+    },
+    {
+      "sha256": "a42f9ff0f8b95b810b84a8cedee5d669895545da22149809b9d40e92aeb3946c",
+      "sourcePath": "src/assets/images/events/fan-fest-club/FANFESTCOLVSUZB-16.jpg",
+      "bytes": 2185340,
+      "decorative": false,
+      "alt": {
+        "en": "Aficionados de Colombia celebrando frente a la pantalla del partido.",
+        "es": "Aficionados de Colombia celebrando frente a la pantalla del partido.",
+        "fr": "Aficionados de Colombia celebrando frente a la pantalla del partido."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/fan-fest-club/FANFESTCOLVSUZB-16.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "fan-fest-club",
+          "position": 5
+        }
+      ]
+    },
+    {
+      "sha256": "06608f4183f9f34883b65c82b20c46a51175cadf4b8bf84b1b69a310598752fc",
+      "sourcePath": "src/assets/images/events/fan-fest-club/FANFESTCOLVSUZB-64.jpg",
+      "bytes": 2090772,
+      "decorative": false,
+      "alt": {
+        "en": "Asistentes celebrando juntos durante un partido en Fan Fest Club.",
+        "es": "Asistentes celebrando juntos durante un partido en Fan Fest Club.",
+        "fr": "Asistentes celebrando juntos durante un partido en Fan Fest Club."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/fan-fest-club/FANFESTCOLVSUZB-64.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "fan-fest-club",
+          "position": 4
+        },
+        {
+          "path": "src/assets/images/events/fan-fest-club/FANFESTCOLVSUZB-64.jpg",
+          "kind": "HOME_DECORATIVE",
+          "owner": "final-cta",
+          "position": 12
+        }
+      ]
+    },
+    {
+      "sha256": "39bbec49c3c67db621d67c70b103a627b61baea822bb363f02793076236d36e7",
+      "sourcePath": "src/assets/images/events/fan-fest-club/FanfestMEXvsSOUTH-128.jpg",
+      "bytes": 1077860,
+      "decorative": false,
+      "alt": {
+        "en": "Aficionados de México disfrutando la música y el partido en Fan Fest Club.",
+        "es": "Aficionados de México disfrutando la música y el partido en Fan Fest Club.",
+        "fr": "Aficionados de México disfrutando la música y el partido en Fan Fest Club."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/fan-fest-club/FanfestMEXvsSOUTH-128.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "fan-fest-club",
+          "position": 6
+        }
+      ]
+    },
+    {
+      "sha256": "4ef3cf8496bf9687d27b9cb98dfa9f067dae156235a0ad5a635f9e57b51e55ef",
+      "sourcePath": "src/assets/images/events/fan-fest-club/main.jpg",
+      "bytes": 970499,
+      "decorative": false,
+      "alt": {
+        "en": "Presentación musical frente a la afición reunida en Fan Fest Club.",
+        "es": "Presentación musical frente a la afición reunida en Fan Fest Club.",
+        "fr": "Presentación musical frente a la afición reunida en Fan Fest Club."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/fan-fest-club/main.jpg",
+          "kind": "SERVICE_MAIN",
+          "owner": "eventos-corporativos",
+          "position": 0
+        },
+        {
+          "path": "src/assets/images/events/fan-fest-club/main.jpg",
+          "kind": "EVENT_MAIN",
+          "owner": "fan-fest-club",
+          "position": 0
+        }
+      ]
+    },
+    {
+      "sha256": "6b01263c1505cdd5cb3f5661c7741ef49c42b1521d5edd50b756d47d1b64bdef",
+      "sourcePath": "src/assets/images/events/nossa-copa/BRZVSESC-16.jpg",
+      "bytes": 569691,
+      "decorative": false,
+      "alt": {
+        "en": "Attendees playing foosball at Brazil at the 2026 World Cup.",
+        "es": "Asistentes jugando futbolín durante Brasil en el Mundial 2026.",
+        "fr": "Des participants jouant au baby-foot lors de l’événement « Le Brésil à la Coupe du monde 2026 »."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/nossa-copa/BRZVSESC-16.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "nossa-copa",
+          "position": 3
+        },
+        {
+          "path": "src/assets/images/events/nossa-copa/BRZVSESC-16.jpg",
+          "kind": "HOME_DECORATIVE",
+          "owner": "final-cta",
+          "position": 8
+        }
+      ]
+    },
+    {
+      "sha256": "4c38d275cd209fd6f33e4447f27a5220cd8f942b418a7c5644335e06e50dc296",
+      "sourcePath": "src/assets/images/events/nossa-copa/BRZVSESC-199.jpg",
+      "bytes": 2457033,
+      "decorative": false,
+      "alt": {
+        "en": "A family posing in Brazil jerseys at Brazil at the 2026 World Cup.",
+        "es": "Familia con camisetas brasileñas posando durante Brasil en el Mundial 2026.",
+        "fr": "Une famille posant en maillots du Brésil lors de l’événement « Le Brésil à la Coupe du monde 2026 »."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/nossa-copa/BRZVSESC-199.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "nossa-copa",
+          "position": 2
+        },
+        {
+          "path": "src/assets/images/events/nossa-copa/BRZVSESC-199.jpg",
+          "kind": "HOME_DECORATIVE",
+          "owner": "final-cta",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "sha256": "099302b13e15533fea9e850f93b660f8a115f0a255c17ae17b8a5d433db6e6cd",
+      "sourcePath": "src/assets/images/events/nossa-copa/NossaCopa-11.jpg",
+      "bytes": 2318431,
+      "decorative": false,
+      "alt": {
+        "en": "Attendees sharing tables at Brazil at the 2026 World Cup.",
+        "es": "Asistentes compartiendo alrededor de las mesas durante Brasil en el Mundial 2026.",
+        "fr": "Des participants réunis autour des tables lors de l’événement « Le Brésil à la Coupe du monde 2026 »."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/nossa-copa/NossaCopa-11.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "nossa-copa",
+          "position": 6
+        }
+      ]
+    },
+    {
+      "sha256": "79ed04192286192822032d9e7d49d5bc993d129ed0aa63a21941663b87939e79",
+      "sourcePath": "src/assets/images/events/nossa-copa/NossaCopa-60.jpg",
+      "bytes": 1501124,
+      "decorative": false,
+      "alt": {
+        "en": "A stall selling Brazilian products at Brazil at the 2026 World Cup.",
+        "es": "Puesto de productos brasileños dentro de Brasil en el Mundial 2026.",
+        "fr": "Un kiosque de produits brésiliens lors de l’événement « Le Brésil à la Coupe du monde 2026 »."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/nossa-copa/NossaCopa-60.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "nossa-copa",
+          "position": 4
+        }
+      ]
+    },
+    {
+      "sha256": "fc489b8729aeaf6d43a27466ded5403e13ecf34b6064ca3f9b499a376f1b7f7e",
+      "sourcePath": "src/assets/images/events/nossa-copa/NossaCopa-71.jpg",
+      "bytes": 953868,
+      "decorative": false,
+      "alt": {
+        "en": "A musical performance for attendees at Brazil at the 2026 World Cup.",
+        "es": "Presentación musical frente a los asistentes de Brasil en el Mundial 2026.",
+        "fr": "Une prestation musicale devant les participants de l’événement « Le Brésil à la Coupe du monde 2026 »."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/nossa-copa/NossaCopa-71.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "nossa-copa",
+          "position": 5
+        }
+      ]
+    },
+    {
+      "sha256": "9a73807a388933cf8800ae6cf959c0aa7de8e16bac3b05b9f7d6346900432c14",
+      "sourcePath": "src/assets/images/events/nossa-copa/NossaCopa-92.jpg",
+      "bytes": 2232496,
+      "decorative": false,
+      "alt": {
+        "en": "An overview of attendees gathered for Brazil at the 2026 World Cup.",
+        "es": "Vista general de los asistentes reunidos para Brasil en el Mundial 2026.",
+        "fr": "Vue d’ensemble des participants réunis pour l’événement « Le Brésil à la Coupe du monde 2026 »."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/nossa-copa/NossaCopa-92.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "nossa-copa",
+          "position": 1
+        }
+      ]
+    },
+    {
+      "sha256": "50153cdfa88f1495cb1f3d0e5c15c738c309f40b030aa8337bddb0e11c512ba8",
+      "sourcePath": "src/assets/images/events/nossa-copa/main.jpg",
+      "bytes": 1151549,
+      "decorative": false,
+      "alt": {
+        "en": "A game of pool at Brazil at the 2026 World Cup, surrounded by attendees wearing Brazil jerseys.",
+        "es": "Partida de billar durante Brasil en el Mundial 2026, rodeada de asistentes con camisetas de Brasil.",
+        "fr": "Une partie de billard lors de l’événement « Le Brésil à la Coupe du monde 2026 », entourée de participants portant des maillots du Brésil."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/nossa-copa/main.jpg",
+          "kind": "EVENT_MAIN",
+          "owner": "nossa-copa",
+          "position": 0
+        }
+      ]
+    },
+    {
+      "sha256": "ab4dd02920bc683a8f309257568eed3e90ddf6728e6fcb55c42f574a56591470",
+      "sourcePath": "src/assets/images/events/wedding-r-r/DSC08265.jpg",
+      "bytes": 965599,
+      "decorative": false,
+      "alt": {
+        "en": "Iniciales R&R colocadas sobre una mesa de madera en la boda.",
+        "es": "Iniciales R&R colocadas sobre una mesa de madera en la boda.",
+        "fr": "Iniciales R&R colocadas sobre una mesa de madera en la boda."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/wedding-r-r/DSC08265.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "wedding-r-r",
+          "position": 1
+        }
+      ]
+    },
+    {
+      "sha256": "b60bb07f4e6ac493f187cc1b531207c5478126f32c8f1b4ebe9afc3bbae4356b",
+      "sourcePath": "src/assets/images/events/wedding-r-r/_EB50054.jpg",
+      "bytes": 1665132,
+      "decorative": false,
+      "alt": {
+        "en": "Letrero de bienvenida rodeado de vegetación en la boda R&R.",
+        "es": "Letrero de bienvenida rodeado de vegetación en la boda R&R.",
+        "fr": "Letrero de bienvenida rodeado de vegetación en la boda R&R."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/wedding-r-r/_EB50054.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "wedding-r-r",
+          "position": 2
+        },
+        {
+          "path": "src/assets/images/events/wedding-r-r/_EB50054.jpg",
+          "kind": "HOME_DECORATIVE",
+          "owner": "final-cta",
+          "position": 1
+        }
+      ]
+    },
+    {
+      "sha256": "f3bf560cb14709c7ec779e746baac9d51204bc7865a47cbed2459eeeed501de1",
+      "sourcePath": "src/assets/images/events/wedding-r-r/_EB50055.jpg",
+      "bytes": 1108424,
+      "decorative": false,
+      "alt": {
+        "en": "Detalle decorativo con limones y un mensaje para la pareja.",
+        "es": "Detalle decorativo con limones y un mensaje para la pareja.",
+        "fr": "Detalle decorativo con limones y un mensaje para la pareja."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/wedding-r-r/_EB50055.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "wedding-r-r",
+          "position": 3
+        }
+      ]
+    },
+    {
+      "sha256": "7ecea5694ead3b4d622b0e317ff767ffc4446658c962720192ea658037bd7053",
+      "sourcePath": "src/assets/images/events/wedding-r-r/_EB53654.jpg",
+      "bytes": 616895,
+      "decorative": false,
+      "alt": {
+        "en": "Mesa de invitados preparada con vajilla blanca y cristalería.",
+        "es": "Mesa de invitados preparada con vajilla blanca y cristalería.",
+        "fr": "Mesa de invitados preparada con vajilla blanca y cristalería."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/wedding-r-r/_EB53654.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "wedding-r-r",
+          "position": 4
+        },
+        {
+          "path": "src/assets/images/events/wedding-r-r/_EB53654.jpg",
+          "kind": "HOME_DECORATIVE",
+          "owner": "final-cta",
+          "position": 7
+        }
+      ]
+    },
+    {
+      "sha256": "ce88467b58b2a262d96cc28a8b429a525e3d2c4d2225507a56796c0838c05207",
+      "sourcePath": "src/assets/images/events/wedding-r-r/_EB53673.jpg",
+      "bytes": 1234201,
+      "decorative": false,
+      "alt": {
+        "en": "Montaje de mesa en tonos claros para la recepción de la boda.",
+        "es": "Montaje de mesa en tonos claros para la recepción de la boda.",
+        "fr": "Montaje de mesa en tonos claros para la recepción de la boda."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/wedding-r-r/_EB53673.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "wedding-r-r",
+          "position": 5
+        }
+      ]
+    },
+    {
+      "sha256": "0e5129741313b5de9bb01097238912995c0610739fc0390532e422f5eefd4764",
+      "sourcePath": "src/assets/images/events/wedding-r-r/_EB59664.jpg",
+      "bytes": 887854,
+      "decorative": false,
+      "alt": {
+        "en": "Mesas de la boda R&R dispuestas al aire libre entre árboles y vegetación.",
+        "es": "Mesas de la boda R&R dispuestas al aire libre entre árboles y vegetación.",
+        "fr": "Mesas de la boda R&R dispuestas al aire libre entre árboles y vegetación."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/wedding-r-r/_EB59664.jpg",
+          "kind": "EVENT_MAIN",
+          "owner": "wedding-r-r",
+          "position": 0
+        }
+      ]
+    },
+    {
+      "sha256": "4f19ac7ebca8b00433fbe415d38ae715d7eac1a26e2232169c4960c32b39f194",
+      "sourcePath": "src/assets/images/events/wedding-r-r/_EB59673.jpg",
+      "bytes": 1536670,
+      "decorative": false,
+      "alt": {
+        "en": "Mesa de dulces con detalles amarillos durante la recepción.",
+        "es": "Mesa de dulces con detalles amarillos durante la recepción.",
+        "fr": "Mesa de dulces con detalles amarillos durante la recepción."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/wedding-r-r/_EB59673.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "wedding-r-r",
+          "position": 6
+        }
+      ]
+    },
+    {
+      "sha256": "1ffabfaa249a1895e17a2dd1a9c8b553a0c640e54b8de499694c76faf8d45f84",
+      "sourcePath": "src/assets/images/events/wedding-r-r/_EB59675.jpg",
+      "bytes": 906120,
+      "decorative": false,
+      "alt": {
+        "en": "Bola de espejos suspendida sobre el espacio exterior de la celebración.",
+        "es": "Bola de espejos suspendida sobre el espacio exterior de la celebración.",
+        "fr": "Bola de espejos suspendida sobre el espacio exterior de la celebración."
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/events/wedding-r-r/_EB59675.jpg",
+          "kind": "EVENT_GALLERY",
+          "owner": "wedding-r-r",
+          "position": 7
+        }
+      ]
+    },
+    {
+      "sha256": "6b78bb1fb4d5d273c3d5a03b17551a0e130071458bffe50c171fc0fa22c29ca6",
+      "sourcePath": "src/assets/images/services/celebrations/01.jpg",
+      "bytes": 9262259,
+      "decorative": false,
+      "alt": {
+        "en": "Celebrations 1",
+        "es": "Celebraciones 1",
+        "fr": "Célébrations 1"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/celebrations/01.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "celebraciones",
+          "position": 1
+        }
+      ]
+    },
+    {
+      "sha256": "c340a936576fdb9328d87459f61b25d71c41e4c9ed06d3d11e79a30e5b3db49d",
+      "sourcePath": "src/assets/images/services/celebrations/02.jpg",
+      "bytes": 8524388,
+      "decorative": false,
+      "alt": {
+        "en": "Celebrations 2",
+        "es": "Celebraciones 2",
+        "fr": "Célébrations 2"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/celebrations/02.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "celebraciones",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "sha256": "d855f54c7b48fc8db926fc11f0eef7d6cfac96d5bf452ce68cbcca5675ee2c51",
+      "sourcePath": "src/assets/images/services/celebrations/03.jpg",
+      "bytes": 7105724,
+      "decorative": false,
+      "alt": {
+        "en": "Celebrations 3",
+        "es": "Celebraciones 3",
+        "fr": "Célébrations 3"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/celebrations/03.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "celebraciones",
+          "position": 3
+        }
+      ]
+    },
+    {
+      "sha256": "49e575dcc905f972ad9751750b22cd8b3d96ad4b34ecc6d0d12c7586486e958c",
+      "sourcePath": "src/assets/images/services/celebrations/04.jpg",
+      "bytes": 12494819,
+      "decorative": false,
+      "alt": {
+        "en": "Celebrations 4",
+        "es": "Celebraciones 4",
+        "fr": "Célébrations 4"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/celebrations/04.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "celebraciones",
+          "position": 4
+        }
+      ]
+    },
+    {
+      "sha256": "3f7fee2e0428240c08db37a4896983cfd606134439486caf18f73ba372763614",
+      "sourcePath": "src/assets/images/services/celebrations/05.jpg",
+      "bytes": 12611885,
+      "decorative": false,
+      "alt": {
+        "en": "Celebrations 5",
+        "es": "Celebraciones 5",
+        "fr": "Célébrations 5"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/celebrations/05.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "celebraciones",
+          "position": 5
+        }
+      ]
+    },
+    {
+      "sha256": "effd1f6dc769ccb11626dc752e4f656a634ab7b20d0d4e106f3939100430d5d7",
+      "sourcePath": "src/assets/images/services/celebrations/06.jpg",
+      "bytes": 8905859,
+      "decorative": false,
+      "alt": {
+        "en": "Celebrations 6",
+        "es": "Celebraciones 6",
+        "fr": "Célébrations 6"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/celebrations/06.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "celebraciones",
+          "position": 6
+        }
+      ]
+    },
+    {
+      "sha256": "3babe49656a4264d334f8402c211abac0d50a1caeddbc7703feb1ab56bf69800",
+      "sourcePath": "src/assets/images/services/celebrations/07.jpg",
+      "bytes": 5328153,
+      "decorative": false,
+      "alt": {
+        "en": "Celebrations 7",
+        "es": "Celebraciones 7",
+        "fr": "Célébrations 7"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/celebrations/07.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "celebraciones",
+          "position": 7
+        }
+      ]
+    },
+    {
+      "sha256": "e27b37bac6cc24511e7adcdd0919a0308f4ed601b6e6492bbd9c975a49222b3c",
+      "sourcePath": "src/assets/images/services/celebrations/08.jpg",
+      "bytes": 9321712,
+      "decorative": false,
+      "alt": {
+        "en": "Celebrations 8",
+        "es": "Celebraciones 8",
+        "fr": "Célébrations 8"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/celebrations/08.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "celebraciones",
+          "position": 8
+        }
+      ]
+    },
+    {
+      "sha256": "860fb7d914644d344cf728cdc5c1c4e8fcfcff2175b3ee26bfc83bd550d742cd",
+      "sourcePath": "src/assets/images/services/celebrations/09.jpg",
+      "bytes": 7382606,
+      "decorative": false,
+      "alt": {
+        "en": "Celebrations 9",
+        "es": "Celebraciones 9",
+        "fr": "Célébrations 9"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/celebrations/09.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "celebraciones",
+          "position": 9
+        }
+      ]
+    },
+    {
+      "sha256": "88e01b2dd060fb85ecc28b3f6051e4c0a3b7d22549745256dd6b08f197f1f322",
+      "sourcePath": "src/assets/images/services/celebrations/10.jpg",
+      "bytes": 7543051,
+      "decorative": false,
+      "alt": {
+        "en": "Celebrations 10",
+        "es": "Celebraciones 10",
+        "fr": "Célébrations 10"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/celebrations/10.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "celebraciones",
+          "position": 10
+        }
+      ]
+    },
+    {
+      "sha256": "f7d06b420bd53d8bf19e6aba6e2ffeb4193ae84b2504424e9e7be4660e075996",
+      "sourcePath": "src/assets/images/services/celebrations/11.jpg",
+      "bytes": 8587047,
+      "decorative": false,
+      "alt": {
+        "en": "Celebrations 11",
+        "es": "Celebraciones 11",
+        "fr": "Célébrations 11"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/celebrations/11.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "celebraciones",
+          "position": 11
+        }
+      ]
+    },
+    {
+      "sha256": "8740e1701ce0dc134bf6d0994d458a4d14c325cf6075d012d06e1c19a2c3cbf0",
+      "sourcePath": "src/assets/images/services/celebrations/main.jpg",
+      "bytes": 7348285,
+      "decorative": false,
+      "alt": {
+        "en": "Celebrations",
+        "es": "Celebraciones",
+        "fr": "Célébrations"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/celebrations/main.jpg",
+          "kind": "SERVICE_MAIN",
+          "owner": "celebraciones",
+          "position": 0
+        },
+        {
+          "path": "src/assets/images/services/celebrations/main.jpg",
+          "kind": "HOME_DECORATIVE",
+          "owner": "marquee",
+          "position": 0
+        }
+      ]
+    },
+    {
+      "sha256": "08a60687b79c684c3565cfc9b395d9ed60b4a3ca4f5ae05a96ce97315478aeb1",
+      "sourcePath": "src/assets/images/services/custom-packages/01.jpg",
+      "bytes": 9736607,
+      "decorative": false,
+      "alt": {
+        "en": "Custom packages 1",
+        "es": "Paquetes personalizados 1",
+        "fr": "Forfaits personnalisés 1"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/custom-packages/01.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "paquetes-personalizados",
+          "position": 1
+        }
+      ]
+    },
+    {
+      "sha256": "55bc3420b6a295d07ced6eea8fa84c2e15918c8280d55bc45d08c6adc5511c4a",
+      "sourcePath": "src/assets/images/services/custom-packages/02.jpg",
+      "bytes": 6072056,
+      "decorative": false,
+      "alt": {
+        "en": "Custom packages 2",
+        "es": "Paquetes personalizados 2",
+        "fr": "Forfaits personnalisés 2"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/custom-packages/02.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "paquetes-personalizados",
+          "position": 2
+        },
+        {
+          "path": "src/assets/images/services/furniture/02.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "alquiler-mobiliario",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "sha256": "007b7fc12a132280473f90121176721ad14dc3c3ffa1e2746e7fbe38b3a703d1",
+      "sourcePath": "src/assets/images/services/custom-packages/03.jpg",
+      "bytes": 1926154,
+      "decorative": false,
+      "alt": {
+        "en": "Custom packages 3",
+        "es": "Paquetes personalizados 3",
+        "fr": "Forfaits personnalisés 3"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/custom-packages/03.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "paquetes-personalizados",
+          "position": 3
+        },
+        {
+          "path": "src/assets/images/services/organization/09.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "organizacion-produccion-integral",
+          "position": 9
+        }
+      ]
+    },
+    {
+      "sha256": "751b5f0df06d8782db2652186c7391f77ff9b6f9fcdcb838379942d771ace8e7",
+      "sourcePath": "src/assets/images/services/custom-packages/04.jpg",
+      "bytes": 758841,
+      "decorative": true,
+      "alt": { "en": null, "es": null, "fr": null },
+      "usages": [
+        {
+          "path": "src/assets/images/services/custom-packages/04.jpg",
+          "kind": "HOME_DECORATIVE",
+          "owner": "process",
+          "position": 0
+        }
+      ]
+    },
+    {
+      "sha256": "515bad05107f014850db45058eda4355019fb46a0fd7c88194e10b58e187a89f",
+      "sourcePath": "src/assets/images/services/custom-packages/main.jpg",
+      "bytes": 579008,
+      "decorative": false,
+      "alt": {
+        "en": "Custom packages",
+        "es": "Paquetes personalizados",
+        "fr": "Forfaits personnalisés"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/custom-packages/main.jpg",
+          "kind": "SERVICE_MAIN",
+          "owner": "paquetes-personalizados",
+          "position": 0
+        }
+      ]
+    },
+    {
+      "sha256": "8911a1916dd4fdd7e2fc70ff49227c14c1f7de538d1960549698b434e3300f03",
+      "sourcePath": "src/assets/images/services/setup-and-logistics/main.jpg",
+      "bytes": 8646224,
+      "decorative": false,
+      "alt": {
+        "en": "Setup and logistics",
+        "es": "Montaje y logística",
+        "fr": "Montage et logistique"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/setup-and-logistics/main.jpg",
+          "kind": "SERVICE_MAIN",
+          "owner": "montaje-logistica",
+          "position": 0
+        },
+        {
+          "path": "src/assets/images/services/furniture/01.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "alquiler-mobiliario",
+          "position": 1
+        },
+        {
+          "path": "src/assets/images/services/organization/01.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "organizacion-produccion-integral",
+          "position": 1
+        }
+      ]
+    },
+    {
+      "sha256": "6273e1dc9577790579b97ee7938272943e78e0b642f517698e7a6a3b6439ec50",
+      "sourcePath": "src/assets/images/services/furniture/03.jpg",
+      "bytes": 8566533,
+      "decorative": false,
+      "alt": {
+        "en": "Furniture rental 3",
+        "es": "Alquiler de mobiliario 3",
+        "fr": "Location de mobilier 3"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/furniture/03.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "alquiler-mobiliario",
+          "position": 3
+        },
+        {
+          "path": "src/assets/images/services/organization/04.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "organizacion-produccion-integral",
+          "position": 4
+        },
+        {
+          "path": "src/assets/images/services/setup-and-logistics/02.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "montaje-logistica",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "sha256": "1314d956e697bcdef0bb8bdcaac99a454047d2bf842587e27c71b05afa7adb57",
+      "sourcePath": "src/assets/images/services/furniture/04.jpg",
+      "bytes": 6713168,
+      "decorative": false,
+      "alt": {
+        "en": "Furniture rental 4",
+        "es": "Alquiler de mobiliario 4",
+        "fr": "Location de mobilier 4"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/furniture/04.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "alquiler-mobiliario",
+          "position": 4
+        },
+        {
+          "path": "src/assets/images/services/organization/06.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "organizacion-produccion-integral",
+          "position": 6
+        },
+        {
+          "path": "src/assets/images/services/setup-and-logistics/03.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "montaje-logistica",
+          "position": 3
+        }
+      ]
+    },
+    {
+      "sha256": "8e755ac65514a210e3eedef5d5613e615f708225553873a3a51f5d8c9d1e76aa",
+      "sourcePath": "src/assets/images/services/furniture/main.jpg",
+      "bytes": 11799222,
+      "decorative": false,
+      "alt": {
+        "en": "Furniture rental",
+        "es": "Alquiler de mobiliario",
+        "fr": "Location de mobilier"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/furniture/main.jpg",
+          "kind": "SERVICE_MAIN",
+          "owner": "alquiler-mobiliario",
+          "position": 0
+        }
+      ]
+    },
+    {
+      "sha256": "d589f046be4d77334791a8ce0cebc3d564b9f9b3c8f00697eba7f1aa02107530",
+      "sourcePath": "src/assets/images/services/organization/02.jpg",
+      "bytes": 10445156,
+      "decorative": false,
+      "alt": {
+        "en": "Full-service event production 2",
+        "es": "Organización y producción integral 2",
+        "fr": "Organisation et production événementielle 2"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/organization/02.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "organizacion-produccion-integral",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "sha256": "f17aa100a51bbee6e3c648877b79b0becbac27223727e38b926e2dff2eeac20f",
+      "sourcePath": "src/assets/images/services/organization/03.jpg",
+      "bytes": 13324796,
+      "decorative": false,
+      "alt": {
+        "en": "Full-service event production 3",
+        "es": "Organización y producción integral 3",
+        "fr": "Organisation et production événementielle 3"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/organization/03.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "organizacion-produccion-integral",
+          "position": 3
+        }
+      ]
+    },
+    {
+      "sha256": "e6485772f5d6651d09776f3a75ffb92b8d4551165738af1e120ce46858fba13d",
+      "sourcePath": "src/assets/images/services/organization/05.jpg",
+      "bytes": 9715997,
+      "decorative": false,
+      "alt": {
+        "en": "Full-service event production 5",
+        "es": "Organización y producción integral 5",
+        "fr": "Organisation et production événementielle 5"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/organization/05.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "organizacion-produccion-integral",
+          "position": 5
+        }
+      ]
+    },
+    {
+      "sha256": "873c8ce85d08bdccda40eb5d61e3a1b54c5b3002d3f7580c9476f35d267c945d",
+      "sourcePath": "src/assets/images/services/organization/07.jpg",
+      "bytes": 10355894,
+      "decorative": false,
+      "alt": {
+        "en": "Full-service event production 7",
+        "es": "Organización y producción integral 7",
+        "fr": "Organisation et production événementielle 7"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/organization/07.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "organizacion-produccion-integral",
+          "position": 7
+        }
+      ]
+    },
+    {
+      "sha256": "3e9063aa47d626228ca747005bc73e7a23e1bd3b7bdaa0b4a54b58a22061b171",
+      "sourcePath": "src/assets/images/services/organization/08.jpg",
+      "bytes": 9621402,
+      "decorative": false,
+      "alt": {
+        "en": "Full-service event production 8",
+        "es": "Organización y producción integral 8",
+        "fr": "Organisation et production événementielle 8"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/organization/08.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "organizacion-produccion-integral",
+          "position": 8
+        }
+      ]
+    },
+    {
+      "sha256": "6fce184c0c6929d53783defe42f01e26bd1a06386be8fc8791fc56a4da3ba724",
+      "sourcePath": "src/assets/images/services/organization/10.jpg",
+      "bytes": 2132827,
+      "decorative": false,
+      "alt": {
+        "en": "Full-service event production 10",
+        "es": "Organización y producción integral 10",
+        "fr": "Organisation et production événementielle 10"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/organization/10.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "organizacion-produccion-integral",
+          "position": 10
+        }
+      ]
+    },
+    {
+      "sha256": "ffa29132cf8308bb76986323b840cef1ae77d255c6a599424df3116b9a99309a",
+      "sourcePath": "src/assets/images/services/organization/11.jpg",
+      "bytes": 1708435,
+      "decorative": false,
+      "alt": {
+        "en": "Full-service event production 11",
+        "es": "Organización y producción integral 11",
+        "fr": "Organisation et production événementielle 11"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/organization/11.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "organizacion-produccion-integral",
+          "position": 11
+        }
+      ]
+    },
+    {
+      "sha256": "e45fd02f8332f7e143845bf84782d68e95e9d703cf832ce63e34331bf5a63404",
+      "sourcePath": "src/assets/images/services/organization/12.jpg",
+      "bytes": 1472640,
+      "decorative": false,
+      "alt": {
+        "en": "Full-service event production 12",
+        "es": "Organización y producción integral 12",
+        "fr": "Organisation et production événementielle 12"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/organization/12.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "organizacion-produccion-integral",
+          "position": 12
+        }
+      ]
+    },
+    {
+      "sha256": "97e187147b697a27090f9eff7476a495d121fda36bee4c224d70cf5e4f43167b",
+      "sourcePath": "src/assets/images/services/organization/13.jpg",
+      "bytes": 1436607,
+      "decorative": false,
+      "alt": {
+        "en": "Full-service event production 13",
+        "es": "Organización y producción integral 13",
+        "fr": "Organisation et production événementielle 13"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/organization/13.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "organizacion-produccion-integral",
+          "position": 13
+        }
+      ]
+    },
+    {
+      "sha256": "28665e33bf6e7c45631803c98ebc65a7b57795af0264391166e11471460b0349",
+      "sourcePath": "src/assets/images/services/organization/14.jpg",
+      "bytes": 3257841,
+      "decorative": false,
+      "alt": {
+        "en": "Full-service event production 14",
+        "es": "Organización y producción integral 14",
+        "fr": "Organisation et production événementielle 14"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/organization/14.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "organizacion-produccion-integral",
+          "position": 14
+        }
+      ]
+    },
+    {
+      "sha256": "8fd95ecbfd311c5404a66285787cf112775b21c48f005ae238252a32e700ecbb",
+      "sourcePath": "src/assets/images/services/organization/main.jpg",
+      "bytes": 12366870,
+      "decorative": false,
+      "alt": {
+        "en": "Full-service event production",
+        "es": "Organización y producción integral",
+        "fr": "Organisation et production événementielle"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/organization/main.jpg",
+          "kind": "SERVICE_MAIN",
+          "owner": "organizacion-produccion-integral",
+          "position": 0
+        }
+      ]
+    },
+    {
+      "sha256": "b7e790a1725bd6d8d105e9eba128979005b4b6cbd25fdb34ba8f4fa19f30d834",
+      "sourcePath": "src/assets/images/services/setup-and-logistics/01.jpg",
+      "bytes": 2132829,
+      "decorative": false,
+      "alt": {
+        "en": "Setup and logistics 1",
+        "es": "Montaje y logística 1",
+        "fr": "Montage et logistique 1"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/setup-and-logistics/01.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "montaje-logistica",
+          "position": 1
+        }
+      ]
+    },
+    {
+      "sha256": "7478cc3a0e0a067b42cb2c867dc671c11db3509bc1643f3a167f58a12acf74c8",
+      "sourcePath": "src/assets/images/services/venues/01.jpg",
+      "bytes": 2427870,
+      "decorative": false,
+      "alt": {
+        "en": "Venue partnerships 1",
+        "es": "Alianzas con venues 1",
+        "fr": "Partenariats avec des lieux 1"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/venues/01.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "alianzas-venues",
+          "position": 1
+        }
+      ]
+    },
+    {
+      "sha256": "742ba975a8a84e4541e270da2f3b91f2685d28ebe00521fee432e140789ec0e0",
+      "sourcePath": "src/assets/images/services/venues/02.jpg",
+      "bytes": 11943744,
+      "decorative": false,
+      "alt": {
+        "en": "Venue partnerships 2",
+        "es": "Alianzas con venues 2",
+        "fr": "Partenariats avec des lieux 2"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/venues/02.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "alianzas-venues",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "sha256": "87f9eec983ebd24baa521435d937bef14d0cedc8e2ed61afef0110edad2ffa9d",
+      "sourcePath": "src/assets/images/services/venues/main.jpg",
+      "bytes": 8114119,
+      "decorative": false,
+      "alt": {
+        "en": "Venue partnerships",
+        "es": "Alianzas con venues",
+        "fr": "Partenariats avec des lieux"
+      },
+      "usages": [
+        {
+          "path": "src/assets/images/services/venues/main.jpg",
+          "kind": "SERVICE_MAIN",
+          "owner": "alianzas-venues",
+          "position": 0
+        }
+      ]
+    },
+    {
+      "sha256": "2c8718128b630cfb38b7ad6685a01099d4e07b5d49587252c8f51747aebb8917",
+      "sourcePath": "src/assets/images/services/weddings/01.jpg",
+      "bytes": 15739351,
+      "decorative": false,
+      "alt": { "en": "Weddings 1", "es": "Bodas 1", "fr": "Mariages 1" },
+      "usages": [
+        {
+          "path": "src/assets/images/services/weddings/01.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "bodas",
+          "position": 1
+        }
+      ]
+    },
+    {
+      "sha256": "0ad1a13919fcd7b7c43626c65d9056f1757633b276b288b8949f819117510bae",
+      "sourcePath": "src/assets/images/services/weddings/02.jpg",
+      "bytes": 12976475,
+      "decorative": false,
+      "alt": { "en": "Weddings 2", "es": "Bodas 2", "fr": "Mariages 2" },
+      "usages": [
+        {
+          "path": "src/assets/images/services/weddings/02.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "bodas",
+          "position": 2
+        }
+      ]
+    },
+    {
+      "sha256": "f1b87eedd2de715a8d9d328f3f2f5f84d22ea15a80abf6b501caf2b85ef643df",
+      "sourcePath": "src/assets/images/services/weddings/03.jpg",
+      "bytes": 9691349,
+      "decorative": false,
+      "alt": { "en": "Weddings 3", "es": "Bodas 3", "fr": "Mariages 3" },
+      "usages": [
+        {
+          "path": "src/assets/images/services/weddings/03.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "bodas",
+          "position": 3
+        }
+      ]
+    },
+    {
+      "sha256": "babcca77e18d9133b8852f7e2d2f2a7632b3d831e8af2ee44ec9b8a354c8e48b",
+      "sourcePath": "src/assets/images/services/weddings/04.jpg",
+      "bytes": 15024201,
+      "decorative": false,
+      "alt": { "en": "Weddings 4", "es": "Bodas 4", "fr": "Mariages 4" },
+      "usages": [
+        {
+          "path": "src/assets/images/services/weddings/04.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "bodas",
+          "position": 4
+        }
+      ]
+    },
+    {
+      "sha256": "bf610a5c1ce3ac90e9832988cfb94cbe2c4c2257e4f587c7c03157a5da02e945",
+      "sourcePath": "src/assets/images/services/weddings/05.jpg",
+      "bytes": 19761964,
+      "decorative": false,
+      "alt": { "en": "Weddings 5", "es": "Bodas 5", "fr": "Mariages 5" },
+      "usages": [
+        {
+          "path": "src/assets/images/services/weddings/05.jpg",
+          "kind": "SERVICE_GALLERY",
+          "owner": "bodas",
+          "position": 5
+        }
+      ]
+    },
+    {
+      "sha256": "2e92e1375b1e3a18a5b3b4f9e0ce8874ec893e4e7001d07a6f27da406bae4dca",
+      "sourcePath": "src/assets/images/services/weddings/main.jpg",
+      "bytes": 14553136,
+      "decorative": false,
+      "alt": { "en": "Weddings", "es": "Bodas", "fr": "Mariages" },
+      "usages": [
+        {
+          "path": "src/assets/images/services/weddings/main.jpg",
+          "kind": "SERVICE_MAIN",
+          "owner": "bodas",
+          "position": 0
+        }
+      ]
+    }
+  ]
+}

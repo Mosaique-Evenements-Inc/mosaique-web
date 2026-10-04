@@ -1,0 +1,28 @@
+{
+  "sourceCommit": "e04b99e8ef58b5de0c9c7d35a873d6a43997c01d",
+  "targetSupabaseProject": "fwiquietxxvozyktaxyp",
+  "previousCurrent": {
+    "code": "PUB-00000002",
+    "generation": 3,
+    "updatedAt": "2026-10-04T03:29:30.637385+00:00"
+  },
+  "homeRevision": 8,
+  "services": {
+    "organizacion-produccion-integral": "SVC-00000014",
+    "bodas": "SVC-00000015",
+    "celebraciones": "SVC-00000016",
+    "eventos-corporativos": "SVC-00000017",
+    "alianzas-venues": "SVC-00000018",
+    "montaje-logistica": "SVC-00000019",
+    "alquiler-mobiliario": "SVC-00000020",
+    "paquetes-personalizados": "SVC-00000021"
+  },
+  "events": {
+    "nossa-copa": "PEV-00000011",
+    "baila-da-zaza": "PEV-00000012",
+    "baby-shower": "PEV-00000013",
+    "wedding-r-r": "PEV-00000014",
+    "cumpleanos-ana-paula": "PEV-00000015",
+    "fan-fest-club": "PEV-00000016"
+  }
+}

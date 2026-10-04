@@ -69,12 +69,9 @@ const lightboxId = `${prefix}-gallery-${slug}-lightbox`;
                     <Text variant="body-lg" tone="inverse">
                       {item.description}
                     </Text>
-                    <Text variant="body-lg" tone="inverse">
-                      {item.idealFor}
-                    </Text>
                     <Button
                       className="service-header__cta"
-                      href={getLocalizedHref("/contact", locale)}
+                      href={getLocalizedHref(`/contact?service=${item.slug}`, locale)}
                       variant="light"
                     >
                       {item.ctaLabel}
@@ -90,6 +87,7 @@ const lightboxId = `${prefix}-gallery-${slug}-lightbox`;
       <section
         class={`${prefix}-gallery`}
         aria-label={`${galleryText.eventGallery} ${item.title}`}
+        id={`${prefix}-gallery-${slug}`}
       >
         <Container class={`${prefix}-gallery__container`}>
           <figure class={`${prefix}-featured-media`}>

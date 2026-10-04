@@ -1,0 +1,396 @@
+{
+  "sourceCommit": "e04b99e8ef58b5de0c9c7d35a873d6a43997c01d",
+  "targetSupabaseProject": "fwiquietxxvozyktaxyp",
+  "imported": {
+    "c4a0c42e2c597b8b2331ce1618588527aa2a6ae8cae544b263bf0e30b05ee5f6": {
+      "code": "MED-00000005",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/baby-shower/Karla&Gino-151.jpg"
+    },
+    "4879d7ac8e8e3b431833b74a2bf3c6305b7351ffab35ed86664d3a2367919d59": {
+      "code": "MED-00000006",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/baby-shower/Karla&Gino-153.jpg"
+    },
+    "bf618d172af74147b7a6ed2258eefac43db789d16a05fa4add0de33907efe185": {
+      "code": "MED-00000007",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/baby-shower/Karla&Gino-190.jpg"
+    },
+    "5f60e51c1ea9d51ec3fb3cc715aa6c65ab8b1880063174e942e6fad2eddfefca": {
+      "code": "MED-00000008",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/baby-shower/Karla&Gino-21.jpg"
+    },
+    "3965df31999e5cfb9bee216aa10c5c51af63393dbcab8b6b64ce83965d7ab012": {
+      "code": "MED-00000009",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/baby-shower/Karla&Gino-6.jpg"
+    },
+    "ea27d81a5eab25fc35eefb0aeab51b6de654f9e34263d0bdb42a77a5d30886cc": {
+      "code": "MED-00000010",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/baby-shower/Karla&Gino-7.jpg"
+    },
+    "fced077f6752a51eff0093ba6fd5a7db8aab8247999b48763171f2b91d6ca807": {
+      "code": "MED-00000011",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/baby-shower/main.jpg"
+    },
+    "cf0f8c75d178687814e33935686c917c31fad69115092ef6c2e31bf507885a42": {
+      "code": "MED-00000012",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/baila-da-zaza/Bailedazaza-6.jpg"
+    },
+    "84ad01eb60f3c8fbf05afeceed1be41ff6abd99782b89145de57a55d26a2983e": {
+      "code": "MED-00000013",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/baila-da-zaza/Bailedazaza-82.jpg"
+    },
+    "f4b4a167ed98898a339ddd093d1bb006ea818771df1274385b639395056e4690": {
+      "code": "MED-00000014",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/baila-da-zaza/main.jpg"
+    },
+    "28b92e96688b7f45eef82358f9145fe30204156b850eb4ae61a9b6561c7aadbd": {
+      "code": "MED-00000015",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-48.jpg"
+    },
+    "aeed8d941b34a626e208d43da7619901177334b9108dfe3d20b94212ad9b01b2": {
+      "code": "MED-00000016",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-49.jpg"
+    },
+    "e9768286263cb38aaa17e28134a44b189ed48e3683dad93b58ffe75b94f68b5e": {
+      "code": "MED-00000017",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-50.jpg"
+    },
+    "e63d7f068c1b7619308e3f671590a2dcb33f3d1b73657d36c748b807a567ce70": {
+      "code": "MED-00000018",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-51.jpg"
+    },
+    "64dff192ec22ebac77b1b2277810063a21ad90f51e9c59d76f57296f83652282": {
+      "code": "MED-00000019",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/cumpleanos-ana-paula/ANAPAULA-70.jpg"
+    },
+    "a658d81d0b63477ae916cbef26888e20e039c9ae2be76bfdda84b6a2232891d4": {
+      "code": "MED-00000020",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/fan-fest-club/ColvsPor-41.jpg"
+    },
+    "ca8569e3c888d648517ca53298914f800bd349cf5505b6a9b6baf20c384ebb72": {
+      "code": "MED-00000021",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/fan-fest-club/ColvsPor-48.jpg"
+    },
+    "c650461d17f531522108cc205b269d80eb88917e7cf59dac5f9484b799169f09": {
+      "code": "MED-00000022",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/fan-fest-club/FANFESTCOLVSCON-3.jpg"
+    },
+    "a42f9ff0f8b95b810b84a8cedee5d669895545da22149809b9d40e92aeb3946c": {
+      "code": "MED-00000023",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/fan-fest-club/FANFESTCOLVSUZB-16.jpg"
+    },
+    "06608f4183f9f34883b65c82b20c46a51175cadf4b8bf84b1b69a310598752fc": {
+      "code": "MED-00000024",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/fan-fest-club/FANFESTCOLVSUZB-64.jpg"
+    },
+    "39bbec49c3c67db621d67c70b103a627b61baea822bb363f02793076236d36e7": {
+      "code": "MED-00000025",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/fan-fest-club/FanfestMEXvsSOUTH-128.jpg"
+    },
+    "4ef3cf8496bf9687d27b9cb98dfa9f067dae156235a0ad5a635f9e57b51e55ef": {
+      "code": "MED-00000026",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/fan-fest-club/main.jpg"
+    },
+    "6b01263c1505cdd5cb3f5661c7741ef49c42b1521d5edd50b756d47d1b64bdef": {
+      "code": "MED-00000027",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/nossa-copa/BRZVSESC-16.jpg"
+    },
+    "4c38d275cd209fd6f33e4447f27a5220cd8f942b418a7c5644335e06e50dc296": {
+      "code": "MED-00000028",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/nossa-copa/BRZVSESC-199.jpg"
+    },
+    "099302b13e15533fea9e850f93b660f8a115f0a255c17ae17b8a5d433db6e6cd": {
+      "code": "MED-00000029",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/nossa-copa/NossaCopa-11.jpg"
+    },
+    "79ed04192286192822032d9e7d49d5bc993d129ed0aa63a21941663b87939e79": {
+      "code": "MED-00000030",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/nossa-copa/NossaCopa-60.jpg"
+    },
+    "fc489b8729aeaf6d43a27466ded5403e13ecf34b6064ca3f9b499a376f1b7f7e": {
+      "code": "MED-00000031",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/nossa-copa/NossaCopa-71.jpg"
+    },
+    "9a73807a388933cf8800ae6cf959c0aa7de8e16bac3b05b9f7d6346900432c14": {
+      "code": "MED-00000032",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/nossa-copa/NossaCopa-92.jpg"
+    },
+    "50153cdfa88f1495cb1f3d0e5c15c738c309f40b030aa8337bddb0e11c512ba8": {
+      "code": "MED-00000033",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/nossa-copa/main.jpg"
+    },
+    "ab4dd02920bc683a8f309257568eed3e90ddf6728e6fcb55c42f574a56591470": {
+      "code": "MED-00000034",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/wedding-r-r/DSC08265.jpg"
+    },
+    "b60bb07f4e6ac493f187cc1b531207c5478126f32c8f1b4ebe9afc3bbae4356b": {
+      "code": "MED-00000035",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/wedding-r-r/_EB50054.jpg"
+    },
+    "f3bf560cb14709c7ec779e746baac9d51204bc7865a47cbed2459eeeed501de1": {
+      "code": "MED-00000036",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/wedding-r-r/_EB50055.jpg"
+    },
+    "7ecea5694ead3b4d622b0e317ff767ffc4446658c962720192ea658037bd7053": {
+      "code": "MED-00000037",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/wedding-r-r/_EB53654.jpg"
+    },
+    "ce88467b58b2a262d96cc28a8b429a525e3d2c4d2225507a56796c0838c05207": {
+      "code": "MED-00000038",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/wedding-r-r/_EB53673.jpg"
+    },
+    "0e5129741313b5de9bb01097238912995c0610739fc0390532e422f5eefd4764": {
+      "code": "MED-00000039",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/wedding-r-r/_EB59664.jpg"
+    },
+    "4f19ac7ebca8b00433fbe415d38ae715d7eac1a26e2232169c4960c32b39f194": {
+      "code": "MED-00000040",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/wedding-r-r/_EB59673.jpg"
+    },
+    "1ffabfaa249a1895e17a2dd1a9c8b553a0c640e54b8de499694c76faf8d45f84": {
+      "code": "MED-00000041",
+      "version": 1,
+      "sourcePath": "src/assets/images/events/wedding-r-r/_EB59675.jpg"
+    },
+    "6b78bb1fb4d5d273c3d5a03b17551a0e130071458bffe50c171fc0fa22c29ca6": {
+      "code": "MED-00000042",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/celebrations/01.jpg"
+    },
+    "c340a936576fdb9328d87459f61b25d71c41e4c9ed06d3d11e79a30e5b3db49d": {
+      "code": "MED-00000043",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/celebrations/02.jpg"
+    },
+    "d855f54c7b48fc8db926fc11f0eef7d6cfac96d5bf452ce68cbcca5675ee2c51": {
+      "code": "MED-00000044",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/celebrations/03.jpg"
+    },
+    "49e575dcc905f972ad9751750b22cd8b3d96ad4b34ecc6d0d12c7586486e958c": {
+      "code": "MED-00000045",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/celebrations/04.jpg"
+    },
+    "3f7fee2e0428240c08db37a4896983cfd606134439486caf18f73ba372763614": {
+      "code": "MED-00000046",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/celebrations/05.jpg"
+    },
+    "effd1f6dc769ccb11626dc752e4f656a634ab7b20d0d4e106f3939100430d5d7": {
+      "code": "MED-00000047",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/celebrations/06.jpg"
+    },
+    "3babe49656a4264d334f8402c211abac0d50a1caeddbc7703feb1ab56bf69800": {
+      "code": "MED-00000048",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/celebrations/07.jpg"
+    },
+    "e27b37bac6cc24511e7adcdd0919a0308f4ed601b6e6492bbd9c975a49222b3c": {
+      "code": "MED-00000049",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/celebrations/08.jpg"
+    },
+    "860fb7d914644d344cf728cdc5c1c4e8fcfcff2175b3ee26bfc83bd550d742cd": {
+      "code": "MED-00000050",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/celebrations/09.jpg"
+    },
+    "88e01b2dd060fb85ecc28b3f6051e4c0a3b7d22549745256dd6b08f197f1f322": {
+      "code": "MED-00000051",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/celebrations/10.jpg"
+    },
+    "f7d06b420bd53d8bf19e6aba6e2ffeb4193ae84b2504424e9e7be4660e075996": {
+      "code": "MED-00000052",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/celebrations/11.jpg"
+    },
+    "8740e1701ce0dc134bf6d0994d458a4d14c325cf6075d012d06e1c19a2c3cbf0": {
+      "code": "MED-00000053",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/celebrations/main.jpg"
+    },
+    "08a60687b79c684c3565cfc9b395d9ed60b4a3ca4f5ae05a96ce97315478aeb1": {
+      "code": "MED-00000054",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/custom-packages/01.jpg"
+    },
+    "55bc3420b6a295d07ced6eea8fa84c2e15918c8280d55bc45d08c6adc5511c4a": {
+      "code": "MED-00000055",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/custom-packages/02.jpg"
+    },
+    "007b7fc12a132280473f90121176721ad14dc3c3ffa1e2746e7fbe38b3a703d1": {
+      "code": "MED-00000056",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/custom-packages/03.jpg"
+    },
+    "515bad05107f014850db45058eda4355019fb46a0fd7c88194e10b58e187a89f": {
+      "code": "MED-00000057",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/custom-packages/main.jpg"
+    },
+    "8911a1916dd4fdd7e2fc70ff49227c14c1f7de538d1960549698b434e3300f03": {
+      "code": "MED-00000004",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/setup-and-logistics/main.jpg"
+    },
+    "6273e1dc9577790579b97ee7938272943e78e0b642f517698e7a6a3b6439ec50": {
+      "code": "MED-00000058",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/furniture/03.jpg"
+    },
+    "1314d956e697bcdef0bb8bdcaac99a454047d2bf842587e27c71b05afa7adb57": {
+      "code": "MED-00000059",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/furniture/04.jpg"
+    },
+    "8e755ac65514a210e3eedef5d5613e615f708225553873a3a51f5d8c9d1e76aa": {
+      "code": "MED-00000060",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/furniture/main.jpg"
+    },
+    "d589f046be4d77334791a8ce0cebc3d564b9f9b3c8f00697eba7f1aa02107530": {
+      "code": "MED-00000061",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/organization/02.jpg"
+    },
+    "f17aa100a51bbee6e3c648877b79b0becbac27223727e38b926e2dff2eeac20f": {
+      "code": "MED-00000062",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/organization/03.jpg"
+    },
+    "e6485772f5d6651d09776f3a75ffb92b8d4551165738af1e120ce46858fba13d": {
+      "code": "MED-00000063",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/organization/05.jpg"
+    },
+    "873c8ce85d08bdccda40eb5d61e3a1b54c5b3002d3f7580c9476f35d267c945d": {
+      "code": "MED-00000064",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/organization/07.jpg"
+    },
+    "3e9063aa47d626228ca747005bc73e7a23e1bd3b7bdaa0b4a54b58a22061b171": {
+      "code": "MED-00000065",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/organization/08.jpg"
+    },
+    "6fce184c0c6929d53783defe42f01e26bd1a06386be8fc8791fc56a4da3ba724": {
+      "code": "MED-00000066",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/organization/10.jpg"
+    },
+    "ffa29132cf8308bb76986323b840cef1ae77d255c6a599424df3116b9a99309a": {
+      "code": "MED-00000067",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/organization/11.jpg"
+    },
+    "e45fd02f8332f7e143845bf84782d68e95e9d703cf832ce63e34331bf5a63404": {
+      "code": "MED-00000068",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/organization/12.jpg"
+    },
+    "97e187147b697a27090f9eff7476a495d121fda36bee4c224d70cf5e4f43167b": {
+      "code": "MED-00000069",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/organization/13.jpg"
+    },
+    "28665e33bf6e7c45631803c98ebc65a7b57795af0264391166e11471460b0349": {
+      "code": "MED-00000070",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/organization/14.jpg"
+    },
+    "8fd95ecbfd311c5404a66285787cf112775b21c48f005ae238252a32e700ecbb": {
+      "code": "MED-00000003",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/organization/main.jpg"
+    },
+    "b7e790a1725bd6d8d105e9eba128979005b4b6cbd25fdb34ba8f4fa19f30d834": {
+      "code": "MED-00000071",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/setup-and-logistics/01.jpg"
+    },
+    "7478cc3a0e0a067b42cb2c867dc671c11db3509bc1643f3a167f58a12acf74c8": {
+      "code": "MED-00000072",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/venues/01.jpg"
+    },
+    "742ba975a8a84e4541e270da2f3b91f2685d28ebe00521fee432e140789ec0e0": {
+      "code": "MED-00000073",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/venues/02.jpg"
+    },
+    "87f9eec983ebd24baa521435d937bef14d0cedc8e2ed61afef0110edad2ffa9d": {
+      "code": "MED-00000074",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/venues/main.jpg"
+    },
+    "2c8718128b630cfb38b7ad6685a01099d4e07b5d49587252c8f51747aebb8917": {
+      "code": "MED-00000075",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/weddings/01.jpg"
+    },
+    "0ad1a13919fcd7b7c43626c65d9056f1757633b276b288b8949f819117510bae": {
+      "code": "MED-00000076",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/weddings/02.jpg"
+    },
+    "f1b87eedd2de715a8d9d328f3f2f5f84d22ea15a80abf6b501caf2b85ef643df": {
+      "code": "MED-00000077",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/weddings/03.jpg"
+    },
+    "babcca77e18d9133b8852f7e2d2f2a7632b3d831e8af2ee44ec9b8a354c8e48b": {
+      "code": "MED-00000078",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/weddings/04.jpg"
+    },
+    "bf610a5c1ce3ac90e9832988cfb94cbe2c4c2257e4f587c7c03157a5da02e945": {
+      "code": "MED-00000079",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/weddings/05.jpg"
+    },
+    "2e92e1375b1e3a18a5b3b4f9e0ce8874ec893e4e7001d07a6f27da406bae4dca": {
+      "code": "MED-00000080",
+      "version": 1,
+      "sourcePath": "src/assets/images/services/weddings/main.jpg"
+    }
+  }
+}
