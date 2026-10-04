@@ -105,7 +105,16 @@ export function mapCmsSite(site: CmsPublicSite, origin: URL): CmsPublication {
       mainImage: media(item.mainImage),
       gallery: [...item.gallery]
         .sort((a, b) => (a.galleryPosition ?? 0) - (b.galleryPosition ?? 0))
-        .map(media),
+        .map((image, index) => {
+          const galleryImage = media(image);
+          return {
+            ...galleryImage,
+            // Main generated these service alts from the localized title and position.
+            alt: `${item.content.title} ${index + 1}`,
+            layout:
+              galleryImage.height > galleryImage.width ? "pair-portrait" : "full-landscape",
+          };
+        }),
     }));
   const events = [...site.events]
     .sort((a, b) => a.displayOrder - b.displayOrder || a.code.localeCompare(b.code))

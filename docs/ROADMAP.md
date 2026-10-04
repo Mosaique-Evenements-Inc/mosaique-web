@@ -332,6 +332,10 @@ This document is the source of truth for implementation status. The existence of
 
 - **Implemented locally on `feature/refact-CMS`:** Astro 7 server rendering with 30-second Vercel ISR uses the public `cms-site-v1` API for CMS-owned pages, shell navigation, and SEO. CMS publication no longer supplies a Web build input or Web SHA assertion. The API outage path is 503 and unknown CURRENT slugs return 404. Static robots/assets and the optional CMS-01 pilot remain independent of the API. Remote ISR, media, and CDN certification remains Episode 5 work. See `docs/CMS_RUNTIME_WEB.md`.
 
+## CMS Episode 6 — real content migration
+
+- **In progress; editorial publication blocked at the DEV media-processing boundary.** The approved `mosaique-web/main` commit is inventoried in deterministic content and Media plans. All 78 unique editorial binaries entered DEV CMS Media through its authenticated upload/finalize flow; 16 reached READY, 26 exceeded the CMS-03 24 MP pixel limit, and 36 hit a reproducible expected-versus-encoded dimension mismatch. An additive v2 worker/profile fix is prepared locally but requires the user's Git checkpoint and coordinated DEV deployment. The originals must then process under v2 before real Service, Event, and Home revisions can be closed and previewed. DEV CURRENT remains the certification publication `PUB-00000002`, generation 3. See `docs/CMS_EPISODE_6_AUDIT.md`.
+
 ## CMS-08D static publication adapter — local implementation
 
 - **Implemented locally:** an explicit CMS materialization JSON plus sibling immutable public assets now drives the CMS-owned Home fields, Services, Website Events and galleries, and the public Tree agenda in EN/ES/FR. The existing Home sections, gallery archive and detail-page visual structures are retained. Build input is required; the synthetic fixture is opt-in only.
