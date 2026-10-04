@@ -1,6 +1,7 @@
 # CMS Episode 6 — source and DEV audit
 
-Status: **DEV Media v2 certified; real editorial dataset migrated and Preview verified; final visual parity and publication pending**.
+Status: **Episode 6 complete in DEV**. The historical checkpoints below record the
+pre-publication sequence; the completion checkpoint is at the end of this audit.
 This document records the source at `mosaique-web/main` commit
 `e04b99e8ef58b5de0c9c7d35a873d6a43997c01d`. The feature branch is not a
 source for editorial values. The generated [source manifest](./CMS_EPISODE_6_SOURCE_MANIFEST.json)
@@ -86,8 +87,9 @@ profile migration was applied. The workflow still checks out `development`
 
 ### CMS-03 v2 cutover and verification
 
-Supabase MCP confirmed the exact DEV project and applied **only**
-`20261110160000_cms_media_profile_v2.sql` to DEV. Two local v2 worker
+Supabase MCP confirmed the exact DEV project and applied the SQL represented by
+`20261110160000_cms_media_profile_v2.sql` to DEV. The effective migration history
+identifier differs; see the migration-history note below. Two local v2 worker
 processes finished the new queue and were stopped. All 78 editorial originals
 are SHA/byte verified and READY under `cms03-v2-sharp0353`; the three historical
 versions are also READY (81/81 total). Orientation is 1, oriented dimensions
@@ -145,3 +147,48 @@ because the required final visual/parity validation had not been completed at
 that point; it made no mutation. Local parity was completed subsequently, but
 the corrected Web code has not been deployed, so publication has not been
 retried. No PROD operation was performed.
+
+## Episode 6 completion checkpoint
+
+The later certified DEV state is CURRENT `PUB-00000006`, generation 6, with
+`mosaique-web` at `c3334f8` and `mosaique-api` at `609f832`. The durable
+scheduled DEV worker uses `cms03-v2-sharp0353`; 81 processing jobs are READY.
+The real publication references 78 assets and 868 derivatives. Admin → CMS →
+Web authority, `cms-public` EN/ES/FR, media, SEO, slugs, ETag/304, and deployed
+Web DEV were certified without a Web redeploy for the controlled edit. PROD was
+untouched. The earlier publication-pending paragraphs above are historical.
+
+The pinned source manifest, content and media plans, DEV mappings, and three
+generation scripts are durable provenance. The Admin editorial importer is
+retained as a DEV-baseline replay record, and its Preview audit remains a
+read-only check. The completed one-time publication and certification-retirement
+scripts had no package, CI, test, documentation, or runtime consumers and were
+removed locally after their outcomes were recorded here: 8 real Services, 6
+real Website Events, Home revision 8, retirement of the old certification roots,
+and the publication stated above. Neither removed script is required to operate
+the current CMS.
+
+### CMS-03 v2 migration history
+
+Read-only Supabase inspection of the exact DEV project found
+`20261004052001_cms_media_profile_v2` in `supabase_migrations.schema_migrations`
+and no `20261110160000` entry. The repository file remains
+`mosaique-api/supabase/migrations/20261110160000_cms_media_profile_v2.sql`.
+The SQL was applied through Supabase MCP, which recorded an execution-time
+version rather than the file's future-dated version. The live `prosrc` MD5 and
+length for both `cms_media_processor_profile` and `cms_media_complete` match
+the file's two function bodies byte-for-byte. The complete stored SQL also
+matches the file after trimming one extra trailing newline in the stored
+statement, so the two migrations are semantically equivalent. The migration's
+`INSERT ... ON CONFLICT DO NOTHING` is compatible with the already READY rows.
+
+Supabase tracks migrations by version. It therefore sees the repository file as
+unapplied and the effective DEV version as remote-only. A future migration
+listing or dry-run must be reviewed before any push: `db push --include-all`
+explicitly includes every local version absent from remote history, and a
+normal push may also select the later `20261110160000` file. Re-executing it
+would create a duplicate logical migration record and could obscure DEV/PROD
+promotion history. No migration file or remote history was changed in this
+housekeeping pass. Resolve this with a separately reviewed migration plan that
+preserves clean local replay and inspects exact DEV and PROD pending lists;
+never mark or remove an applied version merely to make numbers match.

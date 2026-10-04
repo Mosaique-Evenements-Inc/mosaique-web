@@ -334,7 +334,7 @@ This document is the source of truth for implementation status. The existence of
 
 ## CMS Episode 6 — real content migration
 
-- **In progress; local visual parity completed before DEV publication.** CMS-03 v2 was applied only to DEV after disabling the v1 schedule; all 78 real editorial assets are READY with verified dimensions, orientation, 778 derivatives, private Storage integrity and sampled large-image quality. The 8 real Services, 6 real Website Events and Home revision 8 are CLOSED; old certification roots are inactive. EN/ES/FR publication-selection Preview has zero blockers/warnings and matches the pinned `mosaique-web/main` content plan. Local Chrome comparison against the exact `main` build exposed and fixed Web CTA, Process, Service Detail and Gallery category parity issues; these corrections have not reached the deployed DEV Web. DEV CURRENT remains `PUB-00000002`, generation 3. Admin visual Preview, deployed public Web parity, publication and authority proof remain within this episode. The v1 schedule remains disabled until a durable v2 worker is deployed. See `docs/CMS_EPISODE_6_AUDIT.md`.
+- **Complete in DEV.** CURRENT is `PUB-00000006`, generation 6. The scheduled DEV v2 worker is enabled and certified with 81 READY jobs. The real publication references 78 assets and 868 derivatives. Admin → CMS → Web authority and the deployed public Web were certified. PROD was untouched. The repository migration version differs from the effective DEV history identifier; review the reconciliation note in `docs/CMS_EPISODE_6_AUDIT.md` before a future migration push or PROD promotion.
 
 ## CMS-08D static publication adapter — local implementation
 
