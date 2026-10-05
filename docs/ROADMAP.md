@@ -334,7 +334,7 @@ This document is the source of truth for implementation status. The existence of
 
 ## CMS Episode 6 — real content migration
 
-- **Complete in DEV.** CURRENT is `PUB-00000006`, generation 6. The scheduled DEV v2 worker is enabled and certified with 81 READY jobs. The real publication references 78 assets and 868 derivatives. Admin → CMS → Web authority and the deployed public Web were certified. PROD was untouched. The repository migration version differs from the effective DEV history identifier; review the reconciliation note in `docs/CMS_EPISODE_6_AUDIT.md` before a future migration push or PROD promotion.
+- **Complete in DEV.** CURRENT is `PUB-00000006`, generation 6. The scheduled DEV v2 worker is enabled and certified with 81 READY jobs. The real publication references 78 assets and 868 derivatives. Admin → CMS → Web authority and the deployed public Web were certified. PROD was untouched. The CMS-03 v2 DEV migration history now aligns with the versioned file; future deployment must use a checkout with the complete migration set. See `docs/CMS_EPISODE_6_AUDIT.md`.
 
 ## CMS-08D static publication adapter — local implementation
 

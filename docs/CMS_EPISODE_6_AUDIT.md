@@ -182,13 +182,18 @@ matches the file after trimming one extra trailing newline in the stored
 statement, so the two migrations are semantically equivalent. The migration's
 `INSERT ... ON CONFLICT DO NOTHING` is compatible with the already READY rows.
 
-Supabase tracks migrations by version. It therefore sees the repository file as
-unapplied and the effective DEV version as remote-only. A future migration
-listing or dry-run must be reviewed before any push: `db push --include-all`
-explicitly includes every local version absent from remote history, and a
-normal push may also select the later `20261110160000` file. Re-executing it
-would create a duplicate logical migration record and could obscure DEV/PROD
-promotion history. No migration file or remote history was changed in this
-housekeeping pass. Resolve this with a separately reviewed migration plan that
-preserves clean local replay and inspects exact DEV and PROD pending lists;
-never mark or remove an applied version merely to make numbers match.
+Supabase tracks migrations by version, so DEV initially showed the repository
+file as unapplied and the effective version as remote-only. On 2026-10-04, the
+supported Supabase CLI history-only repair marked `20261110160000` applied,
+then `20261004052001` reverted, without executing the SQL again. Post-repair
+inspection found the repository version applied and no historical duplicate.
+The live profile, all 81 READY v2 jobs, CURRENT `PUB-00000006` generation 6,
+and CMS Media row counts and digests were unchanged.
+
+An isolated archive of the complete API `feature/refact-CMS` migration set
+showed all 98 local/DEV versions aligned. Its read-only `db push --dry-run
+--skip-vault` reported zero migrations to apply. The API `development` checkout
+still lacks nine already-applied CMS publication migration files from
+2026-11-02 through 2026-11-09, so a dry-run from that incomplete checkout
+stops before planning. Do not remove those valid remote entries; use a checkout
+with the complete migration set for future deployments. PROD was untouched.
