@@ -1,7 +1,13 @@
 import { assertUniqueValues } from "../../../core/common/utils/assert-unique-values.ts";
 import { supportedLocales, type Locale } from "../../../core/i18n/config/locales.ts";
 import type { LocaleDictionaries } from "../../../core/i18n/translation/contracts.ts";
-import type { MenuProvider, MenuThemeConfig, MenuTranslation } from "../types/index.ts";
+import { MENU_SOCIAL_PLATFORMS } from "../types/index.ts";
+import type {
+  MenuProvider,
+  MenuSocialLink,
+  MenuThemeConfig,
+  MenuTranslation,
+} from "../types/index.ts";
 
 export type MenuTranslationRegistry = LocaleDictionaries<Record<string, MenuTranslation>>;
 
@@ -40,6 +46,36 @@ const validateTheme = (theme: MenuThemeConfig, label: string) => {
   }
 };
 
+const validateSocialLink = (link: MenuSocialLink, providerId: string) => {
+  if (!MENU_SOCIAL_PLATFORMS.some((platform) => platform === link.platform)) {
+    throw new Error(`Menu provider ${providerId} has an unsupported social platform.`);
+  }
+
+  requireText(link.handle, `Menu provider ${providerId} ${link.platform} handle`);
+  if (link.handle !== link.handle.trim() || link.handle.includes("@")) {
+    throw new Error(
+      `Menu provider ${providerId} ${link.platform} handle must omit @ and padding.`,
+    );
+  }
+
+  let url: URL;
+  try {
+    if (
+      typeof link.url !== "string" ||
+      link.url !== link.url.trim() ||
+      !link.url.startsWith("https://")
+    ) {
+      throw new Error("Invalid URL text");
+    }
+    url = new URL(link.url);
+  } catch {
+    throw new Error(`Menu provider ${providerId} ${link.platform} has an invalid social URL.`);
+  }
+  if (url.protocol !== "https:") {
+    throw new Error(`Menu provider ${providerId} ${link.platform} social URL must use HTTPS.`);
+  }
+};
+
 export function validateMenuRegistry(
   providers: readonly MenuProvider[],
   translations: MenuTranslationRegistry,
@@ -63,6 +99,14 @@ export function validateMenuRegistry(
     validateTheme(provider.config, `Menu provider ${provider.id} config`);
     if (provider.eventConfig)
       validateTheme(provider.eventConfig, `Menu provider ${provider.id} eventConfig`);
+    if (provider.socialLinks) {
+      assertUniqueValues(
+        `Menu provider ${provider.id} social`,
+        "platforms",
+        provider.socialLinks.map(({ platform }) => platform),
+      );
+      for (const link of provider.socialLinks) validateSocialLink(link, provider.id);
+    }
 
     const sections = provider.menu.sections;
     assertUniqueValues(

@@ -6,6 +6,18 @@ export interface MenuThemeConfig {
   accentColor: string;
 }
 
+export const MENU_SOCIAL_PLATFORMS = ["instagram", "tiktok", "facebook"] as const;
+
+export type MenuSocialPlatform = (typeof MENU_SOCIAL_PLATFORMS)[number];
+
+export interface MenuSocialLink {
+  platform: MenuSocialPlatform;
+  /** Canonical account handle without @; presentation may add it. */
+  handle: string;
+  /** Complete HTTPS destination, stored independently of the handle. */
+  url: string;
+}
+
 export interface MenuItemRecord {
   id: string;
   price: number;
@@ -21,6 +33,7 @@ export interface MenuProvider {
   slug: string;
   config: MenuThemeConfig;
   eventConfig?: MenuThemeConfig;
+  socialLinks?: readonly MenuSocialLink[];
   menu: {
     sections: readonly MenuSectionRecord[];
   };

@@ -8,7 +8,7 @@ import {
   localizeMenu,
   resolveMenuTheme,
 } from "../selectors/index.ts";
-import type { MenuProvider } from "../types/index.ts";
+import type { MenuProvider, MenuSocialLink, MenuSocialPlatform } from "../types/index.ts";
 import { formatMenuPrice } from "../utils/format-price.ts";
 import { validateMenuRegistry, type MenuTranslationRegistry } from "../utils/validate.ts";
 
@@ -43,6 +43,12 @@ const provider: MenuProvider = {
       },
     ],
   },
+};
+
+const instagramLink: MenuSocialLink = {
+  platform: "instagram",
+  handle: "samplehandle",
+  url: "https://instagram.example.test/samplehandle",
 };
 
 const translations: MenuTranslationRegistry = {
@@ -103,6 +109,65 @@ test("valid registry and slug lookup retain canonical identity", () => {
   assert.doesNotThrow(() => validateMenuRegistry([provider], translations));
   assert.equal(findMenuProviderBySlug([provider], provider.slug), provider);
   assert.equal(findMenuProviderBySlug([provider], "missing"), undefined);
+});
+
+test("social links are optional canonical provider data across all locales", () => {
+  assert.doesNotThrow(() => validateMenuRegistry([provider], translations));
+  assert.doesNotThrow(() =>
+    validateMenuRegistry([{ ...provider, socialLinks: [] }], translations),
+  );
+
+  const socialProvider: MenuProvider = { ...provider, socialLinks: [instagramLink] };
+  assert.doesNotThrow(() => validateMenuRegistry([socialProvider], translations));
+  for (const locale of ["en", "es", "fr"] as const) {
+    const menu = localizeMenu(socialProvider, locale, translations);
+    assert.equal(socialProvider.socialLinks?.[0], instagramLink);
+    assert.equal("socialLinks" in menu, false);
+    assert.equal("socialLinks" in translations[locale][provider.id], false);
+  }
+});
+
+test("social handles must be present and stored without @ or padding", () => {
+  for (const handle of ["", "   ", "@samplehandle", "sample@handle", " samplehandle "]) {
+    const invalid: MenuProvider = {
+      ...provider,
+      socialLinks: [{ ...instagramLink, handle }],
+    };
+    assert.throws(() => validateMenuRegistry([invalid], translations), /handle/);
+  }
+});
+
+test("social URLs must be complete valid HTTPS URLs", () => {
+  for (const url of [
+    "not-a-url",
+    "/samplehandle",
+    "https://",
+    "https:example.test/user",
+    "http://example.test/user",
+  ] as const) {
+    const invalid: MenuProvider = {
+      ...provider,
+      socialLinks: [{ ...instagramLink, url }],
+    };
+    assert.throws(() => validateMenuRegistry([invalid], translations), /social URL/);
+  }
+});
+
+test("duplicate and unsupported social platforms are rejected", () => {
+  const duplicate: MenuProvider = {
+    ...provider,
+    socialLinks: [instagramLink, { ...instagramLink, handle: "anotherhandle" }],
+  };
+  assert.throws(() => validateMenuRegistry([duplicate], translations), /duplicate platforms/);
+
+  const unsupported: MenuProvider = {
+    ...provider,
+    socialLinks: [{ ...instagramLink, platform: "unsupported" as MenuSocialPlatform }],
+  };
+  assert.throws(
+    () => validateMenuRegistry([unsupported], translations),
+    /unsupported social platform/,
+  );
 });
 
 test("English, Spanish, and French map the same sections, dishes, and prices", () => {

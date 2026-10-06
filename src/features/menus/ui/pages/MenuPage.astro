@@ -1,0 +1,20 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import type { MenuContent } from "../../types";
+
+interface Props {
+  menu: MenuContent;
+}
+
+const { menu } = Astro.props;
+---
+
+<BaseLayout
+  title={`${menu.title} — MOSAÏQUE EVENTS`}
+  description={menu.description ?? menu.title}
+>
+  <main id="main-content" tabindex="-1">
+    <h1>{menu.title}</h1>
+    {menu.description && <p>{menu.description}</p>}
+  </main>
+</BaseLayout>
