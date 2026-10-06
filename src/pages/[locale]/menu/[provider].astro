@@ -17,4 +17,4 @@ const locale = Astro.params.locale as Locale;
 const menu = getLocalizedMenu(provider, locale);
 ---
 
-<MenuPage {menu} />
+<MenuPage {provider} {menu} {locale} />

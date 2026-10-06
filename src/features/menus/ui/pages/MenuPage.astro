@@ -1,20 +1,65 @@
 ---
+import { getLocalizedHref, type Locale } from "@/core/i18n";
+import Heading from "@/core/common/ui/components/Heading.astro";
+import Text from "@/core/common/ui/components/Text.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import type { MenuContent } from "../../types";
+import type { MenuContent, MenuProvider } from "../../types";
+import { getMenuUiCopy } from "../copy";
+import MenuLanguageSwitcher from "../components/MenuLanguageSwitcher.astro";
+import MenuSection from "../components/MenuSection.astro";
+import MenuSocialLinks from "../components/MenuSocialLinks.astro";
+
+import "../styles/menu-page.css";
 
 interface Props {
+  provider: MenuProvider;
   menu: MenuContent;
+  locale: Locale;
 }
 
-const { menu } = Astro.props;
+const { provider, menu, locale } = Astro.props;
+const copy = getMenuUiCopy(locale);
 ---
 
 <BaseLayout
   title={`${menu.title} — MOSAÏQUE EVENTS`}
   description={menu.description ?? menu.title}
 >
-  <main id="main-content" tabindex="-1">
-    <h1>{menu.title}</h1>
-    {menu.description && <p>{menu.description}</p>}
+  <main class="menu-page" id="main-content" tabindex="-1">
+    <div class="menu-page__inner">
+      <header class="menu-page__header">
+        <MenuLanguageSwitcher
+          {provider}
+          {locale}
+          currentUrl={Astro.url}
+          label={copy.languages}
+        />
+        <div class="menu-page__identity">
+          <Heading as="h1" variant="heading-lg" class="menu-page__title">{menu.title}</Heading>
+          {
+            menu.description && (
+              <Text variant="body-lg" class="menu-page__description">
+                {menu.description}
+              </Text>
+            )
+          }
+        </div>
+        <MenuSocialLinks
+          links={provider.socialLinks}
+          providerTitle={menu.title}
+          label={copy.socialLinks}
+          opensNewTab={copy.opensNewTab}
+        />
+      </header>
+
+      <div class="menu-page__sections">
+        {menu.sections.map((section) => <MenuSection {section} {locale} />)}
+      </div>
+
+      <footer class="menu-page__attribution">
+        <span>{copy.attribution}</span>
+        <a href={getLocalizedHref("/", locale)}>MOSAÏQUE ÉVÉNEMENTS</a>
+      </footer>
+    </div>
   </main>
 </BaseLayout>

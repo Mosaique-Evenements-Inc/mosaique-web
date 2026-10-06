@@ -1,6 +1,6 @@
 # Mosaïque Web Roadmap
 
-Last verified against code and git history: 2026-09-17.
+Last full verification against code and git history: 2026-09-17. Menus track verified locally: 2026-10-06.
 
 This document is the source of truth for implementation status. The existence of a module in `src/content/home/` does not mean its section has been implemented.
 
@@ -328,6 +328,23 @@ This document is the source of truth for implementation status. The existence of
 - Social image tags remain intentionally absent until an approved production image is available.
 
 ## Current
+
+### Menus V1
+
+- **✅ MENUS-00 through MENUS-02.1: complete.** The feature has a canonical provider contract,
+  localized EN/ES/FR content and routes, CAD formatting, language-routing support, and optional
+  canonical provider social links. The production provider registry remains empty.
+- **✅ MENUS-03 reusable UI: implemented locally.** A standalone Astro page now composes a
+  localized provider header, linked language selector, optional social profiles, authored menu
+  sections and items, formatted prices, and restrained Mosaïque attribution. Feature-local CSS
+  provides mobile-first layout with a narrow-width price fallback; no React hydration, real
+  provider, provider theme mapping, or new dependency was added. Typecheck, 27 tests, build,
+  scoped lint, formatting, and diff-check pass. Global lint retains its known generated
+  `.vercel/output` errors.
+- **⏳ Visual acceptance pending.** With no production provider or public menu route, the menu
+  composition has not yet been rendered in a browser at 320, 375, 768, and desktop widths or
+  checked with runtime reduced-motion emulation. MENUS-04 theme mapping and MENUS-05's first
+  approved provider are separate future phases.
 
 ### Tree Link V1
 

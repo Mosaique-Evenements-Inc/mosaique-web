@@ -1,0 +1,56 @@
+---
+import { getLanguageTag, type Locale } from "@/core/i18n";
+import { getMenuLanguageHref, type MenuProvider } from "@/features/menus";
+import { getMenuLanguageOptions } from "../presentation";
+
+interface Props {
+  provider: MenuProvider;
+  locale: Locale;
+  currentUrl: URL;
+  label: string;
+}
+
+const { provider, locale, currentUrl, label } = Astro.props;
+const options = getMenuLanguageOptions(locale, (target) =>
+  getMenuLanguageHref(provider, target, currentUrl),
+);
+---
+
+<nav class="menu-page__languages" aria-label={label} data-menu-language-switcher>
+  <ul>
+    {
+      options.map((option) => (
+        <li>
+          <a
+            href={option.href}
+            hreflang={getLanguageTag(option.locale)}
+            lang={getLanguageTag(option.locale)}
+            aria-current={option.current ? "page" : undefined}
+            aria-label={option.accessibleName}
+          >
+            {option.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<script>
+  const syncMenuLanguageUrls = () => {
+    document
+      .querySelectorAll<HTMLElement>("[data-menu-language-switcher]")
+      .forEach((switcher) => {
+        switcher.querySelectorAll<HTMLAnchorElement>("a[href]").forEach((link) => {
+          const target = new URL(link.href, window.location.href);
+          target.search = window.location.search;
+          target.hash = window.location.hash;
+          link.href = `${target.pathname}${target.search}${target.hash}`;
+        });
+      });
+  };
+
+  window.addEventListener("hashchange", syncMenuLanguageUrls);
+  document.addEventListener("astro:page-load", syncMenuLanguageUrls);
+  syncMenuLanguageUrls();
+</script>

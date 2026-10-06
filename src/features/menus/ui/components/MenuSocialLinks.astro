@@ -1,0 +1,37 @@
+---
+import type { MenuSocialLink } from "../../types";
+import { getMenuSocialItems } from "../presentation";
+
+interface Props {
+  links?: readonly MenuSocialLink[];
+  providerTitle: string;
+  label: string;
+  opensNewTab: string;
+}
+
+const { links, providerTitle, label, opensNewTab } = Astro.props;
+const items = getMenuSocialItems(links);
+---
+
+{
+  items.length > 0 && (
+    <nav class="menu-page__social" aria-label={label}>
+      <ul>
+        {items.map((item) => (
+          <li>
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${item.platform}, ${item.displayHandle} — ${providerTitle} (${opensNewTab})`}
+            >
+              <span>{item.platform}</span>
+              <span aria-hidden="true"> · </span>
+              <span>{item.displayHandle}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}

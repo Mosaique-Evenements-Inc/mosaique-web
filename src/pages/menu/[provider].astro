@@ -16,4 +16,4 @@ const { provider } = Astro.props;
 const menu = getLocalizedMenu(provider, defaultLocale);
 ---
 
-<MenuPage {menu} />
+<MenuPage {provider} {menu} locale={defaultLocale} />
