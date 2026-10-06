@@ -3,11 +3,12 @@ import { getLocalizedHref, type Locale } from "@/core/i18n";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import type { MenuContent, MenuProvider } from "../../types";
+import { resolveMenuTheme, type MenuContent, type MenuProvider } from "@/features/menus";
 import { getMenuUiCopy } from "../copy";
 import MenuLanguageSwitcher from "../components/MenuLanguageSwitcher.astro";
 import MenuSection from "../components/MenuSection.astro";
 import MenuSocialLinks from "../components/MenuSocialLinks.astro";
+import { projectMenuTheme } from "../theme";
 
 import "../styles/menu-page.css";
 
@@ -19,13 +20,14 @@ interface Props {
 
 const { provider, menu, locale } = Astro.props;
 const copy = getMenuUiCopy(locale);
+const themeStyle = projectMenuTheme(resolveMenuTheme(provider));
 ---
 
 <BaseLayout
   title={`${menu.title} — MOSAÏQUE EVENTS`}
   description={menu.description ?? menu.title}
 >
-  <main class="menu-page" id="main-content" tabindex="-1">
+  <main class="menu-page" id="main-content" tabindex="-1" style={themeStyle}>
     <div class="menu-page__inner">
       <header class="menu-page__header">
         <MenuLanguageSwitcher

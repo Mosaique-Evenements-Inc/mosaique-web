@@ -338,13 +338,20 @@ This document is the source of truth for implementation status. The existence of
   localized provider header, linked language selector, optional social profiles, authored menu
   sections and items, formatted prices, and restrained Mosaïque attribution. Feature-local CSS
   provides mobile-first layout with a narrow-width price fallback; no React hydration, real
-  provider, provider theme mapping, or new dependency was added. Typecheck, 27 tests, build,
+  provider, or new dependency was added. Typecheck, 27 tests, build,
   scoped lint, formatting, and diff-check pass. Global lint retains its known generated
   `.vercel/output` errors.
+- **✅ MENUS-04 provider theme: implemented locally.** The existing Menus resolver projects
+  either the complete restaurant config or its complete event override into five CSS color
+  variables on `.menu-page` only. Page, item surface, primary and muted text, interactions, and
+  attribution consume those scoped roles without provider-specific selectors or global token
+  changes. Typecheck, 29 tests, build, scoped lint, formatting, and diff-check pass; global lint
+  retains its known generated `.vercel/output` errors. Actual provider contrast remains a
+  provider-data acceptance check.
 - **⏳ Visual acceptance pending.** With no production provider or public menu route, the menu
   composition has not yet been rendered in a browser at 320, 375, 768, and desktop widths or
-  checked with runtime reduced-motion emulation. MENUS-04 theme mapping and MENUS-05's first
-  approved provider are separate future phases.
+  checked with runtime reduced-motion emulation. MENUS-05's first approved provider remains a
+  separate future phase.
 
 ### Tree Link V1
 

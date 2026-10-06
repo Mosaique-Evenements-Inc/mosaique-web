@@ -3,8 +3,10 @@ import test from "node:test";
 
 import { localeConfig, type Locale } from "../../../core/i18n/config/locales.ts";
 import { composeMenuLanguageHref } from "../routing/paths.ts";
-import type { MenuSocialLink } from "../types/index.ts";
+import { resolveMenuTheme } from "../selectors/index.ts";
+import type { MenuProvider, MenuSocialLink, MenuThemeConfig } from "../types/index.ts";
 import { getMenuLanguageOptions, getMenuSocialItems } from "../ui/presentation.ts";
+import { projectMenuTheme } from "../ui/theme.ts";
 
 const provider = { slug: "sample-provider" };
 const currentUrl = "/fr/menu/sample-provider?table=4#drinks";
@@ -59,4 +61,76 @@ test("social presentation is optional and retains canonical handles and URLs", (
     composeMenuLanguageHref(provider, target, currentUrl, localizePath),
   );
   assert.equal(options[0].href, "/menu/sample-provider/?table=4#drinks");
+});
+
+test("resolved restaurant theme projects exactly five scoped Menu color roles", () => {
+  const config: MenuThemeConfig = {
+    backgroundColor: "#f5f0e6",
+    surfaceColor: "#ffffff",
+    textColor: "#161616",
+    mutedTextColor: "#555555",
+    accentColor: "#8a4000",
+  };
+  const themedProvider: MenuProvider = {
+    id: "provider-fixture-01",
+    slug: "sample-provider",
+    config,
+    menu: { sections: [] },
+  };
+  const original = structuredClone(themedProvider);
+  const projected = projectMenuTheme(resolveMenuTheme(themedProvider));
+
+  assert.deepEqual(projected, {
+    "--menu-background": "#f5f0e6",
+    "--menu-surface": "#ffffff",
+    "--menu-text": "#161616",
+    "--menu-muted-text": "#555555",
+    "--menu-accent": "#8a4000",
+  });
+  assert.deepEqual(Object.keys(projected), [
+    "--menu-background",
+    "--menu-surface",
+    "--menu-text",
+    "--menu-muted-text",
+    "--menu-accent",
+  ]);
+  assert.deepEqual(
+    projectMenuTheme(resolveMenuTheme({ ...themedProvider, slug: "another-provider" })),
+    projected,
+  );
+  assert.deepEqual(themedProvider, original);
+});
+
+test("event theme fully replaces restaurant colors before Menu projection", () => {
+  const themedProvider: MenuProvider = {
+    id: "provider-fixture-02",
+    slug: "sample-provider",
+    config: {
+      backgroundColor: "#f5f0e6",
+      surfaceColor: "#ffffff",
+      textColor: "#161616",
+      mutedTextColor: "#555555",
+      accentColor: "#8a4000",
+    },
+    eventConfig: {
+      backgroundColor: "#101010",
+      surfaceColor: "#202020",
+      textColor: "#f8f8f8",
+      mutedTextColor: "#d5d5d5",
+      accentColor: "#e8bb55",
+    },
+    menu: { sections: [] },
+  };
+  const original = structuredClone(themedProvider);
+  const resolved = resolveMenuTheme(themedProvider);
+
+  assert.equal(resolved, themedProvider.eventConfig);
+  assert.deepEqual(projectMenuTheme(resolved), {
+    "--menu-background": "#101010",
+    "--menu-surface": "#202020",
+    "--menu-text": "#f8f8f8",
+    "--menu-muted-text": "#d5d5d5",
+    "--menu-accent": "#e8bb55",
+  });
+  assert.deepEqual(themedProvider, original);
 });

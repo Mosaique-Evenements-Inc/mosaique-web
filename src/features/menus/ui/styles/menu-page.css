@@ -1,7 +1,11 @@
 .menu-page {
   min-block-size: 100svh;
-  background: var(--color-background);
-  color: var(--color-text-primary);
+  background: var(--menu-background, var(--color-background));
+  color: var(--menu-text, var(--color-text-primary));
+}
+
+.menu-page :focus-visible {
+  outline-color: var(--menu-text, var(--color-text-primary));
 }
 
 .menu-page__inner {
@@ -44,7 +48,7 @@
   min-block-size: 2.75rem;
   place-items: center;
   border-block-end: 1px solid transparent;
-  color: var(--color-text-secondary);
+  color: var(--menu-muted-text, var(--color-text-secondary));
   font-family: var(--font-family-ui);
   font-size: var(--text-navigation-size);
   font-weight: var(--text-navigation-weight);
@@ -53,8 +57,13 @@
 
 .menu-page__languages a[aria-current="page"] {
   border-block-end-color: currentColor;
-  color: var(--color-text-primary);
+  color: var(--menu-accent, var(--color-accent));
   font-weight: 700;
+}
+
+.menu-page__languages a:hover {
+  color: var(--menu-accent, var(--color-accent));
+  text-decoration: underline;
 }
 
 .menu-page__identity {
@@ -75,6 +84,11 @@
   overflow-wrap: anywhere;
 }
 
+.menu-page .menu-page__description,
+.menu-page .menu-page__item-description {
+  color: var(--menu-muted-text, var(--color-text-secondary));
+}
+
 .menu-page__social ul {
   column-gap: 1.5rem;
 }
@@ -90,7 +104,7 @@
   display: inline-flex;
   min-block-size: 2.75rem;
   align-items: center;
-  color: var(--color-text-secondary);
+  color: var(--menu-muted-text, var(--color-text-secondary));
   font-size: var(--text-caption-size);
   overflow-wrap: anywhere;
   text-decoration: none;
@@ -98,7 +112,7 @@
 
 .menu-page__social a:hover,
 .menu-page__social a:focus-visible {
-  color: var(--color-text-primary);
+  color: var(--menu-accent, var(--color-accent));
   text-decoration: underline;
 }
 
@@ -109,7 +123,7 @@
 
 .menu-page__section {
   min-inline-size: 0;
-  border-block-start: 1px solid var(--color-border-default);
+  border-block-start: 1px solid var(--menu-muted-text, var(--color-border-default));
   padding-block-start: 1.5rem;
 }
 
@@ -120,6 +134,8 @@
 .menu-page__items {
   display: grid;
   gap: 1.75rem;
+  padding: clamp(1rem, 3vw, 1.75rem);
+  background: var(--menu-surface, var(--color-surface));
 }
 
 .menu-page__item {
@@ -144,6 +160,7 @@
 
 .menu-page__price {
   padding-block-start: 0.15rem;
+  color: var(--menu-text, var(--color-text-primary));
   font-size: var(--text-body-size);
   font-weight: 500;
   line-height: var(--text-body-line-height);
@@ -156,14 +173,14 @@
   align-items: baseline;
   column-gap: 0.35em;
   margin-block-start: clamp(4rem, 10vw, 7rem);
-  border-block-start: 1px solid var(--color-border-default);
+  border-block-start: 1px solid var(--menu-muted-text, var(--color-border-default));
   padding-block-start: 1.5rem;
-  color: var(--color-text-secondary);
+  color: var(--menu-muted-text, var(--color-text-secondary));
   font-size: var(--text-caption-size);
 }
 
 .menu-page__attribution a {
-  color: var(--color-text-primary);
+  color: var(--menu-accent, var(--color-accent));
 }
 
 @media (max-width: 22rem) {
