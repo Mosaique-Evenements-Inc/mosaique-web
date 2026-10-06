@@ -22,10 +22,10 @@ export const menuProviders: readonly MenuProvider[] = [
       accentColor: "#C6963E",
       secondaryColor: "#D88F98",
       logo: { assetId: "aoa", alt: "AOA" },
-      // The named fonts remain at the front of safe stacks until licensed assets are supplied.
+      // Reuse Web display tokens; the Menu page self-hosts the variable body font.
       typography: {
-        displayFontFamily: '"TAN Ashford", var(--font-family-display)',
-        bodyFontFamily: "Quicksand, var(--font-family-body)",
+        displayFontFamily: "var(--font-family-display)",
+        bodyFontFamily: '"Quicksand Variable", var(--font-family-body)',
       },
     },
     socialLinks: [

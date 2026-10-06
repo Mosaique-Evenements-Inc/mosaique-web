@@ -191,8 +191,8 @@ test("Alfajores Fleur retains approved items, prices, social identity, and AOA e
   assert.equal(eventConfig.logo?.assetId, "aoa");
   assert.equal(eventConfig.logo?.alt, "AOA");
   assert.deepEqual(eventConfig.typography, {
-    displayFontFamily: '"TAN Ashford", var(--font-family-display)',
-    bodyFontFamily: "Quicksand, var(--font-family-body)",
+    displayFontFamily: "var(--font-family-display)",
+    bodyFontFamily: '"Quicksand Variable", var(--font-family-body)',
   });
   assert.deepEqual(projectMenuTheme(eventConfig), {
     "--menu-background": "#F3E5D2",
@@ -201,8 +201,8 @@ test("Alfajores Fleur retains approved items, prices, social identity, and AOA e
     "--menu-muted-text": "#7D0C0C",
     "--menu-accent": "#C6963E",
     "--menu-secondary": "#D88F98",
-    "--menu-font-display": '"TAN Ashford", var(--font-family-display)',
-    "--menu-font-body": "Quicksand, var(--font-family-body)",
+    "--menu-font-display": "var(--font-family-display)",
+    "--menu-font-body": '"Quicksand Variable", var(--font-family-body)',
   });
   assert.notDeepEqual(realProvider.config, eventConfig);
   assert.equal(
@@ -352,11 +352,12 @@ test("built Alfajores Fleur menus render generic event branding above content an
     assert.match(main, /--menu-muted-text:#7D0C0C/);
     assert.match(main, /--menu-accent:#C6963E/);
     assert.match(main, /--menu-secondary:#D88F98/);
+    assert.match(main, /--menu-font-display:var\(--font-family-display\)/);
     assert.match(
       main,
-      /--menu-font-display:&quot;TAN Ashford&quot;, var\(--font-family-display\)/,
+      /--menu-font-body:&quot;Quicksand Variable&quot;, var\(--font-family-body\)/,
     );
-    assert.match(main, /--menu-font-body:Quicksand, var\(--font-family-body\)/);
+    assert.doesNotMatch(main, /TAN Ashford/);
     assert.match(main, /<h1\b/);
     assert.match(main, /<h2\b/);
     assert.match(main, /aria-current="page"/);

@@ -354,10 +354,11 @@ This document is the source of truth for implementation status. The existence of
   food items and two desserts at the supplied numeric CAD prices, and EN/ES/FR labels without
   invented descriptions or quantity data. Its neutral restaurant config remains provisional.
   A complete AOA event override now supplies the approved six-color palette, the supplied AOA
-  SVG as the primary menu logo, and TAN Ashford/Quicksand font stacks with project fallbacks.
+  SVG as the primary menu logo, and the original TAN Ashford/Quicksand font intentions with
+  project fallbacks (superseded by MENUS-07C below).
   The resolver uses full replacement, with a typed asset registry and generic Menu rendering;
-  Mosaïque attribution remains below the content. TAN Ashford and Quicksand files are absent,
-  so their exact rendering awaits approved font assets or an established loading decision.
+  Mosaïque attribution remains below the content. Font files were absent at this phase;
+  MENUS-07C resolves the final Menu typography decision and body-font delivery.
   The static build emits exactly three provider routes; tests and HTML inspection cover all
   seven items, locale links, social handle, attribution, scoped palette, logo order, and absence
   of provider-specific Menu UI logic. Build, typecheck, tests, scoped lint, formatting, and
@@ -414,12 +415,29 @@ This document is the source of truth for implementation status. The existence of
   No animation or transition was added; reduced-motion emulation and cross-browser QA remain
   unverified. Typecheck (189 files), 37 tests, 78-page build, source lint, scoped formatting, and
   diff-check pass. Global lint retains the same 2521 generated `.vercel/output` errors.
-- **⏳ MENUS-07 final visual acceptance remains pending.** TAN Ashford and Quicksand assets are
-  still absent and configured fallbacks are active. No approved botanical artwork exists, so
+- **✅ MENUS-07C final typography: integrated and certified locally.** Menu display typography
+  now resolves directly to Web's canonical `var(--font-family-display)` token, which aliases
+  the existing Cinzel/editorial fallback stack. This reuses Web's current loading state;
+  Cinzel itself remains unbundled under the separate site-wide font contract.
+  Body/UI uses `"Quicksand Variable"` from `@fontsource-variable/quicksand` 5.3.0, imported only
+  by the Menu page. The dependency and lockfile were already committed at this phase's clean
+  starting HEAD; `pnpm add` confirmed the installation without changing those files.
+  The build emits three subset WOFF2 files and includes their font-face CSS on Menu routes,
+  while Home does not import it. Browser font checking confirms the configured Quicksand face
+  is loaded; computed dish/price typography uses that family and headings use the Web stack.
+  MENUS-07B geometry and sizing require no correction. Desktop sheet height remains about
+  1196 px. Visual comparison covers 375, tablet 769 (closest practical to 768), and 1440 px;
+  overflow measurements pass at 320, 375, 430, 767/769, 1024/1025, 1280, and 1440 CSS px.
+  EN/ES/FR retain all products, localized prices, and controls, including narrow 320 px.
+  Existing full-replacement tests remain intact; updated typography expectations pass with all
+  37 tests. Typecheck (189 files), 78-page build, source lint, scoped formatting, and diff-check
+  pass. Global lint retains the known 2521 errors in generated `.vercel/output`.
+  TAN Ashford is no longer approved or required; the Menu typography asset blocker is resolved.
+- **⏳ MENUS-07 final visual acceptance remains pending.** No approved botanical artwork exists, so
   the literal flower is omitted while CSS atmosphere supplies the surrounding balance.
   The official stacked Mosaïque asset and taller cherub produce different proportions from
   the mockup; unapproved taglines are intentionally absent and prices retain locale-aware CAD
-  formatting. Exact typography, literal botanical fidelity, cross-browser and assistive-technology
+  formatting. Literal botanical fidelity, cross-browser and assistive-technology
   acceptance remain open; MENUS-07A does not certify pixel-perfect identity or close all of MENUS-07.
 
 ### Tree Link V1
