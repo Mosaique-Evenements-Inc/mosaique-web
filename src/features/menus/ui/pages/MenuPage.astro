@@ -32,8 +32,8 @@ const logoImage = theme.logo ? menuLogoAssets[theme.logo.assetId] : undefined;
 ---
 
 <BaseLayout
-  title={`${menu.title} — MOSAÏQUE EVENTS`}
-  description={menu.description ?? menu.title}
+  title={`${menu.title} — ${copy.menu} — MOSAÏQUE ÉVÉNEMENTS`}
+  description={`${copy.menu} — ${menu.description ?? menu.title}`}
 >
   <main class="menu-page" id="main-content" tabindex="-1" style={themeStyle}>
     <div class="menu-page__atmosphere" aria-hidden="true">
