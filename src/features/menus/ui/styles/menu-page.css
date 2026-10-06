@@ -1,0 +1,501 @@
+/* The global 320px minimum includes the scrollbar. Only standalone Menu documents
+   release that minimum so a true 320px viewport can use its available inline size. */
+html:has(.menu-page) {
+  min-inline-size: 0;
+}
+
+.menu-page {
+  --menu-ink: var(--menu-text, var(--color-text-primary));
+  --menu-paper: var(--menu-background, var(--color-background));
+  --menu-gold: var(--menu-accent, var(--color-accent));
+  --menu-wine: var(--menu-muted-text, var(--color-text-secondary));
+  --menu-stage: color-mix(in srgb, var(--menu-ink) 45%, var(--color-black));
+  /* Darken the approved accent for small essential text, preserving its hue. */
+  --menu-readable-accent: color-mix(
+    in srgb,
+    var(--menu-gold) 52%,
+    color-mix(in srgb, var(--menu-wine), var(--menu-ink))
+  );
+  --menu-sheet-width: 42.5rem;
+  position: relative;
+  isolation: isolate;
+  min-block-size: 100svh;
+  padding: 1.25rem max(0.5rem, var(--safe-area-inset-right)) 1.25rem
+    max(0.5rem, var(--safe-area-inset-left));
+  background: var(--menu-stage);
+  color: var(--menu-ink);
+  font-family: var(--menu-font-body, var(--font-family-body));
+}
+
+.menu-page :focus-visible {
+  outline: 2px solid var(--menu-wine);
+  outline-offset: 5px;
+}
+
+.menu-page__atmosphere {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse at 13% 85%,
+      color-mix(in srgb, var(--menu-gold) 13%, transparent),
+      transparent 30%
+    ),
+    radial-gradient(
+      ellipse at 85% 28%,
+      color-mix(in srgb, var(--menu-wine) 18%, transparent),
+      transparent 38%
+    );
+}
+
+.menu-page__atmosphere::before,
+.menu-page__atmosphere::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.menu-page__atmosphere::before {
+  background: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--menu-gold) 62%, transparent) 1px,
+      transparent 1.7px
+    )
+    0 0 / 13px 13px;
+  mask-image:
+    radial-gradient(ellipse at 18% 22%, black, transparent 34%),
+    radial-gradient(ellipse at 84% 23%, black, transparent 26%),
+    radial-gradient(ellipse at 83% 78%, black, transparent 40%);
+}
+
+.menu-page__atmosphere::after {
+  background:
+    radial-gradient(
+      ellipse at 20% 90%,
+      color-mix(in srgb, var(--menu-gold) 16%, transparent),
+      transparent 9%
+    ),
+    radial-gradient(
+      ellipse at 84% 87%,
+      color-mix(in srgb, var(--menu-gold) 20%, transparent),
+      transparent 12%
+    );
+}
+
+.menu-page__stamp {
+  position: absolute;
+  inline-size: 15rem;
+  block-size: 24rem;
+  background: linear-gradient(
+    140deg,
+    color-mix(in srgb, var(--menu-wine) 82%, var(--menu-secondary, var(--menu-paper))),
+    var(--menu-wine)
+  );
+  mask:
+    radial-gradient(circle at 0 10px, transparent 6px, black 6.8px) 0 0 / 100% 20px,
+    radial-gradient(circle at 100% 10px, transparent 6px, black 6.8px) 0 0 / 100% 20px;
+  mask-composite: intersect;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--menu-paper) 20%, transparent);
+}
+
+.menu-page__stamp::after {
+  content: "";
+  position: absolute;
+  inset: 1.2rem;
+  border: 1px solid color-mix(in srgb, var(--menu-paper) 22%, transparent);
+  background: repeating-linear-gradient(
+    35deg,
+    transparent 0 3px,
+    color-mix(in srgb, var(--menu-ink) 8%, transparent) 3px 4px
+  );
+}
+
+.menu-page__stamp--first {
+  top: 8rem;
+  right: calc(50% + 12rem);
+  transform: rotate(-18deg);
+}
+.menu-page__stamp--second {
+  top: 11rem;
+  left: calc(50% + 14rem);
+  transform: rotate(17deg);
+}
+.menu-page__stamp--third {
+  top: 44rem;
+  right: calc(50% + 11rem);
+  block-size: 16rem;
+  transform: rotate(-22deg);
+  background: var(--menu-paper);
+}
+
+.menu-page__composition {
+  position: relative;
+  inline-size: min(100%, var(--menu-sheet-width));
+  margin-inline: auto;
+}
+
+.menu-page__inner {
+  position: relative;
+  padding: clamp(1.25rem, 4vw, 1.5rem) clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid color-mix(in srgb, var(--menu-paper) 85%, var(--color-white));
+  border-radius: 1rem;
+  background:
+    radial-gradient(
+      ellipse at 13% 8%,
+      color-mix(in srgb, var(--menu-surface) 22%, transparent),
+      transparent 65%
+    ),
+    repeating-linear-gradient(
+      115deg,
+      transparent 0 3px,
+      color-mix(in srgb, var(--menu-gold) 2%, transparent) 3px 4px
+    ),
+    linear-gradient(
+      130deg,
+      color-mix(in srgb, var(--menu-paper) 84%, var(--color-white)),
+      var(--menu-paper)
+    );
+  box-shadow:
+    0 1.5rem 5rem color-mix(in srgb, var(--color-black) 48%, transparent),
+    inset 0 0 4rem color-mix(in srgb, var(--menu-gold) 8%, transparent);
+}
+
+.menu-page__languages {
+  margin-block-end: 0.75rem;
+  display: flex;
+  justify-content: end;
+}
+.menu-page__languages ul,
+.menu-page__social ul,
+.menu-page__items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu-page__languages ul {
+  display: flex;
+  gap: 0.125rem;
+  padding: 0.25rem;
+  border: 1px solid color-mix(in srgb, var(--menu-secondary, var(--menu-wine)) 36%, transparent);
+  border-radius: 1rem;
+  background: var(--menu-stage);
+}
+
+.menu-page__languages a {
+  display: grid;
+  place-items: center;
+  min-inline-size: 2.75rem;
+  min-block-size: 2.75rem;
+  border-radius: 0.7rem;
+  color: var(--menu-paper);
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.menu-page__languages a[aria-current="page"] {
+  background: var(--menu-wine);
+  font-weight: 700;
+}
+.menu-page__languages a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+.menu-page__languages a:focus-visible,
+.menu-page__social a:focus-visible {
+  outline-color: var(--menu-paper);
+  outline-offset: -5px;
+}
+
+.menu-page__header {
+  text-align: center;
+}
+.menu-page__brand {
+  display: flex;
+  justify-content: center;
+}
+.menu-page__brand-logo {
+  inline-size: clamp(12rem, 32vw, 18rem);
+  block-size: auto;
+}
+.menu-page__identity {
+  margin-block: 0 1.25rem;
+}
+.menu-page__title,
+.menu-page__section-title {
+  font-family: var(--menu-font-display, var(--font-family-display));
+  font-weight: 500;
+}
+.menu-page__title {
+  margin: 0;
+  font-size: clamp(1.8rem, 6vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+}
+.menu-page__eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 0.5rem 0;
+  color: var(--menu-readable-accent);
+  font-size: 0.8rem;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+}
+.menu-page__eyebrow::before,
+.menu-page__eyebrow::after {
+  content: "";
+  inline-size: 1rem;
+  border-block-start: 1px solid currentColor;
+}
+.menu-page__ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline: auto;
+  max-inline-size: 11rem;
+  color: var(--menu-readable-accent);
+}
+.menu-page__ornament::before,
+.menu-page__ornament::after {
+  content: "";
+  flex: 1;
+  border-block-start: 1px solid color-mix(in srgb, var(--menu-gold) 45%, transparent);
+}
+.menu-page__ornament span {
+  padding-inline: 0.3rem;
+  font-family: Georgia, serif;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+.menu-page__description {
+  margin: 1rem 0 0;
+  color: var(--menu-ink);
+  font-size: 1rem;
+}
+
+.menu-page__social {
+  margin-block-end: 0.85rem;
+  text-align: start;
+}
+.menu-page__social ul {
+  display: grid;
+  gap: 0.65rem;
+}
+.menu-page__social a {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.25rem;
+  min-block-size: 5rem;
+  padding: 1rem 1.5rem;
+  border: 1px solid color-mix(in srgb, var(--menu-gold) 30%, var(--menu-ink));
+  border-radius: 0.8rem;
+  background: linear-gradient(115deg, var(--menu-stage), var(--menu-ink));
+  color: var(--menu-paper);
+  box-shadow: 0 4px 8px color-mix(in srgb, var(--menu-ink) 15%, transparent);
+  text-decoration: none;
+}
+.menu-page__social a:hover {
+  background: var(--menu-wine);
+}
+.menu-page__social-icon {
+  color: var(--menu-secondary, var(--menu-paper));
+}
+.menu-page__social-copy {
+  display: grid;
+  gap: 0.15rem;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  font-size: 1.0625rem;
+  line-height: 1.4;
+}
+.menu-page__social-arrow {
+  display: grid;
+  place-items: center;
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  border: 1px solid var(--menu-gold);
+  border-radius: 50%;
+}
+
+.menu-page__sections {
+  display: grid;
+  gap: 0.85rem;
+}
+.menu-page__section {
+  min-inline-size: 0;
+  padding: 1.125rem clamp(1rem, 3vw, 2rem) 1.25rem;
+  border: 1px solid color-mix(in srgb, var(--menu-gold) 48%, var(--menu-paper));
+  border-radius: 0.85rem;
+  background: color-mix(in srgb, var(--menu-surface) 7%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-white) 45%, transparent);
+}
+.menu-page__section-heading {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-block-end: 1.1rem;
+}
+.menu-page__section-heading::after {
+  content: "";
+  flex: 1;
+  border-block-start: 1px solid color-mix(in srgb, var(--menu-gold) 24%, transparent);
+}
+.menu-page__section-icon {
+  flex: 0 0 2rem;
+  inline-size: 2rem;
+  color: var(--menu-readable-accent);
+}
+.menu-page__section-title {
+  margin: 0;
+  font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+.menu-page__items {
+  display: grid;
+  gap: 0.75rem;
+}
+.menu-page__item {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  column-gap: 0.65rem;
+  row-gap: 0.2rem;
+}
+.menu-page__item-copy {
+  min-inline-size: 0;
+  max-inline-size: calc(100% - 5.5rem);
+}
+.menu-page__item-name {
+  margin: 0;
+  font-size: 1.125rem;
+  line-height: 1.45;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+.menu-page__leader {
+  flex: 1;
+  min-inline-size: 0.5rem;
+  border-block-end: 1px dotted color-mix(in srgb, var(--menu-gold) 55%, transparent);
+}
+.menu-page__price {
+  margin-inline-start: auto;
+  color: var(--menu-readable-accent);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.menu-page .menu-page__item-description {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--menu-wine);
+  font-size: 0.9rem;
+}
+
+.menu-page__attribution {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  margin-block-start: 1.125rem;
+  text-align: center;
+}
+.menu-page__attribution-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  gap: inherit;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  text-decoration: none;
+}
+.menu-page__attribution-copy {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--menu-wine);
+}
+/* The official source has generous transparent margins; preserve the whole asset. */
+.menu-page__mosaique {
+  display: block;
+  inline-size: 18rem;
+  max-inline-size: 100%;
+}
+.menu-page__mosaique img {
+  inline-size: 100%;
+  filter: brightness(0);
+}
+.menu-page__location {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--menu-wine);
+}
+
+@media (max-width: 63.999rem) {
+  .menu-page__stamp {
+    opacity: 0.55;
+  }
+}
+
+@media (max-width: 39.999rem) {
+  .menu-page__stamp {
+    opacity: 0.2;
+  }
+  .menu-page__inner {
+    border-radius: 0.75rem;
+    padding-inline: 1rem;
+  }
+  .menu-page__social a {
+    gap: 0.75rem;
+    padding: 0.85rem;
+  }
+  .menu-page__social-icon svg {
+    inline-size: 1.75rem;
+  }
+  .menu-page__social-copy {
+    font-size: 0.8rem;
+  }
+  .menu-page__social-arrow {
+    inline-size: 2rem;
+    block-size: 2rem;
+  }
+  .menu-page__section {
+    padding: 1rem 0.85rem;
+  }
+  .menu-page__section-heading {
+    gap: 1rem;
+  }
+  .menu-page__section-title {
+    font-size: 1.6rem;
+  }
+  .menu-page__item-name,
+  .menu-page__price {
+    font-size: 0.875rem;
+  }
+  .menu-page__item-copy {
+    max-inline-size: calc(100% - 5rem);
+  }
+}
+
+@media (min-width: 64rem) {
+  .menu-page__languages {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: calc(100% + 0.75rem);
+    margin: 0;
+  }
+}

@@ -1,0 +1,19 @@
+---
+import { defaultLocale } from "@/core/i18n";
+import { getLocalizedMenu, menuProviders, type MenuProvider } from "@/features/menus";
+import { getMenuStaticPaths } from "@/features/menus/routing/paths";
+import MenuPage from "@/features/menus/ui/pages/MenuPage.astro";
+
+export function getStaticPaths() {
+  return getMenuStaticPaths(menuProviders);
+}
+
+interface Props {
+  provider: MenuProvider;
+}
+
+const { provider } = Astro.props;
+const menu = getLocalizedMenu(provider, defaultLocale);
+---
+
+<MenuPage {provider} {menu} locale={defaultLocale} />

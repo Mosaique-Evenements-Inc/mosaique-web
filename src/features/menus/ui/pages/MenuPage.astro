@@ -1,0 +1,109 @@
+---
+import type { Locale } from "@/core/i18n";
+import { Image } from "astro:assets";
+import mosaiqueLogo from "@/assets/logos/mosaique_logo_complete.png";
+import Icon from "@/core/common/ui/components/Icon.astro";
+import { footerContent } from "@/features/site-shell/content/footer";
+import Heading from "@/core/common/ui/components/Heading.astro";
+import Text from "@/core/common/ui/components/Text.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { resolveMenuTheme, type MenuContent, type MenuProvider } from "@/features/menus";
+import { getMenuUiCopy } from "../copy";
+import MenuLanguageSwitcher from "../components/MenuLanguageSwitcher.astro";
+import MenuSection from "../components/MenuSection.astro";
+import MenuSocialLinks from "../components/MenuSocialLinks.astro";
+import { projectMenuTheme } from "../theme";
+import { menuLogoAssets } from "../assets/logos";
+
+import "@fontsource-variable/quicksand";
+import "../styles/menu-page.css";
+
+interface Props {
+  provider: MenuProvider;
+  menu: MenuContent;
+  locale: Locale;
+}
+
+const { provider, menu, locale } = Astro.props;
+const copy = getMenuUiCopy(locale);
+const theme = resolveMenuTheme(provider);
+const themeStyle = projectMenuTheme(theme);
+const logoImage = theme.logo ? menuLogoAssets[theme.logo.assetId] : undefined;
+---
+
+<BaseLayout
+  title={`${menu.title} — MOSAÏQUE EVENTS`}
+  description={menu.description ?? menu.title}
+>
+  <main class="menu-page" id="main-content" tabindex="-1" style={themeStyle}>
+    <div class="menu-page__atmosphere" aria-hidden="true">
+      <span class="menu-page__stamp menu-page__stamp--first"></span>
+      <span class="menu-page__stamp menu-page__stamp--second"></span>
+      <span class="menu-page__stamp menu-page__stamp--third"></span>
+    </div>
+    <div class="menu-page__composition">
+      <MenuLanguageSwitcher {provider} {locale} currentUrl={Astro.url} label={copy.languages} />
+      <div class="menu-page__inner">
+        <header class="menu-page__header">
+          {
+            theme.logo && logoImage && (
+              <div class="menu-page__brand">
+                <Image
+                  src={logoImage}
+                  alt={theme.logo.alt}
+                  class="menu-page__brand-logo"
+                  width={logoImage.width}
+                  height={logoImage.height}
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+            )
+          }
+          <div class="menu-page__identity">
+            <Heading as="h1" variant="heading-lg" class="menu-page__title">{menu.title}</Heading
+            >
+            <p class="menu-page__eyebrow">{copy.menu}</p>
+            <div class="menu-page__ornament" aria-hidden="true"><span>∞</span></div>
+            {
+              menu.description && (
+                <Text variant="body-lg" class="menu-page__description">
+                  {menu.description}
+                </Text>
+              )
+            }
+          </div>
+          <MenuSocialLinks
+            links={provider.socialLinks}
+            providerTitle={menu.title}
+            label={copy.socialLinks}
+            opensNewTab={copy.opensNewTab}
+            followLabel={copy.follow}
+          />
+        </header>
+
+        <div class="menu-page__sections">
+          {menu.sections.map((section) => <MenuSection {section} {locale} />)}
+        </div>
+
+        <footer class="menu-page__attribution">
+          <a href="https://mosaiqueevenements.com" class="menu-page__attribution-link">
+            <span class="menu-page__attribution-copy">{copy.attribution}</span>
+            <span class="menu-page__mosaique">
+              <Image
+                src={mosaiqueLogo}
+                alt="MOSAÏQUE ÉVÉNEMENTS"
+                width={330}
+                format="webp"
+                loading="lazy"
+              />
+            </span>
+          </a>
+          <p class="menu-page__location">
+            <Icon name="mapPin" size={13} />{footerContent.contact.location}
+          </p>
+        </footer>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

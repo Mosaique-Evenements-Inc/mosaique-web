@@ -1,6 +1,6 @@
 # Mosaïque Web Roadmap
 
-Last verified against code and git history: 2026-09-17.
+Last full verification against code and git history: 2026-09-17. Menus track verified locally: 2026-10-06.
 
 This document is the source of truth for implementation status. The existence of a module in `src/content/home/` does not mean its section has been implemented.
 
@@ -328,6 +328,123 @@ This document is the source of truth for implementation status. The existence of
 - Social image tags remain intentionally absent until an approved production image is available.
 
 ## Current
+
+### Menus V1
+
+- **✅ MENUS-00 through MENUS-02.1: complete.** The feature has a canonical provider contract,
+  localized EN/ES/FR content and routes, CAD formatting, language-routing support, and optional
+  canonical provider social links. The production provider registry remained empty through
+  MENUS-04.
+- **✅ MENUS-03 reusable UI: implemented locally.** A standalone Astro page now composes a
+  localized provider header, linked language selector, optional social profiles, authored menu
+  sections and items, formatted prices, and restrained Mosaïque attribution. Feature-local CSS
+  provides mobile-first layout with a narrow-width price fallback; no React hydration, real
+  provider, or new dependency was added. Typecheck, 27 tests, build,
+  scoped lint, formatting, and diff-check pass. Global lint retains its known generated
+  `.vercel/output` errors.
+- **✅ MENUS-04 provider theme: implemented locally.** The existing Menus resolver projects
+  either the complete restaurant config or its complete event override onto `.menu-page` only.
+  MENUS-05 subsequently extended that shared contract with an optional secondary color, logo,
+  and display/body font stacks. Page, item surface, primary and muted text, interactions, and
+  attribution consume scoped roles without provider-specific selectors or global token changes.
+  Typecheck, 29 tests, build, scoped lint, formatting, and diff-check passed for the original
+  five-color phase; global lint retains its known generated `.vercel/output` errors.
+- **✅ MENUS-05 first provider: implemented locally.** Alfajores Fleur is the sole production
+  provider with stable `/menu/alfajores-fleur` identity, one canonical Instagram profile, five
+  food items and two desserts at the supplied numeric CAD prices, and EN/ES/FR labels without
+  invented descriptions or quantity data. Its neutral restaurant config remains provisional.
+  A complete AOA event override now supplies the approved six-color palette, the supplied AOA
+  SVG as the primary menu logo, and the original TAN Ashford/Quicksand font intentions with
+  project fallbacks (superseded by MENUS-07C below).
+  The resolver uses full replacement, with a typed asset registry and generic Menu rendering;
+  Mosaïque attribution remains below the content. Font files were absent at this phase;
+  MENUS-07C resolves the final Menu typography decision and body-font delivery.
+  The static build emits exactly three provider routes; tests and HTML inspection cover all
+  seven items, locale links, social handle, attribution, scoped palette, logo order, and absence
+  of provider-specific Menu UI logic. Build, typecheck, tests, scoped lint, formatting, and
+  diff-check pass; global lint retains its known generated `.vercel/output` errors.
+- **✅ MENUS-06 event override: certified locally.** The real Alfajores Fleur provider resolves
+  its complete AOA `eventConfig`; an otherwise identical test copy without `eventConfig` resolves
+  the provisional base config. A distinguishable base fixture confirms that all six color roles,
+  logo, display font, and body font come from the event override; a separate fixture proves an
+  omitted optional role cannot leak from the base. Resolution and projection leave provider data and localized content
+  unchanged. The generated EN/ES/FR pages retain the AOA logo above seven products, the scoped
+  palette and font stacks, Instagram, and the bottom Mosaïque attribution. Routes, identity,
+  prices, localization, and accessible structure remain unchanged; Menus has no Events-domain
+  import or provider-specific presentation branch. No production code or dependency changed.
+  Warm black on cream is 13.72:1, dark red on cream 8.78:1, and warm black on vanilla 13.49:1.
+  Mustard on cream is 2.16:1 and serves only as a decorative active-link underline; dark text,
+  weight, and `aria-current` identify the active language. The global lint baseline remains in
+  generated `.vercel/output`.
+- **✅ MENUS-07A high-fidelity UI: implemented and validated locally.** The supplied mockup now
+  drives a centered 640 px cream sheet, dark atmospheric background, CSS halftone and perforated
+  paper decorations, floating locale pill from 1024 px, dark social CTA, inset section panels,
+  decorative section icons, dotted item leaders, and the existing official Mosaïque logo.
+  Inspection confirmed that `aoa_logo.svg` already contains the requested red engraved cherub;
+  the generic resolved logo slot renders that asset at up to 304 px without cropping. Palette,
+  fonts, logo, canonical social data, prices, and route identity remain config/data-driven.
+  No unapproved marketing copy, new dependency, Events-domain coupling, or hydration was added.
+  The approved Mosaïque location comes from the existing site-shell content source.
+  Two visual refinement rounds adjusted accent contrast, borders, rhythm, tablet title scale,
+  and language placement after comparison with the reference. Price text derives a darker
+  warm accent from approved colors (4.79:1 against the base cream); base hex values are unchanged.
+  Built-preview inspection covers 320, 375, 430, 768, 1024, 1280, and 1440 CSS px. At true 320 px
+  and 100% browser zoom, `clientWidth` and `scrollWidth` both measure 305 px with the 15 px
+  vertical scrollbar; the `html` minimum override is scoped to documents containing Menu.
+  EN/ES/FR narrow layouts retain all products and prices. Keyboard focus, 44 px locale targets,
+  80 px social target, query/hash preservation, and a clean browser console were verified.
+  Menu elements have no computed animation or transition; reduced-motion emulation remains
+  unavailable in this browser tool, and no motion-specific rendering branch was introduced.
+  Typecheck (189 files), 37 tests, the 78-page build, source lint, formatting, and diff-check
+  pass. Global lint retains exactly 2521 known errors exclusively in generated `.vercel/output`.
+- **✅ MENUS-07B visual polish: complete locally.** Two screenshot comparison passes refined
+  the existing generic CSS composition without changing markup, assets, canonical data, routes,
+  replacement overrides, dependencies, or hydration. The sheet maximum grows from 640 to 680 px;
+  its content-driven desktop height decreases from about 1253 to 1196 px. The complete cherub
+  asset remains centered and uncropped at 288 px (previously 304 px), with tighter hero spacing.
+  Desktop item names/prices grow from 16 to 18 px, section headings from 32 to 36 px, and social
+  copy from 15.2 to 17 px; narrow-screen typography retains its existing sizes. Attribution
+  spacing is reduced while preserving the official logo. The existing right paper moves upward
+  and outward, upper-right halftone fills the empty region, and tablet decoration is quieter.
+  Visual and overflow checks pass at 320, 375, 430, 1024, 1280, and 1440 CSS px, plus both 767
+  and 769 px around the tablet target. This session's browser zoom is 80%; viewport rounding
+  prevents exactly 768 px, and exported screenshot pixels differ from CSS viewport dimensions.
+  Every measured `scrollWidth` equals `clientWidth`; EN/ES/FR content, keyboard focus, heading
+  order, accessible labels, and touch targets remain usable. Mobile footer access was verified
+  by scrolling separately because the full-page screenshot tool truncates its bottom at this zoom.
+  No animation or transition was added; reduced-motion emulation and cross-browser QA remain
+  unverified. Typecheck (189 files), 37 tests, 78-page build, source lint, scoped formatting, and
+  diff-check pass. Global lint retains the same 2521 generated `.vercel/output` errors.
+- **✅ MENUS-07C final typography: integrated and certified locally.** Menu display typography
+  now resolves directly to Web's canonical `var(--font-family-display)` token, which aliases
+  the existing Cinzel/editorial fallback stack. This reuses Web's current loading state;
+  Cinzel itself remains unbundled under the separate site-wide font contract.
+  Body/UI uses `"Quicksand Variable"` from `@fontsource-variable/quicksand` 5.3.0, imported only
+  by the Menu page. The dependency and lockfile were already committed at this phase's clean
+  starting HEAD; `pnpm add` confirmed the installation without changing those files.
+  The build emits three subset WOFF2 files and includes their font-face CSS on Menu routes,
+  while Home does not import it. Browser font checking confirms the configured Quicksand face
+  is loaded; computed dish/price typography uses that family and headings use the Web stack.
+  MENUS-07B geometry and sizing require no correction. Desktop sheet height remains about
+  1196 px. Visual comparison covers 375, tablet 769 (closest practical to 768), and 1440 px;
+  overflow measurements pass at 320, 375, 430, 767/769, 1024/1025, 1280, and 1440 CSS px.
+  EN/ES/FR retain all products, localized prices, and controls, including narrow 320 px.
+  Existing full-replacement tests remain intact; updated typography expectations pass with all
+  37 tests. Typecheck (189 files), 78-page build, source lint, scoped formatting, and diff-check
+  pass. Global lint retains the known 2521 errors in generated `.vercel/output`.
+  TAN Ashford is no longer approved or required; the Menu typography asset blocker is resolved.
+- **✅ Menu currency label: explicit CAD in every locale.** The shared price formatter uses
+  currency-code display while retaining locale decimal separators and placement. EN renders
+  `CAD 20.00`; ES/FR render `20,00 CAD`. All seven canonical amounts remain unchanged.
+  Existing formatter and built-route tests pass (37 total); typecheck, build, scoped lint,
+  formatting, and diff-check pass. Browser checks retain zero horizontal overflow from 320
+  through 1440 CSS px (tablet sampled at 767), including ES/FR at 320 px.
+- **⏳ MENUS-07 final visual acceptance remains pending.** No approved botanical artwork exists, so
+  the literal flower is omitted while CSS atmosphere supplies the surrounding balance.
+  The official stacked Mosaïque asset and taller cherub produce different proportions from
+  the mockup; unapproved taglines are intentionally absent and prices retain locale-aware CAD
+  formatting. Literal botanical fidelity, cross-browser and assistive-technology
+  acceptance remain open; MENUS-07A does not certify pixel-perfect identity or close all of MENUS-07.
 
 ### Tree Link V1
 
