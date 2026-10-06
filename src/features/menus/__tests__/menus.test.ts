@@ -579,7 +579,8 @@ test("prices are finite non-negative numbers and format as CAD in each locale", 
   for (const locale of ["en", "es", "fr"] as const) {
     const formatted = formatMenuPrice(18.5, locale);
     assert.match(formatted, /18[.,]50/);
-    assert.match(formatted, /\$|CAD/);
+    assert.match(formatted, /CAD/);
+    assert.doesNotMatch(formatted, /\$/);
   }
 });
 

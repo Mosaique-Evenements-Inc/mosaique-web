@@ -433,6 +433,12 @@ This document is the source of truth for implementation status. The existence of
   37 tests. Typecheck (189 files), 78-page build, source lint, scoped formatting, and diff-check
   pass. Global lint retains the known 2521 errors in generated `.vercel/output`.
   TAN Ashford is no longer approved or required; the Menu typography asset blocker is resolved.
+- **✅ Menu currency label: explicit CAD in every locale.** The shared price formatter uses
+  currency-code display while retaining locale decimal separators and placement. EN renders
+  `CAD 20.00`; ES/FR render `20,00 CAD`. All seven canonical amounts remain unchanged.
+  Existing formatter and built-route tests pass (37 total); typecheck, build, scoped lint,
+  formatting, and diff-check pass. Browser checks retain zero horizontal overflow from 320
+  through 1440 CSS px (tablet sampled at 767), including ES/FR at 320 px.
 - **⏳ MENUS-07 final visual acceptance remains pending.** No approved botanical artwork exists, so
   the literal flower is omitted while CSS atmosphere supplies the surrounding balance.
   The official stacked Mosaïque asset and taller cherub produce different proportions from

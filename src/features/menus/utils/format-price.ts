@@ -14,5 +14,6 @@ export function formatMenuPrice(price: number, locale: Locale): string {
   return new Intl.NumberFormat(canadianLocale[locale], {
     style: "currency",
     currency: "CAD",
+    currencyDisplay: "code",
   }).format(price);
 }
