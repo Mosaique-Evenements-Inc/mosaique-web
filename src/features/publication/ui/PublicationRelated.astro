@@ -1,0 +1,66 @@
+---
+import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
+import Heading from "@/core/common/ui/components/Heading.astro";
+import Text from "@/core/common/ui/components/Text.astro";
+import {
+  eventDetailTranslations,
+  getLocalizedEventCategory,
+  type EventCategoryId,
+} from "@/features/events";
+import type { CmsItem } from "../publication";
+import PublicationImage from "./PublicationImage.astro";
+interface Props {
+  kind: "service" | "event";
+  events: CmsItem[];
+}
+const { kind, events } = Astro.props;
+const locale = getLocaleFromUrl(Astro.url);
+const text = eventDetailTranslations[locale];
+const prefix = kind === "event" ? "event-more-galleries" : "service-more-galleries";
+---
+
+{
+  events.length > 0 && (
+    <section
+      class={prefix}
+      aria-labelledby={`${prefix}-heading`}
+      data-navigation-contrast="theme"
+    >
+      <header class={`${prefix}__header`}>
+        <Heading as="h2" variant="display-xl" id={`${prefix}-heading`}>
+          {kind === "event" ? text.moreExperiences : text.relatedEvents}
+        </Heading>
+      </header>
+      <div class={`${prefix}__sequence`}>
+        {events.map((event, index) => (
+          <article
+            class:list={[`${prefix}__preview`, { "is-last": index === events.length - 1 }]}
+            data-content-status="approved"
+            style={`--${kind}-scene-index:${index + 1}`}
+          >
+            <a
+              class={`${prefix}__link`}
+              href={getLocalizedHref(`/events/${event.slug}`, locale)}
+              aria-label={`${text.nextExperience}: ${event.title}`}
+            >
+              <div class={`${prefix}__media`}>
+                <div class={`${prefix}__media-inner`}>
+                  <PublicationImage media={event.mainImage} sizes="100vw" loading="lazy" />
+                  <span class={`${prefix}__overlay`} aria-hidden="true" />
+                </div>
+              </div>
+              <div class={`${prefix}__copy`}>
+                <Text as="span" variant="caption" tone="inverse" class={`${prefix}__label`}>
+                  {getLocalizedEventCategory(event.categoryId as EventCategoryId, locale).label}
+                </Text>
+                <Heading as="h3" variant="display-lg">
+                  {event.title}
+                </Heading>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}

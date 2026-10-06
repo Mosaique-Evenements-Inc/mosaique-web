@@ -311,6 +311,7 @@ This document is the source of truth for implementation status. The existence of
 - The Home hero keeps a poster-first visual and its video sources. Video preload is `none`; playback starts only after the poster resolves and a paint opportunity, and is skipped for reduced motion, Save-Data, reported 2G/3G, or an estimated downlink below 10 Mbps when the browser exposes Network Information. A failed video leaves the poster visible. No global loader or new dependency was added.
 - Build, lint, typecheck, tests, and local mobile browser checks passed. FCP, LCP, CLS, cold-cache Fast 3G/Slow 4G, and native Safari behavior remain unmeasured or unverified; do not treat implementation completion as field performance acceptance.
 - WEB-PERF-02 should assess broader asset delivery, CDN/cache behavior, CMS/Storage options, and image transformation without assuming a CMS improves critical loading.
+- **CMS-01 static publication pilot: complete locally on `feature/refact-CMS`.** An opt-in, noindex build fixture (`CMS_PILOT=1`) validates a typed, self-contained EN/ES/FR publication with one Service, one PublicEvent, explicit SHA-256-versioned main media, one gallery item, Home selections, and injectable Tree temporal filtering. Its adapter resolves the fixture before Astro renders three extra static HTML pages; the normal build retains 75 pages and exposes no pilot route. Pilot HTML contains responsive AVIF/WebP sources and no scripts or hydrated islands; existing Home/Tree HTML bytes and WEB-PERF-01 loading contracts remain unchanged. This validates the build-time boundary, not field CWV, external CMS transport, release promotion, or a public Tree agenda. Deployment trigger, CDN headers, and atomic promotion still require separate implementation and verification.
 
 ### Accessibility - Audit
 
@@ -323,9 +324,23 @@ This document is the source of truth for implementation status. The existence of
 ### SEO / Metadata
 
 - **Implementation: complete for the current public surface.** Spanish document language, descriptive titles and descriptions, robots directives, Open Graph metadata, Twitter card metadata, favicons, and Organization JSON-LD are present.
-- `SITE_URL` is the single production URL source. Canonical, `og:url`, the Organization URL, sitemap generation, and the sitemap reference in robots are emitted only when it is configured, preventing localhost or speculative domains from entering production metadata.
+- The CMS-08D adapter pins `SITE_URL` to the approved canonical origin `https://mosaiqueevenements.com` for static publication; an inconsistent override now fails. Canonical, `og:url`, Organization URL, sitemap and robots reference that origin.
 - The official Astro sitemap integration generates the sitemap index and page sitemap. `robots.txt` remains valid without a configured domain and adds the absolute sitemap URL when one exists.
 - Social image tags remain intentionally absent until an approved production image is available.
+
+## CMS runtime Web integration — Episode 3
+
+- **Implemented locally on `feature/refact-CMS`:** Astro 7 server rendering with 30-second Vercel ISR uses the public `cms-site-v1` API for CMS-owned pages, shell navigation, and SEO. CMS publication no longer supplies a Web build input or Web SHA assertion. The API outage path is 503 and unknown CURRENT slugs return 404. Static robots/assets and the optional CMS-01 pilot remain independent of the API. Remote ISR, media, and CDN certification remains Episode 5 work. See `docs/CMS_RUNTIME_WEB.md`.
+
+## CMS Episode 6 — real content migration
+
+- **Complete in DEV.** CURRENT is `PUB-00000006`, generation 6. The scheduled DEV v2 worker is enabled and certified with 81 READY jobs. The real publication references 78 assets and 868 derivatives. Admin → CMS → Web authority and the deployed public Web were certified. PROD was untouched. The CMS-03 v2 DEV migration history now aligns with the versioned file; future deployment must use a checkout with the complete migration set. See `docs/CMS_EPISODE_6_AUDIT.md`.
+
+## CMS-08D static publication adapter — local implementation
+
+- **Implemented locally:** an explicit CMS materialization JSON plus sibling immutable public assets now drives the CMS-owned Home fields, Services, Website Events and galleries, and the public Tree agenda in EN/ES/FR. The existing Home sections, gallery archive and detail-page visual structures are retained. Build input is required; the synthetic fixture is opt-in only.
+- Astro emits the existing route families from the publication adapter. A post-build finalizer verifies immutable asset bytes, hashes required route output, and writes the 08C-compatible `cms-static-artifact-v1` marker. The canonical hash matches the 08C fixed vector.
+- Local certification uses the synthetic fixture. The preserved editorial composition was checked in browser at representative desktop, tablet and mobile widths with no measured horizontal overflow. Real CMS media fidelity and field Core Web Vitals remain unverified. Production promotion, scheduler/reconciliation, and CMS-08E/F/G remain outside this episode. See `docs/CMS_08D_WEB_STATIC_ADAPTER.md`.
 
 ## Current
 
@@ -334,10 +349,10 @@ This document is the source of truth for implementation status. The existence of
 - **✅ Step 1 — diagnostic complete.** The public link-in-bio surface was scoped against the
   supplied Paula references, the existing Mosaïque architecture, confirmed business content,
   locale routing, and native sharing/accessibility contracts before implementation.
-- **✅ Step 2 — implementation and sample reconciliation complete locally.** `/tree`, `/en/tree`,
+- **✅ Step 2 — implementation and sample reconciliation complete locally.** `/tree`, `/es/tree`,
   and `/fr/tree` now render one feature-owned Astro composition with localized metadata and copy,
   no shared Navigation or Footer, no React island, no `client:*` directive, and no hydrated runtime
-  dependency. The former temporary migration sample informed the product reconciliation without
+  dependency. CMS-08D subsequently activated its agenda from the static publication input. The former temporary migration sample informed the product reconciliation without
   becoming a production dependency and was removed in Step 4.
 - The implementation translates the sample's centered profile shell, prominent share trigger,
   section hierarchy, disclosure, vertical action cards, and share preview into Mosaïque's semantic

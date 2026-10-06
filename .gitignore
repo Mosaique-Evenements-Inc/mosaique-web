@@ -1,5 +1,6 @@
 # build output
 dist/
+.vercel/
 
 # original photography and design deliveries
 /assets-raw/

@@ -1,23 +1,22 @@
 ---
-import { serviceNavigationItems } from "@/features/site-shell/content/navigation";
+import { getPublication } from "@/features/publication/publication";
 import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
 import NavigationDropdown from "./NavigationDropdown.astro";
 
 interface Props {
   label: string;
-  labels?: readonly string[];
 }
 
-const { label, labels = [] } = Astro.props;
+const { label } = Astro.props;
 const locale = getLocaleFromUrl(Astro.url);
 const panelId = "site-navigation-services-menu";
 const isCurrentPage = (href: string) =>
   Astro.url.pathname === getLocalizedHref(href, locale) ||
   Astro.url.pathname.startsWith(`${getLocalizedHref(href, locale)}/`);
-const items = serviceNavigationItems.map((item, index) => ({
-  current: isCurrentPage(item.href),
-  href: getLocalizedHref(item.href, locale),
-  label: labels[index] ?? item.label,
+const items = getPublication(Astro.locals, locale).services.map((service) => ({
+  current: isCurrentPage(`/services/${service.slug}`),
+  href: getLocalizedHref(`/services/${service.slug}`, locale),
+  label: service.title,
 }));
 ---
 

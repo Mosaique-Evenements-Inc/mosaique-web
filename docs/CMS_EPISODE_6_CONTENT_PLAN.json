@@ -1,0 +1,1078 @@
+{
+  "sourceCommit": "e04b99e8ef58b5de0c9c7d35a873d6a43997c01d",
+  "targetSupabaseProject": "fwiquietxxvozyktaxyp",
+  "home": {
+    "locales": {
+      "en": {
+        "seoTitle": "MOSAÏQUE EVENTS — Events in Montréal",
+        "seoDescription": "Full-service event company in Montréal specializing in planning, production, setup, and experiences.",
+        "heroOverlay": "Every detail has its place.",
+        "heroCtaLabel": "Plan my event",
+        "heroSegments": [
+          { "text": "We create events that are ", "emphasis": false },
+          { "text": "lived", "emphasis": true },
+          { "text": ", ", "emphasis": false },
+          { "text": "remembered", "emphasis": true },
+          { "text": ", and ", "emphasis": false },
+          { "text": "shared", "emphasis": true }
+        ],
+        "eventsTitle": "Events brought to life",
+        "eventsIntroduction": "A selection of celebrations, productions, and experiences brought from idea to reality.",
+        "eventsCtaLabel": "Explore events",
+        "servicesTitle": "Services for every occasion",
+        "servicesText": "Every event has its own scale, purpose, and rhythm. Our services can be booked independently or combined into tailored packages for the client, space, and experience.",
+        "marqueeText": "WEDDINGS · PRIVATE EVENTS · CORPORATE CELEBRATIONS · VENUE EXPERIENCES · EVENT PRODUCTION · FURNITURE RENTAL · LOGISTICS · MONTRÉAL",
+        "marqueeStatement": "EVENTS THAT CONNECT · EXPERIENCES THAT LAST · SPACES THAT COME ALIVE",
+        "processTitle": "Our process",
+        "processIntroduction": "A memorable event needs more than a good idea. It needs structure, timing, coordination, and a clear vision from the start.",
+        "processClosing": "Every step exists to make the event feel fluid, considered, and memorable.",
+        "processSteps": [
+          {
+            "title": "We listen",
+            "description": "We learn about your idea, event type, guest count, space, desired style, approximate budget, and the level of support you need."
+          },
+          {
+            "title": "We design the proposal",
+            "description": "We create a proposal tailored to the event: concept, services, furniture, logistics, timing, technical needs, and possible packages."
+          },
+          {
+            "title": "We coordinate",
+            "description": "We organize the necessary resources, validate details, align expectations, and coordinate with clients, venues, partners, and suppliers."
+          },
+          {
+            "title": "We produce",
+            "description": "We execute the setup, atmosphere, logistics, and defined elements so the event moves forward clearly and smoothly."
+          },
+          {
+            "title": "We close",
+            "description": "We handle teardown, final review, and operational closeout, giving the experience the same attention with which it began."
+          }
+        ],
+        "faqEyebrow": "Questions",
+        "faqTitle": "Frequently asked questions",
+        "faqPrompt": "Didn’t find your answer?",
+        "faqCtaLabel": "Let’s talk",
+        "faqItems": [
+          {
+            "question": "Does MOSAÏQUE produce complete events?",
+            "answer": "Yes. We can manage full planning and production for weddings, birthdays, private celebrations, and corporate events, including planning, setup, logistics, furniture, and overall coordination."
+          },
+          {
+            "question": "Can I hire only furniture rental or supplies?",
+            "answer": "Yes. Services can be booked independently. You can rent specific furniture, equipment, or supplies without booking full event production."
+          },
+          {
+            "question": "Do you offer setup and teardown?",
+            "answer": "Yes. We provide setup, teardown, and logistics support for clients, planners, venues, and suppliers who need operational help at an event."
+          },
+          {
+            "question": "Do you work with restaurants, halls, or venues?",
+            "answer": "Yes. MOSAÏQUE builds partnerships with venues, restaurants, and spaces that want to create events, increase traffic, strengthen positioning, or develop new revenue through experiences."
+          },
+          {
+            "question": "Can you create ticketed events?",
+            "answer": "Yes. Alongside producing client events, MOSAÏQUE can create, promote, and operate its own experiences or collaborations, including ticketing, sponsorship, and commercial models."
+          },
+          {
+            "question": "Are packages fixed?",
+            "answer": "Not necessarily. We can offer base packages, but each proposal can adapt to the event type, guest count, space, budget, and services required."
+          },
+          {
+            "question": "Where do you work?",
+            "answer": "MOSAÏQUE EVENTS primarily works in Montréal and surrounding areas, with other locations considered according to the project."
+          },
+          {
+            "question": "How can I request a quote?",
+            "answer": "Contact us through the form with your event type, tentative date, guest count, location, and required services. We can then prepare a tailored proposal."
+          }
+        ],
+        "finalCtaTitle": "Let’s build a memorable experience",
+        "finalCtaText": "Every great event begins with an idea. Tell us yours.",
+        "finalCtaLabel": "Request a quote"
+      },
+      "es": {
+        "seoTitle": "MOSAÏQUE EVENTS — Eventos en Montréal",
+        "seoDescription": "Empresa integral de eventos en Montréal especializada en organización, producción, montaje y experiencias.",
+        "heroOverlay": "Every detail has its place.",
+        "heroCtaLabel": "Planear mi evento",
+        "heroSegments": [
+          { "text": "Creamos eventos que se ", "emphasis": false },
+          { "text": "viven", "emphasis": true },
+          { "text": ", se ", "emphasis": false },
+          { "text": "recuerdan", "emphasis": true },
+          { "text": " y se ", "emphasis": false },
+          { "text": "comparten", "emphasis": true }
+        ],
+        "eventsTitle": "Eventos que ya tomaron forma",
+        "eventsIntroduction": "Una selección de celebraciones, producciones y experiencias que hemos llevado de la idea a la realidad.",
+        "eventsCtaLabel": "Explorar eventos",
+        "servicesTitle": "Servicios para cada ocasión",
+        "servicesText": "Cada evento tiene una escala, un propósito y una dinámica distinta. Por eso nuestros servicios pueden contratarse de forma independiente o combinarse en paquetes personalizados según las necesidades del cliente, el espacio y el tipo de experiencia.",
+        "marqueeText": "WEDDINGS · PRIVATE EVENTS · CORPORATE CELEBRATIONS · VENUE EXPERIENCES · EVENT PRODUCTION · FURNITURE RENTAL · LOGISTICS · MONTRÉAL",
+        "marqueeStatement": "EVENTOS QUE CONECTAN · EXPERIENCIAS QUE PERMANECEN · ESPACIOS QUE COBRAN VIDA",
+        "processTitle": "Nuestro proceso",
+        "processIntroduction": "Un evento memorable necesita más que una buena idea. Necesita estructura, tiempos, coordinación y una visión clara desde el inicio.",
+        "processClosing": "Cada paso existe para que el evento se sienta fluido, cuidado y memorable.",
+        "processSteps": [
+          {
+            "title": "Escuchamos",
+            "description": "Conocemos tu idea, el tipo de evento, el número de invitados, el espacio, el estilo deseado, el presupuesto aproximado y el nivel de acompañamiento que necesitas."
+          },
+          {
+            "title": "Diseñamos la propuesta",
+            "description": "Creamos una propuesta adaptada al evento: concepto, servicios, mobiliario, logística, tiempos, necesidades técnicas y posibles paquetes."
+          },
+          {
+            "title": "Coordinamos",
+            "description": "Organizamos los recursos necesarios, validamos detalles, alineamos expectativas y coordinamos con clientes, venues, aliados o proveedores involucrados."
+          },
+          {
+            "title": "Producimos",
+            "description": "Ejecutamos el montaje, la ambientación, la logística y los elementos definidos para que el evento avance de manera clara y ordenada."
+          },
+          {
+            "title": "Cerramos",
+            "description": "Realizamos desmontaje, revisión final y cierre operativo, cuidando que la experiencia termine con la misma atención con la que empezó."
+          }
+        ],
+        "faqEyebrow": "Preguntas",
+        "faqTitle": "Preguntas frecuentes",
+        "faqPrompt": "¿No encontraste tu respuesta?",
+        "faqCtaLabel": "Hablemos",
+        "faqItems": [
+          {
+            "question": "¿MOSAÏQUE organiza eventos completos?",
+            "answer": "Sí. Podemos encargarnos de la organización y producción integral de bodas, cumpleaños, celebraciones privadas y eventos corporativos, incluyendo planificación, montaje, logística, mobiliario y coordinación general."
+          },
+          {
+            "question": "¿Puedo contratar solo alquiler de mobiliario o insumos?",
+            "answer": "Sí. Nuestros servicios pueden contratarse de forma independiente. Puedes alquilar mobiliario, equipos o insumos específicos sin necesidad de contratar la producción completa del evento."
+          },
+          {
+            "question": "¿Ofrecen montaje y desmontaje?",
+            "answer": "Sí. Ofrecemos servicios de montaje, desmontaje y soporte logístico para clientes, planners, venues o proveedores que necesitan apoyo operativo en un evento."
+          },
+          {
+            "question": "¿Trabajan con restaurantes, salones o venues?",
+            "answer": "Sí. MOSAÏQUE desarrolla alianzas con venues, restaurantes y espacios que quieren crear eventos propios, aumentar tráfico, mejorar posicionamiento o generar nuevas fuentes de ingreso a través de experiencias."
+          },
+          {
+            "question": "¿Pueden crear eventos propios con venta de entradas?",
+            "answer": "Sí. Además de producir eventos para clientes, MOSAÏQUE puede crear, promover y operar experiencias propias o en colaboración con aliados, incluyendo modelos de venta de entradas, patrocinios o acuerdos comerciales."
+          },
+          {
+            "question": "¿Los paquetes son fijos?",
+            "answer": "No necesariamente. Podemos ofrecer paquetes base, pero cada propuesta puede adaptarse según el tipo de evento, número de invitados, espacio, presupuesto y servicios requeridos."
+          },
+          {
+            "question": "¿Dónde trabajan?",
+            "answer": "MOSAÏQUE EVENTS trabaja principalmente en Montréal y sus alrededores, con posibilidad de evaluar eventos en otras zonas según el proyecto."
+          },
+          {
+            "question": "¿Cómo puedo pedir una cotización?",
+            "answer": "Puedes contactarnos a través del formulario, indicando el tipo de evento, fecha tentativa, número de invitados, ubicación y servicios que necesitas. Con esa información podremos preparar una propuesta adaptada."
+          }
+        ],
+        "finalCtaTitle": "Construyamos una experiencia memorable",
+        "finalCtaText": "Cada gran evento comienza con una idea. Cuéntanos la tuya.",
+        "finalCtaLabel": "Cotizar evento"
+      },
+      "fr": {
+        "seoTitle": "MOSAÏQUE EVENTS — Événements à Montréal",
+        "seoDescription": "Entreprise événementielle intégrée à Montréal spécialisée en organisation, production, montage et expériences.",
+        "heroOverlay": "Chaque détail a sa place.",
+        "heroCtaLabel": "Planifier mon événement",
+        "heroSegments": [
+          { "text": "Nous créons des événements qui se ", "emphasis": false },
+          { "text": "vivent", "emphasis": true },
+          { "text": ", se ", "emphasis": false },
+          { "text": "mémorisent", "emphasis": true },
+          { "text": " et se ", "emphasis": false },
+          { "text": "partagent", "emphasis": true }
+        ],
+        "eventsTitle": "Des événements qui prennent vie",
+        "eventsIntroduction": "Une sélection de célébrations, productions et expériences que nous avons menées de l’idée à la réalité.",
+        "eventsCtaLabel": "Explorer les événements",
+        "servicesTitle": "Des services pour chaque occasion",
+        "servicesText": "Chaque événement a sa propre échelle, son objectif et son rythme. Nos services peuvent être retenus séparément ou combinés en forfaits adaptés au client, au lieu et à l’expérience.",
+        "marqueeText": "MARIAGES · ÉVÉNEMENTS PRIVÉS · CÉLÉBRATIONS CORPORATIVES · EXPÉRIENCES DE LIEUX · PRODUCTION · LOCATION DE MOBILIER · LOGISTIQUE · MONTRÉAL",
+        "marqueeStatement": "DES ÉVÉNEMENTS QUI RASSEMBLENT · DES EXPÉRIENCES QUI RESTENT · DES ESPACES QUI PRENNENT VIE",
+        "processTitle": "Notre processus",
+        "processIntroduction": "Un événement mémorable demande plus qu’une bonne idée. Il demande une structure, un échéancier, de la coordination et une vision claire dès le départ.",
+        "processClosing": "Chaque étape rend l’événement fluide, soigné et mémorable.",
+        "processSteps": [
+          {
+            "title": "Nous écoutons",
+            "description": "Nous découvrons votre idée, le type d’événement, le nombre d’invités, le lieu, le style souhaité, le budget approximatif et le niveau d’accompagnement nécessaire."
+          },
+          {
+            "title": "Nous concevons la proposition",
+            "description": "Nous créons une proposition adaptée à l’événement : concept, services, mobilier, logistique, échéancier, besoins techniques et forfaits possibles."
+          },
+          {
+            "title": "Nous coordonnons",
+            "description": "Nous organisons les ressources nécessaires, validons les détails, alignons les attentes et coordonnons clients, lieux, partenaires et fournisseurs."
+          },
+          {
+            "title": "Nous produisons",
+            "description": "Nous exécutons le montage, l’ambiance, la logistique et les éléments définis pour que l’événement se déroule avec clarté et fluidité."
+          },
+          {
+            "title": "Nous finalisons",
+            "description": "Nous assurons le démontage, la révision finale et la fermeture opérationnelle avec la même attention qu’au début."
+          }
+        ],
+        "faqEyebrow": "Questions",
+        "faqTitle": "Questions fréquentes",
+        "faqPrompt": "Vous n’avez pas trouvé votre réponse?",
+        "faqCtaLabel": "Parlons-en",
+        "faqItems": [
+          {
+            "question": "MOSAÏQUE organise-t-elle des événements complets?",
+            "answer": "Oui. Nous pouvons prendre en charge l’organisation et la production de mariages, anniversaires, célébrations privées et événements corporatifs, incluant planification, montage, logistique, mobilier et coordination."
+          },
+          {
+            "question": "Puis-je louer seulement du mobilier ou des fournitures?",
+            "answer": "Oui. Nos services peuvent être retenus séparément. Vous pouvez louer du mobilier, de l’équipement ou des fournitures sans production complète."
+          },
+          {
+            "question": "Offrez-vous le montage et le démontage?",
+            "answer": "Oui. Nous offrons le montage, le démontage et le soutien logistique aux clients, planificateurs, lieux et fournisseurs."
+          },
+          {
+            "question": "Travaillez-vous avec des restaurants, salles ou lieux?",
+            "answer": "Oui. MOSAÏQUE développe des partenariats avec des lieux, restaurants et espaces qui souhaitent créer des événements et développer de nouvelles expériences."
+          },
+          {
+            "question": "Pouvez-vous créer des événements avec billetterie?",
+            "answer": "Oui. En plus de produire des événements clients, MOSAÏQUE peut créer, promouvoir et opérer ses propres expériences ou collaborations avec billetterie, commandites ou ententes commerciales."
+          },
+          {
+            "question": "Les forfaits sont-ils fixes?",
+            "answer": "Pas nécessairement. Nous pouvons offrir des forfaits de base, puis adapter chaque proposition au type d’événement, au nombre d’invités, au lieu, au budget et aux services requis."
+          },
+          {
+            "question": "Où travaillez-vous?",
+            "answer": "MOSAÏQUE EVENTS travaille principalement à Montréal et dans les environs; d’autres régions peuvent être évaluées selon le projet."
+          },
+          {
+            "question": "Comment demander un devis?",
+            "answer": "Contactez-nous par le formulaire en indiquant le type d’événement, la date prévue, le nombre d’invités, le lieu et les services souhaités. Nous préparerons une proposition adaptée."
+          }
+        ],
+        "finalCtaTitle": "Construisons une expérience mémorable",
+        "finalCtaText": "Chaque grand événement commence par une idée. Parlez-nous de la vôtre.",
+        "finalCtaLabel": "Demander un devis"
+      }
+    },
+    "selectedEventSlugs": [
+      "nossa-copa",
+      "baila-da-zaza",
+      "baby-shower",
+      "wedding-r-r",
+      "cumpleanos-ana-paula",
+      "fan-fest-club"
+    ]
+  },
+  "services": [
+    {
+      "sourceId": "service-01",
+      "slug": "organizacion-produccion-integral",
+      "displayOrder": 1,
+      "locales": {
+        "en": {
+          "title": "Full-service event production",
+          "description": "We design and coordinate your event from first idea to final execution: concept, logistics, suppliers, setup, and delivery.",
+          "idealFor": "For those who want to entrust the full production of their event.",
+          "ctaLabel": "Request full production",
+          "seoTitle": "Full-service event production — MOSAÏQUE EVENTS",
+          "seoDescription": "We design and coordinate your event from first idea to final execution: concept, logistics, suppliers, setup, and delivery."
+        },
+        "es": {
+          "title": "Organización y producción integral",
+          "description": "Diseñamos y coordinamos tu evento de principio a fin: concepto, logística, proveedores, montaje y ejecución.",
+          "idealFor": "Quienes buscan delegar la producción completa de su evento.",
+          "ctaLabel": "Cotizar producción integral",
+          "seoTitle": "Organización y producción integral — MOSAÏQUE EVENTS",
+          "seoDescription": "Diseñamos y coordinamos tu evento de principio a fin: concepto, logística, proveedores, montaje y ejecución."
+        },
+        "fr": {
+          "title": "Organisation et production événementielle",
+          "description": "Nous concevons et coordonnons votre événement du début à la fin : concept, logistique, fournisseurs, montage et réalisation.",
+          "idealFor": "Pour celles et ceux qui souhaitent confier la production complète de leur événement.",
+          "ctaLabel": "Demander une production complète",
+          "seoTitle": "Organisation et production événementielle — MOSAÏQUE EVENTS",
+          "seoDescription": "Nous concevons et coordonnons votre événement du début à la fin : concept, logistique, fournisseurs, montage et réalisation."
+        }
+      },
+      "mainSha256": "8fd95ecbfd311c5404a66285787cf112775b21c48f005ae238252a32e700ecbb",
+      "gallerySha256": [
+        "8911a1916dd4fdd7e2fc70ff49227c14c1f7de538d1960549698b434e3300f03",
+        "d589f046be4d77334791a8ce0cebc3d564b9f9b3c8f00697eba7f1aa02107530",
+        "f17aa100a51bbee6e3c648877b79b0becbac27223727e38b926e2dff2eeac20f",
+        "6273e1dc9577790579b97ee7938272943e78e0b642f517698e7a6a3b6439ec50",
+        "e6485772f5d6651d09776f3a75ffb92b8d4551165738af1e120ce46858fba13d",
+        "1314d956e697bcdef0bb8bdcaac99a454047d2bf842587e27c71b05afa7adb57",
+        "873c8ce85d08bdccda40eb5d61e3a1b54c5b3002d3f7580c9476f35d267c945d",
+        "3e9063aa47d626228ca747005bc73e7a23e1bd3b7bdaa0b4a54b58a22061b171",
+        "007b7fc12a132280473f90121176721ad14dc3c3ffa1e2746e7fbe38b3a703d1",
+        "6fce184c0c6929d53783defe42f01e26bd1a06386be8fc8791fc56a4da3ba724",
+        "ffa29132cf8308bb76986323b840cef1ae77d255c6a599424df3116b9a99309a",
+        "e45fd02f8332f7e143845bf84782d68e95e9d703cf832ce63e34331bf5a63404",
+        "97e187147b697a27090f9eff7476a495d121fda36bee4c224d70cf5e4f43167b",
+        "28665e33bf6e7c45631803c98ebc65a7b57795af0264391166e11471460b0349"
+      ]
+    },
+    {
+      "sourceId": "service-08",
+      "slug": "bodas",
+      "displayOrder": 2,
+      "locales": {
+        "en": {
+          "title": "Weddings",
+          "description": "We design and produce weddings that reflect each couple's story, style, and personality, caring for every detail from planning through the final moment.",
+          "idealFor": "Couples seeking a personal, carefully produced wedding conceived as a complete experience.",
+          "ctaLabel": "Plan our wedding",
+          "seoTitle": "Weddings — MOSAÏQUE EVENTS",
+          "seoDescription": "We design and produce weddings that reflect each couple's story, style, and personality, caring for every detail from planning through the final moment."
+        },
+        "es": {
+          "title": "Bodas",
+          "description": "Diseñamos y producimos bodas que reflejan la historia, el estilo y la personalidad de cada pareja, cuidando cada detalle desde la planificación hasta el último momento de la celebración.",
+          "idealFor": "Parejas que buscan una boda personalizada, cuidadosamente producida y pensada como una experiencia completa.",
+          "ctaLabel": "Planear nuestra boda",
+          "seoTitle": "Bodas — MOSAÏQUE EVENTS",
+          "seoDescription": "Diseñamos y producimos bodas que reflejan la historia, el estilo y la personalidad de cada pareja, cuidando cada detalle desde la planificación hasta el último momento de la celebración."
+        },
+        "fr": {
+          "title": "Mariages",
+          "description": "Nous concevons et produisons des mariages qui reflètent l’histoire, le style et la personnalité de chaque couple, avec soin jusque dans le dernier moment.",
+          "idealFor": "Couples à la recherche d’un mariage personnalisé, soigneusement produit et pensé comme une expérience complète.",
+          "ctaLabel": "Planifier notre mariage",
+          "seoTitle": "Mariages — MOSAÏQUE EVENTS",
+          "seoDescription": "Nous concevons et produisons des mariages qui reflètent l’histoire, le style et la personnalité de chaque couple, avec soin jusque dans le dernier moment."
+        }
+      },
+      "mainSha256": "2e92e1375b1e3a18a5b3b4f9e0ce8874ec893e4e7001d07a6f27da406bae4dca",
+      "gallerySha256": [
+        "2c8718128b630cfb38b7ad6685a01099d4e07b5d49587252c8f51747aebb8917",
+        "0ad1a13919fcd7b7c43626c65d9056f1757633b276b288b8949f819117510bae",
+        "f1b87eedd2de715a8d9d328f3f2f5f84d22ea15a80abf6b501caf2b85ef643df",
+        "babcca77e18d9133b8852f7e2d2f2a7632b3d831e8af2ee44ec9b8a354c8e48b",
+        "bf610a5c1ce3ac90e9832988cfb94cbe2c4c2257e4f587c7c03157a5da02e945"
+      ]
+    },
+    {
+      "sourceId": "service-02",
+      "slug": "celebraciones",
+      "displayOrder": 3,
+      "locales": {
+        "en": {
+          "title": "Celebrations",
+          "description": "We create memorable celebrations for every occasion, combining concept, atmosphere, setup, and production to make each gathering feel unique.",
+          "idealFor": "Birthdays, baby showers, anniversaries, themed parties, and personal or social celebrations.",
+          "ctaLabel": "Plan a celebration",
+          "seoTitle": "Celebrations — MOSAÏQUE EVENTS",
+          "seoDescription": "We create memorable celebrations for every occasion, combining concept, atmosphere, setup, and production to make each gathering feel unique."
+        },
+        "es": {
+          "title": "Celebraciones",
+          "description": "Creamos celebraciones memorables alrededor de cada ocasión, combinando concepto, ambientación, montaje y producción para transformar cada encuentro en una experiencia única.",
+          "idealFor": "Cumpleaños, baby showers, aniversarios, fiestas temáticas y otras celebraciones personales o sociales.",
+          "ctaLabel": "Planear una celebración",
+          "seoTitle": "Celebraciones — MOSAÏQUE EVENTS",
+          "seoDescription": "Creamos celebraciones memorables alrededor de cada ocasión, combinando concepto, ambientación, montaje y producción para transformar cada encuentro en una experiencia única."
+        },
+        "fr": {
+          "title": "Célébrations",
+          "description": "Nous créons des célébrations mémorables pour chaque occasion, en réunissant concept, ambiance, montage et production pour rendre chaque rencontre unique.",
+          "idealFor": "Anniversaires, fêtes prénatales, anniversaires de mariage, fêtes thématiques et célébrations personnelles ou sociales.",
+          "ctaLabel": "Planifier une célébration",
+          "seoTitle": "Célébrations — MOSAÏQUE EVENTS",
+          "seoDescription": "Nous créons des célébrations mémorables pour chaque occasion, en réunissant concept, ambiance, montage et production pour rendre chaque rencontre unique."
+        }
+      },
+      "mainSha256": "8740e1701ce0dc134bf6d0994d458a4d14c325cf6075d012d06e1c19a2c3cbf0",
+      "gallerySha256": [
+        "6b78bb1fb4d5d273c3d5a03b17551a0e130071458bffe50c171fc0fa22c29ca6",
+        "c340a936576fdb9328d87459f61b25d71c41e4c9ed06d3d11e79a30e5b3db49d",
+        "d855f54c7b48fc8db926fc11f0eef7d6cfac96d5bf452ce68cbcca5675ee2c51",
+        "49e575dcc905f972ad9751750b22cd8b3d96ad4b34ecc6d0d12c7586486e958c",
+        "3f7fee2e0428240c08db37a4896983cfd606134439486caf18f73ba372763614",
+        "effd1f6dc769ccb11626dc752e4f656a634ab7b20d0d4e106f3939100430d5d7",
+        "3babe49656a4264d334f8402c211abac0d50a1caeddbc7703feb1ab56bf69800",
+        "e27b37bac6cc24511e7adcdd0919a0308f4ed601b6e6492bbd9c975a49222b3c",
+        "860fb7d914644d344cf728cdc5c1c4e8fcfcff2175b3ee26bfc83bd550d742cd",
+        "88e01b2dd060fb85ecc28b3f6051e4c0a3b7d22549745256dd6b08f197f1f322",
+        "f7d06b420bd53d8bf19e6aba6e2ffeb4193ae84b2504424e9e7be4660e075996"
+      ]
+    },
+    {
+      "sourceId": "service-03",
+      "slug": "eventos-corporativos",
+      "displayOrder": 4,
+      "locales": {
+        "en": {
+          "title": "Corporate events",
+          "description": "We produce professional gatherings aligned with the objective, identity, and experience your brand wants to create.",
+          "idealFor": "Launches, activations, dinners, networking events, and corporate celebrations.",
+          "ctaLabel": "Create a corporate event",
+          "seoTitle": "Corporate events — MOSAÏQUE EVENTS",
+          "seoDescription": "We produce professional gatherings aligned with the objective, identity, and experience your brand wants to create."
+        },
+        "es": {
+          "title": "Eventos corporativos",
+          "description": "Producimos encuentros profesionales alineados con el objetivo, la identidad y la experiencia que tu marca quiere crear.",
+          "idealFor": "Lanzamientos, activaciones, cenas, networking y celebraciones corporativas.",
+          "ctaLabel": "Crear un evento corporativo",
+          "seoTitle": "Eventos corporativos — MOSAÏQUE EVENTS",
+          "seoDescription": "Producimos encuentros profesionales alineados con el objetivo, la identidad y la experiencia que tu marca quiere crear."
+        },
+        "fr": {
+          "title": "Événements corporatifs",
+          "description": "Nous produisons des rencontres professionnelles alignées sur l’objectif, l’identité et l’expérience que votre marque souhaite créer.",
+          "idealFor": "Lancements, activations, soupers, réseautage et célébrations corporatives.",
+          "ctaLabel": "Créer un événement corporatif",
+          "seoTitle": "Événements corporatifs — MOSAÏQUE EVENTS",
+          "seoDescription": "Nous produisons des rencontres professionnelles alignées sur l’objectif, l’identité et l’expérience que votre marque souhaite créer."
+        }
+      },
+      "mainSha256": "4ef3cf8496bf9687d27b9cb98dfa9f067dae156235a0ad5a635f9e57b51e55ef",
+      "gallerySha256": []
+    },
+    {
+      "sourceId": "service-04",
+      "slug": "alianzas-venues",
+      "displayOrder": 5,
+      "locales": {
+        "en": {
+          "title": "Venue partnerships",
+          "description": "We create experiences with restaurants, hotels, and spaces looking to attract audiences and activate their venue.",
+          "idealFor": "Venues seeking to develop their own events or strategic collaborations.",
+          "ctaLabel": "Propose a partnership",
+          "seoTitle": "Venue partnerships — MOSAÏQUE EVENTS",
+          "seoDescription": "We create experiences with restaurants, hotels, and spaces looking to attract audiences and activate their venue."
+        },
+        "es": {
+          "title": "Alianzas con venues",
+          "description": "Creamos experiencias junto a restaurantes, hoteles y espacios que quieren atraer público y activar su venue.",
+          "idealFor": "Venues que buscan desarrollar eventos propios o colaboraciones estratégicas.",
+          "ctaLabel": "Proponer una alianza",
+          "seoTitle": "Alianzas con venues — MOSAÏQUE EVENTS",
+          "seoDescription": "Creamos experiencias junto a restaurantes, hoteles y espacios que quieren atraer público y activar su venue."
+        },
+        "fr": {
+          "title": "Partenariats avec des lieux",
+          "description": "Nous créons des expériences avec des restaurants, des hôtels et des espaces qui souhaitent attirer leur public et dynamiser leur lieu.",
+          "idealFor": "Lieux qui souhaitent développer leurs propres événements ou des collaborations stratégiques.",
+          "ctaLabel": "Proposer un partenariat",
+          "seoTitle": "Partenariats avec des lieux — MOSAÏQUE EVENTS",
+          "seoDescription": "Nous créons des expériences avec des restaurants, des hôtels et des espaces qui souhaitent attirer leur public et dynamiser leur lieu."
+        }
+      },
+      "mainSha256": "87f9eec983ebd24baa521435d937bef14d0cedc8e2ed61afef0110edad2ffa9d",
+      "gallerySha256": [
+        "7478cc3a0e0a067b42cb2c867dc671c11db3509bc1643f3a167f58a12acf74c8",
+        "742ba975a8a84e4541e270da2f3b91f2685d28ebe00521fee432e140789ec0e0"
+      ]
+    },
+    {
+      "sourceId": "service-05",
+      "slug": "montaje-logistica",
+      "displayOrder": 6,
+      "locales": {
+        "en": {
+          "title": "Setup and logistics",
+          "description": "We handle installation, space organization, furniture movement, and event teardown.",
+          "idealFor": "Planners, venues, and clients who need focused operational support.",
+          "ctaLabel": "Request logistics support",
+          "seoTitle": "Setup and logistics — MOSAÏQUE EVENTS",
+          "seoDescription": "We handle installation, space organization, furniture movement, and event teardown."
+        },
+        "es": {
+          "title": "Montaje y logística",
+          "description": "Nos encargamos de la instalación, organización del espacio, movimiento de mobiliario y desmontaje del evento.",
+          "idealFor": "Planners, venues y clientes que necesitan apoyo operativo puntual.",
+          "ctaLabel": "Solicitar soporte logístico",
+          "seoTitle": "Montaje y logística — MOSAÏQUE EVENTS",
+          "seoDescription": "Nos encargamos de la instalación, organización del espacio, movimiento de mobiliario y desmontaje del evento."
+        },
+        "fr": {
+          "title": "Montage et logistique",
+          "description": "Nous prenons en charge l’installation, l’organisation de l’espace, le déplacement du mobilier et le démontage de l’événement.",
+          "idealFor": "Planificateurs, lieux et clients qui ont besoin d’un soutien opérationnel ciblé.",
+          "ctaLabel": "Demander un soutien logistique",
+          "seoTitle": "Montage et logistique — MOSAÏQUE EVENTS",
+          "seoDescription": "Nous prenons en charge l’installation, l’organisation de l’espace, le déplacement du mobilier et le démontage de l’événement."
+        }
+      },
+      "mainSha256": "8911a1916dd4fdd7e2fc70ff49227c14c1f7de538d1960549698b434e3300f03",
+      "gallerySha256": [
+        "b7e790a1725bd6d8d105e9eba128979005b4b6cbd25fdb34ba8f4fa19f30d834",
+        "6273e1dc9577790579b97ee7938272943e78e0b642f517698e7a6a3b6439ec50",
+        "1314d956e697bcdef0bb8bdcaac99a454047d2bf842587e27c71b05afa7adb57"
+      ]
+    },
+    {
+      "sourceId": "service-06",
+      "slug": "alquiler-mobiliario",
+      "displayOrder": 7,
+      "locales": {
+        "en": {
+          "title": "Furniture rental",
+          "description": "We provide furniture, equipment, and supplies to complement your event on their own or as part of a production.",
+          "idealFor": "Events that need specific resources without booking full production.",
+          "ctaLabel": "View rental options",
+          "seoTitle": "Furniture rental — MOSAÏQUE EVENTS",
+          "seoDescription": "We provide furniture, equipment, and supplies to complement your event on their own or as part of a production."
+        },
+        "es": {
+          "title": "Alquiler de mobiliario",
+          "description": "Ofrecemos mobiliario, equipos e insumos para complementar tu evento de forma individual o dentro de una producción.",
+          "idealFor": "Eventos que necesitan recursos específicos sin contratar un servicio completo.",
+          "ctaLabel": "Ver opciones de alquiler",
+          "seoTitle": "Alquiler de mobiliario — MOSAÏQUE EVENTS",
+          "seoDescription": "Ofrecemos mobiliario, equipos e insumos para complementar tu evento de forma individual o dentro de una producción."
+        },
+        "fr": {
+          "title": "Location de mobilier",
+          "description": "Nous offrons du mobilier, de l’équipement et des fournitures pour compléter votre événement, séparément ou dans le cadre d’une production.",
+          "idealFor": "Événements qui ont besoin de ressources précises sans réserver une production complète.",
+          "ctaLabel": "Voir les options de location",
+          "seoTitle": "Location de mobilier — MOSAÏQUE EVENTS",
+          "seoDescription": "Nous offrons du mobilier, de l’équipement et des fournitures pour compléter votre événement, séparément ou dans le cadre d’une production."
+        }
+      },
+      "mainSha256": "8e755ac65514a210e3eedef5d5613e615f708225553873a3a51f5d8c9d1e76aa",
+      "gallerySha256": [
+        "8911a1916dd4fdd7e2fc70ff49227c14c1f7de538d1960549698b434e3300f03",
+        "55bc3420b6a295d07ced6eea8fa84c2e15918c8280d55bc45d08c6adc5511c4a",
+        "6273e1dc9577790579b97ee7938272943e78e0b642f517698e7a6a3b6439ec50",
+        "1314d956e697bcdef0bb8bdcaac99a454047d2bf842587e27c71b05afa7adb57"
+      ]
+    },
+    {
+      "sourceId": "service-07",
+      "slug": "paquetes-personalizados",
+      "displayOrder": 8,
+      "locales": {
+        "en": {
+          "title": "Custom packages",
+          "description": "We combine production, setup, logistics, atmosphere, and rental around the real needs of your event.",
+          "idealFor": "Those who want flexibility and to pay only for what they need.",
+          "ctaLabel": "Create my package",
+          "seoTitle": "Custom packages — MOSAÏQUE EVENTS",
+          "seoDescription": "We combine production, setup, logistics, atmosphere, and rental around the real needs of your event."
+        },
+        "es": {
+          "title": "Paquetes personalizados",
+          "description": "Combinamos producción, montaje, logística, ambientación y alquiler según las necesidades reales de tu evento.",
+          "idealFor": "Quienes buscan flexibilidad y pagar únicamente por lo que necesitan.",
+          "ctaLabel": "Crear mi paquete",
+          "seoTitle": "Paquetes personalizados — MOSAÏQUE EVENTS",
+          "seoDescription": "Combinamos producción, montaje, logística, ambientación y alquiler según las necesidades reales de tu evento."
+        },
+        "fr": {
+          "title": "Forfaits personnalisés",
+          "description": "Nous combinons production, montage, logistique, ambiance et location selon les besoins réels de votre événement.",
+          "idealFor": "Pour celles et ceux qui recherchent de la flexibilité et souhaitent payer seulement ce dont ils ont besoin.",
+          "ctaLabel": "Créer mon forfait",
+          "seoTitle": "Forfaits personnalisés — MOSAÏQUE EVENTS",
+          "seoDescription": "Nous combinons production, montage, logistique, ambiance et location selon les besoins réels de votre événement."
+        }
+      },
+      "mainSha256": "515bad05107f014850db45058eda4355019fb46a0fd7c88194e10b58e187a89f",
+      "gallerySha256": [
+        "08a60687b79c684c3565cfc9b395d9ed60b4a3ca4f5ae05a96ce97315478aeb1",
+        "55bc3420b6a295d07ced6eea8fa84c2e15918c8280d55bc45d08c6adc5511c4a",
+        "007b7fc12a132280473f90121176721ad14dc3c3ffa1e2746e7fbe38b3a703d1"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "sourceId": "event-slot-01",
+      "slug": "nossa-copa",
+      "displayOrder": 1,
+      "categoryId": "festival",
+      "relatedServiceSlug": "celebraciones",
+      "collaboration": true,
+      "locales": {
+        "en": {
+          "title": "Brazil at the 2026 World Cup",
+          "description": "Football, community, and entrepreneurship brought together in a festival experience.",
+          "mainAlt": "A game of pool at Brazil at the 2026 World Cup, surrounded by attendees wearing Brazil jerseys.",
+          "seoTitle": "Brazil at the 2026 World Cup — MOSAÏQUE EVENTS",
+          "seoDescription": "Football, community, and entrepreneurship brought together in a festival experience."
+        },
+        "es": {
+          "title": "Brasil en el Mundial 2026",
+          "description": "Fútbol, comunidad y emprendimiento reunidos en una experiencia de festival.",
+          "mainAlt": "Partida de billar durante Brasil en el Mundial 2026, rodeada de asistentes con camisetas de Brasil.",
+          "seoTitle": "Brasil en el Mundial 2026 — MOSAÏQUE EVENTS",
+          "seoDescription": "Fútbol, comunidad y emprendimiento reunidos en una experiencia de festival."
+        },
+        "fr": {
+          "title": "Le Brésil à la Coupe du monde 2026",
+          "description": "Football, communauté et entrepreneuriat réunis dans une expérience de festival.",
+          "mainAlt": "Une partie de billard lors de l’événement « Le Brésil à la Coupe du monde 2026 », entourée de participants portant des maillots du Brésil.",
+          "seoTitle": "Le Brésil à la Coupe du monde 2026 — MOSAÏQUE EVENTS",
+          "seoDescription": "Football, communauté et entrepreneuriat réunis dans une expérience de festival."
+        }
+      },
+      "mainSha256": "50153cdfa88f1495cb1f3d0e5c15c738c309f40b030aa8337bddb0e11c512ba8",
+      "gallery": [
+        {
+          "sha256": "9a73807a388933cf8800ae6cf959c0aa7de8e16bac3b05b9f7d6346900432c14",
+          "layout": "full-landscape",
+          "alts": {
+            "en": "An overview of attendees gathered for Brazil at the 2026 World Cup.",
+            "es": "Vista general de los asistentes reunidos para Brasil en el Mundial 2026.",
+            "fr": "Vue d’ensemble des participants réunis pour l’événement « Le Brésil à la Coupe du monde 2026 »."
+          }
+        },
+        {
+          "sha256": "4c38d275cd209fd6f33e4447f27a5220cd8f942b418a7c5644335e06e50dc296",
+          "layout": "pair-portrait",
+          "alts": {
+            "en": "A family posing in Brazil jerseys at Brazil at the 2026 World Cup.",
+            "es": "Familia con camisetas brasileñas posando durante Brasil en el Mundial 2026.",
+            "fr": "Une famille posant en maillots du Brésil lors de l’événement « Le Brésil à la Coupe du monde 2026 »."
+          }
+        },
+        {
+          "sha256": "6b01263c1505cdd5cb3f5661c7741ef49c42b1521d5edd50b756d47d1b64bdef",
+          "layout": "pair-portrait",
+          "alts": {
+            "en": "Attendees playing foosball at Brazil at the 2026 World Cup.",
+            "es": "Asistentes jugando futbolín durante Brasil en el Mundial 2026.",
+            "fr": "Des participants jouant au baby-foot lors de l’événement « Le Brésil à la Coupe du monde 2026 »."
+          }
+        },
+        {
+          "sha256": "79ed04192286192822032d9e7d49d5bc993d129ed0aa63a21941663b87939e79",
+          "layout": "pair-landscape",
+          "alts": {
+            "en": "A stall selling Brazilian products at Brazil at the 2026 World Cup.",
+            "es": "Puesto de productos brasileños dentro de Brasil en el Mundial 2026.",
+            "fr": "Un kiosque de produits brésiliens lors de l’événement « Le Brésil à la Coupe du monde 2026 »."
+          }
+        },
+        {
+          "sha256": "fc489b8729aeaf6d43a27466ded5403e13ecf34b6064ca3f9b499a376f1b7f7e",
+          "layout": "pair-landscape",
+          "alts": {
+            "en": "A musical performance for attendees at Brazil at the 2026 World Cup.",
+            "es": "Presentación musical frente a los asistentes de Brasil en el Mundial 2026.",
+            "fr": "Une prestation musicale devant les participants de l’événement « Le Brésil à la Coupe du monde 2026 »."
+          }
+        },
+        {
+          "sha256": "099302b13e15533fea9e850f93b660f8a115f0a255c17ae17b8a5d433db6e6cd",
+          "layout": "full-landscape",
+          "alts": {
+            "en": "Attendees sharing tables at Brazil at the 2026 World Cup.",
+            "es": "Asistentes compartiendo alrededor de las mesas durante Brasil en el Mundial 2026.",
+            "fr": "Des participants réunis autour des tables lors de l’événement « Le Brésil à la Coupe du monde 2026 »."
+          }
+        }
+      ]
+    },
+    {
+      "sourceId": "event-slot-02",
+      "slug": "baila-da-zaza",
+      "displayOrder": 2,
+      "categoryId": "celebration",
+      "relatedServiceSlug": "celebraciones",
+      "collaboration": true,
+      "locales": {
+        "en": {
+          "title": "Brazilian Celebration",
+          "description": "Rhythm, dancing, and Brazilian spirit in an experience made for celebration.",
+          "mainAlt": "A DJ sharing the booth at Brazilian Celebration under orange lighting.",
+          "seoTitle": "Brazilian Celebration — MOSAÏQUE EVENTS",
+          "seoDescription": "Rhythm, dancing, and Brazilian spirit in an experience made for celebration."
+        },
+        "es": {
+          "title": "Celebración Brasileña",
+          "description": "Ritmo, baile y esencia brasileña en una experiencia hecha para celebrar.",
+          "mainAlt": "DJ compartiendo la cabina durante Celebración Brasileña bajo una iluminación naranja.",
+          "seoTitle": "Celebración Brasileña — MOSAÏQUE EVENTS",
+          "seoDescription": "Ritmo, baile y esencia brasileña en una experiencia hecha para celebrar."
+        },
+        "fr": {
+          "title": "Célébration brésilienne",
+          "description": "Rythme, danse et esprit brésilien dans une expérience faite pour célébrer.",
+          "mainAlt": "Un DJ partageant la cabine lors de Célébration brésilienne sous un éclairage orangé.",
+          "seoTitle": "Célébration brésilienne — MOSAÏQUE EVENTS",
+          "seoDescription": "Rythme, danse et esprit brésilien dans une expérience faite pour célébrer."
+        }
+      },
+      "mainSha256": "f4b4a167ed98898a339ddd093d1bb006ea818771df1274385b639395056e4690",
+      "gallery": [
+        {
+          "sha256": "cf0f8c75d178687814e33935686c917c31fad69115092ef6c2e31bf507885a42",
+          "layout": "pair-portrait",
+          "alts": {
+            "en": "The atmosphere behind the DJ booth at Brazilian Celebration.",
+            "es": "Ambiente detrás de la cabina durante Celebración Brasileña.",
+            "fr": "L’ambiance derrière la cabine du DJ lors de Célébration brésilienne."
+          }
+        },
+        {
+          "sha256": "84ad01eb60f3c8fbf05afeceed1be41ff6abd99782b89145de57a55d26a2983e",
+          "layout": "full-landscape",
+          "alts": {
+            "en": "The dance floor and attendees at Brazilian Celebration under red lights.",
+            "es": "Pista y asistentes de Celebración Brasileña bajo luces rojas.",
+            "fr": "La piste de danse et les participants de Célébration brésilienne sous des lumières rouges."
+          }
+        }
+      ]
+    },
+    {
+      "sourceId": "event-slot-03",
+      "slug": "baby-shower",
+      "displayOrder": 3,
+      "categoryId": "privateCelebration",
+      "relatedServiceSlug": "celebraciones",
+      "collaboration": false,
+      "locales": {
+        "en": {
+          "title": "Baby Shower",
+          "description": "An intimate celebration welcoming a new beginning.",
+          "mainAlt": "Decoración principal del baby shower con globos, flores y bloques de letras.",
+          "seoTitle": "Baby Shower — MOSAÏQUE EVENTS",
+          "seoDescription": "An intimate celebration welcoming a new beginning."
+        },
+        "es": {
+          "title": "Baby Shower",
+          "description": "Una celebración íntima para compartir la llegada de un nuevo comienzo.",
+          "mainAlt": "Decoración principal del baby shower con globos, flores y bloques de letras.",
+          "seoTitle": "Baby Shower — MOSAÏQUE EVENTS",
+          "seoDescription": "Una celebración íntima para compartir la llegada de un nuevo comienzo."
+        },
+        "fr": {
+          "title": "Baby Shower",
+          "description": "Une célébration intime pour accueillir un nouveau départ.",
+          "mainAlt": "Decoración principal del baby shower con globos, flores y bloques de letras.",
+          "seoTitle": "Baby Shower — MOSAÏQUE EVENTS",
+          "seoDescription": "Une célébration intime pour accueillir un nouveau départ."
+        }
+      },
+      "mainSha256": "fced077f6752a51eff0093ba6fd5a7db8aab8247999b48763171f2b91d6ca807",
+      "gallery": [
+        {
+          "sha256": "bf618d172af74147b7a6ed2258eefac43db789d16a05fa4add0de33907efe185",
+          "layout": "full-landscape",
+          "alts": {
+            "en": "Mesa de regalos enmarcada por un arco floral durante el baby shower.",
+            "es": "Mesa de regalos enmarcada por un arco floral durante el baby shower.",
+            "fr": "Mesa de regalos enmarcada por un arco floral durante el baby shower."
+          }
+        },
+        {
+          "sha256": "c4a0c42e2c597b8b2331ce1618588527aa2a6ae8cae544b263bf0e30b05ee5f6",
+          "layout": "pair-portrait",
+          "alts": {
+            "en": "Regalos dispuestos junto a la decoración floral del baby shower.",
+            "es": "Regalos dispuestos junto a la decoración floral del baby shower.",
+            "fr": "Regalos dispuestos junto a la decoración floral del baby shower."
+          }
+        },
+        {
+          "sha256": "4879d7ac8e8e3b431833b74a2bf3c6305b7351ffab35ed86664d3a2367919d59",
+          "layout": "pair-portrait",
+          "alts": {
+            "en": "Arreglo alto de flores blancas y follaje en el baby shower.",
+            "es": "Arreglo alto de flores blancas y follaje en el baby shower.",
+            "fr": "Arreglo alto de flores blancas y follaje en el baby shower."
+          }
+        },
+        {
+          "sha256": "5f60e51c1ea9d51ec3fb3cc715aa6c65ab8b1880063174e942e6fad2eddfefca",
+          "layout": "pair-landscape",
+          "alts": {
+            "en": "Vista amplia de la mesa de regalos y el arco floral del baby shower.",
+            "es": "Vista amplia de la mesa de regalos y el arco floral del baby shower.",
+            "fr": "Vista amplia de la mesa de regalos y el arco floral del baby shower."
+          }
+        },
+        {
+          "sha256": "ea27d81a5eab25fc35eefb0aeab51b6de654f9e34263d0bdb42a77a5d30886cc",
+          "layout": "pair-landscape",
+          "alts": {
+            "en": "Mesa principal decorada con flores, globos y un oso de peluche.",
+            "es": "Mesa principal decorada con flores, globos y un oso de peluche.",
+            "fr": "Mesa principal decorada con flores, globos y un oso de peluche."
+          }
+        },
+        {
+          "sha256": "3965df31999e5cfb9bee216aa10c5c51af63393dbcab8b6b64ce83965d7ab012",
+          "layout": "full-landscape",
+          "alts": {
+            "en": "Detalle frontal de la mesa principal y su arreglo floral.",
+            "es": "Detalle frontal de la mesa principal y su arreglo floral.",
+            "fr": "Detalle frontal de la mesa principal y su arreglo floral."
+          }
+        }
+      ]
+    },
+    {
+      "sourceId": "event-slot-04",
+      "slug": "wedding-r-r",
+      "displayOrder": 4,
+      "categoryId": "wedding",
+      "relatedServiceSlug": "bodas",
+      "collaboration": false,
+      "locales": {
+        "en": {
+          "title": "Wedding R&R",
+          "description": "An Amalfi-inspired celebration at Riverest.",
+          "mainAlt": "Mesas de la boda R&R dispuestas al aire libre entre árboles y vegetación.",
+          "seoTitle": "Wedding R&R — MOSAÏQUE EVENTS",
+          "seoDescription": "An Amalfi-inspired celebration at Riverest."
+        },
+        "es": {
+          "title": "Wedding R&R",
+          "description": "Una celebración de inspiración Amalfi en el entorno de Riverest.",
+          "mainAlt": "Mesas de la boda R&R dispuestas al aire libre entre árboles y vegetación.",
+          "seoTitle": "Wedding R&R — MOSAÏQUE EVENTS",
+          "seoDescription": "Una celebración de inspiración Amalfi en el entorno de Riverest."
+        },
+        "fr": {
+          "title": "Wedding R&R",
+          "description": "Une célébration d’inspiration amalfitaine dans le décor de Riverest.",
+          "mainAlt": "Mesas de la boda R&R dispuestas al aire libre entre árboles y vegetación.",
+          "seoTitle": "Wedding R&R — MOSAÏQUE EVENTS",
+          "seoDescription": "Une célébration d’inspiration amalfitaine dans le décor de Riverest."
+        }
+      },
+      "mainSha256": "0e5129741313b5de9bb01097238912995c0610739fc0390532e422f5eefd4764",
+      "gallery": [
+        {
+          "sha256": "ab4dd02920bc683a8f309257568eed3e90ddf6728e6fcb55c42f574a56591470",
+          "layout": "full-landscape",
+          "alts": {
+            "en": "Iniciales R&R colocadas sobre una mesa de madera en la boda.",
+            "es": "Iniciales R&R colocadas sobre una mesa de madera en la boda.",
+            "fr": "Iniciales R&R colocadas sobre una mesa de madera en la boda."
+          }
+        },
+        {
+          "sha256": "b60bb07f4e6ac493f187cc1b531207c5478126f32c8f1b4ebe9afc3bbae4356b",
+          "layout": "pair-portrait",
+          "alts": {
+            "en": "Letrero de bienvenida rodeado de vegetación en la boda R&R.",
+            "es": "Letrero de bienvenida rodeado de vegetación en la boda R&R.",
+            "fr": "Letrero de bienvenida rodeado de vegetación en la boda R&R."
+          }
+        },
+        {
+          "sha256": "f3bf560cb14709c7ec779e746baac9d51204bc7865a47cbed2459eeeed501de1",
+          "layout": "pair-portrait",
+          "alts": {
+            "en": "Detalle decorativo con limones y un mensaje para la pareja.",
+            "es": "Detalle decorativo con limones y un mensaje para la pareja.",
+            "fr": "Detalle decorativo con limones y un mensaje para la pareja."
+          }
+        },
+        {
+          "sha256": "7ecea5694ead3b4d622b0e317ff767ffc4446658c962720192ea658037bd7053",
+          "layout": "pair-portrait",
+          "alts": {
+            "en": "Mesa de invitados preparada con vajilla blanca y cristalería.",
+            "es": "Mesa de invitados preparada con vajilla blanca y cristalería.",
+            "fr": "Mesa de invitados preparada con vajilla blanca y cristalería."
+          }
+        },
+        {
+          "sha256": "ce88467b58b2a262d96cc28a8b429a525e3d2c4d2225507a56796c0838c05207",
+          "layout": "pair-portrait",
+          "alts": {
+            "en": "Montaje de mesa en tonos claros para la recepción de la boda.",
+            "es": "Montaje de mesa en tonos claros para la recepción de la boda.",
+            "fr": "Montaje de mesa en tonos claros para la recepción de la boda."
+          }
+        },
+        {
+          "sha256": "4f19ac7ebca8b00433fbe415d38ae715d7eac1a26e2232169c4960c32b39f194",
+          "layout": "full-landscape",
+          "alts": {
+            "en": "Mesa de dulces con detalles amarillos durante la recepción.",
+            "es": "Mesa de dulces con detalles amarillos durante la recepción.",
+            "fr": "Mesa de dulces con detalles amarillos durante la recepción."
+          }
+        },
+        {
+          "sha256": "1ffabfaa249a1895e17a2dd1a9c8b553a0c640e54b8de499694c76faf8d45f84",
+          "layout": "full-landscape",
+          "alts": {
+            "en": "Bola de espejos suspendida sobre el espacio exterior de la celebración.",
+            "es": "Bola de espejos suspendida sobre el espacio exterior de la celebración.",
+            "fr": "Bola de espejos suspendida sobre el espacio exterior de la celebración."
+          }
+        }
+      ]
+    },
+    {
+      "sourceId": "event-slot-05",
+      "slug": "cumpleanos-ana-paula",
+      "displayOrder": 5,
+      "categoryId": "birthday",
+      "relatedServiceSlug": "celebraciones",
+      "collaboration": false,
+      "locales": {
+        "en": {
+          "title": "Ana Paula's Birthday",
+          "description": "Play, celebration, and family moments in an experience designed for little ones.",
+          "mainAlt": "Arreglo de globos rosados y lilas para el cumpleaños de Ana Paula.",
+          "seoTitle": "Ana Paula's Birthday — MOSAÏQUE EVENTS",
+          "seoDescription": "Play, celebration, and family moments in an experience designed for little ones."
+        },
+        "es": {
+          "title": "Cumpleaños Ana Paula",
+          "description": "Juego, celebración y momentos en familia en una experiencia pensada para los más pequeños.",
+          "mainAlt": "Arreglo de globos rosados y lilas para el cumpleaños de Ana Paula.",
+          "seoTitle": "Cumpleaños Ana Paula — MOSAÏQUE EVENTS",
+          "seoDescription": "Juego, celebración y momentos en familia en una experiencia pensada para los más pequeños."
+        },
+        "fr": {
+          "title": "Anniversaire d’Ana Paula",
+          "description": "Jeu, célébration et moments en famille dans une expérience pensée pour les tout-petits.",
+          "mainAlt": "Arreglo de globos rosados y lilas para el cumpleaños de Ana Paula.",
+          "seoTitle": "Anniversaire d’Ana Paula — MOSAÏQUE EVENTS",
+          "seoDescription": "Jeu, célébration et moments en famille dans une expérience pensée pour les tout-petits."
+        }
+      },
+      "mainSha256": "28b92e96688b7f45eef82358f9145fe30204156b850eb4ae61a9b6561c7aadbd",
+      "gallery": [
+        {
+          "sha256": "aeed8d941b34a626e208d43da7619901177334b9108dfe3d20b94212ad9b01b2",
+          "layout": "pair-portrait",
+          "alts": {
+            "en": "Pastel y decoración de cumpleaños inspirados en música pop.",
+            "es": "Pastel y decoración de cumpleaños inspirados en música pop.",
+            "fr": "Pastel y decoración de cumpleaños inspirados en música pop."
+          }
+        },
+        {
+          "sha256": "e9768286263cb38aaa17e28134a44b189ed48e3683dad93b58ffe75b94f68b5e",
+          "layout": "pair-landscape",
+          "alts": {
+            "en": "Vasos personalizados dispuestos sobre la mesa del cumpleaños.",
+            "es": "Vasos personalizados dispuestos sobre la mesa del cumpleaños.",
+            "fr": "Vasos personalizados dispuestos sobre la mesa del cumpleaños."
+          }
+        },
+        {
+          "sha256": "e63d7f068c1b7619308e3f671590a2dcb33f3d1b73657d36c748b807a567ce70",
+          "layout": "pair-landscape",
+          "alts": {
+            "en": "Recuerdos personalizados preparados para los invitados.",
+            "es": "Recuerdos personalizados preparados para los invitados.",
+            "fr": "Recuerdos personalizados preparados para los invitados."
+          }
+        },
+        {
+          "sha256": "64dff192ec22ebac77b1b2277810063a21ad90f51e9c59d76f57296f83652282",
+          "layout": "full-landscape",
+          "alts": {
+            "en": "Ana Paula compartiendo la mesa con sus invitados durante la celebración.",
+            "es": "Ana Paula compartiendo la mesa con sus invitados durante la celebración.",
+            "fr": "Ana Paula compartiendo la mesa con sus invitados durante la celebración."
+          }
+        }
+      ]
+    },
+    {
+      "sourceId": "event-slot-06",
+      "slug": "fan-fest-club",
+      "displayOrder": 6,
+      "categoryId": "festival",
+      "relatedServiceSlug": "celebraciones",
+      "collaboration": false,
+      "locales": {
+        "en": {
+          "title": "Fan Fest Club",
+          "description": "Football, music, and entertainment brought together in an experience to celebrate as one.",
+          "mainAlt": "Presentación musical frente a la afición reunida en Fan Fest Club.",
+          "seoTitle": "Fan Fest Club — MOSAÏQUE EVENTS",
+          "seoDescription": "Football, music, and entertainment brought together in an experience to celebrate as one."
+        },
+        "es": {
+          "title": "Fan Fest Club",
+          "description": "Fútbol, música y entretenimiento reunidos en una experiencia para celebrar juntos.",
+          "mainAlt": "Presentación musical frente a la afición reunida en Fan Fest Club.",
+          "seoTitle": "Fan Fest Club — MOSAÏQUE EVENTS",
+          "seoDescription": "Fútbol, música y entretenimiento reunidos en una experiencia para celebrar juntos."
+        },
+        "fr": {
+          "title": "Fan Fest Club",
+          "description": "Football, musique et divertissement réunis dans une expérience pour célébrer ensemble.",
+          "mainAlt": "Presentación musical frente a la afición reunida en Fan Fest Club.",
+          "seoTitle": "Fan Fest Club — MOSAÏQUE EVENTS",
+          "seoDescription": "Football, musique et divertissement réunis dans une expérience pour célébrer ensemble."
+        }
+      },
+      "mainSha256": "4ef3cf8496bf9687d27b9cb98dfa9f067dae156235a0ad5a635f9e57b51e55ef",
+      "gallery": [
+        {
+          "sha256": "a658d81d0b63477ae916cbef26888e20e039c9ae2be76bfdda84b6a2232891d4",
+          "layout": "pair-portrait",
+          "alts": {
+            "en": "Músico con acordeón animando al público de Fan Fest Club.",
+            "es": "Músico con acordeón animando al público de Fan Fest Club.",
+            "fr": "Músico con acordeón animando al público de Fan Fest Club."
+          }
+        },
+        {
+          "sha256": "ca8569e3c888d648517ca53298914f800bd349cf5505b6a9b6baf20c384ebb72",
+          "layout": "pair-portrait",
+          "alts": {
+            "en": "Acordeonista interpretando música entre asistentes con camisetas de Colombia.",
+            "es": "Acordeonista interpretando música entre asistentes con camisetas de Colombia.",
+            "fr": "Acordeonista interpretando música entre asistentes con camisetas de Colombia."
+          }
+        },
+        {
+          "sha256": "c650461d17f531522108cc205b269d80eb88917e7cf59dac5f9484b799169f09",
+          "layout": "pair-landscape",
+          "alts": {
+            "en": "Cantantes y músicos durante una presentación de Fan Fest Club.",
+            "es": "Cantantes y músicos durante una presentación de Fan Fest Club.",
+            "fr": "Cantantes y músicos durante una presentación de Fan Fest Club."
+          }
+        },
+        {
+          "sha256": "06608f4183f9f34883b65c82b20c46a51175cadf4b8bf84b1b69a310598752fc",
+          "layout": "pair-landscape",
+          "alts": {
+            "en": "Asistentes celebrando juntos durante un partido en Fan Fest Club.",
+            "es": "Asistentes celebrando juntos durante un partido en Fan Fest Club.",
+            "fr": "Asistentes celebrando juntos durante un partido en Fan Fest Club."
+          }
+        },
+        {
+          "sha256": "a42f9ff0f8b95b810b84a8cedee5d669895545da22149809b9d40e92aeb3946c",
+          "layout": "full-landscape",
+          "alts": {
+            "en": "Aficionados de Colombia celebrando frente a la pantalla del partido.",
+            "es": "Aficionados de Colombia celebrando frente a la pantalla del partido.",
+            "fr": "Aficionados de Colombia celebrando frente a la pantalla del partido."
+          }
+        },
+        {
+          "sha256": "39bbec49c3c67db621d67c70b103a627b61baea822bb363f02793076236d36e7",
+          "layout": "full-landscape",
+          "alts": {
+            "en": "Aficionados de México disfrutando la música y el partido en Fan Fest Club.",
+            "es": "Aficionados de México disfrutando la música y el partido en Fan Fest Club.",
+            "fr": "Aficionados de México disfrutando la música y el partido en Fan Fest Club."
+          }
+        }
+      ]
+    }
+  ],
+  "currentEvents": []
+}

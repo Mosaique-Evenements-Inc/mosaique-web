@@ -6,8 +6,7 @@ import { getTreeLinkTranslations } from "@/features/tree-link/i18n";
 import CursorHalftone from "@/features/home/ui/components/CursorHalftone.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import TreeLinkActionCard from "../components/TreeLinkActionCard.astro";
-// Próximos eventos is parked for now; keep the accordion import and section ready to restore.
-// import TreeLinkAgenda from "../components/TreeLinkAgenda.astro";
+import PublicationTreeAgenda from "@/features/publication/ui/PublicationTreeAgenda.astro";
 import TreeLinkCollaborators from "../components/TreeLinkCollaborators.astro";
 import TreeLinkIdentity from "../components/TreeLinkIdentity.astro";
 import TreeLinkShareDialog from "../components/TreeLinkShareDialog.astro";
@@ -99,26 +98,19 @@ const canonicalShareUrl = Astro.site ? new URL(treePath, Astro.site).href : unde
         />
       </div>
 
-      {
-        /*
-        Próximos eventos is intentionally commented, not deleted.
-
-        <section
-          class="tree-link__section tree-link__section--reveal"
-          style="--tree-link-section-index:1"
-          aria-labelledby="tree-link-events-title"
-        >
-          <h2 id="tree-link-events-title">{treeText.eventsHeading}</h2>
-          <TreeLinkAgenda
-            title={treeText.agendaTitle}
-            description={treeText.agendaDescription}
-            slots={treeLinkContent.agenda.slots}
-            slotLabels={treeText.eventSlotLabels}
-            pendingLabel={treeText.eventPending}
-          />
-        </section>
-        */
-      }
+      <section
+        class="tree-link__section tree-link__section--reveal"
+        style="--tree-link-section-index:1"
+        aria-labelledby="tree-link-events-title"
+      >
+        <h2 id="tree-link-events-title">{treeText.eventsHeading}</h2>
+        <PublicationTreeAgenda
+          title={treeText.agendaTitle}
+          description={treeText.agendaDescription}
+          empty={treeText.eventsEmpty}
+          locale={locale}
+        />
+      </section>
 
       <section
         class="tree-link__section tree-link__section--reveal"

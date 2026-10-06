@@ -1,17 +1,11 @@
 ---
-import { prefixedLocales, type Locale } from "@/core/i18n";
-import { getLocalizedEventGalleryItems } from "@/features/gallery";
+import { getLocaleFromUrl } from "@/core/i18n";
+import { getPublication } from "@/features/publication/publication";
 import { galleryTranslations } from "@/features/gallery/i18n";
 import GalleryPage from "@/features/gallery/ui/pages/GalleryPage.astro";
-
-export function getStaticPaths() {
-  return prefixedLocales.map((locale) => ({ params: { locale } }));
-}
-
-const locale = Astro.params.locale as Locale;
+const locale = getLocaleFromUrl(Astro.url);
+const items = getPublication(Astro.locals, locale).events;
+const title = `${galleryTranslations[locale].archiveTitle} — MOSAÏQUE EVENTS`;
 ---
 
-<GalleryPage
-  title={`${galleryTranslations[locale].archiveTitle} — MOSAÏQUE EVENTS`}
-  items={getLocalizedEventGalleryItems(locale)}
-/>
+<GalleryPage {items} {title} />

@@ -8,13 +8,13 @@ import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
 import CursorHalftone from "./CursorHalftone.astro";
 import { finalCtaContent } from "@/features/quote/content/finalCta";
-import { getHomeTranslations } from "@/features/home/i18n";
 import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
+import { getPublication } from "@/features/publication/publication";
 
 import "@/features/home/ui/styles/final-cta.css";
 
 const locale = getLocaleFromUrl(Astro.url);
-const finalCtaText = getHomeTranslations(locale);
+const finalCtaText = getPublication(Astro.locals, locale).home;
 ---
 
 <section class="final-cta" id="contact" aria-labelledby="final-cta-title">
@@ -38,7 +38,7 @@ const finalCtaText = getHomeTranslations(locale);
             href={getLocalizedHref(finalCtaContent.action.href, locale)}
             variant="light"
           >
-            {finalCtaText.finalCtaAction}
+            {finalCtaText.finalCtaLabel}
           </Button>
         </div>
       </div>

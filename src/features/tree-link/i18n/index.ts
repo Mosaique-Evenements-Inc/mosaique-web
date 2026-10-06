@@ -15,6 +15,7 @@ interface TreeLinkTranslations {
   agendaDescription: string;
   eventSlotLabels: readonly [string, string, string];
   eventPending: string;
+  eventsEmpty: string;
   socialsHeading: string;
   socialDescriptions: Record<TreeLinkSocialId, string>;
   pendingLink: string;
@@ -60,6 +61,7 @@ export const treeLinkTranslations = {
     agendaDescription: "Descubre lo próximo.",
     eventSlotLabels: ["Evento 01", "Evento 02", "Evento 03"],
     eventPending: "Información próximamente",
+    eventsEmpty: "No hay próximos eventos publicados.",
     socialsHeading: "Sigue la experiencia",
     socialDescriptions: {
       instagram: "Eventos, inspiración y detrás de escena.",
@@ -112,6 +114,7 @@ export const treeLinkTranslations = {
     agendaDescription: "Discover what’s next.",
     eventSlotLabels: ["Event 01", "Event 02", "Event 03"],
     eventPending: "Details coming soon",
+    eventsEmpty: "No upcoming events are published.",
     socialsHeading: "Follow the experience",
     socialDescriptions: {
       instagram: "Events, inspiration, and behind the scenes.",
@@ -165,6 +168,7 @@ export const treeLinkTranslations = {
     agendaDescription: "Découvrez ce qui s’en vient.",
     eventSlotLabels: ["Événement 01", "Événement 02", "Événement 03"],
     eventPending: "Détails à venir",
+    eventsEmpty: "Aucun événement à venir n’est publié.",
     socialsHeading: "Suivez l’expérience",
     socialDescriptions: {
       instagram: "Événements, inspiration et coulisses.",

@@ -3,6 +3,7 @@ import Container from "@/core/common/ui/components/Container.astro";
 import Icon from "@/core/common/ui/components/Icon.astro";
 import { collaborators } from "@/features/site-shell/content/collaborators";
 import { footerContent } from "@/features/site-shell/content/footer";
+import { getPublication } from "@/features/publication/publication";
 import { getSiteShellTranslations } from "@/features/site-shell/i18n";
 import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
 
@@ -12,6 +13,7 @@ const primaryLinks = footerContent.links.slice(0, 4);
 const secondaryLinks = footerContent.links.slice(4);
 const locale = getLocaleFromUrl(Astro.url);
 const shellText = getSiteShellTranslations(locale);
+const publicationServices = getPublication(Astro.locals, locale).services;
 const localizedPrimaryLinks = primaryLinks.map((link, index) => ({
   ...link,
   label: shellText.footerLinkLabels[index] ?? link.label,
@@ -102,13 +104,15 @@ const isCurrentPage = (href: string) => {
           </summary>
           <ul>
             {
-              footerContent.services.map((service, index) => (
+              publicationServices.map((service) => (
                 <li>
                   <a
-                    href={resolveHref(service.href)}
-                    aria-current={isCurrentPage(service.href) ? "page" : undefined}
+                    href={resolveHref(`/services/${service.slug}`)}
+                    aria-current={
+                      isCurrentPage(`/services/${service.slug}`) ? "page" : undefined
+                    }
                   >
-                    {shellText.footerServiceLabels[index] ?? service.label}
+                    {service.title}
                   </a>
                 </li>
               ))

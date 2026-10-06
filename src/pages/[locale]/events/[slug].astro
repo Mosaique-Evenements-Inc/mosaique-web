@@ -1,24 +1,12 @@
 ---
-import { prefixedLocales } from "@/core/i18n";
-import { eventDetails } from "@/features/events";
-import EventDetailPage from "@/features/events/ui/pages/EventDetailPage.astro";
-
-export function getStaticPaths() {
-  return prefixedLocales.flatMap((locale) =>
-    eventDetails.map((event, index) => ({
-      params: { locale, slug: event.slug },
-      props: {
-        event,
-        nextEvents: Array.from(
-          { length: eventDetails.length - 1 },
-          (_, offset) => eventDetails[(index + offset + 1) % eventDetails.length],
-        ),
-      },
-    })),
-  );
-}
-
-const { event, nextEvents } = Astro.props;
+import { getLocaleFromUrl } from "@/core/i18n";
+import { getPublication } from "@/features/publication/publication";
+import PublicationDetail from "@/features/publication/ui/PublicationDetail.astro";
+import NotFoundPage from "@/features/site-shell/ui/pages/NotFoundPage.astro";
+const locale = getLocaleFromUrl(Astro.url);
+const slug = Astro.params.slug ?? "";
+const found = getPublication(Astro.locals, locale).events.some((item) => item.slug === slug);
+if (!found) Astro.response.status = 404;
 ---
 
-<EventDetailPage {event} {nextEvents} />
+{found ? <PublicationDetail kind="event" slug={slug} /> : <NotFoundPage />}

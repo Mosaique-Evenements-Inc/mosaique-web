@@ -1,0 +1,26 @@
+.publication-detail .event-featured-media__media picture,
+.publication-detail .service-featured-media__media picture {
+  block-size: 100%;
+  display: block;
+  inline-size: 100%;
+}
+.publication-detail .event-featured-media__media img,
+.publication-detail .service-featured-media__media img {
+  block-size: 100%;
+  display: block;
+  inline-size: 100%;
+  object-fit: cover;
+}
+.publication-detail .event-gallery__media picture,
+.publication-detail .service-gallery__media picture {
+  block-size: 100%;
+  display: block;
+  inline-size: 100%;
+}
+.publication-detail .event-gallery__media img,
+.publication-detail .service-gallery__media img {
+  block-size: 100%;
+  display: block;
+  inline-size: 100%;
+  object-fit: cover;
+}

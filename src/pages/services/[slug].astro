@@ -1,21 +1,12 @@
 ---
-import { getEventsByServiceId } from "@/features/events";
-import { services, type Service } from "@/features/services";
-import ServiceDetailPage from "@/features/services/ui/pages/ServiceDetailPage.astro";
-
-export function getStaticPaths() {
-  return services.map((service) => ({
-    params: { slug: service.slug },
-    props: { service },
-  }));
-}
-
-interface Props {
-  service: Service;
-}
-
-const { service } = Astro.props;
-const relatedEvents = getEventsByServiceId(service.id);
+import { getLocaleFromUrl } from "@/core/i18n";
+import { getPublication } from "@/features/publication/publication";
+import PublicationDetail from "@/features/publication/ui/PublicationDetail.astro";
+import NotFoundPage from "@/features/site-shell/ui/pages/NotFoundPage.astro";
+const locale = getLocaleFromUrl(Astro.url);
+const slug = Astro.params.slug ?? "";
+const found = getPublication(Astro.locals, locale).services.some((item) => item.slug === slug);
+if (!found) Astro.response.status = 404;
 ---
 
-<ServiceDetailPage {service} {relatedEvents} />
+{found ? <PublicationDetail kind="service" slug={slug} /> : <NotFoundPage />}

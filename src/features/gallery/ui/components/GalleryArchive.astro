@@ -1,18 +1,14 @@
 ---
-import { Picture } from "astro:assets";
-
-import {
-  eventImageFallbackFormat,
-  eventImageFormats,
-  eventImageWidths,
-} from "@/assets/images/events/delivery";
 import Button from "@/core/common/ui/components/Button";
 import Container from "@/core/common/ui/components/Container.astro";
+import type { CmsItem } from "@/features/publication/publication";
 import {
-  eventGalleryItems,
-  getLocalizedGalleryCategories,
-  type EventGalleryItem,
-} from "@/features/gallery";
+  getGalleryCategoryIds,
+  getGalleryCategorySlug,
+  getPublication,
+} from "@/features/publication/publication";
+import PublicationImage from "@/features/publication/ui/PublicationImage.astro";
+import { getLocalizedEventCategory, type EventCategoryId } from "@/features/events";
 import { galleryTranslations } from "@/features/gallery/i18n";
 import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
 
@@ -20,13 +16,19 @@ import "@/features/gallery/ui/styles/gallery-archive.css";
 
 interface Props {
   activeCategoryId?: string;
-  items: readonly EventGalleryItem[];
+  items: readonly CmsItem[];
 }
 
 const { activeCategoryId, items } = Astro.props;
 const locale = getLocaleFromUrl(Astro.url);
 const galleryText = galleryTranslations[locale];
-const galleryCategories = getLocalizedGalleryCategories(locale);
+const galleryCategories = getGalleryCategoryIds(getPublication(Astro.locals, locale)).map(
+  (id) => ({
+    id,
+    href: `/gallery/${getGalleryCategorySlug(id as EventCategoryId)}`,
+    label: getLocalizedEventCategory(id as EventCategoryId, locale).label,
+  }),
+);
 const activeCategory = galleryCategories.find((category) => category.id === activeCategoryId);
 const heading = activeCategory
   ? `${activeCategory.label} — ${galleryText.archiveHeading}`
@@ -77,13 +79,7 @@ const heading = activeCategory
         <ol class="gallery-archive__list" aria-label={galleryText.eventsByBrand}>
           {
             items.map((event, index) => {
-              const sourceIndex = eventGalleryItems.findIndex(
-                (source) => source.id === event.id,
-              );
-              const tone = String(sourceIndex >= 0 ? sourceIndex + 1 : index + 1).padStart(
-                2,
-                "0",
-              );
+              const tone = String(index + 1).padStart(2, "0");
               const titleWords = event.title.split(" ");
               const titleSegments = titleWords.map((word, wordIndex) => ({
                 offset: titleWords
@@ -96,40 +92,32 @@ const heading = activeCategory
                 <li
                   class="gallery-archive__item"
                   data-gallery-event
-                  data-event-id={event.id}
-                  data-content-status={event.status}
+                  data-event-id={event.code}
+                  data-content-status="published"
                 >
                   <a
                     class="gallery-archive__event-link"
-                    href={getLocalizedHref(event.href, locale)}
+                    href={getLocalizedHref(`/events/${event.slug}`, locale)}
                   >
                     <div
                       class="gallery-archive__media"
-                      data-media-status={event.media.status}
+                      data-media-status="approved"
                       data-tone={tone}
-                      aria-hidden="true"
                     >
-                      {event.media.status === "approved" ? (
-                        <Picture
-                          src={event.media.src}
-                          alt=""
-                          formats={eventImageFormats}
-                          fallbackFormat={eventImageFallbackFormat}
-                          widths={eventImageWidths}
-                          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 38vw, 100vw"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      ) : (
-                        <>
-                          <span />
-                          <span />
-                        </>
-                      )}
+                      <PublicationImage
+                        media={event.mainImage}
+                        sizes="(min-width: 1024px) 25vw, (min-width: 768px) 38vw, 100vw"
+                        loading="lazy"
+                      />
                     </div>
 
                     <div class="gallery-archive__copy">
-                      <p>{event.category}</p>
+                      <p>
+                        {
+                          getLocalizedEventCategory(event.categoryId as EventCategoryId, locale)
+                            .label
+                        }
+                      </p>
                       <h2 aria-label={event.title}>
                         {titleSegments.map(({ offset, word }, wordIndex) => (
                           <>

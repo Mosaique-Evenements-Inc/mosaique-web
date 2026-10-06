@@ -1,5 +1,5 @@
-import { assertUniqueValues } from "../../../core/common/utils/assert-unique-values";
-import { EVENT_CATEGORY_IDS, type EventCategoryId } from "../types/category";
+import { assertUniqueValues } from "../../../core/common/utils/assert-unique-values.ts";
+import { EVENT_CATEGORY_IDS, type EventCategoryId } from "../types/category.ts";
 
 export const EVENT_CATEGORIES = {
   [EVENT_CATEGORY_IDS.wedding]: {

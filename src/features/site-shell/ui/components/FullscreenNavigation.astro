@@ -2,13 +2,11 @@
 import Icon from "@/core/common/ui/components/Icon.astro";
 import topbarLogo from "@/assets/logos/logo_topbar.png";
 import { footerContent } from "@/features/site-shell/content/footer";
-import {
-  navigationContent,
-  serviceNavigationItems,
-} from "@/features/site-shell/content/navigation";
+import { navigationContent } from "@/features/site-shell/content/navigation";
 import { siteShellTranslations } from "@/features/site-shell/i18n";
 import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
+import { getPublication } from "@/features/publication/publication";
 import ThemeToggle from "./ThemeToggle.astro";
 
 interface Props {
@@ -18,6 +16,7 @@ interface Props {
 const { anchorPrefix = "" } = Astro.props;
 const locale = getLocaleFromUrl(Astro.url);
 const shellText = siteShellTranslations[locale];
+const publicationServices = getPublication(Astro.locals, locale).services;
 const resolveHref = (href: string) =>
   href.startsWith("#")
     ? anchorPrefix
@@ -104,13 +103,15 @@ const isCurrentPage = (href: string) =>
                     inert
                   >
                     <ul>
-                      {serviceNavigationItems.map((service, serviceIndex) => (
+                      {publicationServices.map((service) => (
                         <li>
                           <a
-                            href={getLocalizedHref(service.href, locale)}
-                            aria-current={isCurrentPage(service.href) ? "page" : undefined}
+                            href={getLocalizedHref(`/services/${service.slug}`, locale)}
+                            aria-current={
+                              isCurrentPage(`/services/${service.slug}`) ? "page" : undefined
+                            }
                           >
-                            {shellText.serviceLabels[serviceIndex] ?? service.label}
+                            {service.title}
                           </a>
                         </li>
                       ))}

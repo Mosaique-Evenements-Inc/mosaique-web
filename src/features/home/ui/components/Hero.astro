@@ -3,14 +3,13 @@ import Button from "@/core/common/ui/components/Button";
 import Container from "@/core/common/ui/components/Container.astro";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import { heroContent } from "@/features/home/content/hero";
-import { getHomeContentTranslations, getHomeTranslations } from "@/features/home/i18n";
 import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
+import { getPublication } from "@/features/publication/publication";
 
 import "@/features/site-shell/ui/styles/home-entry.css";
 
 const locale = getLocaleFromUrl(Astro.url);
-const homeText = getHomeTranslations(locale);
-const heroText = getHomeContentTranslations(locale);
+const home = getPublication(Astro.locals, locale).home;
 ---
 
 <section
@@ -44,14 +43,14 @@ const heroText = getHomeContentTranslations(locale);
           ))
         }
       </video>
-      <figcaption>{homeText.heroOverlay}</figcaption>
+      <figcaption>{home.heroOverlay}</figcaption>
     </figure>
 
     <Container class="home-hero__stage">
       <div class="home-hero__final-state">
         <Heading as="h1" variant="heading-lg" class="home-hero__title" id="home-hero-title">
           {
-            heroText.heroSegments.map((segment) =>
+            home.heroSegments.map((segment) =>
               segment.emphasis ? <em>{segment.text}</em> : segment.text,
             )
           }
@@ -60,7 +59,7 @@ const heroText = getHomeContentTranslations(locale);
           className="home-hero__primary-action"
           href={getLocalizedHref(heroContent.actions.primary.href, locale)}
         >
-          {homeText.planEvent}
+          {home.heroCtaLabel}
         </Button>
       </div>
     </Container>

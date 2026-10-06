@@ -5,14 +5,19 @@ import { URL } from "node:url";
 
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
+import vercel from "@astrojs/vercel";
 
 import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
-const site = process.env.SITE_URL;
+const site = "https://mosaiqueevenements.com";
+if (process.env.SITE_URL && process.env.SITE_URL !== site)
+  throw new Error("The canonical site origin is required");
 
 export default defineConfig({
   site,
+  output: "server",
+  adapter: vercel({ isr: { expiration: 30 } }),
   env: {
     schema: {
       SUPABASE_URL: envField.string({ context: "client", access: "public", optional: true }),

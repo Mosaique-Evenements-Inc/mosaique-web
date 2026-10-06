@@ -3,18 +3,21 @@ import Container from "@/core/common/ui/components/Container.astro";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
 import Icon from "@/core/common/ui/components/Icon.astro";
-import { getHomeContentTranslations } from "@/features/home/i18n";
 import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
+import { getPublication } from "@/features/publication/publication";
 
 import "@/features/home/ui/styles/faq.css";
 
 const faqContent = (() => {
-  const localized = getHomeContentTranslations(getLocaleFromUrl(Astro.url)).faq;
+  const localized = getPublication(Astro.locals, getLocaleFromUrl(Astro.url)).home;
   return {
-    eyebrow: localized.eyebrow,
-    title: localized.title,
-    items: localized.items,
-    contact: { prompt: localized.prompt, cta: { label: localized.ctaLabel, href: "/contact" } },
+    eyebrow: localized.faqEyebrow,
+    title: localized.faqTitle,
+    items: localized.faqItems,
+    contact: {
+      prompt: localized.faqPrompt,
+      cta: { label: localized.faqCtaLabel, href: "/contact" },
+    },
   };
 })();
 const locale = getLocaleFromUrl(Astro.url);

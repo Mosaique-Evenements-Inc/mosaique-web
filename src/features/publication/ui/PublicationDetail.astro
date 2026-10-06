@@ -1,0 +1,154 @@
+---
+import { getLocalizedHref, getLocaleFromUrl } from "@/core/i18n";
+import Button from "@/core/common/ui/components/Button";
+import Heading from "@/core/common/ui/components/Heading.astro";
+import Text from "@/core/common/ui/components/Text.astro";
+import Container from "@/core/common/ui/components/Container.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Navigation from "@/features/site-shell/ui/components/Navigation.astro";
+import Footer from "@/features/site-shell/ui/components/Footer.astro";
+import EventHeader from "@/features/events/ui/components/EventHeader.astro";
+import EventContactMarquee from "@/features/events/ui/components/EventContactMarquee.astro";
+import ServiceContactMarquee from "@/features/services/ui/components/ServiceContactMarquee.astro";
+import { eventDetailTranslations } from "@/features/events";
+import { galleryTranslations } from "@/features/gallery/i18n";
+import { getPublication } from "../publication";
+import PublicationImage from "./PublicationImage.astro";
+import PublicationRelated from "./PublicationRelated.astro";
+import PublicationLightbox from "./PublicationLightbox.astro";
+import "@/features/events/ui/styles/event-detail.css";
+import "@/features/services/ui/styles/service-detail.css";
+import "./publication.css";
+interface Props {
+  kind: "service" | "event";
+  slug: string;
+}
+const { kind, slug } = Astro.props;
+const locale = getLocaleFromUrl(Astro.url);
+const publication = getPublication(Astro.locals, locale);
+const items = kind === "service" ? publication.services : publication.events;
+const item = items.find((entry) => entry.slug === slug);
+if (!item) throw new Error(`Missing CMS ${kind} route: ${slug}`);
+const prefix = kind === "service" ? "service" : "event";
+const related =
+  kind === "service"
+    ? publication.events.filter((event) => event.relatedServiceCode === item.code)
+    : publication.events.filter((event) => event.code !== item.code);
+const galleryText = galleryTranslations[locale];
+const lightboxId = `${prefix}-gallery-${slug}-lightbox`;
+---
+
+<BaseLayout title={item.seoTitle} description={item.seoDescription} image={item.mainImage.src}>
+  <Navigation surface="overlay" anchorPrefix="/" />
+  <main
+    id="main-content"
+    tabindex="-1"
+    class:list={[`${prefix}-detail`, "publication-detail"]}
+    data-navigation-contrast="theme"
+  >
+    <div class={`${prefix}-detail__chapter`} data-content-status="approved">
+      {
+        kind === "event" ? (
+          <EventHeader
+            title={item.title}
+            description={item.description}
+            status="approved"
+            collaborationLabel={
+              item.collaboration ? eventDetailTranslations[locale].collaboration : undefined
+            }
+          />
+        ) : (
+          <header class="service-header" data-content-status="approved">
+            <div class="service-header__layout">
+              <>
+                <Heading as="h1" variant="display-lg">
+                  {item.title}
+                </Heading>
+                <div class="service-header__narrative">
+                  <>
+                    <Text variant="body-lg" tone="inverse">
+                      {item.description}
+                    </Text>
+                    <Button
+                      className="service-header__cta"
+                      href={getLocalizedHref(`/contact?service=${item.slug}`, locale)}
+                      variant="light"
+                    >
+                      {item.ctaLabel}
+                    </Button>
+                  </>
+                </div>
+                <div class="service-header__divider" aria-hidden="true" />
+              </>
+            </div>
+          </header>
+        )
+      }
+      <section
+        class={`${prefix}-gallery`}
+        aria-label={`${galleryText.eventGallery} ${item.title}`}
+        id={`${prefix}-gallery-${slug}`}
+      >
+        <Container class={`${prefix}-gallery__container`}>
+          <figure class={`${prefix}-featured-media`}>
+            <div class={`${prefix}-featured-media__reveal`}>
+              <div class={`${prefix}-featured-media__media`}>
+                <PublicationImage
+                  media={item.mainImage}
+                  sizes="(min-width: 1024px) 72vw, 100vw"
+                  loading="eager"
+                  priority
+                />
+              </div>
+            </div>
+          </figure>
+          {
+            item.gallery.length > 0 && (
+              <ol class={`${prefix}-gallery__list`}>
+                {item.gallery.map((image, index) => (
+                  <li class={`${prefix}-gallery__item`} data-layout={image.layout}>
+                    <button
+                      type="button"
+                      class={`${prefix}-gallery__trigger`}
+                      data-publication-lightbox-trigger={index}
+                      aria-haspopup="dialog"
+                      aria-controls={lightboxId}
+                      aria-label={`${galleryText.openImage} ${index + 1} ${galleryText.of} ${item.gallery.length}${image.alt ? `: ${image.alt}` : ""}`}
+                    >
+                      <span class={`${prefix}-gallery__reveal`}>
+                        <span class={`${prefix}-gallery__media`}>
+                          <PublicationImage
+                            media={image}
+                            sizes={
+                              image.layout === "full-landscape"
+                                ? "(min-width: 1024px) 72vw, 100vw"
+                                : "(min-width: 1024px) 36vw, 100vw"
+                            }
+                            loading="lazy"
+                          />
+                        </span>
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ol>
+            )
+          }
+        </Container>
+        {
+          item.gallery.length > 0 && (
+            <PublicationLightbox
+              id={lightboxId}
+              kind={kind}
+              images={item.gallery}
+              title={item.title}
+            />
+          )
+        }
+      </section>
+    </div>
+    <PublicationRelated kind={kind} events={related} />
+    {kind === "event" ? <EventContactMarquee /> : <ServiceContactMarquee />}
+  </main>
+  <Footer anchorPrefix="/" />
+</BaseLayout>
