@@ -1,9 +1,22 @@
+export const MENU_LOGO_ASSET_IDS = ["aoa"] as const;
+
+export type MenuLogoAssetId = (typeof MENU_LOGO_ASSET_IDS)[number];
+
 export interface MenuThemeConfig {
   backgroundColor: string;
   surfaceColor: string;
   textColor: string;
   mutedTextColor: string;
   accentColor: string;
+  secondaryColor?: string;
+  logo?: {
+    assetId: MenuLogoAssetId;
+    alt: string;
+  };
+  typography?: {
+    displayFontFamily: string;
+    bodyFontFamily: string;
+  };
 }
 
 export const MENU_SOCIAL_PLATFORMS = ["instagram", "tiktok", "facebook"] as const;

@@ -71,19 +71,47 @@ test("static paths enumerate only canonical providers in EN, ES, and FR", () => 
   assert.ok(!english.some(({ params }) => params.provider === "unknown-provider"));
 });
 
-test("empty production registry emits no menu provider paths", async () => {
-  assert.deepEqual(menuProviders, []);
-  assert.deepEqual(getMenuStaticPaths(menuProviders), []);
-  assert.deepEqual(getLocalizedMenuStaticPaths(menuProviders), []);
+test("production registry emits exactly three Alfajores Fleur pages", async () => {
+  assert.deepEqual(
+    getMenuStaticPaths(menuProviders).map(({ params }) => params),
+    [{ provider: "alfajores-fleur" }],
+  );
+  assert.deepEqual(
+    getLocalizedMenuStaticPaths(menuProviders).map(({ params }) => params),
+    [
+      { locale: "es", provider: "alfajores-fleur" },
+      { locale: "fr", provider: "alfajores-fleur" },
+    ],
+  );
 
   const distUrl = new URL("../../../../dist/", import.meta.url);
   for (const path of [
-    "menu/first-provider/index.html",
-    "es/menu/first-provider/index.html",
-    "fr/menu/first-provider/index.html",
-    "en/menu/first-provider/index.html",
+    "menu/alfajores-fleur/index.html",
+    "es/menu/alfajores-fleur/index.html",
+    "fr/menu/alfajores-fleur/index.html",
   ]) {
+    await assert.doesNotReject(stat(new URL(path, distUrl)));
+  }
+  for (const path of ["en/menu/alfajores-fleur/index.html", "menu/first-provider/index.html"]) {
     await assert.rejects(stat(new URL(path, distUrl)), { code: "ENOENT" });
+  }
+});
+
+test("Alfajores Fleur language targets preserve its slug without an English prefix", () => {
+  for (const [locale, expected] of [
+    ["en", "/menu/alfajores-fleur/?table=4#desserts"],
+    ["es", "/es/menu/alfajores-fleur/?table=4#desserts"],
+    ["fr", "/fr/menu/alfajores-fleur/?table=4#desserts"],
+  ] as const) {
+    assert.equal(
+      composeMenuLanguageHref(
+        menuProviders[0],
+        locale,
+        "/menu/alfajores-fleur?table=4#desserts",
+        localizePath,
+      ),
+      expected,
+    );
   }
 });
 

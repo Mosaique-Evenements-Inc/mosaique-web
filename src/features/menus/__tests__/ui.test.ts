@@ -134,3 +134,43 @@ test("event theme fully replaces restaurant colors before Menu projection", () =
   });
   assert.deepEqual(themedProvider, original);
 });
+
+test("event resolution never inherits optional logo, secondary color, or typography", () => {
+  const themedProvider: MenuProvider = {
+    id: "provider-fixture-03",
+    slug: "sample-provider",
+    config: {
+      backgroundColor: "#f5f0e6",
+      surfaceColor: "#ffffff",
+      textColor: "#161616",
+      mutedTextColor: "#555555",
+      accentColor: "#8a4000",
+      secondaryColor: "#00ff00",
+      logo: { assetId: "aoa", alt: "Base logo" },
+      typography: {
+        displayFontFamily: "Base Display, serif",
+        bodyFontFamily: "Base Body, sans-serif",
+      },
+    },
+    eventConfig: {
+      backgroundColor: "#101010",
+      surfaceColor: "#202020",
+      textColor: "#f8f8f8",
+      mutedTextColor: "#d5d5d5",
+      accentColor: "#e8bb55",
+    },
+    menu: { sections: [] },
+  };
+  const resolved = resolveMenuTheme(themedProvider);
+  assert.equal(resolved, themedProvider.eventConfig);
+  assert.equal(resolved.logo, undefined);
+  assert.equal(resolved.secondaryColor, undefined);
+  assert.equal(resolved.typography, undefined);
+  assert.deepEqual(Object.keys(projectMenuTheme(resolved)), [
+    "--menu-background",
+    "--menu-surface",
+    "--menu-text",
+    "--menu-muted-text",
+    "--menu-accent",
+  ]);
+});

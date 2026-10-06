@@ -333,7 +333,8 @@ This document is the source of truth for implementation status. The existence of
 
 - **✅ MENUS-00 through MENUS-02.1: complete.** The feature has a canonical provider contract,
   localized EN/ES/FR content and routes, CAD formatting, language-routing support, and optional
-  canonical provider social links. The production provider registry remains empty.
+  canonical provider social links. The production provider registry remained empty through
+  MENUS-04.
 - **✅ MENUS-03 reusable UI: implemented locally.** A standalone Astro page now composes a
   localized provider header, linked language selector, optional social profiles, authored menu
   sections and items, formatted prices, and restrained Mosaïque attribution. Feature-local CSS
@@ -342,16 +343,31 @@ This document is the source of truth for implementation status. The existence of
   scoped lint, formatting, and diff-check pass. Global lint retains its known generated
   `.vercel/output` errors.
 - **✅ MENUS-04 provider theme: implemented locally.** The existing Menus resolver projects
-  either the complete restaurant config or its complete event override into five CSS color
-  variables on `.menu-page` only. Page, item surface, primary and muted text, interactions, and
-  attribution consume those scoped roles without provider-specific selectors or global token
-  changes. Typecheck, 29 tests, build, scoped lint, formatting, and diff-check pass; global lint
-  retains its known generated `.vercel/output` errors. Actual provider contrast remains a
-  provider-data acceptance check.
-- **⏳ Visual acceptance pending.** With no production provider or public menu route, the menu
-  composition has not yet been rendered in a browser at 320, 375, 768, and desktop widths or
-  checked with runtime reduced-motion emulation. MENUS-05's first approved provider remains a
-  separate future phase.
+  either the complete restaurant config or its complete event override onto `.menu-page` only.
+  MENUS-05 subsequently extended that shared contract with an optional secondary color, logo,
+  and display/body font stacks. Page, item surface, primary and muted text, interactions, and
+  attribution consume scoped roles without provider-specific selectors or global token changes.
+  Typecheck, 29 tests, build, scoped lint, formatting, and diff-check passed for the original
+  five-color phase; global lint retains its known generated `.vercel/output` errors.
+- **✅ MENUS-05 first provider: implemented locally.** Alfajores Fleur is the sole production
+  provider with stable `/menu/alfajores-fleur` identity, one canonical Instagram profile, five
+  food items and two desserts at the supplied numeric CAD prices, and EN/ES/FR labels without
+  invented descriptions or quantity data. Its neutral restaurant config remains provisional.
+  A complete AOA event override now supplies the approved six-color palette, the supplied AOA
+  SVG as the primary menu logo, and TAN Ashford/Quicksand font stacks with project fallbacks.
+  The resolver uses full replacement, with a typed asset registry and generic Menu rendering;
+  Mosaïque attribution remains below the content. TAN Ashford and Quicksand files are absent,
+  so their exact rendering awaits approved font assets or an established loading decision.
+  The static build emits exactly three provider routes; tests and HTML inspection cover all
+  seven items, locale links, social handle, attribution, scoped palette, logo order, and absence
+  of provider-specific Menu UI logic. Build, typecheck, tests, scoped lint, formatting, and
+  diff-check pass; global lint retains its known generated `.vercel/output` errors.
+- **⏳ MENUS-07 visual acceptance pending.** The built preview passed content, focus, theme, and
+  overflow checks at 375, 768, and 1280 CSS px, including the event logo and approved colors.
+  At 320 CSS px, the in-app browser still reports 19 px of document overflow from the existing
+  global `html` 320 px minimum combined with its non-overlay vertical scrollbar. Exact event
+  fonts, cross-browser contrast, this narrow-width case, and runtime reduced motion remain to
+  be certified.
 
 ### Tree Link V1
 

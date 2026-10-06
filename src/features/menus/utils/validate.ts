@@ -1,7 +1,7 @@
 import { assertUniqueValues } from "../../../core/common/utils/assert-unique-values.ts";
 import { supportedLocales, type Locale } from "../../../core/i18n/config/locales.ts";
 import type { LocaleDictionaries } from "../../../core/i18n/translation/contracts.ts";
-import { MENU_SOCIAL_PLATFORMS } from "../types/index.ts";
+import { MENU_LOGO_ASSET_IDS, MENU_SOCIAL_PLATFORMS } from "../types/index.ts";
 import type {
   MenuProvider,
   MenuSocialLink,
@@ -33,16 +33,43 @@ const assertSameKeys = (
 };
 
 const validateTheme = (theme: MenuThemeConfig, label: string) => {
-  const roles = [
+  const requiredRoles = [
     "backgroundColor",
     "surfaceColor",
     "textColor",
     "mutedTextColor",
     "accentColor",
   ] as const;
-  assertSameKeys(roles, Object.keys(theme), label);
-  for (const role of roles) {
+  const optionalRoles = ["secondaryColor", "logo", "typography"] as const;
+  const allowedRoles: readonly string[] = [...requiredRoles, ...optionalRoles];
+  const keys = Object.keys(theme);
+  const missing = requiredRoles.filter((role) => !keys.includes(role));
+  const unknown = keys.filter((role) => !allowedRoles.includes(role));
+  if (missing.length || unknown.length) {
+    throw new Error(
+      `${label} has missing roles [${missing.join(", ")}] or unknown roles [${unknown.join(", ")}].`,
+    );
+  }
+  for (const role of requiredRoles) {
     requireText(theme[role], `${label}.${role}`);
+  }
+  if (theme.secondaryColor !== undefined)
+    requireText(theme.secondaryColor, `${label}.secondaryColor`);
+  if (theme.logo !== undefined) {
+    assertSameKeys(["assetId", "alt"], Object.keys(theme.logo), `${label}.logo`);
+    requireText(theme.logo.alt, `${label}.logo.alt`);
+    if (!MENU_LOGO_ASSET_IDS.includes(theme.logo.assetId)) {
+      throw new Error(`${label}.logo.assetId is unsupported.`);
+    }
+  }
+  if (theme.typography !== undefined) {
+    assertSameKeys(
+      ["displayFontFamily", "bodyFontFamily"],
+      Object.keys(theme.typography),
+      `${label}.typography`,
+    );
+    requireText(theme.typography.displayFontFamily, `${label}.typography.displayFontFamily`);
+    requireText(theme.typography.bodyFontFamily, `${label}.typography.bodyFontFamily`);
   }
 };
 

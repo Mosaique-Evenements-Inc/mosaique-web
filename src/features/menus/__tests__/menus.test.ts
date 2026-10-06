@@ -1,9 +1,12 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import { menuProviders } from "../data/providers.ts";
+import { menuTranslations } from "../i18n/index.ts";
 import {
   findMenuProviderBySlug,
+  getLocalizedMenu,
   getMenuProviderBySlug,
   localizeMenu,
   resolveMenuTheme,
@@ -11,6 +14,7 @@ import {
 import type { MenuProvider, MenuSocialLink, MenuSocialPlatform } from "../types/index.ts";
 import { formatMenuPrice } from "../utils/format-price.ts";
 import { validateMenuRegistry, type MenuTranslationRegistry } from "../utils/validate.ts";
+import { projectMenuTheme } from "../ui/theme.ts";
 
 const restaurantTheme = {
   backgroundColor: "#fff8ed",
@@ -99,10 +103,185 @@ const translations: MenuTranslationRegistry = {
 
 const copyTranslations = () => structuredClone(translations);
 
-test("production registry has no unpublished sample provider", () => {
-  assert.deepEqual(menuProviders, []);
+test("production registry contains only Alfajores Fleur", () => {
+  assert.equal(menuProviders.length, 1);
+  assert.equal(menuProviders[0].id, "alfajores-fleur");
+  assert.equal(menuProviders[0].slug, "alfajores-fleur");
+  assert.equal(getMenuProviderBySlug("alfajores-fleur"), menuProviders[0]);
   assert.equal(findMenuProviderBySlug(menuProviders, "sample-provider"), undefined);
   assert.equal(getMenuProviderBySlug("sample-provider"), undefined);
+});
+
+test("Alfajores Fleur retains approved items, prices, social identity, and AOA event branding", () => {
+  const realProvider = menuProviders[0];
+  assert.deepEqual(
+    realProvider.menu.sections.map(({ id }) => id),
+    ["food", "desserts"],
+  );
+  assert.deepEqual(
+    realProvider.menu.sections.flatMap(({ items }) =>
+      items.map(({ id, price }) => [id, price]),
+    ),
+    [
+      ["tacos-de-lomo-saltado", 20],
+      ["causa-de-pollo", 18],
+      ["arroz-con-mariscos", 25],
+      ["ceviche-colombiano-de-camarones", 25],
+      ["empanadas-colombianas", 16],
+      ["alfajores", 4.5],
+      ["tres-leches", 8],
+    ],
+  );
+  assert.ok(
+    realProvider.menu.sections
+      .flatMap(({ items }) => items)
+      .every(({ price }) => typeof price === "number"),
+  );
+  assert.ok(
+    realProvider.menu.sections
+      .flatMap(({ items }) => items)
+      .every((item) => Object.keys(item).sort().join(",") === "id,price"),
+  );
+  assert.deepEqual(realProvider.socialLinks, [
+    {
+      platform: "instagram",
+      handle: "alfajoresfleur",
+      url: "https://www.instagram.com/alfajoresfleur/",
+    },
+  ]);
+  assert.deepEqual(Object.keys(realProvider.config).sort(), [
+    "accentColor",
+    "backgroundColor",
+    "mutedTextColor",
+    "surfaceColor",
+    "textColor",
+  ]);
+  const eventConfig = realProvider.eventConfig;
+  assert.ok(eventConfig);
+  assert.doesNotThrow(() => validateMenuRegistry(menuProviders, menuTranslations));
+  assert.equal(resolveMenuTheme(realProvider), eventConfig);
+  assert.deepEqual(Object.keys(eventConfig).sort(), [
+    "accentColor",
+    "backgroundColor",
+    "logo",
+    "mutedTextColor",
+    "secondaryColor",
+    "surfaceColor",
+    "textColor",
+    "typography",
+  ]);
+  assert.deepEqual(
+    {
+      backgroundColor: eventConfig.backgroundColor,
+      surfaceColor: eventConfig.surfaceColor,
+      textColor: eventConfig.textColor,
+      mutedTextColor: eventConfig.mutedTextColor,
+      accentColor: eventConfig.accentColor,
+      secondaryColor: eventConfig.secondaryColor,
+    },
+    {
+      backgroundColor: "#F3E5D2",
+      surfaceColor: "#FDE39F",
+      textColor: "#211B19",
+      mutedTextColor: "#7D0C0C",
+      accentColor: "#C6963E",
+      secondaryColor: "#D88F98",
+    },
+  );
+  assert.equal(eventConfig.logo?.assetId, "aoa");
+  assert.equal(eventConfig.logo?.alt, "AOA");
+  assert.deepEqual(eventConfig.typography, {
+    displayFontFamily: '"TAN Ashford", var(--font-family-display)',
+    bodyFontFamily: "Quicksand, var(--font-family-body)",
+  });
+  assert.deepEqual(projectMenuTheme(eventConfig), {
+    "--menu-background": "#F3E5D2",
+    "--menu-surface": "#FDE39F",
+    "--menu-text": "#211B19",
+    "--menu-muted-text": "#7D0C0C",
+    "--menu-accent": "#C6963E",
+    "--menu-secondary": "#D88F98",
+    "--menu-font-display": '"TAN Ashford", var(--font-family-display)',
+    "--menu-font-body": "Quicksand, var(--font-family-body)",
+  });
+  assert.notDeepEqual(realProvider.config, eventConfig);
+  assert.equal(
+    Object.values(projectMenuTheme(eventConfig)).includes(realProvider.config.backgroundColor),
+    false,
+  );
+});
+
+test("Alfajores Fleur localizes section labels while preserving approved dish names", () => {
+  const approvedNames = [
+    "Tacos de lomo saltado",
+    "Causa de pollo",
+    "Arroz con mariscos",
+    "Ceviche colombiano de camarones",
+    "Empanadas colombianas",
+    "Alfajores",
+    "Tres leches",
+  ];
+  for (const [locale, sectionLabels] of [
+    ["en", ["Menu", "Desserts"]],
+    ["es", ["Menú", "Postres"]],
+    ["fr", ["Menu", "Desserts"]],
+  ] as const) {
+    const menu = getLocalizedMenu(menuProviders[0], locale);
+    assert.equal(menu.title, "Alfajores Fleur");
+    assert.equal(menu.description, undefined);
+    assert.deepEqual(
+      menu.sections.map(({ title }) => title),
+      sectionLabels,
+    );
+    assert.deepEqual(
+      menu.sections.flatMap(({ items }) => items.map(({ name }) => name)),
+      approvedNames,
+    );
+    assert.ok(
+      menu.sections
+        .flatMap(({ items }) => items)
+        .every(({ description }) => description === undefined),
+    );
+    assert.match(formatMenuPrice(4.5, locale), /4[.,]50/);
+  }
+});
+
+test("built Alfajores Fleur menus render generic event branding above content and attribution below", () => {
+  for (const prefix of ["", "es/", "fr/"]) {
+    const html = readFileSync(
+      new URL(`../../../../dist/${prefix}menu/alfajores-fleur/index.html`, import.meta.url),
+      "utf8",
+    );
+    const main = html.slice(html.indexOf('<main class="menu-page"'));
+    const logoIndex = main.indexOf("aoa_logo");
+    const titleIndex = main.indexOf("Alfajores Fleur");
+    const itemsIndex = main.indexOf('class="menu-page__items"');
+    const attributionIndex = main.indexOf('class="menu-page__attribution"');
+
+    assert.ok(logoIndex >= 0 && logoIndex < titleIndex && titleIndex < itemsIndex);
+    assert.ok(attributionIndex > itemsIndex);
+    assert.match(main, /alt="AOA"/);
+    assert.equal((main.match(/class="menu-page__item"/g) ?? []).length, 7);
+    assert.match(main, /@alfajoresfleur/);
+    assert.match(main.slice(attributionIndex), /MOSAÏQUE ÉVÉNEMENTS/);
+    assert.match(main, /--menu-background:#F3E5D2/);
+    assert.match(main, /--menu-text:#211B19/);
+    assert.match(main, /--menu-secondary:#D88F98/);
+    assert.doesNotMatch(
+      main.slice(0, main.indexOf('><div class="menu-page__inner"')),
+      /#f6f1e8/i,
+    );
+    assert.doesNotMatch(main, /menu-page--(?:alfajores|aoa)/i);
+  }
+  const pageSource = readFileSync(
+    new URL("../ui/pages/MenuPage.astro", import.meta.url),
+    "utf8",
+  );
+  const styleSource = readFileSync(
+    new URL("../ui/styles/menu-page.css", import.meta.url),
+    "utf8",
+  );
+  assert.doesNotMatch(`${pageSource}\n${styleSource}`, /alfajores|aoa/i);
 });
 
 test("valid registry and slug lookup retain canonical identity", () => {
@@ -293,6 +472,20 @@ test("event configuration fully replaces restaurant theme when present", () => {
   };
   assert.throws(
     () => validateMenuRegistry([incompleteEventProvider], translations),
+    /missing roles/,
+  );
+
+  const incompleteTypography: MenuProvider = {
+    ...provider,
+    eventConfig: {
+      ...eventTheme,
+      typography: { displayFontFamily: "Display" } as NonNullable<
+        MenuProvider["eventConfig"]
+      >["typography"],
+    },
+  };
+  assert.throws(
+    () => validateMenuRegistry([incompleteTypography], translations),
     /missing IDs/,
   );
 });

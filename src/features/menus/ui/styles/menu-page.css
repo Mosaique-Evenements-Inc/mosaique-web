@@ -2,6 +2,7 @@
   min-block-size: 100svh;
   background: var(--menu-background, var(--color-background));
   color: var(--menu-text, var(--color-text-primary));
+  font-family: var(--menu-font-body, var(--font-family-body));
 }
 
 .menu-page :focus-visible {
@@ -27,6 +28,17 @@
   justify-self: end;
 }
 
+.menu-page__brand {
+  display: flex;
+  justify-content: center;
+}
+
+.menu-page__brand-logo {
+  display: block;
+  inline-size: clamp(7rem, 22vw, 10rem);
+  block-size: auto;
+}
+
 .menu-page__languages ul,
 .menu-page__social ul,
 .menu-page__items {
@@ -49,20 +61,20 @@
   place-items: center;
   border-block-end: 1px solid transparent;
   color: var(--menu-muted-text, var(--color-text-secondary));
-  font-family: var(--font-family-ui);
+  font-family: var(--menu-font-body, var(--font-family-ui));
   font-size: var(--text-navigation-size);
   font-weight: var(--text-navigation-weight);
   text-decoration: none;
 }
 
 .menu-page__languages a[aria-current="page"] {
-  border-block-end-color: currentColor;
-  color: var(--menu-accent, var(--color-accent));
+  border-block-end-color: var(--menu-accent, var(--color-accent));
+  color: var(--menu-text, var(--color-text-primary));
   font-weight: 700;
 }
 
 .menu-page__languages a:hover {
-  color: var(--menu-accent, var(--color-accent));
+  color: var(--menu-text, var(--color-text-primary));
   text-decoration: underline;
 }
 
@@ -76,6 +88,11 @@
 .menu-page__item-name {
   margin: 0;
   overflow-wrap: anywhere;
+}
+
+.menu-page__title,
+.menu-page__section-title {
+  font-family: var(--menu-font-display, var(--font-family-display));
 }
 
 .menu-page__description,
@@ -112,7 +129,7 @@
 
 .menu-page__social a:hover,
 .menu-page__social a:focus-visible {
-  color: var(--menu-accent, var(--color-accent));
+  color: var(--menu-text, var(--color-text-primary));
   text-decoration: underline;
 }
 
@@ -123,7 +140,8 @@
 
 .menu-page__section {
   min-inline-size: 0;
-  border-block-start: 1px solid var(--menu-muted-text, var(--color-border-default));
+  border-block-start: 1px solid
+    var(--menu-secondary, var(--menu-muted-text, var(--color-border-default)));
   padding-block-start: 1.5rem;
 }
 
@@ -152,7 +170,7 @@
 }
 
 .menu-page__item-name {
-  font-family: var(--font-family-display);
+  font-family: var(--menu-font-body, var(--font-family-body));
   font-size: clamp(1.125rem, 3.5vw, 1.5rem);
   font-weight: 500;
   line-height: 1.25;
@@ -180,7 +198,7 @@
 }
 
 .menu-page__attribution a {
-  color: var(--menu-accent, var(--color-accent));
+  color: var(--menu-muted-text, var(--color-text-secondary));
 }
 
 @media (max-width: 22rem) {

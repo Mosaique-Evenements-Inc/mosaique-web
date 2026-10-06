@@ -1,5 +1,6 @@
 ---
 import { getLocalizedHref, type Locale } from "@/core/i18n";
+import { Image } from "astro:assets";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
@@ -9,6 +10,7 @@ import MenuLanguageSwitcher from "../components/MenuLanguageSwitcher.astro";
 import MenuSection from "../components/MenuSection.astro";
 import MenuSocialLinks from "../components/MenuSocialLinks.astro";
 import { projectMenuTheme } from "../theme";
+import { menuLogoAssets } from "../assets/logos";
 
 import "../styles/menu-page.css";
 
@@ -20,7 +22,9 @@ interface Props {
 
 const { provider, menu, locale } = Astro.props;
 const copy = getMenuUiCopy(locale);
-const themeStyle = projectMenuTheme(resolveMenuTheme(provider));
+const theme = resolveMenuTheme(provider);
+const themeStyle = projectMenuTheme(theme);
+const logoImage = theme.logo ? menuLogoAssets[theme.logo.assetId] : undefined;
 ---
 
 <BaseLayout
@@ -36,6 +40,21 @@ const themeStyle = projectMenuTheme(resolveMenuTheme(provider));
           currentUrl={Astro.url}
           label={copy.languages}
         />
+        {
+          theme.logo && logoImage && (
+            <div class="menu-page__brand">
+              <Image
+                src={logoImage}
+                alt={theme.logo.alt}
+                class="menu-page__brand-logo"
+                width={logoImage.width}
+                height={logoImage.height}
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+          )
+        }
         <div class="menu-page__identity">
           <Heading as="h1" variant="heading-lg" class="menu-page__title">{menu.title}</Heading>
           {
