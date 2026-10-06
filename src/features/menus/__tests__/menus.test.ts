@@ -211,6 +211,88 @@ test("Alfajores Fleur retains approved items, prices, social identity, and AOA e
   );
 });
 
+test("real event override toggles to the unchanged base presentation without changing identity or content", () => {
+  const realProvider = menuProviders[0];
+  const original = structuredClone(realProvider);
+  const localizedBefore = (["en", "es", "fr"] as const).map((locale) =>
+    getLocalizedMenu(realProvider, locale),
+  );
+  const { eventConfig, ...baseFields } = realProvider;
+  const baseOnly = Object.freeze(baseFields);
+
+  assert.ok(eventConfig);
+  assert.equal(resolveMenuTheme(realProvider), eventConfig);
+  assert.equal(resolveMenuTheme(baseOnly), realProvider.config);
+  assert.deepEqual(projectMenuTheme(resolveMenuTheme(baseOnly)), {
+    "--menu-background": "#f6f1e8",
+    "--menu-surface": "#ffffff",
+    "--menu-text": "#000000",
+    "--menu-muted-text": "#444444",
+    "--menu-accent": "#000000",
+  });
+  assert.equal(resolveMenuTheme(baseOnly).logo, undefined);
+  assert.equal(resolveMenuTheme(baseOnly).secondaryColor, undefined);
+  assert.equal(resolveMenuTheme(baseOnly).typography, undefined);
+  assert.equal(baseOnly.id, realProvider.id);
+  assert.equal(baseOnly.slug, realProvider.slug);
+  assert.equal(baseOnly.socialLinks, realProvider.socialLinks);
+  assert.equal(baseOnly.menu, realProvider.menu);
+  assert.deepEqual(
+    (["en", "es", "fr"] as const).map((locale) => getLocalizedMenu(baseOnly, locale)),
+    localizedBefore,
+  );
+  assert.deepEqual(realProvider, original);
+});
+
+test("real AOA override wins every presentation role over a distinguishable base fixture", () => {
+  const realProvider = menuProviders[0];
+  const conflictingBase: MenuProvider["config"] = {
+    backgroundColor: "#111111",
+    surfaceColor: "#222222",
+    textColor: "#333333",
+    mutedTextColor: "#444444",
+    accentColor: "#555555",
+    secondaryColor: "#666666",
+    logo: { assetId: "aoa", alt: "Base fixture logo" },
+    typography: {
+      displayFontFamily: "Base Display, serif",
+      bodyFontFamily: "Base Body, sans-serif",
+    },
+  };
+  const fixture: MenuProvider = { ...realProvider, config: conflictingBase };
+  const before = structuredClone(fixture);
+  const event = realProvider.eventConfig;
+  assert.ok(event);
+
+  const resolved = resolveMenuTheme(fixture);
+  assert.equal(resolved, event);
+  for (const role of [
+    "backgroundColor",
+    "surfaceColor",
+    "textColor",
+    "mutedTextColor",
+    "accentColor",
+    "secondaryColor",
+  ] as const) {
+    assert.equal(resolved[role], event[role]);
+    assert.notEqual(resolved[role], conflictingBase[role]);
+  }
+  assert.deepEqual(resolved.logo, event.logo);
+  assert.notDeepEqual(resolved.logo, conflictingBase.logo);
+  assert.equal(resolved.typography?.displayFontFamily, event.typography?.displayFontFamily);
+  assert.equal(resolved.typography?.bodyFontFamily, event.typography?.bodyFontFamily);
+  assert.notEqual(
+    resolved.typography?.displayFontFamily,
+    conflictingBase.typography?.displayFontFamily,
+  );
+  assert.notEqual(
+    resolved.typography?.bodyFontFamily,
+    conflictingBase.typography?.bodyFontFamily,
+  );
+  assert.deepEqual(projectMenuTheme(resolved), projectMenuTheme(event));
+  assert.deepEqual(fixture, before);
+});
+
 test("Alfajores Fleur localizes section labels while preserving approved dish names", () => {
   const approvedNames = [
     "Tacos de lomo saltado",
@@ -265,12 +347,20 @@ test("built Alfajores Fleur menus render generic event branding above content an
     assert.match(main, /@alfajoresfleur/);
     assert.match(main.slice(attributionIndex), /MOSAÏQUE ÉVÉNEMENTS/);
     assert.match(main, /--menu-background:#F3E5D2/);
+    assert.match(main, /--menu-surface:#FDE39F/);
     assert.match(main, /--menu-text:#211B19/);
+    assert.match(main, /--menu-muted-text:#7D0C0C/);
+    assert.match(main, /--menu-accent:#C6963E/);
     assert.match(main, /--menu-secondary:#D88F98/);
-    assert.doesNotMatch(
-      main.slice(0, main.indexOf('><div class="menu-page__inner"')),
-      /#f6f1e8/i,
+    assert.match(
+      main,
+      /--menu-font-display:&quot;TAN Ashford&quot;, var\(--font-family-display\)/,
     );
+    assert.match(main, /--menu-font-body:Quicksand, var\(--font-family-body\)/);
+    assert.match(main, /<h1\b/);
+    assert.match(main, /<h2\b/);
+    assert.match(main, /aria-current="page"/);
+    assert.doesNotMatch(main.slice(0, main.indexOf(">")), /#f6f1e8/i);
     assert.doesNotMatch(main, /menu-page--(?:alfajores|aoa)/i);
   }
   const pageSource = readFileSync(
@@ -282,6 +372,38 @@ test("built Alfajores Fleur menus render generic event branding above content an
     "utf8",
   );
   assert.doesNotMatch(`${pageSource}\n${styleSource}`, /alfajores|aoa/i);
+});
+
+test("built editorial menus preserve localized actions, accessible decoration, and formatted prices", () => {
+  for (const [prefix, locale, eyebrow, follow] of [
+    ["", "en", "Menu", "Follow us on"],
+    ["es/", "es", "Menú", "Síguenos en"],
+    ["fr/", "fr", "Menu", "Suivez-nous sur"],
+  ] as const) {
+    const html = readFileSync(
+      new URL(`../../../../dist/${prefix}menu/alfajores-fleur/index.html`, import.meta.url),
+      "utf8",
+    );
+    assert.ok(html.includes(`class="menu-page__eyebrow">${eyebrow}</p>`));
+    assert.ok(html.includes(`${follow} Instagram`));
+    assert.match(
+      html,
+      /href="https:\/\/www.instagram.com\/alfajoresfleur\/" target="_blank" rel="noopener noreferrer"/,
+    );
+    assert.equal((html.match(/class="menu-page__leader" aria-hidden="true"/g) ?? []).length, 7);
+    assert.match(html, /class="menu-page__atmosphere" aria-hidden="true"/);
+    assert.match(html, /mosaique_logo_complete/);
+    assert.ok(
+      html.indexOf('id="menu-section-food"') < html.indexOf('id="menu-section-desserts"'),
+    );
+    for (const item of menuProviders[0].menu.sections.flatMap(({ items }) => items)) {
+      assert.ok(html.includes(formatMenuPrice(item.price, locale)));
+    }
+    assert.doesNotMatch(
+      html,
+      /<astro-island\b|href="\/en\/|Sabores que conectan culturas|Cocina latina con/,
+    );
+  }
 });
 
 test("valid registry and slug lookup retain canonical identity", () => {

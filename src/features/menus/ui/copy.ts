@@ -5,19 +5,25 @@ const menuUiCopy = {
     languages: "Menu language",
     socialLinks: "Provider social profiles",
     opensNewTab: "opens in a new tab",
-    attribution: "Powered by",
+    attribution: "An experience by",
+    menu: "Menu",
+    follow: "Follow us on",
   },
   es: {
     languages: "Idioma del menú",
     socialLinks: "Redes sociales del establecimiento",
     opensNewTab: "se abre en una pestaña nueva",
-    attribution: "Creado por",
+    attribution: "Una experiencia de",
+    menu: "Menú",
+    follow: "Síguenos en",
   },
   fr: {
     languages: "Langue du menu",
     socialLinks: "Réseaux sociaux de l’établissement",
     opensNewTab: "s’ouvre dans un nouvel onglet",
-    attribution: "Propulsé par",
+    attribution: "Une expérience signée",
+    menu: "Menu",
+    follow: "Suivez-nous sur",
   },
 } as const satisfies Record<
   Locale,
@@ -26,6 +32,8 @@ const menuUiCopy = {
     socialLinks: string;
     opensNewTab: string;
     attribution: string;
+    menu: string;
+    follow: string;
   }
 >;
 

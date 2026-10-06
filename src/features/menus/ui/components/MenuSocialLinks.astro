@@ -1,16 +1,23 @@
 ---
 import type { MenuSocialLink } from "../../types";
 import { getMenuSocialItems } from "../presentation";
+import Icon, { type IconName } from "@/core/common/ui/components/Icon.astro";
 
 interface Props {
   links?: readonly MenuSocialLink[];
   providerTitle: string;
   label: string;
   opensNewTab: string;
+  followLabel: string;
 }
 
-const { links, providerTitle, label, opensNewTab } = Astro.props;
+const { links, providerTitle, label, opensNewTab, followLabel } = Astro.props;
 const items = getMenuSocialItems(links);
+const platformIcons: Record<string, IconName> = {
+  Instagram: "instagram",
+  TikTok: "tiktok",
+  Facebook: "facebook",
+};
 ---
 
 {
@@ -23,11 +30,20 @@ const items = getMenuSocialItems(links);
               href={item.url}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`${item.platform}, ${item.displayHandle} — ${providerTitle} (${opensNewTab})`}
+              aria-label={`${followLabel} ${item.platform}, ${item.displayHandle} — ${providerTitle} (${opensNewTab})`}
             >
-              <span>{item.platform}</span>
-              <span aria-hidden="true"> · </span>
-              <span>{item.displayHandle}</span>
+              <span class="menu-page__social-icon">
+                <Icon name={platformIcons[item.platform] ?? "globe"} size={36} />
+              </span>
+              <span class="menu-page__social-copy">
+                <span>
+                  {followLabel} {item.platform}
+                </span>
+                <span>{item.displayHandle}</span>
+              </span>
+              <span class="menu-page__social-arrow">
+                <Icon name="arrowRight" size={22} />
+              </span>
             </a>
           </li>
         ))}

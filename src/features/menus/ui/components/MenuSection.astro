@@ -14,9 +14,34 @@ const headingId = `menu-section-${section.id}`;
 ---
 
 <section class="menu-page__section" aria-labelledby={headingId}>
-  <Heading as="h2" variant="heading-md" class="menu-page__section-title" id={headingId}>
-    {section.title}
-  </Heading>
+  <div class="menu-page__section-heading">
+    <svg
+      class="menu-page__section-icon"
+      viewBox="0 0 32 32"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.7"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {
+        section.id === "desserts" ? (
+          <>
+            <path d="M4 14h24v14H4zM4 14l12-8 12 8M16 6V3M4 20c3 4 5-4 8 0s5-4 8 0 5-4 8 0M10 12h12" />
+          </>
+        ) : (
+          <>
+            <path d="m5 4 6 6m-3-9 6 6m-3-6 6 6c2 2-2 6-4 5L3 27m22-24c-6 3-8 8-6 11l2 2 7 11M27 3 8 27" />
+          </>
+        )
+      }
+    </svg>
+    <Heading as="h2" variant="heading-md" class="menu-page__section-title" id={headingId}>
+      {section.title}
+    </Heading>
+  </div>
   <ul class="menu-page__items">
     {section.items.map((item) => <MenuItem {item} {locale} />)}
   </ul>

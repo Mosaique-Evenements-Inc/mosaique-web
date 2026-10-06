@@ -14,7 +14,8 @@ const { item, locale } = Astro.props;
 <li class="menu-page__item">
   <div class="menu-page__item-copy">
     <h3 class="menu-page__item-name">{item.name}</h3>
-    {item.description && <Text class="menu-page__item-description">{item.description}</Text>}
   </div>
+  <span class="menu-page__leader" aria-hidden="true"></span>
   <span class="menu-page__price">{formatMenuPrice(item.price, locale)}</span>
+  {item.description && <Text class="menu-page__item-description">{item.description}</Text>}
 </li>
