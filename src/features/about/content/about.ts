@@ -1,8 +1,30 @@
 import type { ImageMetadata } from "astro";
+import amanteOAmigo0442 from "@/assets/images/about-us/mosaico/AMANTEOAMIGO-0442.jpg";
+import amanteOAmigo0455 from "@/assets/images/about-us/mosaico/AMANTEOAMIGO-0455.jpg";
+import amanteOAmigo0461 from "@/assets/images/about-us/mosaico/AMANTEOAMIGO-0461.jpg";
+import amanteOAmigo0463 from "@/assets/images/about-us/mosaico/AMANTEOAMIGO-0463.jpg";
+import amanteOAmigo0485 from "@/assets/images/about-us/mosaico/AMANTEOAMIGO-0485.jpg";
+import amanteOAmigo0650 from "@/assets/images/about-us/mosaico/AMANTEOAMIGO-0650.jpg";
+import amanteOAmigo0745 from "@/assets/images/about-us/mosaico/AMANTEOAMIGO-0745.jpg";
+import amanteOAmigo0749 from "@/assets/images/about-us/mosaico/AMANTEOAMIGO-0749.jpg";
+import amanteOAmigo1442 from "@/assets/images/about-us/mosaico/AMANTEOAMIGO-1442.jpg";
 import * as eventImages from "@/assets/images/events";
 import type { Locale } from "@/core/i18n";
 import { eventTranslations } from "@/features/events/i18n";
 import { aboutContent } from "./overview";
+
+const mosaicImages = {
+  ...eventImages,
+  amanteOAmigo0442,
+  amanteOAmigo0455,
+  amanteOAmigo0461,
+  amanteOAmigo0463,
+  amanteOAmigo0485,
+  amanteOAmigo0650,
+  amanteOAmigo0745,
+  amanteOAmigo0749,
+  amanteOAmigo1442,
+};
 
 export type AboutMediaItem = {
   desktopColumnStart: boolean;
@@ -24,29 +46,24 @@ const getMediaLabel = (id: string, locale: Locale = "es") => {
 };
 
 const mosaicMediaColumns = [
+  ["amanteOAmigo0442", "babyShowerKarlaGino152", "amanteOAmigo0461", "babyShowerKarlaGino156"],
   [
-    "babyShowerKarlaGino151",
-    "babyShowerKarlaGino152",
-    "babyShowerKarlaGino153",
-    "babyShowerKarlaGino156",
-  ],
-  [
-    "bailaDaZaza82",
+    "amanteOAmigo0455",
     "bailaDaZazaMain",
     "cumpleanosAnaPaula48",
-    "cumpleanosAnaPaula49",
+    "amanteOAmigo0485",
     "cumpleanosAnaPaula50",
     "cumpleanosAnaPaula51",
   ],
   [
     "fanFestMexVsSouth128",
-    "fanFestMexVsSouth158",
-    "fanFestMexVsSouth3",
+    "amanteOAmigo0650",
+    "amanteOAmigo0463",
     "fanFestMexVsSouth8",
     "nossaCopa105",
   ],
   [
-    "nossaCopaBrzVsEsc170",
+    "amanteOAmigo0745",
     "nossaCopaBrzVsEsc199",
     "nossaCopaBrzVsEsc27",
     "nossaCopaBrzVsEsc4",
@@ -54,18 +71,18 @@ const mosaicMediaColumns = [
   ],
   [
     "weddingEb53693",
-    "weddingEb59642",
+    "amanteOAmigo0749",
     "weddingEb59664",
     "weddingEb59668Edit",
     "weddingEb59670",
     "weddingEb59673",
   ],
-  ["weddingKt36", "weddingKt37", "weddingKt38", "weddingKt39", "weddingKt4"],
-] as const satisfies readonly (readonly (keyof typeof eventImages)[])[];
+  ["weddingKt36", "amanteOAmigo1442", "weddingKt38", "weddingKt39", "weddingKt4"],
+] as const satisfies readonly (readonly (keyof typeof mosaicImages)[])[];
 
 const mediaItems = mosaicMediaColumns.flatMap((column, columnIndex) =>
   column.map((id, itemIndex) => {
-    const src = eventImages[id];
+    const src = mosaicImages[id];
 
     return {
       desktopColumnStart: columnIndex > 0 && itemIndex === 0,
