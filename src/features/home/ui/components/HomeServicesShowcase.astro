@@ -1,11 +1,10 @@
 ---
-import { servicesContent } from "@/features/home/content/services";
+import { getHomeServicePreview, servicesContent } from "@/features/home/content/services";
 import Heading from "@/core/common/ui/components/Heading.astro";
 import Text from "@/core/common/ui/components/Text.astro";
 import HomeServicePreviewScene from "./HomeServicePreviewScene.astro";
 import CursorHalftone from "./CursorHalftone.astro";
 import { getHomeContentTranslations } from "@/features/home/i18n";
-import { getLocalizedService } from "@/features/services";
 import { getLocaleFromUrl } from "@/core/i18n";
 
 import "@/features/home/ui/styles/home-services-showcase.css";
@@ -13,7 +12,7 @@ import "@/features/home/ui/styles/home-services-showcase.css";
 const locale = getLocaleFromUrl(Astro.url);
 const services = [...servicesContent.items]
   .sort((a, b) => a.index.localeCompare(b.index))
-  .map((service) => getLocalizedService(service, locale));
+  .map((service) => getHomeServicePreview(service, locale));
 const titleId = "home-services-heading";
 const servicesPanel = getHomeContentTranslations(locale).servicesPanel;
 ---

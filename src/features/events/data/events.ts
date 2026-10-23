@@ -1,5 +1,6 @@
 import { assertUniqueValues } from "../../../core/common/utils/assert-unique-values";
 import { services } from "../../services";
+import { amanteOAmigoEvent } from "./amante-o-amigo";
 import { babyShowerEvent } from "./baby-shower";
 import { bailaDaZazaEvent } from "./baila-da-zaza";
 import { cumpleanosAnaPaulaEvent } from "./cumpleanos-ana-paula";
@@ -10,6 +11,7 @@ import type { Event } from "../types/event";
 import { weddingRrEvent } from "./wedding-r-r";
 
 export const eventDetails: Event[] = [
+  amanteOAmigoEvent,
   nossaCopaEvent,
   bailaDaZazaEvent,
   babyShowerEvent,

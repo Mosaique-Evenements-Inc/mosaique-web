@@ -15,6 +15,30 @@ export interface EventTranslation {
 type EventTranslations = Record<string, EventTranslation>;
 
 const es: EventTranslations = {
+  "event-slot-07": {
+    title: "Amante o Amigo",
+    description:
+      "Conexiones, conversaciones y nuevas experiencias en una noche creada para conocer personas y dejarse sorprender.",
+    categoryLabel: "Celebración",
+    media: {
+      featuredAlt:
+        "Grupo musical actuando en el escenario de Amante o Amigo bajo iluminación roja.",
+      galleryAlts: [
+        "Presentadora y asistentes frente al escenario de Amante o Amigo.",
+        "Asistentes conversando alrededor de una mesa bajo luces rojas.",
+        "Manos sosteniendo tarjetas junto a la barra de Amante o Amigo.",
+        "Grupo de asistentes conversando junto al escenario.",
+        "Vista amplia de asistentes reunidos bajo globos y telas rojas.",
+        "Asistentes participando alrededor de una mesa con velas.",
+        "Asistentes escribiendo en tarjetas alrededor de una mesa.",
+        "Presentador y asistentes celebrando frente al escenario.",
+        "Músicos actuando en el escenario bajo iluminación roja.",
+        "Asistentes aplaudiendo y levantando los brazos durante la celebración.",
+        "Personal de barra atendiendo a los asistentes de Amante o Amigo.",
+        "Vista desde arriba de asistentes bailando junto al escenario.",
+      ],
+    },
+  },
   "event-slot-01": {
     title: "Brasil en el Mundial 2026",
     description: "Fútbol, comunidad y emprendimiento reunidos en una experiencia de festival.",
@@ -70,6 +94,29 @@ const es: EventTranslations = {
 };
 
 const en: EventTranslations = {
+  "event-slot-07": {
+    title: "Amante o Amigo",
+    description:
+      "Connections, conversations and new experiences in a night created to meet new people and embrace the unexpected.",
+    categoryLabel: "Celebration",
+    media: {
+      featuredAlt: "A musical group performing on the Amante o Amigo stage under red lighting.",
+      galleryAlts: [
+        "A host and attendees in front of the Amante o Amigo stage.",
+        "Attendees talking around a table under red lighting.",
+        "Hands holding cards beside the bar at Amante o Amigo.",
+        "A group of attendees talking beside the stage.",
+        "A wide view of attendees gathered beneath red balloons and drapes.",
+        "Attendees taking part around a candlelit table.",
+        "Attendees writing on cards around a table.",
+        "A host and attendees celebrating in front of the stage.",
+        "Musicians performing on stage under red lighting.",
+        "Attendees applauding and raising their arms during the celebration.",
+        "Bar staff serving attendees at Amante o Amigo.",
+        "An overhead view of attendees dancing beside the stage.",
+      ],
+    },
+  },
   "event-slot-01": {
     title: "Brazil at the 2026 World Cup",
     description:
@@ -125,6 +172,29 @@ const en: EventTranslations = {
 };
 
 const fr: EventTranslations = {
+  "event-slot-07": {
+    title: "Amante o Amigo",
+    description:
+      "Des rencontres, des conversations et de nouvelles expériences lors d’une soirée pensée pour faire connaissance et se laisser surprendre.",
+    categoryLabel: "Célébration",
+    media: {
+      featuredAlt: "Un groupe musical sur la scène d’Amante o Amigo sous un éclairage rouge.",
+      galleryAlts: [
+        "Une animatrice et des participants devant la scène d’Amante o Amigo.",
+        "Des participants discutant autour d’une table sous des lumières rouges.",
+        "Des mains tenant des cartes près du bar d’Amante o Amigo.",
+        "Un groupe de participants discutant près de la scène.",
+        "Vue d’ensemble des participants réunis sous des ballons et des tentures rouges.",
+        "Des participants prenant part à une activité autour d’une table éclairée aux chandelles.",
+        "Des participants écrivant sur des cartes autour d’une table.",
+        "Un animateur et des participants célébrant devant la scène.",
+        "Des musiciens sur scène sous un éclairage rouge.",
+        "Des participants applaudissant et levant les bras pendant la célébration.",
+        "Le personnel du bar servant les participants d’Amante o Amigo.",
+        "Vue plongeante des participants dansant près de la scène.",
+      ],
+    },
+  },
   "event-slot-01": {
     title: "Le Brésil à la Coupe du monde 2026",
     description:

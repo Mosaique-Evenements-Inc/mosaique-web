@@ -1,3 +1,17 @@
+export { default as amanteOAmigo0525 } from "./amante-o-amigo/AMANTEOAMIGO-0525.jpg";
+export { default as amanteOAmigo0553 } from "./amante-o-amigo/AMANTEOAMIGO-0553.jpg";
+export { default as amanteOAmigo0685 } from "./amante-o-amigo/AMANTEOAMIGO-0685.jpg";
+export { default as amanteOAmigo0721 } from "./amante-o-amigo/AMANTEOAMIGO-0721.jpg";
+export { default as amanteOAmigo0722 } from "./amante-o-amigo/AMANTEOAMIGO-0722.jpg";
+export { default as amanteOAmigo0789 } from "./amante-o-amigo/AMANTEOAMIGO-0789.jpg";
+export { default as amanteOAmigo0804 } from "./amante-o-amigo/AMANTEOAMIGO-0804.jpg";
+export { default as amanteOAmigo0962 } from "./amante-o-amigo/AMANTEOAMIGO-0962.jpg";
+export { default as amanteOAmigo1032 } from "./amante-o-amigo/AMANTEOAMIGO-1032.jpg";
+export { default as amanteOAmigo1201 } from "./amante-o-amigo/AMANTEOAMIGO-1201.jpg";
+export { default as amanteOAmigo1219 } from "./amante-o-amigo/AMANTEOAMIGO-1219.jpg";
+export { default as amanteOAmigo1308 } from "./amante-o-amigo/AMANTEOAMIGO-1308.jpg";
+export { default as amanteOAmigoMain } from "./amante-o-amigo/AMANTEOAMIGO-main.jpg";
+
 export { default as babyShowerKarlaGino151 } from "./baby-shower/Karla&Gino-151.jpg";
 export { default as babyShowerKarlaGino152 } from "./baby-shower/Karla&Gino-152.jpg";
 export { default as babyShowerKarlaGino153 } from "./baby-shower/Karla&Gino-153.jpg";

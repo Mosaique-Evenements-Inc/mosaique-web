@@ -1,5 +1,25 @@
+import setupLogisticsHomeImage from "@/assets/images/services/setup-and-logistics/AMANTEOAMIGO-0523.jpg";
 import type { ContentLink } from "@/core/common/types/content";
-import { getLocalizedService, services } from "@/features/services";
+import type { Locale } from "@/core/i18n";
+import { getLocalizedService, SERVICE_IDS, services, type Service } from "@/features/services";
+
+export const getHomeServicePreview = (service: Service, locale: Locale): Service => {
+  const localizedService = getLocalizedService(service, locale);
+
+  if (service.id !== SERVICE_IDS.setupLogistics) {
+    return localizedService;
+  }
+
+  return {
+    ...localizedService,
+    featuredMedia: {
+      alt: localizedService.title,
+      kind: "image",
+      src: setupLogisticsHomeImage,
+      status: "approved",
+    },
+  };
+};
 
 export const servicesContent = {
   intro: {
