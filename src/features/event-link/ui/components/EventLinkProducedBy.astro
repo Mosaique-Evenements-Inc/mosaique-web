@@ -1,0 +1,23 @@
+---
+import { Image } from "astro:assets";
+import { getLocalizedHref, type Locale } from "@/core/i18n";
+import { eventLinkLogoAssets } from "../../data/logo-assets";
+import type { EventLinkProducerView } from "../../types";
+
+interface Props {
+  producer: EventLinkProducerView;
+  locale: Locale;
+}
+
+const { producer, locale } = Astro.props;
+const logo = eventLinkLogoAssets[producer.logoAssetId];
+---
+
+<footer class="event-link-produced-by">
+  <a class="event-link-produced-by__link" href={getLocalizedHref(producer.href, locale)}>
+    <span class="event-link-produced-by__label">{producer.label}</span>
+    <span class="event-link-produced-by__logo">
+      <Image src={logo} alt="" width={330} format="webp" loading="lazy" decoding="async" />
+    </span>
+  </a>
+</footer>

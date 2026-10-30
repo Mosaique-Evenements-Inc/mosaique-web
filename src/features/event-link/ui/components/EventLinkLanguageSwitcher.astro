@@ -1,0 +1,39 @@
+---
+import { getLanguageTag, supportedLocales, switchLocaleUrl, type Locale } from "@/core/i18n";
+import { eventLinkLanguageNames } from "../../i18n";
+
+interface Props {
+  locale: Locale;
+  currentUrl: URL;
+  label: string;
+}
+
+const { locale, currentUrl, label } = Astro.props;
+const options = supportedLocales.map((targetLocale) => ({
+  locale: targetLocale,
+  href: switchLocaleUrl(currentUrl, targetLocale),
+  languageTag: getLanguageTag(targetLocale),
+  current: targetLocale === locale,
+  accessibleName: eventLinkLanguageNames[targetLocale],
+}));
+---
+
+<nav class="event-link-page__languages" aria-label={label}>
+  <ul>
+    {
+      options.map((option) => (
+        <li>
+          <a
+            href={option.href}
+            lang={option.languageTag}
+            hreflang={option.languageTag}
+            aria-label={option.accessibleName}
+            aria-current={option.current ? "page" : undefined}
+          >
+            {option.locale.toUpperCase()}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

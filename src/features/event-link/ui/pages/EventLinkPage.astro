@@ -1,0 +1,106 @@
+---
+import { getLocaleFromUrl, getLocalizedPath } from "@/core/i18n";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { eventLinkLogoAssets } from "../../data/logo-assets";
+import type { getLocalizedAmanteOAmigoEventLink } from "../../selectors";
+import EventLinkBrand from "../components/EventLinkBrand.astro";
+import EventLinkGalleryDirectory from "../components/EventLinkGalleryDirectory.astro";
+import EventLinkLanguageSwitcher from "../components/EventLinkLanguageSwitcher.astro";
+import EventLinkMenuEntry from "../components/EventLinkMenuEntry.astro";
+import EventLinkProducedBy from "../components/EventLinkProducedBy.astro";
+import EventLinkSocialLinks from "../components/EventLinkSocialLinks.astro";
+import EventLinkUpcomingEvent from "../components/EventLinkUpcomingEvent.astro";
+import ShareAction from "../components/ShareAction.astro";
+
+import "@fontsource-variable/quicksand";
+import "../styles/event-link-page.css";
+
+interface Props {
+  content: ReturnType<typeof getLocalizedAmanteOAmigoEventLink>;
+}
+
+const { content } = Astro.props;
+const {
+  config,
+  copy,
+  event,
+  upcoming,
+  menuEntry,
+  socials,
+  sharePayloads,
+  galleryDirectory,
+  producer,
+} = content;
+const logo = eventLinkLogoAssets[config.brand.logoAssetId];
+const locale = getLocaleFromUrl(Astro.url);
+const landingPath = getLocalizedPath(event.slug, locale);
+const landingPayload = {
+  title: sharePayloads.landing.title,
+  text: sharePayloads.landing.text,
+  url: Astro.site ? new URL(landingPath, Astro.site).href : landingPath,
+};
+const shareLabels = {
+  close: copy.labels.closeShare,
+  copy: copy.labels.copyLink,
+  copied: copy.labels.copied,
+  copyError: copy.labels.copyError,
+  shareVia: copy.labels.shareVia,
+  email: copy.labels.emailShare,
+  moreShare: copy.labels.moreShare,
+  opensNewTab: copy.labels.opensNewTab,
+};
+const visualStyle = {
+  "--event-link-paper": config.visual.paper,
+  "--event-link-surface": config.visual.surface,
+  "--event-link-ink": config.visual.ink,
+  "--event-link-wine": config.visual.wine,
+  "--event-link-gold": config.visual.gold,
+  "--event-link-pink": config.visual.pink,
+};
+---
+
+<BaseLayout title={event.title} description={copy.landingDescription}>
+  <main class="event-link-page" id="main-content" tabindex="-1" style={visualStyle}>
+    <div class="event-link-page__atmosphere" aria-hidden="true"></div>
+    <div class="event-link-page__composition">
+      <EventLinkLanguageSwitcher
+        {locale}
+        currentUrl={Astro.url}
+        label={copy.labels.languages}
+      />
+      <div class="event-link-page__sheet">
+        <EventLinkBrand
+          {logo}
+          title={event.title}
+          slogan={copy.slogan}
+          description={copy.landingDescription}
+        >
+          <ShareAction
+            instanceId="share-event-link-page"
+            payload={landingPayload}
+            triggerLabel={copy.labels.landingShare}
+            labels={shareLabels}
+          />
+        </EventLinkBrand>
+        <EventLinkUpcomingEvent
+          event={upcoming}
+          sharePayload={sharePayloads.event}
+          shareLabel={copy.labels.upcomingShare}
+          shareLabels={shareLabels}
+        />
+        <EventLinkMenuEntry {...menuEntry} />
+        <EventLinkSocialLinks
+          {socials}
+          label={copy.labels.socialMedia}
+          opensNewTab={copy.labels.opensNewTab}
+        />
+        <EventLinkGalleryDirectory
+          directory={galleryDirectory}
+          instanceId="event-link-gallery-directory"
+          {locale}
+        />
+        <EventLinkProducedBy {producer} {locale} />
+      </div>
+    </div>
+  </main>
+</BaseLayout>

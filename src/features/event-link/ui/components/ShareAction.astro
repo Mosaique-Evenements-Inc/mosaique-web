@@ -1,0 +1,257 @@
+---
+import Icon, { type IconName } from "@/core/common/ui/components/Icon.astro";
+import type { ShareActionLabels, SharePayload } from "../../types/index.ts";
+import type { ShareProvider } from "../share/share-action.ts";
+
+interface Props {
+  instanceId: string;
+  payload: SharePayload;
+  triggerLabel: string;
+  labels: ShareActionLabels;
+}
+
+const { instanceId, payload, triggerLabel, labels } = Astro.props;
+const providers: readonly { id: ShareProvider; label: string; icon: IconName }[] = [
+  { id: "x", label: "X", icon: "x" },
+  { id: "facebook", label: "Facebook", icon: "facebook" },
+  { id: "whatsapp", label: "WhatsApp", icon: "whatsapp" },
+  { id: "linkedin", label: "LinkedIn", icon: "linkedin" },
+  { id: "email", label: labels.email, icon: "sendMail" },
+];
+---
+
+<div
+  class="event-link-share"
+  data-event-link-share
+  data-payload={JSON.stringify(payload)}
+  data-copy-error={labels.copyError}
+  data-copied={labels.copied}
+>
+  <button
+    type="button"
+    class="event-link-share__trigger"
+    aria-controls={`${instanceId}-dialog`}
+    aria-expanded="false"
+    data-share-trigger
+  >
+    <Icon name="shareIos" size={19} />
+    <span>{triggerLabel}</span>
+  </button>
+
+  <dialog
+    id={`${instanceId}-dialog`}
+    class="event-link-share__dialog"
+    aria-labelledby={`${instanceId}-title`}
+    aria-modal="true"
+    data-share-dialog
+  >
+    <div class="event-link-share__surface">
+      <header class="event-link-share__header">
+        <h2 id={`${instanceId}-title`}>{triggerLabel}</h2>
+        <button
+          type="button"
+          class="event-link-share__close"
+          aria-label={labels.close}
+          data-share-close
+        >
+          <Icon name="xmark" size={22} />
+        </button>
+      </header>
+      <p class="event-link-share__preview">{payload.title}<span>{payload.text}</span></p>
+      <button type="button" class="event-link-share__copy" data-share-copy>
+        <Icon name="copy" size={19} />
+        <span>{labels.copy}</span>
+      </button>
+      <p
+        class="event-link-share__status"
+        aria-live="polite"
+        aria-atomic="true"
+        data-share-status
+      >
+      </p>
+      <nav aria-label={labels.shareVia}>
+        <p>{labels.shareVia}</p>
+        <ul class="event-link-share__providers">
+          {
+            providers.map((provider) => (
+              <li>
+                <a
+                  data-share-provider={provider.id}
+                  target={provider.id === "email" ? undefined : "_blank"}
+                  rel={provider.id === "email" ? undefined : "noopener noreferrer"}
+                >
+                  <Icon name={provider.icon} size={22} />
+                  <span>{provider.label}</span>
+                  {provider.id !== "email" && (
+                    <span class="visually-hidden"> ({labels.opensNewTab})</span>
+                  )}
+                </a>
+              </li>
+            ))
+          }
+          <li hidden data-share-native-option>
+            <button type="button" data-share-native>
+              <Icon name="moreHoriz" size={22} />
+              <span>{labels.moreShare}</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </dialog>
+</div>
+
+<script>
+  import {
+    getShareProviderUrl,
+    isShareCancellation,
+    resolveSharePayload,
+    type ShareProvider,
+  } from "../share/share-action.ts";
+
+  document.querySelectorAll<HTMLElement>("[data-event-link-share]").forEach((root) => {
+    if (root.dataset.ready === "true") return;
+    root.dataset.ready = "true";
+
+    const trigger = root.querySelector<HTMLButtonElement>("[data-share-trigger]");
+    const dialog = root.querySelector<HTMLDialogElement>("[data-share-dialog]");
+    const closeButton = root.querySelector<HTMLButtonElement>("[data-share-close]");
+    const copyButton = root.querySelector<HTMLButtonElement>("[data-share-copy]");
+    const nativeOption = root.querySelector<HTMLElement>("[data-share-native-option]");
+    const nativeButton = root.querySelector<HTMLButtonElement>("[data-share-native]");
+    const status = root.querySelector<HTMLElement>("[data-share-status]");
+    if (!trigger || !dialog || !closeButton || !copyButton || !status || !root.dataset.payload)
+      return;
+
+    const payload = resolveSharePayload(
+      JSON.parse(root.dataset.payload),
+      window.location.origin,
+    );
+    if (nativeOption && typeof navigator.share === "function") nativeOption.hidden = false;
+    const controller = new AbortController();
+    let resetTimer = 0;
+    let previousRootOverflow = "";
+    let previousBodyOverflow = "";
+
+    root.querySelectorAll<HTMLAnchorElement>("[data-share-provider]").forEach((link) => {
+      link.href = getShareProviderUrl(link.dataset.shareProvider as ShareProvider, payload);
+    });
+
+    const resetStatus = () => {
+      window.clearTimeout(resetTimer);
+      status.textContent = "";
+      status.removeAttribute("data-error");
+    };
+
+    const openFallback = () => {
+      resetStatus();
+      previousRootOverflow = document.documentElement.style.overflow;
+      previousBodyOverflow = document.body.style.overflow;
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+      dialog.showModal();
+      trigger.setAttribute("aria-expanded", "true");
+      closeButton.focus({ preventScroll: true });
+    };
+
+    const copyWithFallback = () => {
+      const textarea = document.createElement("textarea");
+      textarea.value = payload.url;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      try {
+        textarea.select();
+        const legacyDocument = document as unknown as {
+          execCommand: (command: string) => boolean;
+        };
+        if (!legacyDocument.execCommand("copy")) throw new Error("Copy command failed");
+      } finally {
+        textarea.remove();
+        copyButton.focus({ preventScroll: true });
+      }
+    };
+
+    trigger.addEventListener("click", openFallback, { signal: controller.signal });
+
+    nativeButton?.addEventListener(
+      "click",
+      () => {
+        void (async () => {
+          if (!navigator.share) return;
+          try {
+            await navigator.share(payload);
+            dialog.close();
+          } catch (error) {
+            if (isShareCancellation(error)) return;
+            copyButton.focus({ preventScroll: true });
+          }
+        })();
+      },
+      { signal: controller.signal },
+    );
+
+    copyButton.addEventListener(
+      "click",
+      () => {
+        void (async () => {
+          try {
+            if (navigator.clipboard?.writeText)
+              await navigator.clipboard.writeText(payload.url);
+            else copyWithFallback();
+          } catch {
+            try {
+              copyWithFallback();
+            } catch {
+              status.textContent = root.dataset.copyError || "";
+              status.dataset.error = "true";
+              return;
+            }
+          }
+          status.textContent = root.dataset.copied || "";
+          window.clearTimeout(resetTimer);
+          resetTimer = window.setTimeout(resetStatus, 2400);
+        })();
+      },
+      { signal: controller.signal },
+    );
+
+    closeButton.addEventListener("click", () => dialog.close(), { signal: controller.signal });
+    dialog.addEventListener(
+      "click",
+      (event) => {
+        if (event.target === dialog) dialog.close();
+      },
+      { signal: controller.signal },
+    );
+    dialog.addEventListener(
+      "close",
+      () => {
+        document.documentElement.style.overflow = previousRootOverflow;
+        document.body.style.overflow = previousBodyOverflow;
+        trigger.setAttribute("aria-expanded", "false");
+        trigger.focus({ preventScroll: true });
+        resetStatus();
+      },
+      { signal: controller.signal },
+    );
+    window.addEventListener(
+      "pagehide",
+      (event) => {
+        resetStatus();
+        if (event.persisted) {
+          if (dialog.open) {
+            dialog.close();
+            document.documentElement.style.overflow = previousRootOverflow;
+            document.body.style.overflow = previousBodyOverflow;
+            trigger.setAttribute("aria-expanded", "false");
+          }
+          return;
+        }
+        controller.abort();
+      },
+      { signal: controller.signal },
+    );
+  });
+</script>

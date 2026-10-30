@@ -323,7 +323,7 @@ This document is the source of truth for implementation status. The existence of
 ### SEO / Metadata
 
 - **Implementation: complete for the current public surface.** Spanish document language, descriptive titles and descriptions, robots directives, Open Graph metadata, Twitter card metadata, favicons, and Organization JSON-LD are present.
-- `SITE_URL` is the single production URL source. Canonical, `og:url`, the Organization URL, sitemap generation, and the sitemap reference in robots are emitted only when it is configured, preventing localhost or speculative domains from entering production metadata.
+- `SITE_URL` is the single production URL source. Canonical, `og:url`, the Organization URL, and hreflang targets are relative without it and absolute when configured. Sitemap generation and the sitemap reference in robots require it; production must configure the approved domain so metadata does not retain relative URLs.
 - The official Astro sitemap integration generates the sitemap index and page sitemap. `robots.txt` remains valid without a configured domain and adds the absolute sitemap URL when one exists.
 - Social image tags remain intentionally absent until an approved production image is available.
 
@@ -445,6 +445,114 @@ This document is the source of truth for implementation status. The existence of
   the mockup; unapproved taglines are intentionally absent and prices retain locale-aware CAD
   formatting. Literal botanical fidelity, cross-browser and assistive-technology
   acceptance remain open; MENUS-07A does not certify pixel-perfect identity or close all of MENUS-07.
+
+### Amante o Amigo Event Link Page V1
+
+- **✅ Step 1 — typed data and i18n foundation complete locally.** The feature owns its AOA
+  configuration, canonical `event-slot-07` relationship, approved destinations, EN/ES/FR copy,
+  and empty past-edition and sponsor collections. None of the later actions render yet.
+- **✅ Step 2 — routes and visual shell complete locally.** `/amante-o-amigo`,
+  `/es/amante-o-amigo`, and `/fr/amante-o-amigo` render one static Astro page composition using
+  BaseLayout metadata and the existing locale registry. The shell derives Alfajores Fleur's
+  six visual roles, 680 px paper surface, dark print atmosphere, and existing Cinzel/Quicksand
+  typography without changing Menu, Tree, Event Detail, or the global theme. At this phase it
+  rendered only the AOA logo, canonical event name, localized slogan, and landing description.
+- **✅ Step 3 — Brand + Reusable Language Control** is complete locally.
+  The brand is a feature-owned Astro component. A separate Event Link language control uses
+  core locale helpers, ordinary EN/ES/FR links, localized accessible names, and Alfajores-derived
+  presentation without changing Menu, Tree, Event Detail, or the six semantic visual roles.
+  V1 accepts that static language links do not preserve query strings or fragments added after
+  build; the core helper still preserves them when supplied in its URL input. No Event Link client
+  JavaScript is added. At this phase no upcoming-event, ticket, social, menu, gallery, producer,
+  or sponsor UI was rendered.
+- **✅ Step 4 — Upcoming Event Card + JassPass CTA is complete locally.** A reusable Astro card
+  receives a locale-prepared view model from Event Link, reusing the canonical Event title and
+  approved AVIF/WebP cover, Events descriptions and image alternatives, and the existing AOA
+  edition and ticket data. It renders localized date and time, Lola Bar and Montréal, and a
+  localized external ticket link without hydration or new dependencies. The six requested
+  viewport widths passed overflow checks; EN/ES/FR content, keyboard focus, and Menu, Event
+  Detail, and Tree routes passed browser checks. The live Paula page no longer exposes its
+  upcoming card, so visual comparison is limited to the supplied information pattern. Runtime
+  reduced-motion emulation remains unverified; this card introduces no animation. At this phase,
+  share, social, menu, gallery, producer, and sponsor UI remained deferred.
+- **✅ Step 5 — Existing Menu Entry is complete locally.** A reusable Event Link action row
+  receives the approved absolute Spanish Alfajores URL and localized EN/ES/FR labels from the
+  selector, and navigates in the same tab. It follows the ticket card as a quieter secondary
+  action, reusing AOA visual roles and Iconoir icons without client JavaScript or dependencies.
+  Browser checks at 320, 390, 430, 768, 1024, 1280, and 1600 px passed overflow, French copy,
+  spacing, and keyboard-focus checks; Menu, Event Detail, and Tree remain unchanged. Share,
+  social, gallery, producer, and sponsor UI remain deferred.
+- **✅ Step 6 — Social Networks is complete locally.** Event Link now renders the approved
+  Instagram profile after the menu as a feature-owned Astro section. The selector passes the
+  canonical profile and display handle to a reusable component with typed platform-to-Iconoir
+  mapping, localized section heading and new-tab notice, and an empty-collection guard. The
+  action remains secondary to JassPass and uses AOA's existing visual roles. Browser checks of
+  EN/ES/FR content, keyboard focus, accessible new-tab notice, and the neighboring Menu, Event
+  Detail, and Tree routes pass. Overflow checks pass at 320, 390, 430, 768, both sides of 1024,
+  1280, and 1600 CSS px. The browser's 80% zoom limits full-frame screenshot comparison at narrow
+  widths; runtime reduced-motion emulation remains unverified, though this step adds no animation.
+  No share, gallery, producer, sponsor, client JavaScript, dependency, or route was added; Step 7
+  remains deferred.
+- **✅ Step 7 — Reusable Share Infrastructure + Event and Global Share is complete locally.**
+  One feature-owned Astro share component and a small scoped script render two independent,
+  deterministic dialog instances. The Upcoming Event card shares its approved localized edition
+  details and JassPass destination; the brand area shares the recurring AOA experience at the
+  current locale's canonical landing path. Both offer copy-link, X, Facebook, WhatsApp, LinkedIn,
+  email, and optional native Web Share from an accessible dialog. The script handles focus return,
+  Escape/backdrop dismissal, scroll restoration, and clipboard fallback without hydration or new
+  dependencies. Tree's established share implementation remains untouched. EN/ES/FR payloads and
+  generated DOM pass tests, and browser checks cover both actions, Tree regression, and 320–1600 px
+  widths including a 320 × 480 scrollable dialog. OS clipboard contents and the native share sheet
+  could not be independently inspected; runtime reduced-motion emulation remains unverified, though
+  Step 7 introduces no motion. Gallery, producer, and sponsors remain deferred.
+- **✅ Step 8 — Gallery Directory / Past Editions architecture is complete locally.** A
+  feature-owned Astro component consumes a localized selector view and uses native
+  `<details>/<summary>` with direct edition links, optional formatted dates, and a singular/plural
+  gallery count derived from the record collection. Root-relative gallery destinations use the
+  locale-aware helper; off-site destinations open in a new tab with an accessible notice. The
+  approved production `pastEditions: []` renders no section in EN/ES/FR. Test-only one- and
+  three-edition fixtures exercised the populated component, including long French labels,
+  keyboard disclosure, link targets, and 320/390/430 px widths; the temporary fixture route was
+  removed before the final 84-page build. Production AOA passed overflow checks at 390, 430, 768,
+  1024, 1280, and 1600 px, with both share actions, Instagram, Menu, Event Detail, Tree, and
+  language routes intact. The component adds no gallery images, lightbox, client JavaScript,
+  dependency, motion, producer, or sponsors. Runtime reduced-motion emulation remains unverified;
+  there is no Gallery Directory animation to vary. Real gallery records remain pending.
+- **✅ Step 9 — Produced by MOSAÏQUE attribution is complete locally.** The Event Link
+  selector prepares the existing producer identity and approved EN/ES/FR label for one
+  feature-owned Astro attribution component. It uses the registered official MOSAÏQUE logo,
+  locale-aware same-tab home link, and a decorative logo alternative because the visible label
+  already names the producer. Its centered proportions and microcopy derive from the Alfajores
+  Menu attribution, which remains untouched. The optional location is omitted because it is not
+  part of the producer contract. EN/ES/FR static output, keyboard focus, 320–1600 px overflow,
+  and visual-family comparison pass. No sponsor, gallery record, schema, route, client script,
+  dependency, or shared Menu change was added. Runtime reduced-motion emulation remains
+  unverified; this step adds no animation.
+- **✅ Step 10 — Sponsors foundation / empty-no-render verification is complete locally.**
+  The existing `EventLinkSponsor` contract remains limited to stable ID, name, logo asset ID,
+  and optional HTTPS URL. AOA's approved `sponsors: []` produces no sponsor heading, container,
+  list, logo, placeholder, accessible landmark, or schema in EN/ES/FR static output. Focused
+  tests protect this behavior and the separate MOSAÏQUE producer attribution. Sponsor labels,
+  projection, and visual components remain deferred until real records and design requirements
+  are approved; no client JavaScript, dependency, route, or production content was added.
+- **✅ Step 11 — Final responsive, accessibility, and functional QA is complete locally.**
+  EN/ES/FR content, locale links, canonical event data, both independent share dialogs, copy
+  destinations and announcements, provider URLs, focus return, keyboard order, empty gallery and
+  sponsor states, image loading, and neighboring Menu, Event Detail, and Tree routes passed browser
+  checks. All nine requested viewport and short-height cases passed page and dialog overflow,
+  touch-target, and scrollability checks. A localized CSS fix restores the intended 14 px provider
+  label size after the inherited-font shorthand had overridden it and caused slight text overflow
+  in the 320 px French share dialog. Native OS share-sheet completion and runtime reduced-motion
+  emulation were unavailable; the fallback actions remain usable, and Step 11 adds no animation.
+  No product content, route, dependency, sponsor UI, or gallery record changed.
+- **✅ Step 12.1 — Share bfcache lifecycle closure is complete locally.** `pagehide` now retains
+  each Share instance's listeners when the document is eligible for bfcache, while clearing its
+  status timer and closing an open dialog with scroll state restored. A non-persisted pagehide
+  still aborts listeners. Chrome back-navigation checks exercised both Share payloads, Copy,
+  Escape, backdrop, focus return, repeated navigation, and an open-dialog departure; 320, 390,
+  and 1280 px checks passed, including French provider labels at 320 px. The browser tooling did
+  not expose `pageshow.persisted`, so actual bfcache restoration was not independently confirmed.
+  The static lifecycle defect is closed; no Tree, SEO, route, content, CSS, or dependency changed.
 
 ### Tree Link V1
 

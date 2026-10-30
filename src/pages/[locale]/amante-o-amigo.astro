@@ -1,0 +1,15 @@
+---
+import { prefixedLocales, type Locale } from "@/core/i18n";
+import { eventDetails } from "@/features/events";
+import { getLocalizedAmanteOAmigoEventLink } from "@/features/event-link";
+import EventLinkPage from "@/features/event-link/ui/pages/EventLinkPage.astro";
+
+export function getStaticPaths() {
+  return prefixedLocales.map((locale) => ({ params: { locale } }));
+}
+
+const locale = Astro.params.locale as Locale;
+const content = getLocalizedAmanteOAmigoEventLink(locale, eventDetails);
+---
+
+<EventLinkPage {content} />

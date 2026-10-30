@@ -1,0 +1,10 @@
+---
+import { defaultLocale } from "@/core/i18n";
+import { eventDetails } from "@/features/events";
+import { getLocalizedAmanteOAmigoEventLink } from "@/features/event-link";
+import EventLinkPage from "@/features/event-link/ui/pages/EventLinkPage.astro";
+
+const content = getLocalizedAmanteOAmigoEventLink(defaultLocale, eventDetails);
+---
+
+<EventLinkPage {content} />

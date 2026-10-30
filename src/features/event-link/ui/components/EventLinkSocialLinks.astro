@@ -1,0 +1,60 @@
+---
+import Icon, { type IconName } from "@/core/common/ui/components/Icon.astro";
+import type { EventLinkSocialPlatform } from "../../types";
+
+interface SocialLink {
+  platform: EventLinkSocialPlatform;
+  displayHandle: string;
+  url: string;
+}
+
+interface Props {
+  socials: readonly SocialLink[];
+  label: string;
+  opensNewTab: string;
+}
+
+const { socials, label, opensNewTab } = Astro.props;
+const platformPresentation: Record<EventLinkSocialPlatform, { label: string; icon: IconName }> =
+  {
+    instagram: { label: "Instagram", icon: "instagram" },
+    tiktok: { label: "TikTok", icon: "tiktok" },
+    facebook: { label: "Facebook", icon: "facebook" },
+  };
+---
+
+{
+  socials.length > 0 && (
+    <section class="event-link-socials" aria-labelledby="event-link-socials-title">
+      <h2 id="event-link-socials-title" class="event-link-socials__title">
+        {label}
+      </h2>
+      <ul class="event-link-socials__list">
+        {socials.map((social) => (
+          <li>
+            <a
+              class="event-link-socials__link"
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="event-link-socials__icon">
+                <Icon name={platformPresentation[social.platform].icon} size={28} />
+              </span>
+              <span class="event-link-socials__identity">
+                <span class="event-link-socials__platform">
+                  {platformPresentation[social.platform].label}
+                </span>
+                <span class="event-link-socials__handle">{social.displayHandle}</span>
+              </span>
+              <span class="event-link-socials__arrow">
+                <Icon name="arrowRight" size={20} />
+              </span>
+              <span class="visually-hidden"> ({opensNewTab})</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}

@@ -1,4 +1,5 @@
-import { defaultLocale, type LocaleDictionaries } from "@/core/i18n";
+import { defaultLocale } from "../../../core/i18n/config/locales.ts";
+import type { LocaleDictionaries } from "../../../core/i18n/translation/contracts.ts";
 import type { EventCategoryId } from "../types/category";
 import type { Event } from "../types/event";
 

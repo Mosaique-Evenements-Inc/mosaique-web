@@ -1,0 +1,29 @@
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+
+interface Props {
+  logo: ImageMetadata;
+  title: string;
+  slogan: string;
+  description: string;
+}
+
+const { logo, title, slogan, description } = Astro.props;
+---
+
+<header class="event-link-page__header">
+  <Image
+    src={logo}
+    alt=""
+    class="event-link-page__logo"
+    width={logo.width}
+    height={logo.height}
+    loading="eager"
+    decoding="async"
+  />
+  <h1 class="event-link-page__title">{title}</h1>
+  <p class="event-link-page__slogan">{slogan}</p>
+  <p class="event-link-page__description">{description}</p>
+  <slot />
+</header>

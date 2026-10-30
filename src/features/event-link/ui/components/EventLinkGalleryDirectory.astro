@@ -1,0 +1,69 @@
+---
+import Icon from "@/core/common/ui/components/Icon.astro";
+import { getLocalizedHref, type Locale } from "@/core/i18n";
+import type { EventLinkGalleryDirectoryView } from "../../types/index.ts";
+
+interface Props {
+  directory: EventLinkGalleryDirectoryView | null;
+  instanceId: string;
+  locale: Locale;
+}
+
+const { directory, instanceId, locale } = Astro.props;
+const siteOrigin = Astro.site?.origin ?? Astro.url.origin;
+const rows = directory?.editions.map((edition) => ({
+  ...edition,
+  href: getLocalizedHref(edition.galleryUrl, locale),
+  opensNewTab:
+    edition.galleryUrl.startsWith("https://") &&
+    new URL(edition.galleryUrl).origin !== siteOrigin,
+}));
+---
+
+{
+  directory && (
+    <section class="event-link-gallery-directory" aria-labelledby={`${instanceId}-title`}>
+      <h2 id={`${instanceId}-title`} class="event-link-gallery-directory__title">
+        {directory.sectionLabel}
+      </h2>
+      <details class="event-link-gallery-directory__disclosure">
+        <summary>
+          <span class="event-link-gallery-directory__icon" aria-hidden="true">
+            <Icon name="calendar" size={22} />
+          </span>
+          <span class="event-link-gallery-directory__summary-copy">
+            <strong>{directory.directoryLabel}</strong>
+            <span>{directory.availableCount}</span>
+          </span>
+          <span class="event-link-gallery-directory__chevron" aria-hidden="true">
+            <Icon name="navArrowDown" size={22} />
+          </span>
+        </summary>
+        <ul class="event-link-gallery-directory__list">
+          {rows?.map((edition) => (
+            <li>
+              <a
+                class="event-link-gallery-directory__link"
+                href={edition.href}
+                target={edition.opensNewTab ? "_blank" : undefined}
+                rel={edition.opensNewTab ? "noopener noreferrer" : undefined}
+              >
+                <span class="event-link-gallery-directory__edition-copy">
+                  <strong>{edition.title}</strong>
+                  {edition.description && <span>{edition.description}</span>}
+                  {edition.date && <time datetime={edition.date}>{edition.dateLabel}</time>}
+                  {edition.opensNewTab && (
+                    <span class="visually-hidden"> ({directory.opensNewTab})</span>
+                  )}
+                </span>
+                <span class="event-link-gallery-directory__arrow" aria-hidden="true">
+                  <Icon name="arrowRight" size={21} />
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </section>
+  )
+}
