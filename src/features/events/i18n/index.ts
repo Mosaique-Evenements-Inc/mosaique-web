@@ -16,6 +16,27 @@ export interface EventTranslation {
 type EventTranslations = Record<string, EventTranslation>;
 
 const es: EventTranslations = {
+  "event-slot-08": {
+    title: "Latino Fake Mariage",
+    description:
+      "Una experiencia inmersiva que recrea una boda, donde los asistentes participan como invitados mientras disfrutan de una puesta en escena, música, comida y baile.",
+    categoryLabel: "Celebración",
+    media: {
+      featuredAlt: "Asistentes reunidos alrededor de una pareja durante Latino Fake Mariage.",
+      galleryAlts: [
+        "Mesas y decoración del salón de Latino Fake Mariage bajo luces violetas.",
+        "Tres cantantes actuando con micrófonos durante Latino Fake Mariage.",
+        "Iniciales luminosas junto a las mesas del evento.",
+        "Presentadora con velo durante la celebración.",
+        "Iniciales luminosas de Latino Fake Mariage.",
+        "Invitada con velo rodeada de asistentes durante Latino Fake Mariage.",
+        "Invitado con traje y micrófono frente a la persona con velo.",
+        "Grupo de asistentes posando juntos durante la fiesta.",
+        "Grupo de personas posando para una fotografía durante Latino Fake Mariage.",
+        "Pareja con micrófonos durante la puesta en escena de la boda.",
+      ],
+    },
+  },
   "event-slot-07": {
     title: "Amante o Amigo",
     description:
@@ -95,6 +116,27 @@ const es: EventTranslations = {
 };
 
 const en: EventTranslations = {
+  "event-slot-08": {
+    title: "Latino Fake Mariage",
+    description:
+      "An immersive experience that recreates a wedding, where attendees take part as guests while enjoying a staged production, music, food, and dancing.",
+    categoryLabel: "Celebration",
+    media: {
+      featuredAlt: "Attendees gathered around a couple at Latino Fake Mariage.",
+      galleryAlts: [
+        "Tables and venue decor at Latino Fake Mariage under violet lighting.",
+        "Three singers performing with microphones at Latino Fake Mariage.",
+        "Illuminated initials beside the event tables.",
+        "A veiled host during the celebration.",
+        "Illuminated initials at Latino Fake Mariage.",
+        "A veiled guest surrounded by attendees at Latino Fake Mariage.",
+        "A suited guest with a microphone facing the veiled participant.",
+        "A group of attendees posing together at the party.",
+        "A group of people posing for a photograph at Latino Fake Mariage.",
+        "A couple with microphones during the staged wedding.",
+      ],
+    },
+  },
   "event-slot-07": {
     title: "Amante o Amigo",
     description:
@@ -173,6 +215,27 @@ const en: EventTranslations = {
 };
 
 const fr: EventTranslations = {
+  "event-slot-08": {
+    title: "Latino Fake Mariage",
+    description:
+      "Une expérience immersive qui recrée un mariage, où les participants prennent part à la fête en tant qu’invités tout en profitant d’une mise en scène, de musique, de nourriture et de danse.",
+    categoryLabel: "Célébration",
+    media: {
+      featuredAlt: "Des participants réunis autour d’un couple à Latino Fake Mariage.",
+      galleryAlts: [
+        "Tables et décoration de la salle de Latino Fake Mariage sous des lumières violettes.",
+        "Trois chanteurs avec des micros sur scène à Latino Fake Mariage.",
+        "Initiales lumineuses près des tables de l’événement.",
+        "Une animatrice voilée pendant la célébration.",
+        "Initiales lumineuses de Latino Fake Mariage.",
+        "Une invitée voilée entourée des participants à Latino Fake Mariage.",
+        "Un invité en costume avec un micro face à la participante voilée.",
+        "Un groupe de participants posant ensemble pendant la fête.",
+        "Un groupe de personnes posant pour une photo à Latino Fake Mariage.",
+        "Un couple avec des micros pendant la mise en scène du mariage.",
+      ],
+    },
+  },
   "event-slot-07": {
     title: "Amante o Amigo",
     description:
@@ -298,25 +361,29 @@ export const eventCategoryTranslations = {
 
 export const eventDetailTranslations = {
   es: {
-    collaboration: "Fuimos colaboradores",
+    collaborator: "Fuimos colaboradores",
+    producer: "Fuimos productores",
     moreExperiences: "Más experiencias",
     nextExperience: "Siguiente experiencia",
     relatedEvents: "Eventos relacionados",
   },
   en: {
-    collaboration: "We were collaborators",
+    collaborator: "We were collaborators",
+    producer: "We were producers",
     moreExperiences: "More experiences",
     nextExperience: "Next experience",
     relatedEvents: "Related events",
   },
   fr: {
-    collaboration: "Nous étions collaborateurs",
+    collaborator: "Nous étions collaborateurs",
+    producer: "Nous étions producteurs",
     moreExperiences: "Plus d’expériences",
     nextExperience: "Expérience suivante",
     relatedEvents: "Événements associés",
   },
 } satisfies LocaleDictionaries<{
-  collaboration: string;
+  collaborator: string;
+  producer: string;
   moreExperiences: string;
   nextExperience: string;
   relatedEvents: string;

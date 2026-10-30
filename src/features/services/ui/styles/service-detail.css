@@ -70,7 +70,7 @@
   line-height: var(--text-body-lg-line-height);
 }
 
-.service-header__cta {
+.service-header .service-header__cta {
   --action-button-border: var(--color-region-text-primary);
   --action-button-fill: var(--color-region-text-primary);
   --action-button-filled-text: var(--color-region-page);

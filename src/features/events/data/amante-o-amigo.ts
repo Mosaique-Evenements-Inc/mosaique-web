@@ -20,6 +20,7 @@ export const amanteOAmigoEvent = {
   categoryId: "celebration",
   description:
     "Conexiones, conversaciones y nuevas experiencias en una noche creada para conocer personas y dejarse sorprender.",
+  relationship: "producer",
   featuredMedia: {
     alt: "Grupo musical actuando en el escenario de Amante o Amigo bajo iluminación roja.",
     kind: "image",

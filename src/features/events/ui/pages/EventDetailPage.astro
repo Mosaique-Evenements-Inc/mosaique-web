@@ -24,14 +24,15 @@ const localizedEvent = getLocalizedEvent(event, locale);
 <BaseLayout
   title={`${localizedEvent.title} — MOSAÏQUE EVENTS`}
   description={localizedEvent.description}
+  noindex={localizedEvent.status === "placeholder"}
 >
   <Navigation surface="overlay" anchorPrefix="/" />
   <main class="event-detail" id="main-content" tabindex="-1" data-navigation-contrast="theme">
     <div class="event-detail__chapter" data-content-status={localizedEvent.status}>
       <EventHeader
         title={localizedEvent.title}
-        collaborationLabel={localizedEvent.collaboration
-          ? eventDetailTranslations[locale].collaboration
+        relationshipLabel={localizedEvent.relationship
+          ? eventDetailTranslations[locale][localizedEvent.relationship]
           : undefined}
         description={localizedEvent.description}
         status={localizedEvent.status}

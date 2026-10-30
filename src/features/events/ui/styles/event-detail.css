@@ -61,7 +61,7 @@
   line-height: var(--text-body-lg-line-height);
 }
 
-.event-header__narrative .event-header__collaboration {
+.event-header__narrative .event-header__relationship {
   align-items: center;
   align-self: flex-start;
   background: var(--color-background-inverse);
@@ -79,11 +79,11 @@
   text-transform: uppercase;
 }
 
-.event-header__collaboration svg {
+.event-header__relationship svg {
   flex-shrink: 0;
 }
 
-.event-header__collaboration span {
+.event-header__relationship span {
   min-inline-size: 0;
   overflow-wrap: anywhere;
 }

@@ -4,7 +4,7 @@ import type { Event } from "../types/event";
 
 export const bailaDaZazaEvent = {
   categoryId: "celebration",
-  collaboration: true,
+  relationship: "collaborator",
   description: "Ritmo, baile y esencia brasileña en una experiencia hecha para celebrar.",
   featuredMedia: {
     alt: "DJ compartiendo la cabina durante Celebración Brasileña bajo una iluminación naranja.",

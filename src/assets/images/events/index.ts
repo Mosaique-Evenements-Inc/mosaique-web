@@ -52,6 +52,18 @@ export { default as fanFestMexVsSouth3 } from "./fan-fest-club/FanfestMEXvsSOUTH
 export { default as fanFestMexVsSouth8 } from "./fan-fest-club/FanfestMEXvsSOUTH-8.jpg";
 export { default as fanFestMain } from "./fan-fest-club/main.jpg";
 
+export { default as latinoFakeMariageCover } from "./Latino-fake-mariage/DSC_portada.jpg";
+export { default as latinoFakeMariage3941 } from "./Latino-fake-mariage/DSC_3941.jpg";
+export { default as latinoFakeMariageGroup } from "./Latino-fake-mariage/LFM-.jpg";
+export { default as latinoFakeMariage4 } from "./Latino-fake-mariage/LFM-4.jpg";
+export { default as latinoFakeMariage5 } from "./Latino-fake-mariage/LFM-5.jpg";
+export { default as latinoFakeMariage120 } from "./Latino-fake-mariage/LFMDSC00120.jpg";
+export { default as latinoFakeMariage422 } from "./Latino-fake-mariage/LFMDSC00422.jpg";
+export { default as latinoFakeMariage487 } from "./Latino-fake-mariage/LFMDSC00487.jpg";
+export { default as latinoFakeMariage501 } from "./Latino-fake-mariage/LFMDSC00501-2.jpg";
+export { default as latinoFakeMariage525 } from "./Latino-fake-mariage/LFMDSC00525.jpg";
+export { default as latinoFakeMariage721 } from "./Latino-fake-mariage/LFMDSC00721.jpg";
+
 export { default as nossaCopaBrzVsEsc16 } from "./nossa-copa/BRZVSESC-16.jpg";
 export { default as nossaCopaBrzVsEsc170 } from "./nossa-copa/BRZVSESC-170.jpg";
 export { default as nossaCopaBrzVsEsc199 } from "./nossa-copa/BRZVSESC-199.jpg";
