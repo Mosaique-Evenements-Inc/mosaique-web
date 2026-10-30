@@ -331,6 +331,14 @@ This document is the source of truth for implementation status. The existence of
 
 ### Menus V1
 
+- **✅ Alfajores Fleur dual-brand attribution implemented locally.** Its existing Mosaïque
+  discovery link now shares a two-column footer with a localized Amante o Amigo discovery link,
+  the approved AOA logo, and a fine wine-tinted vertical divider. The provider owns the related
+  event identity and route; Menu-owned EN/ES/FR copy supplies the invitation, and the route uses
+  the existing locale helper. The location line remains below both logos. Mobile-to-desktop
+  visual review confirms the two links remain distinct and readable without horizontal overflow;
+  no hydration, motion, or dependency was added.
+
 - **✅ MENUS-00 through MENUS-02.1: complete.** The feature has a canonical provider contract,
   localized EN/ES/FR content and routes, CAD formatting, language-routing support, and optional
   canonical provider social links. The production provider registry remained empty through
@@ -623,6 +631,90 @@ This document is the source of truth for implementation status. The existence of
   and event disclosure pass locally. The generated Spanish Alfajores HTML is byte-identical to
   the pre-change build, with no Menu source changes. No client JavaScript, dependency, or motion
   was introduced.
+
+- **✅ AOA static event / Gallery-only disclosure implemented locally.** Events now contains one
+  immediately rendered, named article with its canonical cover, localized Social events eyebrow,
+  title, description, date/time, venue, JassPass CTA, and compact Event Share. Both former event
+  disclosures, compact row, chevrons, count labels, and their unused styles were removed; there
+  was no event-toggle JavaScript. Gallery retains its non-interactive empty state and native
+  disclosure only when editions exist. A temporary two-edition fixture verified rendered links,
+  counts, Enter open/close, visible keyboard focus, and narrow layout without inline photos; its
+  route was removed before the final build. EN/ES/FR passed 320, 390, 430, 768, 1024, and 1280 px
+  checks without horizontal overflow; cover ratio and CTA/Share alignment are preserved. Both
+  Share dialogs and focus return pass; their generated markup and the Menu/Tree HTML match the
+  pre-change output. Reference image files remain unavailable for exact screenshot matching.
+  No dependencies, hydration, or motion were added. This supersedes the earlier nested-event
+  disclosure and compact-row decisions above.
+
+- **✅ AOA compact event card implemented and visually compared locally.** The supplied Paula
+  screenshot now guides a compact, static event preview: the existing AOA angel sits centered in
+  a short ivory visual panel; the approved localized slogan replaces the long event description.
+  Smaller type, padding, and metadata spacing reduce the Spanish card to approximately 370–396 px
+  across the requested widths. Venue and city share one line; Spanish time uses the requested
+  12-hour format. The wine JassPass CTA remains dominant beside a secondary 44 × 44 px icon-only
+  Share button. AOA typography, palette, and the existing sheet width remain intentional brand
+  differences from the reference. This supersedes the cover-photo treatment in the preceding step.
+  EN/ES/FR pass 320, 390, 430, 768, and 1024 px overflow checks; screenshots were also reviewed at
+  desktop 1280 px. Keyboard Share opening, Escape, visible focus return, and console checks pass.
+  Share payloads, other sections, routing, and SEO remain unchanged. No motion was introduced;
+  runtime reduced-motion emulation remains unavailable in the in-app browser. Build, 45 tests,
+  lint, typecheck, scoped formatter, and diff-check pass. Changes remain local, without commit/push.
+
+- **✅ AOA Gallery disclosure now remains interactive with an empty edition collection.** The
+  existing native `details`/`summary` card now shows a derived zero count and opens to its localized
+  empty message. Real past editions remain driven by stable IDs, optional dates, approved gallery
+  URLs, and feature-owned localized titles; no unverified edition or destination was added. A
+  temporary one-/two-edition page confirmed count changes, direct external links, accessible
+  new-tab notices, Enter disclosure, visible focus, and expanded layouts at 320–1280 px without
+  horizontal overflow or browser errors. The temporary page was removed. This supersedes the
+  previous non-interactive empty Gallery card; Events remains an always-visible static card.
+  Real production gallery links are pending the verified edition URL(s) and any corresponding
+  dates/titles. No client script, dependency, route, or motion was added.
+
+- **✅ AOA official TikTok profile added locally.** The existing typed social collection now
+  lists Instagram followed by the approved TikTok `@amanteoamigo.mtl` profile with the clean
+  `https://www.tiktok.com/@amanteoamigo.mtl` URL. The existing selector, social card, Iconoir
+  icon mapping, localized new-tab notice, and Share providers remain unchanged. EN/ES/FR browser
+  checks at 320, 390, 430, 768, 1024, and 1280 px found equal card heights and aligned arrows,
+  no horizontal overflow, and a clean console. TikTok keyboard focus, visible outline, 44 px+
+  target, semantic link, and decorative icon passed. Static tests protect profile order, exact
+  clean destination, and absence of other official networks. No dependency or motion was added;
+  changes remain uncommitted.
+
+- **✅ AOA inner event-information glass treatment implemented locally.** The compact event card
+  now groups its existing logo, category, title, slogan, date/time, and venue in a rounded inner
+  surface that shares the live Share preview's translucent ivory-to-paper gradient, fine light
+  border, 8 px backdrop blur, and restrained shadow. Centered information and a smaller logo
+  bring the two surfaces into the same visual family without increasing card height; the wine
+  ticket CTA and secondary Share control remain outside the new inner surface. Browser comparison
+  covered the open Event Share preview and main card at narrow mobile, mobile, and desktop. All
+  EN/ES/FR layouts pass 320, 390, 430, 768, 1024, and 1280 px without horizontal overflow;
+  French 320 px keeps the two actions vertically centered. Generated event copy, CTA markup, both
+  Share dialogs, and Share trigger markup match the pre-change output. Both dialogs still open
+  with Enter and close with Escape while returning visible focus. No data, routing, dependency,
+  or motion changed; runtime reduced-motion emulation remains unavailable.
+
+- **✅ AOA single-surface event card refinement implemented locally.** The former paper outer
+  border/background and inset glass wrapper were removed. The existing warm translucent glass
+  gradient now belongs to the semantic event article itself, enclosing the logo, localized event
+  information, metadata, wine JassPass CTA, and compact Share trigger within one rounded silhouette.
+  Two restrained wine-tinted internal rules separate the slogan, metadata, and actions without
+  adding another card. EN/ES/FR browser review at 320, 390, 430, 768, 1024, and 1280 px found no
+  horizontal overflow; mobile and desktop screenshots confirm the unified composition. Event and
+  global Share still open by keyboard and close with Escape, event focus returns visibly, Gallery
+  disclosure remains native, and the browser console is clear. The AOA logo, content, destinations,
+  Share payloads/modal, other sections, and motion remain unchanged. This supersedes the preceding
+  nested inner-glass treatment while preserving its approved visual palette.
+
+- **✅ AOA Share triggers use the reference's connected-node icon.** Both global and event-card
+  Share buttons now render the existing Iconoir `ShareAndroid` shape in place of the upload-style
+  `ShareIos` glyph. Their accessible labels, controls, dialogs, destinations, focus behavior, and
+  button treatments remain unchanged; the Tree Link Share control is outside this local change.
+
+- **✅ AOA producer location added below the Mosaïque logo.** The Event Link attribution now
+  repeats the Menu's small Iconoir location line and the canonical `Montréal, Québec` business
+  location beneath its existing linked logo. The same type scale, tracking, and icon size are
+  retained with AOA's wine color; the logo link and all other sections remain unchanged.
 
 ### Tree Link V1
 

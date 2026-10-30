@@ -1,6 +1,8 @@
 ---
 import { Image } from "astro:assets";
+import Icon from "@/core/common/ui/components/Icon.astro";
 import { getLocalizedHref, type Locale } from "@/core/i18n";
+import { footerContent } from "@/features/site-shell/content/footer";
 import { eventLinkLogoAssets } from "../../data/logo-assets";
 import type { EventLinkProducerView } from "../../types";
 
@@ -20,4 +22,7 @@ const logo = eventLinkLogoAssets[producer.logoAssetId];
       <Image src={logo} alt="" width={330} format="webp" loading="lazy" decoding="async" />
     </span>
   </a>
+  <p class="event-link-produced-by__location">
+    <Icon name="mapPin" size={13} />{footerContent.contact.location}
+  </p>
 </footer>

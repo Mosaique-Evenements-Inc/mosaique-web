@@ -28,21 +28,21 @@ const rows = directory.editions.map((edition) => ({
   <h2 id={`${instanceId}-title`} class="event-link-section-heading">
     {directory.sectionLabel}
   </h2>
-  {
-    hasEditions ? (
-      <details class="event-link-gallery-directory__disclosure">
-        <summary class="event-link-gallery-directory__card">
-          <span class="event-link-gallery-directory__icon" aria-hidden="true">
-            <Icon name="mediaImage" size={22} />
-          </span>
-          <span class="event-link-gallery-directory__summary-copy">
-            <strong>{directory.directoryLabel}</strong>
-            <span>{directory.statusLabel}</span>
-          </span>
-          <span class="event-link-gallery-directory__chevron" aria-hidden="true">
-            <Icon name="navArrowDown" size={22} />
-          </span>
-        </summary>
+  <details class="event-link-gallery-directory__disclosure">
+    <summary class="event-link-gallery-directory__card">
+      <span class="event-link-gallery-directory__icon" aria-hidden="true">
+        <Icon name="mediaImage" size={22} />
+      </span>
+      <span class="event-link-gallery-directory__summary-copy">
+        <strong>{directory.directoryLabel}</strong>
+        <span>{directory.statusLabel}</span>
+      </span>
+      <span class="event-link-gallery-directory__chevron" aria-hidden="true">
+        <Icon name="navArrowDown" size={22} />
+      </span>
+    </summary>
+    {
+      hasEditions ? (
         <ul class="event-link-gallery-directory__list">
           {rows.map((edition) => (
             <li>
@@ -67,17 +67,9 @@ const rows = directory.editions.map((edition) => ({
             </li>
           ))}
         </ul>
-      </details>
-    ) : (
-      <div class="event-link-gallery-directory__empty-card event-link-gallery-directory__card">
-        <span class="event-link-gallery-directory__icon" aria-hidden="true">
-          <Icon name="mediaImage" size={22} />
-        </span>
-        <span class="event-link-gallery-directory__summary-copy">
-          <strong>{directory.directoryLabel}</strong>
-          <span>{directory.statusLabel}</span>
-        </span>
-      </div>
-    )
-  }
+      ) : (
+        <p class="event-link-gallery-directory__empty">{directory.emptyLabel}</p>
+      )
+    }
+  </details>
 </section>

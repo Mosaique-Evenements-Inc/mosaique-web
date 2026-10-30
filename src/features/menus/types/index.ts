@@ -46,6 +46,11 @@ export interface MenuProvider {
   slug: string;
   config: MenuThemeConfig;
   eventConfig?: MenuThemeConfig;
+  relatedEvent?: {
+    name: string;
+    href: string;
+    logoAssetId: MenuLogoAssetId;
+  };
   socialLinks?: readonly MenuSocialLink[];
   menu: {
     sections: readonly MenuSectionRecord[];

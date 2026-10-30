@@ -29,6 +29,7 @@ function formatUpcomingDateTime(locale: Locale, date: string, startTime: string)
     timeLabel: new Intl.DateTimeFormat(languageTag, {
       hour: "numeric",
       minute: "2-digit",
+      ...(locale === "es" && { hour12: true }),
       timeZone: "UTC",
     }).format(timeValue),
   };
@@ -63,10 +64,8 @@ export function getEventLinkGalleryDirectory(
   return {
     sectionLabel: translation.labels.photoGallery,
     directoryLabel: translation.labels.photoGallery,
-    statusLabel:
-      editions.length === 0
-        ? translation.labels.galleryEmpty
-        : `${editions.length} ${countLabel}`,
+    statusLabel: `${editions.length} ${countLabel}`,
+    emptyLabel: translation.labels.galleryEmpty,
     opensNewTab: translation.labels.opensNewTab,
     editions: editions.map((edition) => {
       const localized = translation.pastEditions[edition.id];
@@ -124,7 +123,7 @@ export function getLocalizedAmanteOAmigoEventLink(
   const upcoming: EventLinkUpcomingView = {
     categoryLabel: copy.labels.upcomingEvent,
     title: event.title,
-    description: eventCopy.description,
+    description: copy.slogan,
     date: edition.date,
     startTime: edition.startTime,
     ...formatUpcomingDateTime(locale, edition.date, edition.startTime),
