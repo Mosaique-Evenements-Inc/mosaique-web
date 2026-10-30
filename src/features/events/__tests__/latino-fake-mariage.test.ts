@@ -6,7 +6,7 @@ const distUrl = new URL("../../../../dist/", import.meta.url);
 
 const readPage = (path: string) => readFile(new URL(path, distUrl), "utf8");
 
-test("Latino Fake Mariage follows AOA in Home and has a dedicated placeholder gallery in every locale", async () => {
+test("Latino Fake Mariage follows AOA in Home and shows its supplied photography in every locale", async () => {
   const descriptions = {
     "": "An immersive experience that recreates a wedding, where attendees take part as guests while enjoying a staged production, music, food, and dancing.",
     "es/":
@@ -25,10 +25,9 @@ test("Latino Fake Mariage follows AOA in Home and has a dedicated placeholder ga
       latinoPosition > aoaPosition,
       `${prefix} Home must show Latino Fake Mariage second`,
     );
-    assert.match(
-      home.slice(latinoPosition, home.indexOf("</li>", latinoPosition)),
-      /data-media-status="pending"/,
-    );
+    const latinoCard = home.slice(latinoPosition, home.indexOf("</li>", latinoPosition));
+    assert.match(latinoCard, /data-media-status="approved"/);
+    assert.match(latinoCard, /DSC_portada\./);
     assert.ok(home.includes(description), `${prefix} Home is missing localized event copy`);
     assert.match(home.slice(aoaPosition, latinoPosition), /data-media-status="approved"/);
     assert.match(
@@ -39,9 +38,17 @@ test("Latino Fake Mariage follows AOA in Home and has a dedicated placeholder ga
     const detail = await readPage(`${prefix}events/latino-fake-mariage/index.html`);
     assert.match(detail, /<h1[^>]*>Latino Fake Mariage<\/h1>/);
     assert.ok(detail.includes(description), `${prefix} detail is missing localized event copy`);
-    assert.match(detail, /<meta name="robots" content="noindex, nofollow"/);
-    assert.match(detail, /data-kind="pending"/);
-    assert.equal((detail.match(/data-event-lightbox-trigger=/g) ?? []).length, 2);
+    assert.match(detail, /<meta name="robots" content="index, follow"/);
+    assert.match(detail, /data-kind="image"/);
+    assert.match(
+      detail.match(/<figure class="event-featured-media"[\s\S]*?<\/figure>/)?.[0] ?? "",
+      /DSC_portada\./,
+    );
+    assert.match(detail, /DSC_3941\./);
+    assert.match(detail, /LFM-\./);
+    assert.match(detail, /LFMDSC00525\./);
+    assert.equal((detail.match(/data-event-lightbox-trigger=/g) ?? []).length, 10);
+    assert.equal((detail.match(/<picture>/g) ?? []).length > 10, true);
     assert.doesNotMatch(detail, /jasspass\.com/);
   }
 });

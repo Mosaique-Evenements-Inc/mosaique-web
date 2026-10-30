@@ -29,6 +29,7 @@ This document is the source of truth for implementation status. The existence of
 - Standard textual CTAs now render through one `Button.tsx` primitive with two inverse capsule variants and one transform-based vertical fill interaction: transparent to light, and light to transparent. Hero, Services, Final CTA, the quote form, and venue-dialog actions preserve their existing destinations, handlers, data attributes, disabled behavior, and contextual sizing. CTA labels use the display family; icon-only and low-chrome controls preserve their established contracts.
 - **Button glyph clipping fixed locally.** The filled label's `clip-path: inset(0)` previously clipped font ink outside its `line-height: 1` box. The shared `action-button.css` now gives only that masked layer a `0.25em` paint allowance with compensating negative margins, preserving button/text geometry, wrapping, typography, and transition duration/easing. Chromium before/after checks on venue-partnership and logistics CTAs passed at 320, 390, 430, 768, and 1280px in ES/EN/FR (30 cases): glyph pixels match an unclipped reference, with unchanged layout and no page overflow. Multiline P/p/Q/q/g/j/y, accents, both variants, hover/focus, hidden masks, and runtime reduced motion also passed. Native iOS Safari remains unverified. Scoped Prettier, build, lint, typecheck, and diff-check passed; no test script, dependency, commit, or push was added.
 - **Theme-aware Service and Gallery button interactions refined locally.** Service Detail header CTAs now map the existing filled wipe to semantic page foreground/background roles, producing a Black default with an Ivory interaction in Light while retaining the inverse Dark treatment. Gallery category filters use the same adaptive roles so Dark interactions reveal Ivory instead of Black. Hover, focus-visible, and press reuse the existing wipe and keep the 1 px stroke and control geometry unchanged. Chromium checks passed for two Service routes and Gallery in both themes, reduced motion, and 390, 430, 768, 1024, 1280, and 1600 px viewports without horizontal overflow.
+- **Service Detail CTA color regression corrected locally.** The Service header selector now takes precedence over the shared button defaults in the production CSS cascade, restoring the filled button and its hover/focus wipe in both themes without changing its link or dimensions.
 - CSS and TypeScript runtime motion tokens are documented and synchronized.
 - UI primitives exist for Button, Container, Grid, Heading, Media, Section, Stack, and Text.
 - Iconoir is the shared interface-icon source for navigation, disclosures, directional controls, quote-flow states, editorial actions, and the four-icon “¿Por qué elegir MOSAÏQUE?” proof band; decorative media geometry and required-field marks remain outside that icon contract.
@@ -153,13 +154,16 @@ This document is the source of truth for implementation status. The existence of
 ### Projects / Experiences
 
 - **Implementation: complete for approved content.** The section presents a data-driven carousel of canonical Events through `getLocalizedEventGalleryItems`.
-- Seven approved records and one pending-media Latino Fake Mariage record share the typed `eventDetails` source with Gallery Archive and Event Detail. Clients, venues, and dates are not invented.
-- **🟡 Latino Fake Mariage added locally after Amante o Amigo.** Its approved title, dedicated
-  Event Detail route, Home card, and Gallery Archive row use one canonical record. The cover and
-  two gallery slots are temporary image placeholders; the incomplete detail routes are `noindex`.
-  The user limited this event to Mosaïque Web, so AOA Event Link remains unchanged. The approved
-  Spanish description and localized EN/FR versions now render in Home and Event Detail; approved
-  photography remains pending, so visual fidelity awaits those assets.
+- Eight approved records share the typed `eventDetails` source with Gallery Archive and Event Detail. Clients, venues, and dates are not invented.
+- **🟢 Latino Fake Mariage added locally after Amante o Amigo with supplied photography.** Its
+  title, Event Detail route, Home card, and Gallery Archive row use one canonical record. The
+  user-selected `DSC_portada.jpg` serves as the cover and the remaining ten form the gallery;
+  the completed detail routes are indexable. The user limited this event to Mosaïque Web, so
+  AOA Event Link remains unchanged. The approved Spanish description and localized EN/FR
+  versions render in Home and Event Detail. The new set includes `DSC_3941.jpg` and `LFM-.jpg`
+  in the gallery. The cover crop was reviewed in Home and Event Detail at desktop and mobile;
+  tablet and narrow-mobile geometry have no horizontal overflow, all ten gallery controls render,
+  the final photograph opens in the lightbox, and the browser console is clear.
 - **Fidelity Pass: complete.** The Movra editorial split, divider, typography, portrait media, and desktop controls remain unchanged; responsive controls were aligned with the CTA row against the supplied mobile reference.
 - The desktop carousel uses native horizontal scrolling, scroll snap, touch/keyboard scrolling, and accessible previous/next controls. Arrow navigation advances in derived two-event pages (`1–2`, `3–4`, `5–6`, `7–8`) without an isolated final card; the live status announces the first event in the visible pair with the current eight-event total.
 - Tablet and mobile use the same data-driven carousel in a single-event mode: one complete event card is visible at a time, navigation advances by one, and the finite previous/next controls share the CTA row above the active card. Mobile keeps the full-width editorial heading clear of the navigation and uses one tokenized grid gap between that control row and the media; tablet retains its wider spacing. Approved featured photography is delivered through the shared Astro responsive-image contract.
@@ -181,7 +185,7 @@ This document is the source of truth for implementation status. The existence of
 
 ### Event Detail
 
-- **Implementation: complete for the approved event copy and supplied photography.** One Astro dynamic route at `/events/[slug]` composes the existing Navigation and Footer around an editorial event header, a data-driven gallery, and a reusable native-dialog lightbox. Approved records and the explicitly pending Latino Fake Mariage record link to generated detail routes without duplicating page templates.
+- **Implementation: complete for the approved event copy and supplied photography.** One Astro dynamic route at `/events/[slug]` composes the existing Navigation and Footer around an editorial event header, a data-driven gallery, and a reusable native-dialog lightbox. Approved records, including Latino Fake Mariage, link to generated detail routes without duplicating page templates.
 - Event detail content is derived from the same typed event collection and adds only a slug, title, description, featured image, and curated gallery. No client, venue, date, location, or other unverified business metadata was introduced; the category used by `/gallery` remains in the shared source record and is not rendered as extra detail metadata.
 - The gallery remains server-rendered Astro and follows the approved strict editorial composition: a constrained three-column 2:3 grid with a hairline gap on desktop, two columns on tablet, and one full-width column on mobile. Gallery crops use `object-fit: cover`; the lightbox preserves each complete asset without squashing. Approved local images use Astro Assets with responsive widths, sizes, intrinsic metadata, and selective loading priority; no gallery dependency or additional React island was introduced.
 - **Baseline implementation retained; David Tutera reference-fidelity program complete.** The dynamic Astro route at `/events/[slug]`, its six stable Project / Experience records, Navigation, Footer, and typed media contract remain the foundation rather than being rebuilt.
@@ -1031,6 +1035,8 @@ This document is the source of truth for implementation status. The existence of
 - Service CTAs encode the handoff as `/contact?service={service.slug}`. Contact consumes only
   valid service slugs and leaves the default option selected for absent, empty, or invalid
   parameters.
+- The closing Service Detail contact marquee now uses that same service-specific handoff as
+  the header CTA, so either action preselects the current service in the Contact form.
 - **Responsibility 2 — Service Detail Domain + Route: complete locally.** The independent
   `src/pages/services/[slug].astro` route resolves services by slug, uses the shared BaseLayout,
   Navigation, Footer, Heading, Text, and Button primitives, and renders a dedicated

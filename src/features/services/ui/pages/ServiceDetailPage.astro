@@ -37,7 +37,7 @@ const localizedService = getLocalizedService(service, getLocaleFromUrl(Astro.url
       />
     </div>
     <ServiceRelatedEvents events={relatedEvents} />
-    <ServiceContactMarquee />
+    <ServiceContactMarquee service={localizedService} />
   </main>
   <Footer anchorPrefix="/" />
 </BaseLayout>
