@@ -54,9 +54,7 @@ export function getEventLinkGalleryDirectory(
   locale: Locale,
   editions: readonly EventLinkPastEdition[],
   translation: Pick<EventLinkTranslation, "labels" | "pastEditions">,
-): EventLinkGalleryDirectoryView | null {
-  if (editions.length === 0) return null;
-
+): EventLinkGalleryDirectoryView {
   const countLabel =
     editions.length === 1
       ? translation.labels.galleryAvailableSingular
@@ -64,8 +62,11 @@ export function getEventLinkGalleryDirectory(
 
   return {
     sectionLabel: translation.labels.photoGallery,
-    directoryLabel: translation.labels.pastEditions,
-    availableCount: `${editions.length} ${countLabel}`,
+    directoryLabel: translation.labels.photoGallery,
+    statusLabel:
+      editions.length === 0
+        ? translation.labels.galleryEmpty
+        : `${editions.length} ${countLabel}`,
     opensNewTab: translation.labels.opensNewTab,
     editions: editions.map((edition) => {
       const localized = translation.pastEditions[edition.id];

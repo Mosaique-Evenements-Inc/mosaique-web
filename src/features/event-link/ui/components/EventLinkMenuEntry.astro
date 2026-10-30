@@ -11,7 +11,9 @@ const { href, label, accessibleName } = Astro.props;
 ---
 
 <a class="event-link-menu-entry" {href} aria-label={accessibleName}>
-  <span class="event-link-menu-entry__icon"><Icon name="menu" size={24} /></span>
+  <span class="event-link-menu-entry__icon" aria-hidden="true">
+    <Icon name="cutlery" size={22} />
+  </span>
   <span class="event-link-menu-entry__label">{label}</span>
   <span class="event-link-menu-entry__arrow"><Icon name="arrowRight" size={20} /></span>
 </a>

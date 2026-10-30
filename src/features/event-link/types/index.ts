@@ -12,6 +12,7 @@ export interface SharePayload {
 }
 
 export interface ShareActionLabels {
+  dialogTitle: string;
   close: string;
   copy: string;
   copied: string;
@@ -71,7 +72,7 @@ export interface EventLinkPastEdition {
 export interface EventLinkGalleryDirectoryView {
   sectionLabel: string;
   directoryLabel: string;
-  availableCount: string;
+  statusLabel: string;
   opensNewTab: string;
   editions: readonly {
     id: string;
@@ -132,16 +133,24 @@ export interface EventLinkTranslation {
   labels: {
     languages: string;
     opensNewTab: string;
+    eventsHeading: string;
+    socialEvents: string;
+    eventAvailableSingular: string;
+    eventAvailablePlural: string;
+    eventShare: string;
     upcomingEvent: string;
     photoGallery: string;
     pastEditions: string;
     galleryAvailableSingular: string;
     galleryAvailablePlural: string;
+    galleryEmpty: string;
     socialMedia: string;
+    menuHeading: string;
     menuAction: string;
     ticketAction: string;
     upcomingShare: string;
     landingShare: string;
+    shareDialogTitle: string;
     copyLink: string;
     copied: string;
     copyError: string;

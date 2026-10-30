@@ -25,8 +25,11 @@ const platformPresentation: Record<EventLinkSocialPlatform, { label: string; ico
 
 {
   socials.length > 0 && (
-    <section class="event-link-socials" aria-labelledby="event-link-socials-title">
-      <h2 id="event-link-socials-title" class="event-link-socials__title">
+    <section
+      class="event-link-section event-link-socials"
+      aria-labelledby="event-link-socials-title"
+    >
+      <h2 id="event-link-socials-title" class="event-link-section-heading">
         {label}
       </h2>
       <ul class="event-link-socials__list">

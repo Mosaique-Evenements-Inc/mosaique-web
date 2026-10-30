@@ -1,4 +1,5 @@
 ---
+import Icon from "@/core/common/ui/components/Icon.astro";
 import { getLocaleFromUrl, getLocalizedPath } from "@/core/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { eventLinkLogoAssets } from "../../data/logo-assets";
@@ -32,6 +33,7 @@ const {
   producer,
 } = content;
 const logo = eventLinkLogoAssets[config.brand.logoAssetId];
+const availableEventCount = [upcoming].length;
 const locale = getLocaleFromUrl(Astro.url);
 const landingPath = getLocalizedPath(event.slug, locale);
 const landingPayload = {
@@ -40,6 +42,7 @@ const landingPayload = {
   url: Astro.site ? new URL(landingPath, Astro.site).href : landingPath,
 };
 const shareLabels = {
+  dialogTitle: copy.labels.shareDialogTitle,
   close: copy.labels.closeShare,
   copy: copy.labels.copyLink,
   copied: copy.labels.copied,
@@ -61,7 +64,11 @@ const visualStyle = {
 
 <BaseLayout title={event.title} description={copy.landingDescription}>
   <main class="event-link-page" id="main-content" tabindex="-1" style={visualStyle}>
-    <div class="event-link-page__atmosphere" aria-hidden="true"></div>
+    <div class="event-link-page__atmosphere" aria-hidden="true">
+      <span class="event-link-page__stamp event-link-page__stamp--first"></span>
+      <span class="event-link-page__stamp event-link-page__stamp--second"></span>
+      <span class="event-link-page__stamp event-link-page__stamp--third"></span>
+    </div>
     <div class="event-link-page__composition">
       <EventLinkLanguageSwitcher
         {locale}
@@ -80,24 +87,66 @@ const visualStyle = {
             payload={landingPayload}
             triggerLabel={copy.labels.landingShare}
             labels={shareLabels}
+            preview={{ logo, title: event.title, subtitle: copy.slogan }}
+            iconOnly
           />
         </EventLinkBrand>
-        <EventLinkUpcomingEvent
-          event={upcoming}
-          sharePayload={sharePayloads.event}
-          shareLabel={copy.labels.upcomingShare}
-          shareLabels={shareLabels}
-        />
-        <EventLinkMenuEntry {...menuEntry} />
-        <EventLinkSocialLinks
-          {socials}
-          label={copy.labels.socialMedia}
-          opensNewTab={copy.labels.opensNewTab}
-        />
+        <section
+          class="event-link-section event-link-events"
+          aria-labelledby="event-link-events-title"
+        >
+          <h2 id="event-link-events-title" class="event-link-section-heading">
+            {copy.labels.eventsHeading}
+          </h2>
+          <details class="event-link-events__category" open>
+            <summary>
+              <span class="event-link-events__icon" aria-hidden="true">
+                <Icon name="calendar" size={22} />
+              </span>
+              <span class="event-link-events__summary-copy">
+                <strong>{copy.labels.socialEvents}</strong>
+                <span>
+                  {availableEventCount}{" "}
+                  {
+                    availableEventCount === 1
+                      ? copy.labels.eventAvailableSingular
+                      : copy.labels.eventAvailablePlural
+                  }
+                </span>
+              </span>
+              <span class="event-link-events__chevron" aria-hidden="true">
+                <Icon name="navArrowDown" size={22} />
+              </span>
+            </summary>
+            <div class="event-link-events__list">
+              <EventLinkUpcomingEvent
+                event={upcoming}
+                sharePayload={sharePayloads.event}
+                shareLabel={copy.labels.eventShare}
+                shareLabels={shareLabels}
+                {logo}
+              />
+            </div>
+          </details>
+        </section>
+        <section
+          class="event-link-section event-link-menu"
+          aria-labelledby="event-link-menu-title"
+        >
+          <h2 id="event-link-menu-title" class="event-link-section-heading">
+            {copy.labels.menuHeading}
+          </h2>
+          <EventLinkMenuEntry {...menuEntry} />
+        </section>
         <EventLinkGalleryDirectory
           directory={galleryDirectory}
           instanceId="event-link-gallery-directory"
           {locale}
+        />
+        <EventLinkSocialLinks
+          {socials}
+          label={copy.labels.socialMedia}
+          opensNewTab={copy.labels.opensNewTab}
         />
         <EventLinkProducedBy {producer} {locale} />
       </div>

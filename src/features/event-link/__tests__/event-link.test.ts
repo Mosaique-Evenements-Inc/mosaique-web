@@ -166,16 +166,22 @@ test("share providers encode approved Unicode text and preserve each payload URL
   );
 });
 
-test("gallery directory stays absent with no approved AOA editions", () => {
+test("gallery directory exposes an honest empty state with no approved AOA editions", () => {
   for (const locale of supportedLocales) {
     const content = getLocalizedAmanteOAmigoEventLink(locale, [canonicalEvent]);
     assert.deepEqual(content.config.pastEditions, []);
-    assert.equal(content.galleryDirectory, null);
-    assert.equal(getEventLinkGalleryDirectory(locale, [], content.copy), null);
+    assert.deepEqual(content.galleryDirectory.editions, []);
+    assert.equal(content.galleryDirectory.sectionLabel, content.copy.labels.photoGallery);
+    assert.equal(content.galleryDirectory.directoryLabel, content.copy.labels.photoGallery);
+    assert.equal(content.galleryDirectory.statusLabel, content.copy.labels.galleryEmpty);
+    assert.deepEqual(
+      getEventLinkGalleryDirectory(locale, [], content.copy),
+      content.galleryDirectory,
+    );
   }
 });
 
-test("gallery directory prepares one and three test-only editions without image data", () => {
+test("gallery directory prepares singular and plural counts without image data", () => {
   const fixtures = [
     {
       id: "edition-test-01",
@@ -193,9 +199,9 @@ test("gallery directory prepares one and three test-only editions without image 
     },
   ] as const;
   const galleryCounts = {
-    en: ["1 gallery available", "3 galleries available"],
-    es: ["1 galería disponible", "3 galerías disponibles"],
-    fr: ["1 galerie disponible", "3 galeries disponibles"],
+    en: ["1 gallery available", "2 galleries available", "3 galleries available"],
+    es: ["1 galería disponible", "2 galerías disponibles", "3 galerías disponibles"],
+    fr: ["1 galerie disponible", "2 galeries disponibles", "3 galeries disponibles"],
   } as const;
 
   for (const locale of supportedLocales) {
@@ -208,13 +214,16 @@ test("gallery directory prepares one and three test-only editions without image 
       },
     };
     const one = getEventLinkGalleryDirectory(locale, fixtures.slice(0, 1), copy);
+    const two = getEventLinkGalleryDirectory(locale, fixtures.slice(0, 2), copy);
     const three = getEventLinkGalleryDirectory(locale, fixtures, copy);
     assert.ok(one);
+    assert.ok(two);
     assert.ok(three);
     assert.equal(one.sectionLabel, copy.labels.photoGallery);
-    assert.equal(one.directoryLabel, copy.labels.pastEditions);
-    assert.equal(one.availableCount, galleryCounts[locale][0]);
-    assert.equal(three.availableCount, galleryCounts[locale][1]);
+    assert.equal(one.directoryLabel, copy.labels.photoGallery);
+    assert.equal(one.statusLabel, galleryCounts[locale][0]);
+    assert.equal(two.statusLabel, galleryCounts[locale][1]);
+    assert.equal(three.statusLabel, galleryCounts[locale][2]);
     assert.deepEqual(
       three.editions.map(({ id, galleryUrl }) => ({ id, galleryUrl })),
       fixtures.map(({ id, galleryUrl }) => ({ id, galleryUrl })),
@@ -280,13 +289,46 @@ test("the three localized Event Link pages render the shell and inherited SEO me
     assert.equal([...html.matchAll(/<h1\b/g)].length, 1);
     assert.ok(!html.includes("<astro-island"));
 
-    const upcoming = html.match(/<section class="event-link-upcoming"[\s\S]*?<\/section>/)?.[0];
-    assert.ok(upcoming, `${path}: missing upcoming event card`);
+    const eventsSection = html.match(
+      /<section class="event-link-section event-link-events"[\s\S]*?<\/section>/,
+    )?.[0];
+    assert.ok(eventsSection, `${path}: missing events section`);
+    assert.ok(
+      eventsSection.includes(
+        `<h2 id="event-link-events-title" class="event-link-section-heading">${copy.labels.eventsHeading}</h2>`,
+      ),
+    );
+    assert.match(eventsSection, /<details class="event-link-events__category" open>/);
+    assert.ok(eventsSection.includes(`>${copy.labels.socialEvents}</strong>`));
+    assert.ok(eventsSection.includes(`1 ${copy.labels.eventAvailableSingular}`));
+    const categorySummary = eventsSection.match(
+      /<details class="event-link-events__category" open><summary>[\s\S]*?<\/summary>/,
+    )?.[0];
+    assert.ok(categorySummary);
+    assert.match(categorySummary, /class="event-link-events__icon"[^>]*><svg\b/);
+    assert.doesNotMatch(categorySummary, /<img\b/);
+    const upcoming = eventsSection.match(
+      /<details class="event-link-upcoming">[\s\S]*?<\/details>/,
+    )?.[0];
+    assert.ok(upcoming, `${path}: missing compact event disclosure`);
+    assert.match(upcoming, /<summary class="event-link-upcoming__summary">/);
+    const eventSummary = upcoming.match(
+      /<summary class="event-link-upcoming__summary">[\s\S]*?<\/summary>/,
+    )?.[0];
+    assert.ok(eventSummary);
+    assert.match(eventSummary, /class="event-link-upcoming__logo" aria-hidden="true"/);
+    assert.match(eventSummary, /<img\b[^>]*aoa_logo[^>]*\balt(?:="")?(?:\s|>)/);
+    assert.ok(upcoming.includes(`<strong>${canonicalEvent.title}</strong>`));
+    assert.ok(upcoming.includes(dateLabel));
+    assert.ok(upcoming.includes(timeLabel));
+    assert.ok(upcoming.includes("Lola Bar"));
+    assert.ok(
+      upcoming.indexOf("event-link-upcoming__summary") <
+        upcoming.indexOf("event-link-upcoming__visual"),
+    );
     assert.ok(upcoming.includes(`>${copy.labels.upcomingEvent}</p>`));
     assert.ok(
-      upcoming.includes(
-        `<h2 id="event-link-upcoming-title" class="event-link-upcoming__title">${canonicalEvent.title}</h2>`,
-      ),
+      upcoming.includes(`<h3 class="event-link-upcoming__title">${canonicalEvent.title}</h3>`),
     );
     assert.ok(
       upcoming.includes(eventTranslations[activeLocale][canonicalEvent.id].description),
@@ -311,10 +353,17 @@ test("the three localized Event Link pages render the shell and inherited SEO me
     );
     assert.ok(upcoming.includes(copy.labels.ticketAction));
     assert.ok(upcoming.includes(copy.labels.opensNewTab));
+    assert.match(
+      upcoming,
+      /<div class="event-link-upcoming__actions">[\s\S]*?class="event-link-upcoming__ticket"[\s\S]*?class="event-link-share event-link-share--icon-only"/,
+    );
+    assert.ok(upcoming.includes(`class="visually-hidden">${copy.labels.eventShare}</span>`));
     assert.doesNotMatch(upcoming, /instagram|sponsor|menu/i);
 
     const shareRoots = [
-      ...html.matchAll(/<div class="event-link-share"[\s\S]*?<\/dialog><\/div>/g),
+      ...html.matchAll(
+        /<div class="event-link-share event-link-share--icon-only"[\s\S]*?<\/dialog><\/div>/g,
+      ),
     ].map(([root]) => root);
     assert.equal(shareRoots.length, 2);
     const [globalShare, eventShare] = shareRoots;
@@ -328,11 +377,30 @@ test("the three localized Event Link pages render the shell and inherited SEO me
       assert.match(root, /<button type="button" class="event-link-share__trigger"/);
       assert.match(root, /<button type="button" class="event-link-share__close"/);
       assert.match(root, /<button type="button" class="event-link-share__copy"/);
+      assert.ok(root.includes(`>${copy.labels.shareDialogTitle}</h2>`));
+      assert.ok(root.includes(`>${copy.labels.shareVia}</p>`));
+      assert.match(root, /<img[^>]*alt(?:\s|=)[^>]*class="event-link-share__preview-logo"/);
+      assert.ok(
+        root.includes(
+          `<strong class="event-link-share__preview-title">${canonicalEvent.title}</strong>`,
+        ),
+      );
+      assert.equal([...root.matchAll(/class="event-link-share__provider-icon"/g)].length, 6);
       assert.equal([...root.matchAll(/data-share-provider=/g)].length, 5);
       assert.match(root, /<li hidden data-share-native-option>/);
     }
     assert.ok(html.indexOf(globalShare) < html.indexOf(upcoming));
+    assert.ok(html.indexOf(globalShare) < html.indexOf(eventsSection));
+    assert.ok(
+      globalShare.includes(`class="visually-hidden">${copy.labels.landingShare}</span>`),
+    );
     assert.ok(upcoming.includes(eventShare));
+    assert.ok(eventShare.includes(dateLabel));
+    assert.ok(eventShare.includes(timeLabel));
+    assert.ok(eventShare.includes("Lola Bar · Montréal"));
+    assert.ok(eventShare.includes(copy.labels.ticketAction));
+    assert.ok(eventShare.includes("www.jasspass.com/event/amante-o-amigo"));
+    assert.doesNotMatch(globalShare, /Lola Bar|jasspass|event-link-share__preview-details/i);
     const parsePayload = (root: string) =>
       JSON.parse(
         root
@@ -364,14 +432,47 @@ test("the three localized Event Link pages render the shell and inherited SEO me
     assert.doesNotMatch(menuEntry, /target=|role=|onclick=|aria-disabled=/);
     assert.ok(menuEntry.includes('aria-hidden="true"'));
     assert.ok(html.indexOf(menuEntry) > html.indexOf(upcoming));
+    const menuSection = html.match(
+      /<section class="event-link-section event-link-menu"[\s\S]*?<\/section>/,
+    )?.[0];
+    assert.ok(menuSection, `${path}: missing menu section`);
+    assert.ok(
+      menuSection.includes(
+        `<h2 id="event-link-menu-title" class="event-link-section-heading">${copy.labels.menuHeading}</h2>`,
+      ),
+    );
+    assert.ok(menuSection.includes(menuEntry));
+    assert.match(
+      menuEntry,
+      /class="event-link-menu-entry__icon" aria-hidden="true"[^>]*><svg\b/,
+    );
+
+    const gallerySection = html.match(
+      /<section class="event-link-section event-link-gallery-directory"[\s\S]*?<\/section>/,
+    )?.[0];
+    assert.ok(gallerySection, `${path}: missing empty gallery section`);
+    assert.ok(
+      gallerySection.includes(
+        `<h2 id="event-link-gallery-directory-title" class="event-link-section-heading">${copy.labels.photoGallery}</h2>`,
+      ),
+    );
+    assert.ok(gallerySection.includes(`<strong>${copy.labels.photoGallery}</strong>`));
+    assert.ok(gallerySection.includes(copy.labels.galleryEmpty));
+    assert.match(
+      gallerySection,
+      /class="event-link-gallery-directory__empty-card event-link-gallery-directory__card"/,
+    );
+    assert.doesNotMatch(gallerySection, /<details\b|<summary\b|<a\b|<button\b|edition-test-0/);
+    assert.ok(html.indexOf(eventsSection) < html.indexOf(menuSection));
+    assert.ok(html.indexOf(menuSection) < html.indexOf(gallerySection));
 
     const socialSection = html.match(
-      /<section class="event-link-socials"[\s\S]*?<\/section>/,
+      /<section class="event-link-section event-link-socials"[\s\S]*?<\/section>/,
     )?.[0];
     assert.ok(socialSection, `${path}: missing social section`);
     assert.ok(
       socialSection.includes(
-        `<h2 id="event-link-socials-title" class="event-link-socials__title">${copy.labels.socialMedia}</h2>`,
+        `<h2 id="event-link-socials-title" class="event-link-section-heading">${copy.labels.socialMedia}</h2>`,
       ),
     );
     assert.equal([...socialSection.matchAll(/<a\b/g)].length, 1);
@@ -387,7 +488,7 @@ test("the three localized Event Link pages render the shell and inherited SEO me
       socialSection,
       /vrfl|utm_source|tiktok|facebook|youtube|<button\b|role="button"/i,
     );
-    assert.ok(html.indexOf(socialSection) > html.indexOf(menuEntry));
+    assert.ok(html.indexOf(socialSection) > html.indexOf(gallerySection));
 
     const producerBlock = html.match(
       /<footer class="event-link-produced-by">[\s\S]*?<\/footer>/,
@@ -425,12 +526,9 @@ test("the three localized Event Link pages render the shell and inherited SEO me
 
     const main = html.match(/<main\b[\s\S]*?<\/main>/)?.[0];
     assert.ok(main);
-    assert.doesNotMatch(main, /event-link-(?:gallery|sponsor)/);
-    assert.doesNotMatch(main, /<details\b/);
-    assert.doesNotMatch(
-      html,
-      /Photo gallery|Galería de fotos|Galerie photos|gallery available|galería disponible|galerie disponible|Test Edition|edition-test-0/,
-    );
+    assert.doesNotMatch(main, /event-link-sponsor/);
+    assert.equal([...main.matchAll(/<details\b/g)].length, 2);
+    assert.doesNotMatch(html, /Test Edition|edition-test-0/);
 
     const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
     assert.ok(canonical);
@@ -470,6 +568,5 @@ test("empty AOA sponsors produce no visible, accessible, or SEO markup in any lo
     );
     assert.doesNotMatch(html, /"sponsor"\s*:|"@type"\s*:\s*"Sponsor"|sponsor-test-/i);
     assert.equal([...main.matchAll(/<footer class="event-link-produced-by">/g)].length, 1);
-    assert.doesNotMatch(main, /event-link-gallery-directory/);
   }
 });

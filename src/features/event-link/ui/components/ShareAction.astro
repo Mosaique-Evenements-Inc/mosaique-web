@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import Icon, { type IconName } from "@/core/common/ui/components/Icon.astro";
 import type { ShareActionLabels, SharePayload } from "../../types/index.ts";
 import type { ShareProvider } from "../share/share-action.ts";
@@ -8,9 +10,24 @@ interface Props {
   payload: SharePayload;
   triggerLabel: string;
   labels: ShareActionLabels;
+  preview: {
+    logo: ImageMetadata;
+    title: string;
+    subtitle?: string;
+    category?: string;
+    dateLabel?: string;
+    timeLabel?: string;
+    venue?: string;
+    city?: string;
+    destinationLabel?: string;
+  };
+  iconOnly?: boolean;
 }
 
-const { instanceId, payload, triggerLabel, labels } = Astro.props;
+const { instanceId, payload, triggerLabel, labels, preview, iconOnly = false } = Astro.props;
+const destination = payload.url.startsWith("/")
+  ? payload.url
+  : `${new URL(payload.url).host}${new URL(payload.url).pathname}`;
 const providers: readonly { id: ShareProvider; label: string; icon: IconName }[] = [
   { id: "x", label: "X", icon: "x" },
   { id: "facebook", label: "Facebook", icon: "facebook" },
@@ -21,7 +38,7 @@ const providers: readonly { id: ShareProvider; label: string; icon: IconName }[]
 ---
 
 <div
-  class="event-link-share"
+  class:list={["event-link-share", { "event-link-share--icon-only": iconOnly }]}
   data-event-link-share
   data-payload={JSON.stringify(payload)}
   data-copy-error={labels.copyError}
@@ -35,7 +52,7 @@ const providers: readonly { id: ShareProvider; label: string; icon: IconName }[]
     data-share-trigger
   >
     <Icon name="shareIos" size={19} />
-    <span>{triggerLabel}</span>
+    <span class:list={{ "visually-hidden": iconOnly }}>{triggerLabel}</span>
   </button>
 
   <dialog
@@ -47,17 +64,67 @@ const providers: readonly { id: ShareProvider; label: string; icon: IconName }[]
   >
     <div class="event-link-share__surface">
       <header class="event-link-share__header">
-        <h2 id={`${instanceId}-title`}>{triggerLabel}</h2>
+        <h2 id={`${instanceId}-title`}>{labels.dialogTitle}</h2>
         <button
           type="button"
           class="event-link-share__close"
           aria-label={labels.close}
           data-share-close
         >
-          <Icon name="xmark" size={22} />
+          <Icon name="xmark" size={18} />
         </button>
       </header>
-      <p class="event-link-share__preview">{payload.title}<span>{payload.text}</span></p>
+      <div class="event-link-share__preview">
+        <Image
+          class="event-link-share__preview-logo"
+          src={preview.logo}
+          alt=""
+          width={preview.logo.width}
+          height={preview.logo.height}
+          loading="lazy"
+        />
+        {
+          preview.category && (
+            <p class="event-link-share__preview-category">{preview.category}</p>
+          )
+        }
+        <strong class="event-link-share__preview-title">{preview.title}</strong>
+        {
+          preview.subtitle && (
+            <p class="event-link-share__preview-subtitle">{preview.subtitle}</p>
+          )
+        }
+        {
+          (preview.dateLabel || preview.venue) && (
+            <div class="event-link-share__preview-details">
+              {preview.dateLabel && (
+                <p>
+                  <Icon name="calendar" size={16} />
+                  <span>
+                    {preview.dateLabel}
+                    {preview.timeLabel && ` · ${preview.timeLabel}`}
+                  </span>
+                </p>
+              )}
+              {preview.venue && (
+                <p>
+                  <Icon name="mapPin" size={16} />
+                  <span>
+                    {preview.venue}
+                    {preview.city && ` · ${preview.city}`}
+                  </span>
+                </p>
+              )}
+            </div>
+          )
+        }
+        <div class="event-link-share__preview-destination">
+          {preview.destinationLabel && <span>{preview.destinationLabel}</span>}
+          <span class="event-link-share__preview-url"
+            ><Icon name="globe" size={15} />{destination}</span
+          >
+        </div>
+      </div>
       <button type="button" class="event-link-share__copy" data-share-copy>
         <Icon name="copy" size={19} />
         <span>{labels.copy}</span>
@@ -80,7 +147,9 @@ const providers: readonly { id: ShareProvider; label: string; icon: IconName }[]
                   target={provider.id === "email" ? undefined : "_blank"}
                   rel={provider.id === "email" ? undefined : "noopener noreferrer"}
                 >
-                  <Icon name={provider.icon} size={22} />
+                  <span class="event-link-share__provider-icon" aria-hidden="true">
+                    <Icon name={provider.icon} size={22} />
+                  </span>
                   <span>{provider.label}</span>
                   {provider.id !== "email" && (
                     <span class="visually-hidden"> ({labels.opensNewTab})</span>
@@ -91,7 +160,9 @@ const providers: readonly { id: ShareProvider; label: string; icon: IconName }[]
           }
           <li hidden data-share-native-option>
             <button type="button" data-share-native>
-              <Icon name="moreHoriz" size={22} />
+              <span class="event-link-share__provider-icon" aria-hidden="true">
+                <Icon name="moreHoriz" size={22} />
+              </span>
               <span>{labels.moreShare}</span>
             </button>
           </li>

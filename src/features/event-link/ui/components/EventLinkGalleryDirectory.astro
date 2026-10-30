@@ -4,14 +4,15 @@ import { getLocalizedHref, type Locale } from "@/core/i18n";
 import type { EventLinkGalleryDirectoryView } from "../../types/index.ts";
 
 interface Props {
-  directory: EventLinkGalleryDirectoryView | null;
+  directory: EventLinkGalleryDirectoryView;
   instanceId: string;
   locale: Locale;
 }
 
 const { directory, instanceId, locale } = Astro.props;
 const siteOrigin = Astro.site?.origin ?? Astro.url.origin;
-const rows = directory?.editions.map((edition) => ({
+const hasEditions = directory.editions.length > 0;
+const rows = directory.editions.map((edition) => ({
   ...edition,
   href: getLocalizedHref(edition.galleryUrl, locale),
   opensNewTab:
@@ -20,27 +21,30 @@ const rows = directory?.editions.map((edition) => ({
 }));
 ---
 
-{
-  directory && (
-    <section class="event-link-gallery-directory" aria-labelledby={`${instanceId}-title`}>
-      <h2 id={`${instanceId}-title`} class="event-link-gallery-directory__title">
-        {directory.sectionLabel}
-      </h2>
+<section
+  class="event-link-section event-link-gallery-directory"
+  aria-labelledby={`${instanceId}-title`}
+>
+  <h2 id={`${instanceId}-title`} class="event-link-section-heading">
+    {directory.sectionLabel}
+  </h2>
+  {
+    hasEditions ? (
       <details class="event-link-gallery-directory__disclosure">
-        <summary>
+        <summary class="event-link-gallery-directory__card">
           <span class="event-link-gallery-directory__icon" aria-hidden="true">
-            <Icon name="calendar" size={22} />
+            <Icon name="mediaImage" size={22} />
           </span>
           <span class="event-link-gallery-directory__summary-copy">
             <strong>{directory.directoryLabel}</strong>
-            <span>{directory.availableCount}</span>
+            <span>{directory.statusLabel}</span>
           </span>
           <span class="event-link-gallery-directory__chevron" aria-hidden="true">
             <Icon name="navArrowDown" size={22} />
           </span>
         </summary>
         <ul class="event-link-gallery-directory__list">
-          {rows?.map((edition) => (
+          {rows.map((edition) => (
             <li>
               <a
                 class="event-link-gallery-directory__link"
@@ -64,6 +68,16 @@ const rows = directory?.editions.map((edition) => ({
           ))}
         </ul>
       </details>
-    </section>
-  )
-}
+    ) : (
+      <div class="event-link-gallery-directory__empty-card event-link-gallery-directory__card">
+        <span class="event-link-gallery-directory__icon" aria-hidden="true">
+          <Icon name="mediaImage" size={22} />
+        </span>
+        <span class="event-link-gallery-directory__summary-copy">
+          <strong>{directory.directoryLabel}</strong>
+          <span>{directory.statusLabel}</span>
+        </span>
+      </div>
+    )
+  }
+</section>

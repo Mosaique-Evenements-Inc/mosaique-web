@@ -510,7 +510,8 @@ This document is the source of truth for implementation status. The existence of
   `<details>/<summary>` with direct edition links, optional formatted dates, and a singular/plural
   gallery count derived from the record collection. Root-relative gallery destinations use the
   locale-aware helper; off-site destinations open in a new tab with an accessible notice. The
-  approved production `pastEditions: []` renders no section in EN/ES/FR. Test-only one- and
+  approved production `pastEditions: []` rendered no section at that checkpoint; the later
+  section-hierarchy addendum supersedes this empty-state behavior. Test-only one- and
   three-edition fixtures exercised the populated component, including long French labels,
   keyboard disclosure, link targets, and 320/390/430 px widths; the temporary fixture route was
   removed before the final 84-page build. Production AOA passed overflow checks at 390, 430, 768,
@@ -553,6 +554,75 @@ This document is the source of truth for implementation status. The existence of
   and 1280 px checks passed, including French provider labels at 320 px. The browser tooling did
   not expose `pageshow.persisted`, so actual bfcache restoration was not independently confirmed.
   The static lifecycle defect is closed; no Tree, SEO, route, content, CSS, or dependency changed.
+- **✅ AOA reference-driven visual restructure implemented locally.** The landing now opens with a
+  small global Share control, localized Events heading, open Social events category, and a closed
+  event row showing approved venue/date/time. Two native disclosures reveal the existing cover,
+  description, metadata, and a JassPass-plus-icon-Share action row without changing routes,
+  payloads, provider logic, or product data. EN/ES/FR browser checks, keyboard open/close,
+  Share dialogs, and collapsed/expanded overflow checks at 320–1600 px passed. The supplied
+  Paula captures were unavailable as inspectable image files, so direct pixel-fidelity comparison
+  remains pending review; the described three-state hierarchy was verified visually.
+- **✅ AOA three-section hierarchy addendum implemented locally.** Events, Photo gallery, and
+  Social media now share one centered heading rule and section rhythm in that order. The Gallery
+  selector always prepares a view: an empty approved `pastEditions: []` renders a localized,
+  non-interactive mini-card without fake links or editions; real editions retain the existing
+  native disclosure, derived singular/plural count, and localized direct links. Menu remains a
+  separate approved action after the three sections; empty sponsors remain hidden. EN/ES/FR
+  output, responsive layout, and keyboard behavior were revalidated without new client code or
+  dependencies. Direct comparison with the unavailable Paula image files remains pending.
+- **✅ AOA share-modal visual update implemented locally.** Both Share dialogs now use a centered
+  AOA mini preview card, a prominent full-width Copy action, and circular provider icons with
+  labels. Event Share shows the approved localized date/time, Lola Bar, Montréal, and JassPass
+  destination; Global Share keeps its landing destination and slogan. The existing payloads,
+  provider links, copy behavior, focus return, and dialog script remain intact. EN/ES/FR output,
+  320–1280 px layout, short-height scrolling, and Escape/focus behavior were checked locally.
+  Pixel comparison with Paula's second screenshot remains pending because the image file was not
+  available to inspect in this task.
+- **✅ AOA main-card glass treatment implemented locally.** The existing paper gradient on the
+  Event Link sheet now uses a mostly opaque cream base, subtle translucent border and shadow,
+  and a soft backdrop blur. Card geometry, nested surfaces, content, Share dialogs, routes, and
+  interactions remain unchanged. Browser checks at 320–1280 px found no horizontal overflow;
+  expanded-event and Share focus behavior passed at 320 px. The earlier reference screenshots
+  were not available as image files for direct pixel comparison.
+- **✅ AOA Share glass styling implemented locally.** Both existing Share dialogs now use a
+  translucent warm panel with backdrop blur, a lighter frosted preview, a softer page overlay,
+  translucent close and provider controls, and the unchanged solid Copy action. The dialog
+  structure, payloads, providers, and script remain unchanged. Local browser checks cover
+  320 × 480 through desktop, short-height keyboard scrolling, Global and Event Share, Copy
+  feedback, Escape, and focus return. Direct pixel matching remains unverified because the two
+  referenced screenshots were not available as inspectable image files in this task.
+- **✅ AOA section order and icon refinement implemented locally.** Events, Menu, Photo gallery,
+  Social media, and the Mosaïque attribution now render in that order. The Events category uses
+  the existing Iconoir calendar; the compact event row uses the approved AOA logo. Menu has a
+  localized heading and Iconoir cutlery; Gallery uses Iconoir media-image in both populated and
+  empty states. Existing destinations, content, disclosures, Share, and SEO remain unchanged.
+  EN/ES/FR output tests and visual checks at 320, 390, 430, 768, and 1280 px passed without
+  horizontal overflow; the expanded event, JassPass, Event Share, Escape/focus return, and empty
+  gallery were checked locally. Direct screenshot matching remains pending because the cited
+  reference images were not available as inspectable files for this refinement.
+
+- **🟡 AOA hero typography refinement: description complete; title font pending.** Only the
+  intro description now uses a 14–15 px responsive size, 38 rem maximum measure, unchanged 1.6
+  line height, and balanced natural wrapping. EN/ES/FR render two description lines at 768,
+  1024, and 1280 px, with readable natural wrapping at 320, 390, and 430 px and no horizontal
+  overflow. The slogan and 24 px gap before Events remain unchanged. TAN ASHFORD has no local
+  asset, font-face declaration, or approved import in the repository; the existing title class
+  retains its current display font until an approved font file is supplied. No substitute,
+  external download, font dependency, or speculative asset path was introduced. Share opening,
+  Escape, focus return, and the browser console passed local checks. Title-font visual acceptance
+  remains pending; this refinement adds no motion.
+
+- **✅ AOA Alfajores postcard background implemented locally.** The existing Menu's three CSS
+  paper stamps are reproduced within Event Link's decorative atmosphere, preserving its exact
+  wine gradient, perforated edges, inset texture, sizes, offsets, rotations, and tablet/mobile
+  opacity rules. No raster asset exists or was added. The dark dotted backdrop and cream sheet
+  styles remain unchanged; the clipped, aria-hidden, pointer-inert layer stays behind the sheet
+  and native Share dialogs. Comparison with the published Alfajores page confirms the same
+  decorative family. Overflow checks pass at 320, 390, 430, 768, 1024, 1280, 1440, and 1600 px;
+  visual checks include mobile, tablet, and wide desktop. Both Share dialogs, Escape/focus return,
+  and event disclosure pass locally. The generated Spanish Alfajores HTML is byte-identical to
+  the pre-change build, with no Menu source changes. No client JavaScript, dependency, or motion
+  was introduced.
 
 ### Tree Link V1
 
