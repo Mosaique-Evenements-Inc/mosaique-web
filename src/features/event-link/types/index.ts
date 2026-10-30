@@ -73,6 +73,7 @@ export interface EventLinkGalleryDirectoryView {
   sectionLabel: string;
   directoryLabel: string;
   statusLabel: string;
+  emptyLabel: string;
   opensNewTab: string;
   editions: readonly {
     id: string;
@@ -135,8 +136,6 @@ export interface EventLinkTranslation {
     opensNewTab: string;
     eventsHeading: string;
     socialEvents: string;
-    eventAvailableSingular: string;
-    eventAvailablePlural: string;
     eventShare: string;
     upcomingEvent: string;
     photoGallery: string;

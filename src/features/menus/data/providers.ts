@@ -28,6 +28,11 @@ export const menuProviders: readonly MenuProvider[] = [
         bodyFontFamily: '"Quicksand Variable", var(--font-family-body)',
       },
     },
+    relatedEvent: {
+      name: "Amante o Amigo",
+      href: "/amante-o-amigo",
+      logoAssetId: "aoa",
+    },
     socialLinks: [
       {
         platform: "instagram",

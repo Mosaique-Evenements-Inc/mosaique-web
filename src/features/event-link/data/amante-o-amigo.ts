@@ -31,6 +31,11 @@ export const amanteOAmigoEventLink = {
       handle: "amanteoamigo.mtl",
       url: "https://www.instagram.com/amanteoamigo.mtl/",
     },
+    {
+      platform: "tiktok",
+      handle: "amanteoamigo.mtl",
+      url: "https://www.tiktok.com/@amanteoamigo.mtl",
+    },
   ],
   pastEditions: [],
   sponsors: [],

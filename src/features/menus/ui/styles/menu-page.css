@@ -409,11 +409,25 @@ html:has(.menu-page) {
   margin-block-start: 1.125rem;
   text-align: center;
 }
-.menu-page__attribution-link {
+.menu-page__attribution-links {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  justify-items: center;
-  gap: inherit;
+  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+  align-items: stretch;
+  gap: clamp(0.5rem, 2vw, 1.25rem);
+  inline-size: 100%;
+}
+.menu-page__attribution-links--single {
+  display: flex;
+  justify-content: center;
+}
+.menu-page__attribution-divider {
+  background: color-mix(in srgb, var(--menu-wine) 18%, transparent);
+}
+.menu-page__attribution-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
   min-inline-size: 0;
   max-inline-size: 100%;
   text-decoration: none;
@@ -426,13 +440,28 @@ html:has(.menu-page) {
 }
 /* The official source has generous transparent margins; preserve the whole asset. */
 .menu-page__mosaique {
-  display: block;
-  inline-size: 18rem;
-  max-inline-size: 100%;
+  inline-size: min(100%, 13rem);
+}
+.menu-page__attribution-links--single .menu-page__mosaique {
+  inline-size: min(100%, 18rem);
+}
+.menu-page__attribution-logo {
+  display: grid;
+  place-items: center;
+  block-size: 8rem;
+  margin-block-start: auto;
 }
 .menu-page__mosaique img {
   inline-size: 100%;
+  max-block-size: 100%;
+  object-fit: contain;
   filter: brightness(0);
+}
+.menu-page__event-logo img {
+  display: block;
+  inline-size: min(100%, 7rem);
+  max-block-size: 100%;
+  object-fit: contain;
 }
 .menu-page__location {
   display: flex;

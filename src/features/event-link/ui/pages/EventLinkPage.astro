@@ -1,5 +1,4 @@
 ---
-import Icon from "@/core/common/ui/components/Icon.astro";
 import { getLocaleFromUrl, getLocalizedPath } from "@/core/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { eventLinkLogoAssets } from "../../data/logo-assets";
@@ -33,7 +32,6 @@ const {
   producer,
 } = content;
 const logo = eventLinkLogoAssets[config.brand.logoAssetId];
-const availableEventCount = [upcoming].length;
 const locale = getLocaleFromUrl(Astro.url);
 const landingPath = getLocalizedPath(event.slug, locale);
 const landingPayload = {
@@ -98,36 +96,14 @@ const visualStyle = {
           <h2 id="event-link-events-title" class="event-link-section-heading">
             {copy.labels.eventsHeading}
           </h2>
-          <details class="event-link-events__category" open>
-            <summary>
-              <span class="event-link-events__icon" aria-hidden="true">
-                <Icon name="calendar" size={22} />
-              </span>
-              <span class="event-link-events__summary-copy">
-                <strong>{copy.labels.socialEvents}</strong>
-                <span>
-                  {availableEventCount}{" "}
-                  {
-                    availableEventCount === 1
-                      ? copy.labels.eventAvailableSingular
-                      : copy.labels.eventAvailablePlural
-                  }
-                </span>
-              </span>
-              <span class="event-link-events__chevron" aria-hidden="true">
-                <Icon name="navArrowDown" size={22} />
-              </span>
-            </summary>
-            <div class="event-link-events__list">
-              <EventLinkUpcomingEvent
-                event={upcoming}
-                sharePayload={sharePayloads.event}
-                shareLabel={copy.labels.eventShare}
-                shareLabels={shareLabels}
-                {logo}
-              />
-            </div>
-          </details>
+          <EventLinkUpcomingEvent
+            event={upcoming}
+            categoryLabel={copy.labels.socialEvents}
+            sharePayload={sharePayloads.event}
+            shareLabel={copy.labels.eventShare}
+            shareLabels={shareLabels}
+            {logo}
+          />
         </section>
         <section
           class="event-link-section event-link-menu"

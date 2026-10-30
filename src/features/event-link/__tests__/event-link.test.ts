@@ -59,6 +59,11 @@ test("AOA keeps one approved upcoming edition and clean canonical destinations",
       handle: "amanteoamigo.mtl",
       url: "https://www.instagram.com/amanteoamigo.mtl/",
     },
+    {
+      platform: "tiktok",
+      handle: "amanteoamigo.mtl",
+      url: "https://www.tiktok.com/@amanteoamigo.mtl",
+    },
   ]);
   assert.deepEqual(pastEditions, []);
   assert.deepEqual(sponsors, []);
@@ -108,10 +113,7 @@ test("EN, ES, and FR keep approved landing copy and distinct share sources", () 
       slug: canonicalEvent.slug,
     });
     assert.equal(upcoming.title, canonicalEvent.title);
-    assert.equal(
-      upcoming.description,
-      eventTranslations[locale][canonicalEvent.id].description,
-    );
+    assert.equal(upcoming.description, copy.slogan);
     assert.equal(menuEntry.href, config.menuUrl);
     assert.equal(menuEntry.label, copy.labels.menuAction);
     assert.deepEqual(socials, [
@@ -120,6 +122,12 @@ test("EN, ES, and FR keep approved landing copy and distinct share sources", () 
         handle: "amanteoamigo.mtl",
         displayHandle: "@amanteoamigo.mtl",
         url: "https://www.instagram.com/amanteoamigo.mtl/",
+      },
+      {
+        platform: "tiktok",
+        handle: "amanteoamigo.mtl",
+        displayHandle: "@amanteoamigo.mtl",
+        url: "https://www.tiktok.com/@amanteoamigo.mtl",
       },
     ]);
   }
@@ -173,7 +181,11 @@ test("gallery directory exposes an honest empty state with no approved AOA editi
     assert.deepEqual(content.galleryDirectory.editions, []);
     assert.equal(content.galleryDirectory.sectionLabel, content.copy.labels.photoGallery);
     assert.equal(content.galleryDirectory.directoryLabel, content.copy.labels.photoGallery);
-    assert.equal(content.galleryDirectory.statusLabel, content.copy.labels.galleryEmpty);
+    assert.equal(
+      content.galleryDirectory.statusLabel,
+      `0 ${content.copy.labels.galleryAvailablePlural}`,
+    );
+    assert.equal(content.galleryDirectory.emptyLabel, content.copy.labels.galleryEmpty);
     assert.deepEqual(
       getEventLinkGalleryDirectory(locale, [], content.copy),
       content.galleryDirectory,
@@ -262,7 +274,7 @@ test("the three localized Event Link pages render the shell and inherited SEO me
       activeLocale: "es",
       copy: eventLinkTranslations.es["event-slot-07"],
       dateLabel: "6 de noviembre de 2026",
-      timeLabel: "19:00",
+      timeLabel: "7:00 p.\u00a0m.",
     },
     {
       locale: "fr-CA",
@@ -298,48 +310,34 @@ test("the three localized Event Link pages render the shell and inherited SEO me
         `<h2 id="event-link-events-title" class="event-link-section-heading">${copy.labels.eventsHeading}</h2>`,
       ),
     );
-    assert.match(eventsSection, /<details class="event-link-events__category" open>/);
-    assert.ok(eventsSection.includes(`>${copy.labels.socialEvents}</strong>`));
-    assert.ok(eventsSection.includes(`1 ${copy.labels.eventAvailableSingular}`));
-    const categorySummary = eventsSection.match(
-      /<details class="event-link-events__category" open><summary>[\s\S]*?<\/summary>/,
-    )?.[0];
-    assert.ok(categorySummary);
-    assert.match(categorySummary, /class="event-link-events__icon"[^>]*><svg\b/);
-    assert.doesNotMatch(categorySummary, /<img\b/);
+    assert.doesNotMatch(
+      eventsSection,
+      /<details\b|<summary\b|event-link-(?:events|upcoming)__(?:chevron|summary|expanded)/,
+    );
     const upcoming = eventsSection.match(
-      /<details class="event-link-upcoming">[\s\S]*?<\/details>/,
+      /<article class="event-link-upcoming" aria-labelledby="event-link-upcoming-title">[\s\S]*?<\/article>/,
     )?.[0];
-    assert.ok(upcoming, `${path}: missing compact event disclosure`);
-    assert.match(upcoming, /<summary class="event-link-upcoming__summary">/);
-    const eventSummary = upcoming.match(
-      /<summary class="event-link-upcoming__summary">[\s\S]*?<\/summary>/,
-    )?.[0];
-    assert.ok(eventSummary);
-    assert.match(eventSummary, /class="event-link-upcoming__logo" aria-hidden="true"/);
-    assert.match(eventSummary, /<img\b[^>]*aoa_logo[^>]*\balt(?:="")?(?:\s|>)/);
-    assert.ok(upcoming.includes(`<strong>${canonicalEvent.title}</strong>`));
-    assert.ok(upcoming.includes(dateLabel));
-    assert.ok(upcoming.includes(timeLabel));
-    assert.ok(upcoming.includes("Lola Bar"));
-    assert.ok(
-      upcoming.indexOf("event-link-upcoming__summary") <
-        upcoming.indexOf("event-link-upcoming__visual"),
-    );
-    assert.ok(upcoming.includes(`>${copy.labels.upcomingEvent}</p>`));
-    assert.ok(
-      upcoming.includes(`<h3 class="event-link-upcoming__title">${canonicalEvent.title}</h3>`),
-    );
-    assert.ok(
-      upcoming.includes(eventTranslations[activeLocale][canonicalEvent.id].description),
-    );
-    assert.match(upcoming, /<picture\b[\s\S]*?<source\b[^>]*\.avif/);
-    assert.match(upcoming, /<img\b[^>]*\.webp/);
+    assert.ok(upcoming, `${path}: missing static full event card`);
+    assert.ok(upcoming.includes(`>${copy.labels.socialEvents}</p>`));
     assert.ok(
       upcoming.includes(
-        eventTranslations[activeLocale][canonicalEvent.id].media?.featuredAlt ?? "",
+        `<h3 id="event-link-upcoming-title" class="event-link-upcoming__title">${canonicalEvent.title}</h3>`,
       ),
     );
+    assert.ok(
+      upcoming.indexOf("event-link-upcoming__visual") <
+        upcoming.indexOf("event-link-upcoming__body"),
+    );
+    assert.ok(upcoming.includes(`class="event-link-upcoming__description">${copy.slogan}</p>`));
+    assert.ok(
+      !upcoming.includes(eventTranslations[activeLocale][canonicalEvent.id].description),
+    );
+    assert.match(
+      upcoming,
+      /<div class="event-link-upcoming__visual" aria-hidden="true"><img[^>]*aoa_logo[^>]*\balt(?:="")?(?:\s|>)/,
+    );
+    assert.doesNotMatch(upcoming, /<picture\b/);
+    assert.ok(upcoming.includes("<p>Lola Bar Montréal</p>"));
     assert.match(upcoming, /<time datetime="2026-11-06">/);
     assert.match(upcoming, /<time datetime="19:00">/);
     assert.ok(upcoming.includes(dateLabel));
@@ -460,9 +458,15 @@ test("the three localized Event Link pages render the shell and inherited SEO me
     assert.ok(gallerySection.includes(copy.labels.galleryEmpty));
     assert.match(
       gallerySection,
-      /class="event-link-gallery-directory__empty-card event-link-gallery-directory__card"/,
+      /<details class="event-link-gallery-directory__disclosure"><summary class="event-link-gallery-directory__card">/,
     );
-    assert.doesNotMatch(gallerySection, /<details\b|<summary\b|<a\b|<button\b|edition-test-0/);
+    assert.ok(gallerySection.includes(`0 ${copy.labels.galleryAvailablePlural}`));
+    assert.match(
+      gallerySection,
+      /class="event-link-gallery-directory__chevron" aria-hidden="true"[^>]*><svg\b/,
+    );
+    assert.match(gallerySection, /<p class="event-link-gallery-directory__empty">/);
+    assert.doesNotMatch(gallerySection, /<a\b|<button\b|<ul\b|edition-test-0/);
     assert.ok(html.indexOf(eventsSection) < html.indexOf(menuSection));
     assert.ok(html.indexOf(menuSection) < html.indexOf(gallerySection));
 
@@ -475,18 +479,28 @@ test("the three localized Event Link pages render the shell and inherited SEO me
         `<h2 id="event-link-socials-title" class="event-link-section-heading">${copy.labels.socialMedia}</h2>`,
       ),
     );
-    assert.equal([...socialSection.matchAll(/<a\b/g)].length, 1);
-    assert.match(
-      socialSection,
-      /<a class="event-link-socials__link" href="https:\/\/www\.instagram\.com\/amanteoamigo\.mtl\/" target="_blank" rel="noopener noreferrer">/,
-    );
-    assert.ok(socialSection.includes("Instagram"));
-    assert.ok(socialSection.includes("@amanteoamigo.mtl"));
-    assert.ok(socialSection.includes(`(${copy.labels.opensNewTab})`));
-    assert.ok(socialSection.includes('aria-hidden="true"'));
+    const socialLinks = [
+      ...socialSection.matchAll(/<a class="event-link-socials__link"[\s\S]*?<\/a>/g),
+    ].map(([link]) => link);
+    assert.equal(socialLinks.length, 2);
+    for (const [index, { platform, href }] of [
+      { platform: "Instagram", href: "https://www.instagram.com/amanteoamigo.mtl/" },
+      { platform: "TikTok", href: "https://www.tiktok.com/@amanteoamigo.mtl" },
+    ].entries()) {
+      const link = socialLinks[index];
+      assert.ok(
+        link.startsWith(
+          `<a class="event-link-socials__link" href="${href}" target="_blank" rel="noopener noreferrer">`,
+        ),
+      );
+      assert.ok(link.includes(`>${platform}</span>`));
+      assert.ok(link.includes(">@amanteoamigo.mtl</span>"));
+      assert.ok(link.includes(`(${copy.labels.opensNewTab})`));
+      assert.ok(link.includes('aria-hidden="true"'));
+    }
     assert.doesNotMatch(
       socialSection,
-      /vrfl|utm_source|tiktok|facebook|youtube|<button\b|role="button"/i,
+      /vrfl|utm_source|\?_r=|&_t=|facebook|youtube|<button\b|role="button"/i,
     );
     assert.ok(html.indexOf(socialSection) > html.indexOf(gallerySection));
 
@@ -503,7 +517,10 @@ test("the three localized Event Link pages render the shell and inherited SEO me
       producerBlock,
       /<img\b[^>]*src="[^"]*mosaique_logo_complete[^"]*\.webp"[^>]*\balt(?:="")?(?:\s|>)/,
     );
-    assert.doesNotMatch(producerBlock, /Montréal, Québec/);
+    assert.match(
+      producerBlock,
+      /class="event-link-produced-by__location"[^>]*>[\s\S]*?Montréal, Québec<\/p>/,
+    );
     assert.doesNotMatch(producerBlock, /target=|rel=|sponsor|<h[1-6]\b/i);
     assert.ok(html.indexOf(producerBlock) > html.indexOf(socialSection));
 
@@ -527,7 +544,8 @@ test("the three localized Event Link pages render the shell and inherited SEO me
     const main = html.match(/<main\b[\s\S]*?<\/main>/)?.[0];
     assert.ok(main);
     assert.doesNotMatch(main, /event-link-sponsor/);
-    assert.equal([...main.matchAll(/<details\b/g)].length, 2);
+    assert.equal([...main.matchAll(/<details\b/g)].length, 1);
+    assert.equal([...main.matchAll(/<summary\b/g)].length, 1);
     assert.doesNotMatch(html, /Test Edition|edition-test-0/);
 
     const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1];

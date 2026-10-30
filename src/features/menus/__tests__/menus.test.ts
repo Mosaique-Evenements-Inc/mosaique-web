@@ -346,6 +346,16 @@ test("built Alfajores Fleur menus render generic event branding above content an
     assert.equal((main.match(/class="menu-page__item"/g) ?? []).length, 7);
     assert.match(main, /@alfajoresfleur/);
     assert.match(main.slice(attributionIndex), /MOSAÏQUE ÉVÉNEMENTS/);
+    assert.match(
+      main.slice(attributionIndex),
+      /class="menu-page__attribution-divider" aria-hidden="true"/,
+    );
+    assert.match(main.slice(attributionIndex), new RegExp(`href="/${prefix}amante-o-amigo/"`));
+    assert.match(main.slice(attributionIndex), /aoa_logo.*?\.svg" alt(?:\s|>)/);
+    assert.equal(
+      (main.slice(attributionIndex).match(/class="menu-page__attribution-link"/g) ?? []).length,
+      2,
+    );
     assert.match(main, /--menu-background:#F3E5D2/);
     assert.match(main, /--menu-surface:#FDE39F/);
     assert.match(main, /--menu-text:#211B19/);

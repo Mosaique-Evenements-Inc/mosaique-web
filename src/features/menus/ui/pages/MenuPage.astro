@@ -1,5 +1,5 @@
 ---
-import type { Locale } from "@/core/i18n";
+import { getLocalizedHref, type Locale } from "@/core/i18n";
 import { Image } from "astro:assets";
 import mosaiqueLogo from "@/assets/logos/mosaique_logo_complete.png";
 import Icon from "@/core/common/ui/components/Icon.astro";
@@ -87,18 +87,51 @@ const logoImage = theme.logo ? menuLogoAssets[theme.logo.assetId] : undefined;
         </div>
 
         <footer class="menu-page__attribution">
-          <a href="https://mosaiqueevenements.com" class="menu-page__attribution-link">
-            <span class="menu-page__attribution-copy">{copy.attribution}</span>
-            <span class="menu-page__mosaique">
-              <Image
-                src={mosaiqueLogo}
-                alt="MOSAÏQUE ÉVÉNEMENTS"
-                width={330}
-                format="webp"
-                loading="lazy"
-              />
-            </span>
-          </a>
+          <div
+            class:list={[
+              "menu-page__attribution-links",
+              { "menu-page__attribution-links--single": !provider.relatedEvent },
+            ]}
+          >
+            <a href="https://mosaiqueevenements.com" class="menu-page__attribution-link">
+              <span class="menu-page__attribution-copy">{copy.attribution}</span>
+              <span class="menu-page__attribution-logo menu-page__mosaique">
+                <Image
+                  src={mosaiqueLogo}
+                  alt="MOSAÏQUE ÉVÉNEMENTS"
+                  width={330}
+                  format="webp"
+                  loading="lazy"
+                />
+              </span>
+            </a>
+            {
+              provider.relatedEvent && (
+                <>
+                  <span class="menu-page__attribution-divider" aria-hidden="true" />
+                  <a
+                    href={getLocalizedHref(provider.relatedEvent.href, locale)}
+                    class="menu-page__attribution-link"
+                  >
+                    <span class="menu-page__attribution-copy">
+                      {copy.relatedEventAttribution.replace(
+                        "{event}",
+                        provider.relatedEvent.name,
+                      )}
+                    </span>
+                    <span class="menu-page__attribution-logo menu-page__event-logo">
+                      <Image
+                        src={menuLogoAssets[provider.relatedEvent.logoAssetId]}
+                        alt=""
+                        width={160}
+                        loading="lazy"
+                      />
+                    </span>
+                  </a>
+                </>
+              )
+            }
+          </div>
           <p class="menu-page__location">
             <Icon name="mapPin" size={13} />{footerContent.contact.location}
           </p>

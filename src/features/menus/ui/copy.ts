@@ -6,6 +6,7 @@ const menuUiCopy = {
     socialLinks: "Provider social profiles",
     opensNewTab: "opens in a new tab",
     attribution: "Discover the Mosaïque universe",
+    relatedEventAttribution: "Discover the {event} universe",
     menu: "Menu",
     follow: "Follow us on",
   },
@@ -14,6 +15,7 @@ const menuUiCopy = {
     socialLinks: "Redes sociales del establecimiento",
     opensNewTab: "se abre en una pestaña nueva",
     attribution: "Descubre el universo Mosaïque",
+    relatedEventAttribution: "Descubre el universo de {event}",
     menu: "Menú",
     follow: "Síguenos en",
   },
@@ -22,6 +24,7 @@ const menuUiCopy = {
     socialLinks: "Réseaux sociaux de l’établissement",
     opensNewTab: "s’ouvre dans un nouvel onglet",
     attribution: "Découvrez l’univers Mosaïque",
+    relatedEventAttribution: "Découvrez l’univers d’{event}",
     menu: "Menu",
     follow: "Suivez-nous sur",
   },
@@ -32,6 +35,7 @@ const menuUiCopy = {
     socialLinks: string;
     opensNewTab: string;
     attribution: string;
+    relatedEventAttribution: string;
     menu: string;
     follow: string;
   }
