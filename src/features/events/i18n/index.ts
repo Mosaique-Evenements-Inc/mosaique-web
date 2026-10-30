@@ -16,6 +16,19 @@ export interface EventTranslation {
 type EventTranslations = Record<string, EventTranslation>;
 
 const es: EventTranslations = {
+  "event-slot-08": {
+    title: "Latino Fake Mariage",
+    description:
+      "Una experiencia inmersiva que recrea una boda, donde los asistentes participan como invitados mientras disfrutan de una puesta en escena, música, comida y baile.",
+    categoryLabel: "Celebración",
+    media: {
+      featuredAlt: "Imagen de portada de Latino Fake Mariage pendiente.",
+      galleryAlts: [
+        "Primera fotografía de Latino Fake Mariage pendiente.",
+        "Segunda fotografía de Latino Fake Mariage pendiente.",
+      ],
+    },
+  },
   "event-slot-07": {
     title: "Amante o Amigo",
     description:
@@ -95,6 +108,19 @@ const es: EventTranslations = {
 };
 
 const en: EventTranslations = {
+  "event-slot-08": {
+    title: "Latino Fake Mariage",
+    description:
+      "An immersive experience that recreates a wedding, where attendees take part as guests while enjoying a staged production, music, food, and dancing.",
+    categoryLabel: "Celebration",
+    media: {
+      featuredAlt: "Cover image for Latino Fake Mariage pending.",
+      galleryAlts: [
+        "First Latino Fake Mariage photo pending.",
+        "Second Latino Fake Mariage photo pending.",
+      ],
+    },
+  },
   "event-slot-07": {
     title: "Amante o Amigo",
     description:
@@ -173,6 +199,19 @@ const en: EventTranslations = {
 };
 
 const fr: EventTranslations = {
+  "event-slot-08": {
+    title: "Latino Fake Mariage",
+    description:
+      "Une expérience immersive qui recrée un mariage, où les participants prennent part à la fête en tant qu’invités tout en profitant d’une mise en scène, de musique, de nourriture et de danse.",
+    categoryLabel: "Célébration",
+    media: {
+      featuredAlt: "Image de couverture de Latino Fake Mariage à venir.",
+      galleryAlts: [
+        "Première photo de Latino Fake Mariage à venir.",
+        "Deuxième photo de Latino Fake Mariage à venir.",
+      ],
+    },
+  },
   "event-slot-07": {
     title: "Amante o Amigo",
     description:
@@ -298,25 +337,29 @@ export const eventCategoryTranslations = {
 
 export const eventDetailTranslations = {
   es: {
-    collaboration: "Fuimos colaboradores",
+    collaborator: "Fuimos colaboradores",
+    producer: "Fuimos productores",
     moreExperiences: "Más experiencias",
     nextExperience: "Siguiente experiencia",
     relatedEvents: "Eventos relacionados",
   },
   en: {
-    collaboration: "We were collaborators",
+    collaborator: "We were collaborators",
+    producer: "We were producers",
     moreExperiences: "More experiences",
     nextExperience: "Next experience",
     relatedEvents: "Related events",
   },
   fr: {
-    collaboration: "Nous étions collaborateurs",
+    collaborator: "Nous étions collaborateurs",
+    producer: "Nous étions producteurs",
     moreExperiences: "Plus d’expériences",
     nextExperience: "Expérience suivante",
     relatedEvents: "Événements associés",
   },
 } satisfies LocaleDictionaries<{
-  collaboration: string;
+  collaborator: string;
+  producer: string;
   moreExperiences: string;
   nextExperience: string;
   relatedEvents: string;

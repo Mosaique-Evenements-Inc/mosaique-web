@@ -6,12 +6,14 @@ import { bailaDaZazaEvent } from "./baila-da-zaza";
 import { cumpleanosAnaPaulaEvent } from "./cumpleanos-ana-paula";
 import { EVENT_CATEGORIES } from "./categories";
 import { fanFestClubEvent } from "./fan-fest-club";
+import { latinoFakeMariageEvent } from "./latino-fake-mariage";
 import { nossaCopaEvent } from "./nossa-copa";
 import type { Event } from "../types/event";
 import { weddingRrEvent } from "./wedding-r-r";
 
 export const eventDetails: Event[] = [
   amanteOAmigoEvent,
+  latinoFakeMariageEvent,
   nossaCopaEvent,
   bailaDaZazaEvent,
   babyShowerEvent,

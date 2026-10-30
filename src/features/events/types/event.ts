@@ -4,7 +4,7 @@ import type { EventCategoryId } from "./category";
 
 export interface Event {
   categoryId: EventCategoryId;
-  collaboration?: boolean;
+  relationship?: "collaborator" | "producer";
   description: string;
   featuredMedia: FeaturedMedia;
   gallery: GalleryImage[];

@@ -4,13 +4,13 @@ import Icon from "@/core/common/ui/components/Icon.astro";
 import Text from "@/core/common/ui/components/Text.astro";
 
 interface Props {
-  collaborationLabel?: string;
+  relationshipLabel?: string;
   description: string;
   status: "approved" | "placeholder";
   title: string;
 }
 
-const { collaborationLabel, description, status, title } = Astro.props;
+const { relationshipLabel, description, status, title } = Astro.props;
 ---
 
 <header class="event-header" data-content-status={status}>
@@ -19,10 +19,10 @@ const { collaborationLabel, description, status, title } = Astro.props;
 
     <div class="event-header__narrative">
       {
-        collaborationLabel && (
-          <Text variant="caption" class="event-header__collaboration">
+        relationshipLabel && (
+          <Text variant="caption" class="event-header__relationship">
             <Icon name="sparks" size={16} />
-            <span>{collaborationLabel}</span>
+            <span>{relationshipLabel}</span>
           </Text>
         )
       }

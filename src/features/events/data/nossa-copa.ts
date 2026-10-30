@@ -12,7 +12,7 @@ import type { Event } from "../types/event";
 
 export const nossaCopaEvent = {
   categoryId: "festival",
-  collaboration: true,
+  relationship: "collaborator",
   description: "Fútbol, comunidad y emprendimiento reunidos en una experiencia de festival.",
   featuredMedia: {
     alt: "Partida de billar durante Brasil en el Mundial 2026, rodeada de asistentes con camisetas de Brasil.",

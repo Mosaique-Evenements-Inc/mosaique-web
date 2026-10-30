@@ -152,12 +152,18 @@ This document is the source of truth for implementation status. The existence of
 
 ### Projects / Experiences
 
-- **Implementation: complete.** The section now presents a six-slot gallery for completed events from `src/content/home/projects.ts` instead of five conceptual project categories.
-- The six approved event names, descriptions, derived categories, slugs, detail links, and featured photographs live in one typed `eventGalleryItems` collection. Clients, venues, and dates remain unavailable, so the records preserve only verified metadata and stable identifiers.
+- **Implementation: complete for approved content.** The section presents a data-driven carousel of canonical Events through `getLocalizedEventGalleryItems`.
+- Seven approved records and one pending-media Latino Fake Mariage record share the typed `eventDetails` source with Gallery Archive and Event Detail. Clients, venues, and dates are not invented.
+- **🟡 Latino Fake Mariage added locally after Amante o Amigo.** Its approved title, dedicated
+  Event Detail route, Home card, and Gallery Archive row use one canonical record. The cover and
+  two gallery slots are temporary image placeholders; the incomplete detail routes are `noindex`.
+  The user limited this event to Mosaïque Web, so AOA Event Link remains unchanged. The approved
+  Spanish description and localized EN/FR versions now render in Home and Event Detail; approved
+  photography remains pending, so visual fidelity awaits those assets.
 - **Fidelity Pass: complete.** The Movra editorial split, divider, typography, portrait media, and desktop controls remain unchanged; responsive controls were aligned with the CTA row against the supplied mobile reference.
-- The desktop carousel uses native horizontal scrolling, scroll snap, touch/keyboard scrolling, and accessible previous/next controls. Arrow navigation advances in derived two-event pages (`1–2`, `3–4`, `5–6`) without an isolated final card; the live status announces the first event in the visible pair as `Evento X de 6`.
+- The desktop carousel uses native horizontal scrolling, scroll snap, touch/keyboard scrolling, and accessible previous/next controls. Arrow navigation advances in derived two-event pages (`1–2`, `3–4`, `5–6`, `7–8`) without an isolated final card; the live status announces the first event in the visible pair with the current eight-event total.
 - Tablet and mobile use the same data-driven carousel in a single-event mode: one complete event card is visible at a time, navigation advances by one, and the finite previous/next controls share the CTA row above the active card. Mobile keeps the full-width editorial heading clear of the navigation and uses one tokenized grid gap between that control row and the media; tablet retains its wider spacing. Approved featured photography is delivered through the shared Astro responsive-image contract.
-- Desktop, tablet, mobile, breakpoint resize normalization, reduced-motion behavior, overflow, six-item completeness, all six responsive navigation states, and all three desktop paired navigation states were validated.
+- The original six-item carousel passed desktop, tablet, mobile, breakpoint resize, reduced-motion, overflow, and navigation validation. The current eight-item order, localized copy, and horizontal overflow were rechecked at 320–1600 px; the full navigation and reduced-motion matrix has not been rerun for the added record.
 - **Carousel control refinement complete.** Previous and next controls now present only their arrow glyphs without a surrounding border or fill, while preserving the 44 px target, disabled state, accessible labels, focus visibility, and existing finite navigation behavior.
 
 ### Gallery / Eventos realizados
@@ -175,7 +181,7 @@ This document is the source of truth for implementation status. The existence of
 
 ### Event Detail
 
-- **Implementation: complete for the approved event copy and supplied photography.** One Astro dynamic route at `/events/[slug]` composes the existing Navigation and Footer around an editorial event header, a data-driven gallery, and a reusable native-dialog lightbox. The six stable Project / Experience records now link to their corresponding generated detail routes without duplicating page templates.
+- **Implementation: complete for the approved event copy and supplied photography.** One Astro dynamic route at `/events/[slug]` composes the existing Navigation and Footer around an editorial event header, a data-driven gallery, and a reusable native-dialog lightbox. Approved records and the explicitly pending Latino Fake Mariage record link to generated detail routes without duplicating page templates.
 - Event detail content is derived from the same typed event collection and adds only a slug, title, description, featured image, and curated gallery. No client, venue, date, location, or other unverified business metadata was introduced; the category used by `/gallery` remains in the shared source record and is not rendered as extra detail metadata.
 - The gallery remains server-rendered Astro and follows the approved strict editorial composition: a constrained three-column 2:3 grid with a hairline gap on desktop, two columns on tablet, and one full-width column on mobile. Gallery crops use `object-fit: cover`; the lightbox preserves each complete asset without squashing. Approved local images use Astro Assets with responsive widths, sizes, intrinsic metadata, and selective loading priority; no gallery dependency or additional React island was introduced.
 - **Baseline implementation retained; David Tutera reference-fidelity program complete.** The dynamic Astro route at `/events/[slug]`, its six stable Project / Experience records, Navigation, Footer, and typed media contract remain the foundation rather than being rebuilt.
@@ -884,9 +890,10 @@ This document is the source of truth for implementation status. The existence of
 - Events `event-slot-01` / `nossa-copa` and `event-slot-02` / `baila-da-zaza` now expose
   localized public titles in ES, EN-CA, and FR-CA, including Home, Gallery, related previews,
   About captions, media descriptions, accessibility labels, and inherited SEO/Open Graph titles.
-- Only those two canonical records declare the optional `Event.collaboration` flag. Event Detail
-  renders the localized collaborator notice between the title and description using the existing
-  Text primitive and caption, spacing, and accent tokens. Other events render no notice.
+- Those two canonical records keep the `collaborator` relationship. Amante o Amigo and Latino
+  Fake Mariage now declare `producer`; all other events omit a relationship. Event Detail renders
+  either localized label in one informational Text badge between the title and description, using
+  the same icon, caption, spacing, and accent tokens.
 - **Collaboration mark UI refinement complete locally:** the previous full-column rules are
   replaced by a fit-content, thin accent outline with an existing Iconoir Sparks icon, caption
   uppercase text, black surface, and the same rounded radius as action buttons (`--space-16`). The icon is decorative;
@@ -898,7 +905,8 @@ This document is the source of truth for implementation status. The existence of
 - Chromium checks passed across 1280, 900, 390, and 320px widths in all three locales, plus
   short-desktop/reduced-motion checks. Captures confirmed readable titles/notices without horizontal
   overflow; Baby Shower header, title, and narrative geometry match the pre-change measurements.
-- The static build contains exactly six collaboration notices (two events times three locales),
+- The static build contains six collaborator and six producer notices (two events per role across
+  three locales),
   with no old public event names remaining in `src/` or generated output. Technical slugs, IDs,
   asset names, relationships, images, routing, global styles, and motion remain unchanged.
 - Scoped Prettier, lint, typecheck, build (72 pages), and diff-check passed. No automated test
