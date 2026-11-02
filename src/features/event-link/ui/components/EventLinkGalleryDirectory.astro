@@ -1,6 +1,8 @@
 ---
+import { Image } from "astro:assets";
 import Icon from "@/core/common/ui/components/Icon.astro";
 import { getLocalizedHref, type Locale } from "@/core/i18n";
+import { eventLinkLogoAssets } from "../../data/logo-assets";
 import type { EventLinkGalleryDirectoryView } from "../../types/index.ts";
 
 interface Props {
@@ -12,11 +14,12 @@ interface Props {
 const { directory, instanceId, locale } = Astro.props;
 const siteOrigin = Astro.site?.origin ?? Astro.url.origin;
 const hasEditions = directory.editions.length > 0;
+const logo = eventLinkLogoAssets.aoa;
 const rows = directory.editions.map((edition) => ({
   ...edition,
-  href: getLocalizedHref(edition.galleryUrl, locale),
+  href: edition.galleryUrl ? getLocalizedHref(edition.galleryUrl, locale) : undefined,
   opensNewTab:
-    edition.galleryUrl.startsWith("https://") &&
+    edition.galleryUrl?.startsWith("https://") &&
     new URL(edition.galleryUrl).origin !== siteOrigin,
 }));
 ---
@@ -43,30 +46,79 @@ const rows = directory.editions.map((edition) => ({
     </summary>
     {
       hasEditions ? (
-        <ul class="event-link-gallery-directory__list">
-          {rows.map((edition) => (
-            <li>
-              <a
-                class="event-link-gallery-directory__link"
-                href={edition.href}
-                target={edition.opensNewTab ? "_blank" : undefined}
-                rel={edition.opensNewTab ? "noopener noreferrer" : undefined}
-              >
-                <span class="event-link-gallery-directory__edition-copy">
-                  <strong>{edition.title}</strong>
-                  {edition.description && <span>{edition.description}</span>}
-                  {edition.date && <time datetime={edition.date}>{edition.dateLabel}</time>}
-                  {edition.opensNewTab && (
-                    <span class="visually-hidden"> ({directory.opensNewTab})</span>
-                  )}
-                </span>
-                <span class="event-link-gallery-directory__arrow" aria-hidden="true">
-                  <Icon name="arrowRight" size={21} />
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div class="event-link-gallery-directory__content">
+          <p class="event-link-gallery-directory__description">{directory.description}</p>
+          <ul class="event-link-gallery-directory__list">
+            {rows.map((edition) => {
+              const Row = edition.href ? "a" : "div";
+              return (
+                <li>
+                  <Row
+                    class="event-link-gallery-directory__edition"
+                    href={edition.href}
+                    target={edition.opensNewTab ? "_blank" : undefined}
+                    rel={edition.opensNewTab ? "noopener noreferrer" : undefined}
+                  >
+                    <span class="event-link-gallery-directory__edition-logo" aria-hidden="true">
+                      <Image
+                        src={logo}
+                        alt=""
+                        width={logo.width}
+                        height={logo.height}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </span>
+                    <span class="event-link-gallery-directory__edition-copy">
+                      <strong>
+                        {edition.title}
+                        <span aria-hidden="true"> — </span>
+                        {edition.ordinal ? (
+                          <>
+                            <span aria-hidden="true">
+                              {edition.ordinal.number}
+                              <sup>{edition.ordinal.suffix}</sup> {edition.ordinal.noun}
+                            </span>
+                            <span class="visually-hidden">{edition.editionLabel}</span>
+                          </>
+                        ) : (
+                          edition.editionLabel
+                        )}
+                      </strong>
+                      {(edition.locationLabel || edition.date || edition.startTime) && (
+                        <span class="event-link-gallery-directory__edition-meta">
+                          {edition.locationLabel && <span>{edition.locationLabel}</span>}
+                          {edition.date && (
+                            <>
+                              {edition.locationLabel && <span aria-hidden="true"> · </span>}
+                              <time datetime={edition.date}>{edition.dateLabel}</time>
+                            </>
+                          )}
+                          {edition.startTime && (
+                            <>
+                              {(edition.locationLabel || edition.date) && (
+                                <span aria-hidden="true"> · </span>
+                              )}
+                              <time datetime={edition.startTime}>{edition.timeLabel}</time>
+                            </>
+                          )}
+                        </span>
+                      )}
+                      {edition.opensNewTab && (
+                        <span class="visually-hidden"> ({directory.opensNewTab})</span>
+                      )}
+                    </span>
+                    {edition.href && (
+                      <span class="event-link-gallery-directory__arrow" aria-hidden="true">
+                        <Icon name="arrowRight" size={21} />
+                      </span>
+                    )}
+                  </Row>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       ) : (
         <p class="event-link-gallery-directory__empty">{directory.emptyLabel}</p>
       )

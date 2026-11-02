@@ -27,6 +27,7 @@ export const eventLinkTranslations = {
         pastEditions: "Past editions",
         galleryAvailableSingular: "gallery available",
         galleryAvailablePlural: "galleries available",
+        galleryDescription: "Galleries from previous editions.",
         galleryEmpty: "No galleries available yet",
         socialMedia: "Social media",
         menuHeading: "Menu",
@@ -50,7 +51,12 @@ export const eventLinkTranslations = {
         ticketPrefix: "Tickets:",
         landingInvitation: "Discover the experience.",
       },
-      pastEditions: {},
+      pastEditions: {
+        "aoa-edition-01": {
+          label: "First edition",
+          ordinal: { number: "1", suffix: "st", noun: "edition" },
+        },
+      },
     },
   },
   es: {
@@ -69,6 +75,7 @@ export const eventLinkTranslations = {
         pastEditions: "Ediciones anteriores",
         galleryAvailableSingular: "galería disponible",
         galleryAvailablePlural: "galerías disponibles",
+        galleryDescription: "Galerías de las ediciones realizadas.",
         galleryEmpty: "Aún no hay galerías disponibles",
         socialMedia: "Redes sociales",
         menuHeading: "Menú",
@@ -92,7 +99,12 @@ export const eventLinkTranslations = {
         ticketPrefix: "Entradas:",
         landingInvitation: "Descubre la experiencia.",
       },
-      pastEditions: {},
+      pastEditions: {
+        "aoa-edition-01": {
+          label: "Primera edición",
+          ordinal: { number: "1", suffix: "era", noun: "edición" },
+        },
+      },
     },
   },
   fr: {
@@ -111,6 +123,7 @@ export const eventLinkTranslations = {
         pastEditions: "Éditions précédentes",
         galleryAvailableSingular: "galerie disponible",
         galleryAvailablePlural: "galeries disponibles",
+        galleryDescription: "Galeries des éditions précédentes.",
         galleryEmpty: "Aucune galerie disponible pour le moment",
         socialMedia: "Réseaux sociaux",
         menuHeading: "Menu",
@@ -134,7 +147,12 @@ export const eventLinkTranslations = {
         ticketPrefix: "Billets :",
         landingInvitation: "Découvrez l’expérience.",
       },
-      pastEditions: {},
+      pastEditions: {
+        "aoa-edition-01": {
+          label: "Première édition",
+          ordinal: { number: "1", suffix: "re", noun: "édition" },
+        },
+      },
     },
   },
 } satisfies LocaleDictionaries<Record<EventLinkId, EventLinkTranslation>>;

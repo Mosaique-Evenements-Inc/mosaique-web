@@ -670,16 +670,15 @@ This document is the source of truth for implementation status. The existence of
   runtime reduced-motion emulation remains unavailable in the in-app browser. Build, 45 tests,
   lint, typecheck, scoped formatter, and diff-check pass. Changes remain local, without commit/push.
 
-- **✅ AOA Gallery disclosure now remains interactive with an empty edition collection.** The
-  existing native `details`/`summary` card now shows a derived zero count and opens to its localized
-  empty message. Real past editions remain driven by stable IDs, optional dates, approved gallery
-  URLs, and feature-owned localized titles; no unverified edition or destination was added. A
-  temporary one-/two-edition page confirmed count changes, direct external links, accessible
-  new-tab notices, Enter disclosure, visible focus, and expanded layouts at 320–1280 px without
-  horizontal overflow or browser errors. The temporary page was removed. This supersedes the
-  previous non-interactive empty Gallery card; Events remains an always-visible static card.
-  Real production gallery links are pending the verified edition URL(s) and any corresponding
-  dates/titles. No client script, dependency, route, or motion was added.
+- **✅ AOA Gallery first-edition link complete locally.** The native `details`/`summary`
+  card shows a collection-derived singular count, a localized description, and one compact nested
+  row with the existing AOA angel logo and localized First Edition label. The owner-confirmed
+  first-edition details now render as a compact title with ordinal, followed by Lola Bar Montréal,
+  Friday 9 October 2026, and the 19:00 start time, localized for EN/ES/FR. Its approved Pixieset
+  `galleryUrl` makes the full row a one-click external link with the directional arrow and
+  localized new-tab notice. Enter/Space disclosure, focus, EN/ES/FR content, and 320–1280 px open-state
+  overflow checks pass. Events remains an always-visible static card; Menu, Social, Share, and
+  producer sections are unchanged.
 
 - **✅ AOA official TikTok profile added locally.** The existing typed social collection now
   lists Instagram followed by the approved TikTok `@amanteoamigo.mtl` profile with the clean
