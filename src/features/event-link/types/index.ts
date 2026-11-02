@@ -66,22 +66,29 @@ export interface EventLinkSocialProfile {
 export interface EventLinkPastEdition {
   id: string;
   date?: EventLinkDate;
-  galleryUrl: EventLinkGalleryUrl;
+  startTime?: EventLinkTime;
+  location?: EventLinkLocation;
+  galleryUrl?: EventLinkGalleryUrl;
 }
 
 export interface EventLinkGalleryDirectoryView {
   sectionLabel: string;
   directoryLabel: string;
   statusLabel: string;
+  description: string;
   emptyLabel: string;
   opensNewTab: string;
   editions: readonly {
     id: string;
     title: string;
-    description?: string;
+    editionLabel: string;
+    ordinal?: { number: string; suffix: string; noun: string };
     date?: EventLinkDate;
     dateLabel?: string;
-    galleryUrl: EventLinkGalleryUrl;
+    startTime?: EventLinkTime;
+    timeLabel?: string;
+    locationLabel?: string;
+    galleryUrl?: EventLinkGalleryUrl;
   }[];
 }
 
@@ -142,6 +149,7 @@ export interface EventLinkTranslation {
     pastEditions: string;
     galleryAvailableSingular: string;
     galleryAvailablePlural: string;
+    galleryDescription: string;
     galleryEmpty: string;
     socialMedia: string;
     menuHeading: string;
@@ -165,5 +173,8 @@ export interface EventLinkTranslation {
     ticketPrefix: string;
     landingInvitation: string;
   };
-  pastEditions: Record<string, { title: string; description?: string }>;
+  pastEditions: Record<
+    string,
+    { label: string; ordinal?: { number: string; suffix: string; noun: string } }
+  >;
 }

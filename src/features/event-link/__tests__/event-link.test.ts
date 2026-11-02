@@ -65,7 +65,15 @@ test("AOA keeps one approved upcoming edition and clean canonical destinations",
       url: "https://www.tiktok.com/@amanteoamigo.mtl",
     },
   ]);
-  assert.deepEqual(pastEditions, []);
+  assert.deepEqual(pastEditions, [
+    {
+      id: "aoa-edition-01",
+      date: "2026-10-09",
+      startTime: "19:00",
+      location: { venue: "Lola Bar", city: "Montréal" },
+      galleryUrl: "https://pharuscreative6.pixieset.com/amanteoamigo/",
+    },
+  ]);
   assert.deepEqual(sponsors, []);
   assert.equal(amanteOAmigoEventLink.producer.id, "mosaique");
   assert.equal(amanteOAmigoEventLink.producer.logoAssetId, "mosaique-complete");
@@ -174,21 +182,41 @@ test("share providers encode approved Unicode text and preserve each payload URL
   );
 });
 
-test("gallery directory exposes an honest empty state with no approved AOA editions", () => {
+test("gallery directory shows approved first-edition metadata and gallery URL", () => {
+  const dateLabels = {
+    en: "Friday, October 9",
+    es: "viernes 9 de octubre",
+    fr: "vendredi 9 octobre",
+  };
+  const timeLabels = { en: "7 p.m.", es: "7 p.\u00a0m.", fr: "19 h" };
   for (const locale of supportedLocales) {
     const content = getLocalizedAmanteOAmigoEventLink(locale, [canonicalEvent]);
-    assert.deepEqual(content.config.pastEditions, []);
-    assert.deepEqual(content.galleryDirectory.editions, []);
+    assert.deepEqual(content.config.pastEditions, amanteOAmigoEventLink.pastEditions);
+    assert.deepEqual(content.galleryDirectory.editions, [
+      {
+        id: "aoa-edition-01",
+        title: canonicalEvent.title,
+        editionLabel: content.copy.pastEditions["aoa-edition-01"].label,
+        ordinal: content.copy.pastEditions["aoa-edition-01"].ordinal,
+        date: "2026-10-09",
+        dateLabel: dateLabels[locale],
+        startTime: "19:00",
+        timeLabel: timeLabels[locale],
+        locationLabel: "Lola Bar Montréal",
+        galleryUrl: "https://pharuscreative6.pixieset.com/amanteoamigo/",
+      },
+    ]);
     assert.equal(content.galleryDirectory.sectionLabel, content.copy.labels.photoGallery);
     assert.equal(content.galleryDirectory.directoryLabel, content.copy.labels.photoGallery);
+    assert.equal(content.galleryDirectory.description, content.copy.labels.galleryDescription);
     assert.equal(
       content.galleryDirectory.statusLabel,
-      `0 ${content.copy.labels.galleryAvailablePlural}`,
+      `1 ${content.copy.labels.galleryAvailableSingular}`,
     );
     assert.equal(content.galleryDirectory.emptyLabel, content.copy.labels.galleryEmpty);
     assert.deepEqual(
-      getEventLinkGalleryDirectory(locale, [], content.copy),
-      content.galleryDirectory,
+      getEventLinkGalleryDirectory(locale, [], content.copy, canonicalEvent.title).editions,
+      [],
     );
   }
 });
@@ -198,7 +226,6 @@ test("gallery directory prepares singular and plural counts without image data",
     {
       id: "edition-test-01",
       date: "2026-10-01",
-      galleryUrl: "/gallery/test-edition-01",
     },
     {
       id: "edition-test-02",
@@ -220,14 +247,24 @@ test("gallery directory prepares singular and plural counts without image data",
     const copy = {
       ...eventLinkTranslations[locale]["event-slot-07"],
       pastEditions: {
-        "edition-test-01": { title: `Test Edition One ${locale}` },
-        "edition-test-02": { title: `Test Edition Two ${locale}` },
-        "edition-test-03": { title: `Test Edition Three ${locale}` },
+        "edition-test-01": { label: `Test Edition One ${locale}` },
+        "edition-test-02": { label: `Test Edition Two ${locale}` },
+        "edition-test-03": { label: `Test Edition Three ${locale}` },
       },
     };
-    const one = getEventLinkGalleryDirectory(locale, fixtures.slice(0, 1), copy);
-    const two = getEventLinkGalleryDirectory(locale, fixtures.slice(0, 2), copy);
-    const three = getEventLinkGalleryDirectory(locale, fixtures, copy);
+    const one = getEventLinkGalleryDirectory(
+      locale,
+      fixtures.slice(0, 1),
+      copy,
+      canonicalEvent.title,
+    );
+    const two = getEventLinkGalleryDirectory(
+      locale,
+      fixtures.slice(0, 2),
+      copy,
+      canonicalEvent.title,
+    );
+    const three = getEventLinkGalleryDirectory(locale, fixtures, copy, canonicalEvent.title);
     assert.ok(one);
     assert.ok(two);
     assert.ok(three);
@@ -238,10 +275,16 @@ test("gallery directory prepares singular and plural counts without image data",
     assert.equal(three.statusLabel, galleryCounts[locale][2]);
     assert.deepEqual(
       three.editions.map(({ id, galleryUrl }) => ({ id, galleryUrl })),
-      fixtures.map(({ id, galleryUrl }) => ({ id, galleryUrl })),
+      fixtures.map((fixture) => ({
+        id: fixture.id,
+        galleryUrl: "galleryUrl" in fixture ? fixture.galleryUrl : undefined,
+      })),
     );
-    assert.equal(three.editions[0].title, `Test Edition One ${locale}`);
+    assert.equal(three.editions[0].title, canonicalEvent.title);
+    assert.equal(three.editions[0].editionLabel, `Test Edition One ${locale}`);
     assert.ok(three.editions[0].dateLabel);
+    assert.equal(three.editions[0].galleryUrl, undefined);
+    assert.equal(three.editions[1].galleryUrl, "https://gallery.example.test/edition-02");
     assert.equal(three.editions[1].date, undefined);
     assert.equal(three.editions[1].dateLabel, undefined);
     assert.equal(new Set(three.editions.map(({ galleryUrl }) => galleryUrl)).size, 3);
@@ -251,8 +294,14 @@ test("gallery directory prepares singular and plural counts without image data",
       ),
     );
     assert.throws(
-      () => getEventLinkGalleryDirectory(locale, fixtures, { ...copy, pastEditions: {} }),
-      /Missing Event Link past-edition title/,
+      () =>
+        getEventLinkGalleryDirectory(
+          locale,
+          fixtures,
+          { ...copy, pastEditions: {} },
+          canonicalEvent.title,
+        ),
+      /Missing Event Link past-edition label/,
     );
   }
 });
@@ -448,25 +497,38 @@ test("the three localized Event Link pages render the shell and inherited SEO me
     const gallerySection = html.match(
       /<section class="event-link-section event-link-gallery-directory"[\s\S]*?<\/section>/,
     )?.[0];
-    assert.ok(gallerySection, `${path}: missing empty gallery section`);
+    assert.ok(gallerySection, `${path}: missing gallery section`);
     assert.ok(
       gallerySection.includes(
         `<h2 id="event-link-gallery-directory-title" class="event-link-section-heading">${copy.labels.photoGallery}</h2>`,
       ),
     );
     assert.ok(gallerySection.includes(`<strong>${copy.labels.photoGallery}</strong>`));
-    assert.ok(gallerySection.includes(copy.labels.galleryEmpty));
+    assert.ok(gallerySection.includes(copy.labels.galleryDescription));
     assert.match(
       gallerySection,
       /<details class="event-link-gallery-directory__disclosure"><summary class="event-link-gallery-directory__card">/,
     );
-    assert.ok(gallerySection.includes(`0 ${copy.labels.galleryAvailablePlural}`));
+    assert.ok(gallerySection.includes(`1 ${copy.labels.galleryAvailableSingular}`));
     assert.match(
       gallerySection,
       /class="event-link-gallery-directory__chevron" aria-hidden="true"[^>]*><svg\b/,
     );
-    assert.match(gallerySection, /<p class="event-link-gallery-directory__empty">/);
-    assert.doesNotMatch(gallerySection, /<a\b|<button\b|<ul\b|edition-test-0/);
+    assert.match(gallerySection, /<ul class="event-link-gallery-directory__list">/);
+    assert.match(
+      gallerySection,
+      /<a class="event-link-gallery-directory__edition" href="https:\/\/pharuscreative6\.pixieset\.com\/amanteoamigo\/" target="_blank" rel="noopener noreferrer">/,
+    );
+    assert.match(gallerySection, /<img\b[^>]*aoa_logo[^>]*\balt(?:="")?(?:\s|>)/);
+    assert.ok(gallerySection.includes(canonicalEvent.title));
+    assert.ok(gallerySection.includes(copy.pastEditions["aoa-edition-01"].label));
+    assert.ok(gallerySection.includes("Lola Bar Montréal"));
+    assert.ok(gallerySection.includes('<time datetime="2026-10-09">'));
+    assert.ok(gallerySection.includes('<time datetime="19:00">'));
+    assert.match(gallerySection, /<sup>(?:st|era|re)<\/sup>/);
+    assert.ok(gallerySection.includes(`(${copy.labels.opensNewTab})`));
+    assert.match(gallerySection, /class="event-link-gallery-directory__arrow"/);
+    assert.doesNotMatch(gallerySection, /<button\b|edition-test-0/);
     assert.ok(html.indexOf(eventsSection) < html.indexOf(menuSection));
     assert.ok(html.indexOf(menuSection) < html.indexOf(gallerySection));
 

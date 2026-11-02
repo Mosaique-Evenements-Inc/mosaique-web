@@ -37,7 +37,15 @@ export const amanteOAmigoEventLink = {
       url: "https://www.tiktok.com/@amanteoamigo.mtl",
     },
   ],
-  pastEditions: [],
+  pastEditions: [
+    {
+      id: "aoa-edition-01",
+      date: "2026-10-09",
+      startTime: "19:00",
+      location: { venue: "Lola Bar", city: "Montréal" },
+      galleryUrl: "https://pharuscreative6.pixieset.com/amanteoamigo/",
+    },
+  ],
   sponsors: [],
   producer: {
     id: "mosaique",

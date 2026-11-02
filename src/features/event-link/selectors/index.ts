@@ -51,10 +51,35 @@ function formatShareDateTime(locale: Locale, date: string, startTime: string) {
   return `${dateLabel} · ${timeLabel}`;
 }
 
+function formatPastEditionDate(locale: Locale, date: string) {
+  const dateValue = new Date(`${date}T12:00:00.000Z`);
+  const options = { timeZone: "UTC" } as const;
+  const languageTag = localeConfig[locale].languageTag;
+  const weekday = new Intl.DateTimeFormat(languageTag, {
+    ...options,
+    weekday: "long",
+  }).format(dateValue);
+  const dayAndMonth = new Intl.DateTimeFormat(languageTag, {
+    ...options,
+    day: "numeric",
+    month: "long",
+  }).format(dateValue);
+  return `${weekday}${locale === "en" ? ", " : " "}${dayAndMonth}`;
+}
+
+function formatPastEditionTime(locale: Locale, startTime: string) {
+  return new Intl.DateTimeFormat(localeConfig[locale].languageTag, {
+    hour: "numeric",
+    hour12: locale !== "fr",
+    timeZone: "UTC",
+  }).format(new Date(`2000-01-01T${startTime}:00.000Z`));
+}
+
 export function getEventLinkGalleryDirectory(
   locale: Locale,
   editions: readonly EventLinkPastEdition[],
   translation: Pick<EventLinkTranslation, "labels" | "pastEditions">,
+  eventTitle: string,
 ): EventLinkGalleryDirectoryView {
   const countLabel =
     editions.length === 1
@@ -65,27 +90,31 @@ export function getEventLinkGalleryDirectory(
     sectionLabel: translation.labels.photoGallery,
     directoryLabel: translation.labels.photoGallery,
     statusLabel: `${editions.length} ${countLabel}`,
+    description: translation.labels.galleryDescription,
     emptyLabel: translation.labels.galleryEmpty,
     opensNewTab: translation.labels.opensNewTab,
     editions: editions.map((edition) => {
       const localized = translation.pastEditions[edition.id];
-      if (!localized?.title) {
-        throw new Error(`Missing Event Link past-edition title: ${edition.id} (${locale}).`);
+      if (!localized?.label) {
+        throw new Error(`Missing Event Link past-edition label: ${edition.id} (${locale}).`);
       }
       return {
         id: edition.id,
-        title: localized.title,
-        ...(localized.description && { description: localized.description }),
+        title: eventTitle,
+        editionLabel: localized.label,
+        ...(localized.ordinal && { ordinal: localized.ordinal }),
         ...(edition.date && {
           date: edition.date,
-          dateLabel: new Intl.DateTimeFormat(localeConfig[locale].languageTag, {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-            timeZone: "UTC",
-          }).format(new Date(`${edition.date}T12:00:00.000Z`)),
+          dateLabel: formatPastEditionDate(locale, edition.date),
         }),
-        galleryUrl: edition.galleryUrl,
+        ...(edition.startTime && {
+          startTime: edition.startTime,
+          timeLabel: formatPastEditionTime(locale, edition.startTime),
+        }),
+        ...(edition.location && {
+          locationLabel: `${edition.location.venue} ${edition.location.city}`,
+        }),
+        ...(edition.galleryUrl && { galleryUrl: edition.galleryUrl }),
       };
     }),
   };
@@ -156,7 +185,12 @@ export function getLocalizedAmanteOAmigoEventLink(
       ...profile,
       displayHandle: `@${profile.handle}`,
     })),
-    galleryDirectory: getEventLinkGalleryDirectory(locale, config.pastEditions, copy),
+    galleryDirectory: getEventLinkGalleryDirectory(
+      locale,
+      config.pastEditions,
+      copy,
+      event.title,
+    ),
     share: {
       upcoming: {
         title: shareTitle,
