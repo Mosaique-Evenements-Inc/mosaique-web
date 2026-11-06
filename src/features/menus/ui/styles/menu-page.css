@@ -395,6 +395,14 @@ html:has(.menu-page) {
 .menu-page__item-trigger:hover {
   background: color-mix(in srgb, var(--menu-gold) 6%, transparent);
 }
+.menu-page .menu-page__item-trigger:focus-visible {
+  outline: none;
+}
+.menu-page__item-trigger:focus-visible ~ .menu-page__item-copy .menu-page__item-name {
+  text-decoration: underline;
+  text-decoration-color: var(--menu-wine);
+  text-underline-offset: 0.15em;
+}
 .menu-page__item-image {
   display: block;
   inline-size: 100%;
