@@ -1,0 +1,24 @@
+---
+import Icon from "@/core/common/ui/components/Icon.astro";
+
+interface Props {
+  title: string;
+  status: string;
+}
+
+const { title, status } = Astro.props;
+---
+
+<details class="event-link-accordion">
+  <summary class="event-link-accordion__summary">
+    <span class="event-link-accordion__icon" aria-hidden="true"><slot name="icon" /></span>
+    <span class="event-link-accordion__label">
+      <strong>{title}</strong>
+      <span>{status}</span>
+    </span>
+    <span class="event-link-accordion__chevron" aria-hidden="true">
+      <Icon name="navArrowDown" size={18} />
+    </span>
+  </summary>
+  <div class="event-link-accordion__panel"><slot /></div>
+</details>

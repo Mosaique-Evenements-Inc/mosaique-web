@@ -4,6 +4,7 @@ import Icon from "@/core/common/ui/components/Icon.astro";
 import { getLocalizedHref, type Locale } from "@/core/i18n";
 import { eventLinkLogoAssets } from "../../data/logo-assets";
 import type { EventLinkGalleryDirectoryView } from "../../types/index.ts";
+import EventLinkAccordion from "./EventLinkAccordion.astro";
 
 interface Props {
   directory: EventLinkGalleryDirectoryView;
@@ -31,19 +32,8 @@ const rows = directory.editions.map((edition) => ({
   <h2 id={`${instanceId}-title`} class="event-link-section-heading">
     {directory.sectionLabel}
   </h2>
-  <details class="event-link-gallery-directory__disclosure">
-    <summary class="event-link-gallery-directory__card">
-      <span class="event-link-gallery-directory__icon" aria-hidden="true">
-        <Icon name="mediaImage" size={22} />
-      </span>
-      <span class="event-link-gallery-directory__summary-copy">
-        <strong>{directory.directoryLabel}</strong>
-        <span>{directory.statusLabel}</span>
-      </span>
-      <span class="event-link-gallery-directory__chevron" aria-hidden="true">
-        <Icon name="navArrowDown" size={22} />
-      </span>
-    </summary>
+  <EventLinkAccordion title={directory.directoryLabel} status={directory.statusLabel}>
+    <Image slot="icon" src={logo} alt="" />
     {
       hasEditions ? (
         <div class="event-link-gallery-directory__content">
@@ -85,21 +75,13 @@ const rows = directory.editions.map((edition) => ({
                           edition.editionLabel
                         )}
                       </strong>
-                      {(edition.locationLabel || edition.date || edition.startTime) && (
+                      {(edition.locationLabel || edition.date) && (
                         <span class="event-link-gallery-directory__edition-meta">
                           {edition.locationLabel && <span>{edition.locationLabel}</span>}
                           {edition.date && (
                             <>
                               {edition.locationLabel && <span aria-hidden="true"> · </span>}
                               <time datetime={edition.date}>{edition.dateLabel}</time>
-                            </>
-                          )}
-                          {edition.startTime && (
-                            <>
-                              {(edition.locationLabel || edition.date) && (
-                                <span aria-hidden="true"> · </span>
-                              )}
-                              <time datetime={edition.startTime}>{edition.timeLabel}</time>
                             </>
                           )}
                         </span>
@@ -123,5 +105,5 @@ const rows = directory.editions.map((edition) => ({
         <p class="event-link-gallery-directory__empty">{directory.emptyLabel}</p>
       )
     }
-  </details>
+  </EventLinkAccordion>
 </section>

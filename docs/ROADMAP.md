@@ -556,7 +556,14 @@ This document is the source of truth for implementation status. The existence of
   1024, 1280, and 1600 px, with both share actions, Instagram, Menu, Event Detail, Tree, and
   language routes intact. The component adds no gallery images, lightbox, client JavaScript,
   dependency, motion, producer, or sponsors. Runtime reduced-motion emulation remains unverified;
-  there is no Gallery Directory animation to vary. Real gallery records remain pending.
+  there was no Gallery Directory animation to vary at that checkpoint.
+- **✅ Photo Gallery accordion adapted from PC React `/tree` locally.** The historical
+  `EventGroupCard` in `EventAccordionList.tsx` (before PC React commit `7f9f762`) informed the
+  rounded card, icon, count, chevron, and expanding panel. `EventLinkAccordion.astro` uses native
+  disclosure for Photo Gallery, which starts collapsed with the Amante o Amigo logo.
+  The Menu link shares the gallery card’s surface, icon tile, and typography.
+  Events uses the full event card. Supported browsers animate the gallery panel when
+  reduced motion is off.
 - **✅ Step 9 — Produced by MOSAÏQUE attribution is complete locally.** The Event Link
   selector prepares the existing producer identity and approved EN/ES/FR label for one
   feature-owned Astro attribution component. It uses the registered official MOSAÏQUE logo,
