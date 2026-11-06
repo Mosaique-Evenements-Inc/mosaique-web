@@ -45,18 +45,16 @@ export const menuProviders: readonly MenuProvider[] = [
         {
           id: "food",
           items: [
-            { id: "tacos-de-lomo-saltado", price: 20 },
-            { id: "causa-de-pollo", price: 18 },
-            { id: "arroz-con-mariscos", price: 25 },
-            { id: "ceviche-colombiano-de-camarones", price: 25 },
-            { id: "empanadas-colombianas", price: 16 },
+            { id: "tacos-de-lomo-saltado", price: 25, imageId: "lomo-saltado-tacos" },
+            { id: "empanadas-colombianas", price: 16, imageId: "colombian-empanadas" },
+            { id: "arroz-chaufa-de-pollo", price: 20, imageId: "chicken-chaufa-rice" },
           ],
         },
         {
           id: "desserts",
           items: [
-            { id: "alfajores", price: 4.5 },
-            { id: "tres-leches", price: 8 },
+            { id: "tiramisu", price: 8, imageId: "tiramisu" },
+            { id: "tres-leches", price: 8, imageId: "tres-leches" },
           ],
         },
       ],

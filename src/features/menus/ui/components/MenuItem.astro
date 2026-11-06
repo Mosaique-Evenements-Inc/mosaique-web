@@ -1,21 +1,61 @@
 ---
-import { type Locale } from "@/core/i18n";
-import Text from "@/core/common/ui/components/Text.astro";
-import { formatMenuPrice, type MenuItem as MenuItemData } from "@/features/menus";
+import type { Locale } from "@/core/i18n";
+import { Image } from "astro:assets";
+import {
+  formatMenuPrice,
+  type MenuItem as MenuItemData,
+  type MenuRelatedEvent,
+} from "@/features/menus";
+import { menuDishImages } from "../assets/dishes";
+import { getMenuUiCopy } from "../copy";
+import MenuDishDialog from "./MenuDishDialog.astro";
 
 interface Props {
   item: MenuItemData;
   locale: Locale;
+  dessert: boolean;
+  relatedEvent?: MenuRelatedEvent;
 }
 
-const { item, locale } = Astro.props;
+const { item, locale, dessert, relatedEvent } = Astro.props;
+const copy = getMenuUiCopy(locale);
+const dialogId = `menu-dish-${item.id}`;
+const image = item.imageId ? menuDishImages[item.imageId] : undefined;
 ---
 
-<li class="menu-page__item">
+<li class="menu-page__item" data-menu-dish>
+  <button
+    type="button"
+    class="menu-page__item-trigger"
+    aria-label={copy.viewDish.replace("{dish}", item.name)}
+    aria-haspopup="dialog"
+    aria-controls={dialogId}
+    data-menu-dish-open></button>
+  {
+    image ? (
+      <Image
+        class="menu-page__item-image"
+        src={image}
+        alt={item.imageAlt ?? item.name}
+        widths={[160, 320, 480]}
+        sizes="(max-width: 639px) 40vw, 240px"
+        format="webp"
+        loading="lazy"
+      />
+    ) : (
+      <span class="menu-page__item-image menu-page__item-image--pending" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M4 14h24v14H4zM4 14l12-8 12 8M16 6V3M4 20c3 4 5-4 8 0s5-4 8 0 5-4 8 0" />
+        </svg>
+      </span>
+    )
+  }
   <div class="menu-page__item-copy">
     <h3 class="menu-page__item-name">{item.name}</h3>
+    {item.description && <p class="menu-page__item-description">{item.description}</p>}
+    <span class="menu-page__price menu-page__item-price"
+      >{formatMenuPrice(item.price, locale)}</span
+    >
   </div>
-  <span class="menu-page__leader" aria-hidden="true"></span>
-  <span class="menu-page__price">{formatMenuPrice(item.price, locale)}</span>
-  {item.description && <Text class="menu-page__item-description">{item.description}</Text>}
+  <MenuDishDialog {item} {locale} id={dialogId} {dessert} {relatedEvent} />
 </li>

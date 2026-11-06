@@ -123,12 +123,10 @@ test("Alfajores Fleur retains approved items, prices, social identity, and AOA e
       items.map(({ id, price }) => [id, price]),
     ),
     [
-      ["tacos-de-lomo-saltado", 20],
-      ["causa-de-pollo", 18],
-      ["arroz-con-mariscos", 25],
-      ["ceviche-colombiano-de-camarones", 25],
+      ["tacos-de-lomo-saltado", 25],
       ["empanadas-colombianas", 16],
-      ["alfajores", 4.5],
+      ["arroz-chaufa-de-pollo", 20],
+      ["tiramisu", 8],
       ["tres-leches", 8],
     ],
   );
@@ -140,7 +138,9 @@ test("Alfajores Fleur retains approved items, prices, social identity, and AOA e
   assert.ok(
     realProvider.menu.sections
       .flatMap(({ items }) => items)
-      .every((item) => Object.keys(item).sort().join(",") === "id,price"),
+      .every((item) =>
+        Object.keys(item).every((key) => ["id", "price", "imageId"].includes(key)),
+      ),
   );
   assert.deepEqual(realProvider.socialLinks, [
     {
@@ -294,19 +294,33 @@ test("real AOA override wins every presentation role over a distinguishable base
 });
 
 test("Alfajores Fleur localizes section labels while preserving approved dish names", () => {
-  const approvedNames = [
-    "Tacos de lomo saltado",
-    "Causa de pollo",
-    "Arroz con mariscos",
-    "Ceviche colombiano de camarones",
-    "Empanadas colombianas",
-    "Alfajores",
-    "Tres leches",
-  ];
+  const approvedNames = {
+    en: [
+      "Lomo saltado tacos",
+      "Colombian empanadas",
+      "Chicken chaufa rice",
+      "Tiramisu",
+      "Tres leches",
+    ],
+    es: [
+      "Tacos de lomo saltado",
+      "Empanadas colombianas",
+      "Arroz chaufa de pollo",
+      "Tiramisú",
+      "Tres leches",
+    ],
+    fr: [
+      "Tacos de lomo saltado",
+      "Empanadas colombiennes",
+      "Riz chaufa au poulet",
+      "Tiramisu",
+      "Tres leches",
+    ],
+  };
   for (const [locale, sectionLabels] of [
-    ["en", ["Menu", "Desserts"]],
-    ["es", ["Menú", "Postres"]],
-    ["fr", ["Menu", "Desserts"]],
+    ["en", ["Main dishes", "Desserts"]],
+    ["es", ["Platos principales", "Postres"]],
+    ["fr", ["Plats principaux", "Desserts"]],
   ] as const) {
     const menu = getLocalizedMenu(menuProviders[0], locale);
     assert.equal(menu.title, "Alfajores Fleur");
@@ -317,13 +331,10 @@ test("Alfajores Fleur localizes section labels while preserving approved dish na
     );
     assert.deepEqual(
       menu.sections.flatMap(({ items }) => items.map(({ name }) => name)),
-      approvedNames,
+      approvedNames[locale],
     );
-    assert.ok(
-      menu.sections
-        .flatMap(({ items }) => items)
-        .every(({ description }) => description === undefined),
-    );
+    assert.ok(menu.sections[0].items.every(({ description }) => description));
+    assert.ok(menu.sections[1].items.every(({ description }) => description));
     assert.match(formatMenuPrice(4.5, locale), /4[.,]50/);
   }
 });
@@ -343,19 +354,9 @@ test("built Alfajores Fleur menus render generic event branding above content an
     assert.ok(logoIndex >= 0 && logoIndex < titleIndex && titleIndex < itemsIndex);
     assert.ok(attributionIndex > itemsIndex);
     assert.match(main, /alt="AOA"/);
-    assert.equal((main.match(/class="menu-page__item"/g) ?? []).length, 7);
+    assert.equal((main.match(/class="menu-page__item"/g) ?? []).length, 5);
     assert.match(main, /@alfajoresfleur/);
     assert.match(main.slice(attributionIndex), /MOSAÏQUE ÉVÉNEMENTS/);
-    assert.match(
-      main.slice(attributionIndex),
-      /class="menu-page__attribution-divider" aria-hidden="true"/,
-    );
-    assert.match(main.slice(attributionIndex), new RegExp(`href="/${prefix}amante-o-amigo/"`));
-    assert.match(main.slice(attributionIndex), /aoa_logo.*?\.svg" alt(?:\s|>)/);
-    assert.equal(
-      (main.slice(attributionIndex).match(/class="menu-page__attribution-link"/g) ?? []).length,
-      2,
-    );
     assert.match(main, /--menu-background:#F3E5D2/);
     assert.match(main, /--menu-surface:#FDE39F/);
     assert.match(main, /--menu-text:#211B19/);
@@ -401,7 +402,8 @@ test("built editorial menus preserve localized actions, accessible decoration, a
       html,
       /href="https:\/\/www.instagram.com\/alfajoresfleur\/" target="_blank" rel="noopener noreferrer"/,
     );
-    assert.equal((html.match(/class="menu-page__leader" aria-hidden="true"/g) ?? []).length, 7);
+    assert.equal((html.match(/class="menu-page__item-trigger"/g) ?? []).length, 5);
+    assert.equal((html.match(/<dialog\b/g) ?? []).length, 5);
     assert.match(html, /class="menu-page__atmosphere" aria-hidden="true"/);
     assert.match(html, /mosaique_logo_complete/);
     assert.ok(
@@ -622,4 +624,86 @@ test("event configuration fully replaces restaurant theme when present", () => {
     () => validateMenuRegistry([incompleteTypography], translations),
     /missing IDs/,
   );
+});
+
+test("dish rows and branded dialogs render translated categories, details, prices, and photos", () => {
+  const realProvider = menuProviders[0];
+  for (const [locale, mainDish, dessert] of [
+    ["en", "Main course", "Dessert"],
+    ["es", "Plato principal", "Postre"],
+    ["fr", "Plat principal", "Dessert"],
+  ] as const) {
+    const menu = getLocalizedMenu(realProvider, locale);
+    const prefix = locale === "en" ? "" : `${locale}/`;
+    const html = readFileSync(
+      new URL(`../../../../dist/${prefix}menu/alfajores-fleur/index.html`, import.meta.url),
+      "utf8",
+    );
+    assert.equal(menu.sections.flatMap(({ items }) => items).length, 5);
+    assert.equal((html.match(/aria-haspopup="dialog"/g) ?? []).length, 5);
+    const dialogs = html.match(/<dialog\b[^>]*>[\s\S]*?<\/dialog>/g) ?? [];
+    assert.equal(dialogs.length, 5);
+    for (const section of menu.sections) {
+      for (const item of section.items) {
+        const id = `menu-dish-${item.id}`;
+        assert.ok(html.includes(`aria-controls="${id}"`));
+        const dialog = dialogs.find((markup) => markup.includes(`id="${id}"`));
+        assert.ok(dialog);
+        assert.ok(dialog.includes(`aria-labelledby="${id}-title"`));
+        assert.match(dialog, /aoa_logo.*?\.svg.*?class="menu-page__dish-brand-logo"/);
+        assert.match(dialog, /class="menu-page__dish-brand-name">Amante o Amigo</);
+        const category = section.id === "desserts" ? dessert : mainDish;
+        assert.match(dialog, new RegExp(`</svg>\\s*${category}\\s*</p>`));
+        assert.ok(dialog.includes(formatMenuPrice(item.price, locale)));
+        if (item.imageId) assert.ok(dialog.includes(`alt="${item.imageAlt ?? item.name}"`));
+        if (item.description) assert.ok(dialog.includes(item.description));
+      }
+    }
+    assert.deepEqual(
+      menu.sections[1].items.map(({ imageId }) => imageId),
+      ["tiramisu", "tres-leches"],
+    );
+    assert.ok(menu.sections[1].items.every(({ imageAlt }) => imageAlt?.length));
+    assert.doesNotMatch(
+      html,
+      /Causa de pollo|Arroz con mariscos|Ceviche colombiano|menu-page__highlights/,
+    );
+  }
+});
+
+test("optional dish images validate against the asset registry", () => {
+  assert.doesNotThrow(() => validateMenuRegistry(menuProviders, menuTranslations));
+  assert.equal(
+    localizeMenu(provider, "en", translations).sections[0].items[0].imageId,
+    undefined,
+  );
+  const unsupported = structuredClone(menuProviders[0]);
+  const item = unsupported.menu.sections[0].items[0];
+  item.imageId = "unknown" as never;
+  assert.throws(
+    () => validateMenuRegistry([unsupported], menuTranslations),
+    /unsupported image/,
+  );
+});
+
+test("footer restores two branded links with localized event destinations", () => {
+  for (const [prefix, eventPath] of [
+    ["", "/amante-o-amigo/"],
+    ["es/", "/es/amante-o-amigo/"],
+    ["fr/", "/fr/amante-o-amigo/"],
+  ] as const) {
+    const html = readFileSync(
+      new URL(`../../../../dist/${prefix}menu/alfajores-fleur/index.html`, import.meta.url),
+      "utf8",
+    );
+    const footer = html.slice(html.indexOf('<footer class="menu-page__attribution"'));
+    const links = footer.match(/<a\b[^>]*>[\s\S]*?<\/a>/g) ?? [];
+    assert.equal(links.length, 2);
+    assert.match(links[0], /href="https:\/\/mosaiqueevenements\.com"/);
+    assert.match(links[0], /alt="MOSAÏQUE ÉVÉNEMENTS"/);
+    assert.ok(links[1].includes(`href="${eventPath}"`));
+    assert.match(links[1], /aoa_logo.*?\.svg/);
+    assert.match(footer, /class="menu-page__attribution-divider" aria-hidden="true"/);
+    assert.match(footer, /Montréal, Québec/);
+  }
 });
