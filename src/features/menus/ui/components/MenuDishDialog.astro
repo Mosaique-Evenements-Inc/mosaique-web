@@ -1,0 +1,139 @@
+---
+import { Image } from "astro:assets";
+import type { Locale } from "@/core/i18n";
+import { formatMenuPrice, type MenuItem, type MenuRelatedEvent } from "@/features/menus";
+import { menuDishImages } from "../assets/dishes";
+import { menuLogoAssets } from "../assets/logos";
+import { getMenuUiCopy } from "../copy";
+import MenuSectionIcon from "./MenuSectionIcon.astro";
+
+interface Props {
+  item: MenuItem;
+  locale: Locale;
+  id: string;
+  dessert: boolean;
+  relatedEvent?: MenuRelatedEvent;
+}
+const { item, locale, id, dessert, relatedEvent } = Astro.props;
+const copy = getMenuUiCopy(locale);
+const image = item.imageId ? menuDishImages[item.imageId] : undefined;
+const eventLogo = relatedEvent ? menuLogoAssets[relatedEvent.logoAssetId] : undefined;
+---
+
+<dialog
+  class="menu-page__dish-dialog"
+  id={id}
+  aria-labelledby={`${id}-title`}
+  aria-describedby={item.description ? `${id}-description` : undefined}
+>
+  <button
+    type="button"
+    class="menu-page__dish-close"
+    aria-label={copy.closeDish}
+    data-menu-dish-close
+    autofocus
+  >
+    <svg
+      viewBox="0 0 24 24"
+      width="24"
+      height="24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      aria-hidden="true"
+    >
+      <path d="m5 5 14 14M5 19 19 5"></path>
+    </svg>
+  </button>
+  <div
+    class="menu-page__dish-detail"
+    tabindex="0"
+    role="region"
+    aria-labelledby={`${id}-title`}
+    data-menu-dish-detail
+  >
+    <div class:list={["menu-page__dish-hero", { "menu-page__dish-hero--photo": image }]}>
+      {
+        image && (
+          <Image
+            src={image}
+            alt={item.imageAlt ?? item.name}
+            widths={[480, 800, 1200]}
+            sizes="(max-width: 639px) calc(100vw - 1rem), 576px"
+            format="webp"
+            loading="lazy"
+            class="menu-page__dish-photo"
+          />
+        )
+      }
+      {
+        relatedEvent && eventLogo && (
+          <div class="menu-page__dish-brand">
+            <Image src={eventLogo} alt="" class="menu-page__dish-brand-logo" />
+            <p class="menu-page__dish-brand-name">{relatedEvent.name}</p>
+            <p class="menu-page__dish-menu">{copy.menu}</p>
+          </div>
+        )
+      }
+    </div>
+    <div class="menu-page__dish-panel">
+      <p class="menu-page__dish-category">
+        <MenuSectionIcon class="menu-page__dish-category-icon" {dessert} />
+        {dessert ? copy.dessert : copy.mainDish}
+      </p>
+      <h2 id={`${id}-title`}>{item.name}</h2>
+      {
+        item.description && (
+          <p id={`${id}-description`} class="menu-page__dish-description">
+            {item.description}
+          </p>
+        )
+      }
+      <p class="menu-page__price menu-page__dish-price">
+        {formatMenuPrice(item.price, locale)}
+      </p>
+      <div class="menu-page__dish-ornament" aria-hidden="true">∞</div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  function initializeDishDialogs() {
+    document.querySelectorAll<HTMLElement>("[data-menu-dish]").forEach((row) => {
+      if (row.dataset.ready === "true") return;
+      const trigger = row.querySelector<HTMLButtonElement>("[data-menu-dish-open]");
+      const dialog = row.querySelector<HTMLDialogElement>("dialog");
+      const close = dialog?.querySelector<HTMLButtonElement>("[data-menu-dish-close]");
+      const detail = dialog?.querySelector<HTMLElement>("[data-menu-dish-detail]");
+      if (!trigger || !dialog || !close || !detail) return;
+      row.dataset.ready = "true";
+      let previousOverflow = "";
+      trigger.addEventListener("click", () => {
+        if (dialog.open) return;
+        previousOverflow = document.documentElement.style.overflow;
+        document.documentElement.style.overflow = "hidden";
+        dialog.showModal();
+        detail.scrollTop = 0;
+        close.focus({ preventScroll: true });
+      });
+      close.addEventListener("click", () => dialog.close());
+      dialog.addEventListener("click", (event) => {
+        if (event.target !== dialog) return;
+        const bounds = dialog.getBoundingClientRect();
+        if (
+          event.clientX < bounds.left ||
+          event.clientX > bounds.right ||
+          event.clientY < bounds.top ||
+          event.clientY > bounds.bottom
+        )
+          dialog.close();
+      });
+      dialog.addEventListener("close", () => {
+        document.documentElement.style.overflow = previousOverflow;
+        trigger.focus({ preventScroll: true });
+      });
+    });
+  }
+  initializeDishDialogs();
+  document.addEventListener("astro:page-load", initializeDishDialogs);
+</script>

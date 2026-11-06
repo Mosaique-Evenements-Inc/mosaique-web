@@ -9,6 +9,10 @@ const menuUiCopy = {
     relatedEventAttribution: "Discover the {event} universe",
     menu: "Menu",
     follow: "Follow us on",
+    viewDish: "View details: {dish}",
+    closeDish: "Close dish details",
+    mainDish: "Main course",
+    dessert: "Dessert",
   },
   es: {
     languages: "Idioma del menú",
@@ -18,6 +22,10 @@ const menuUiCopy = {
     relatedEventAttribution: "Descubre el universo de {event}",
     menu: "Menú",
     follow: "Síguenos en",
+    viewDish: "Ver detalles: {dish}",
+    closeDish: "Cerrar detalles del plato",
+    mainDish: "Plato principal",
+    dessert: "Postre",
   },
   fr: {
     languages: "Langue du menu",
@@ -27,6 +35,10 @@ const menuUiCopy = {
     relatedEventAttribution: "Découvrez l’univers d’{event}",
     menu: "Menu",
     follow: "Suivez-nous sur",
+    viewDish: "Voir les détails : {dish}",
+    closeDish: "Fermer les détails du plat",
+    mainDish: "Plat principal",
+    dessert: "Dessert",
   },
 } as const satisfies Record<
   Locale,
@@ -38,6 +50,10 @@ const menuUiCopy = {
     relatedEventAttribution: string;
     menu: string;
     follow: string;
+    viewDish: string;
+    closeDish: string;
+    mainDish: string;
+    dessert: string;
   }
 >;
 

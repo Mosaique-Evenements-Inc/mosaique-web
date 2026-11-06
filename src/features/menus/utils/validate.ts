@@ -1,7 +1,11 @@
 import { assertUniqueValues } from "../../../core/common/utils/assert-unique-values.ts";
 import { supportedLocales, type Locale } from "../../../core/i18n/config/locales.ts";
 import type { LocaleDictionaries } from "../../../core/i18n/translation/contracts.ts";
-import { MENU_LOGO_ASSET_IDS, MENU_SOCIAL_PLATFORMS } from "../types/index.ts";
+import {
+  MENU_LOGO_ASSET_IDS,
+  MENU_SOCIAL_PLATFORMS,
+  MENU_DISH_IMAGE_IDS,
+} from "../types/index.ts";
 import type {
   MenuProvider,
   MenuSocialLink,
@@ -148,6 +152,9 @@ export function validateMenuRegistry(
       requireText(section.id, `Menu provider ${provider.id} section ID`);
       for (const item of section.items) {
         requireText(item.id, `Menu provider ${provider.id} item ID`);
+        if (item.imageId !== undefined && !MENU_DISH_IMAGE_IDS.includes(item.imageId)) {
+          throw new Error(`Menu item ${item.id} has an unsupported image.`);
+        }
         if (!Number.isFinite(item.price) || item.price < 0) {
           throw new Error(`Menu provider ${provider.id} item ${item.id} has an invalid price.`);
         }
@@ -193,6 +200,9 @@ function validateMenuTranslation(
     for (const item of section.items) {
       const localizedItem = localizedSection.items[item.id];
       requireText(localizedItem.name, `${label} item ${item.id} name`);
+      if (localizedItem.imageAlt !== undefined) {
+        requireText(localizedItem.imageAlt, `${label} item ${item.id} image alt`);
+      }
       if (localizedItem.description !== undefined) {
         requireText(localizedItem.description, `${label} item ${item.id} description`);
       }

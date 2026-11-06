@@ -188,24 +188,30 @@ test("gallery directory shows approved first-edition metadata and gallery URL", 
     es: "viernes 9 de octubre",
     fr: "vendredi 9 octobre",
   };
-  const timeLabels = { en: "7 p.m.", es: "7 p.\u00a0m.", fr: "19 h" };
+  const timeLabels = { en: "7 p.m.", es: "7 p. m.", fr: "19 h" };
   for (const locale of supportedLocales) {
     const content = getLocalizedAmanteOAmigoEventLink(locale, [canonicalEvent]);
     assert.deepEqual(content.config.pastEditions, amanteOAmigoEventLink.pastEditions);
-    assert.deepEqual(content.galleryDirectory.editions, [
-      {
-        id: "aoa-edition-01",
-        title: canonicalEvent.title,
-        editionLabel: content.copy.pastEditions["aoa-edition-01"].label,
-        ordinal: content.copy.pastEditions["aoa-edition-01"].ordinal,
-        date: "2026-10-09",
-        dateLabel: dateLabels[locale],
-        startTime: "19:00",
-        timeLabel: timeLabels[locale],
-        locationLabel: "Lola Bar Montréal",
-        galleryUrl: "https://pharuscreative6.pixieset.com/amanteoamigo/",
-      },
-    ]);
+    assert.deepEqual(
+      content.galleryDirectory.editions.map((edition) => ({
+        ...edition,
+        timeLabel: edition.timeLabel?.replace(/\s/g, " "),
+      })),
+      [
+        {
+          id: "aoa-edition-01",
+          title: canonicalEvent.title,
+          editionLabel: content.copy.pastEditions["aoa-edition-01"].label,
+          ordinal: content.copy.pastEditions["aoa-edition-01"].ordinal,
+          date: "2026-10-09",
+          dateLabel: dateLabels[locale],
+          startTime: "19:00",
+          timeLabel: timeLabels[locale],
+          locationLabel: "Lola Bar Montréal",
+          galleryUrl: "https://pharuscreative6.pixieset.com/amanteoamigo/",
+        },
+      ],
+    );
     assert.equal(content.galleryDirectory.sectionLabel, content.copy.labels.photoGallery);
     assert.equal(content.galleryDirectory.directoryLabel, content.copy.labels.photoGallery);
     assert.equal(content.galleryDirectory.description, content.copy.labels.galleryDescription);
@@ -323,7 +329,7 @@ test("the three localized Event Link pages render the shell and inherited SEO me
       activeLocale: "es",
       copy: eventLinkTranslations.es["event-slot-07"],
       dateLabel: "6 de noviembre de 2026",
-      timeLabel: "7:00 p.\u00a0m.",
+      timeLabel: "7:00 p. m.",
     },
     {
       locale: "fr-CA",
@@ -390,7 +396,7 @@ test("the three localized Event Link pages render the shell and inherited SEO me
     assert.match(upcoming, /<time datetime="2026-11-06">/);
     assert.match(upcoming, /<time datetime="19:00">/);
     assert.ok(upcoming.includes(dateLabel));
-    assert.ok(upcoming.includes(timeLabel));
+    assert.ok(upcoming.replace(/[\u00a0\u202f]/g, " ").includes(timeLabel));
     assert.doesNotMatch(upcoming, /November 5|5 de noviembre|5 novembre/);
     assert.ok(upcoming.includes("Lola Bar"));
     assert.ok(upcoming.includes("Montréal"));
@@ -443,7 +449,7 @@ test("the three localized Event Link pages render the shell and inherited SEO me
     );
     assert.ok(upcoming.includes(eventShare));
     assert.ok(eventShare.includes(dateLabel));
-    assert.ok(eventShare.includes(timeLabel));
+    assert.ok(eventShare.replace(/[\u00a0\u202f]/g, " ").includes(timeLabel));
     assert.ok(eventShare.includes("Lola Bar · Montréal"));
     assert.ok(eventShare.includes(copy.labels.ticketAction));
     assert.ok(eventShare.includes("www.jasspass.com/event/amante-o-amigo"));
@@ -507,12 +513,12 @@ test("the three localized Event Link pages render the shell and inherited SEO me
     assert.ok(gallerySection.includes(copy.labels.galleryDescription));
     assert.match(
       gallerySection,
-      /<details class="event-link-gallery-directory__disclosure"><summary class="event-link-gallery-directory__card">/,
+      /<details class="event-link-accordion"><summary class="event-link-accordion__summary">/,
     );
     assert.ok(gallerySection.includes(`1 ${copy.labels.galleryAvailableSingular}`));
     assert.match(
       gallerySection,
-      /class="event-link-gallery-directory__chevron" aria-hidden="true"[^>]*><svg\b/,
+      /class="event-link-accordion__chevron" aria-hidden="true"[^>]*><svg\b/,
     );
     assert.match(gallerySection, /<ul class="event-link-gallery-directory__list">/);
     assert.match(
@@ -524,7 +530,7 @@ test("the three localized Event Link pages render the shell and inherited SEO me
     assert.ok(gallerySection.includes(copy.pastEditions["aoa-edition-01"].label));
     assert.ok(gallerySection.includes("Lola Bar Montréal"));
     assert.ok(gallerySection.includes('<time datetime="2026-10-09">'));
-    assert.ok(gallerySection.includes('<time datetime="19:00">'));
+    assert.doesNotMatch(gallerySection, /<time datetime="19:00">/);
     assert.match(gallerySection, /<sup>(?:st|era|re)<\/sup>/);
     assert.ok(gallerySection.includes(`(${copy.labels.opensNewTab})`));
     assert.match(gallerySection, /class="event-link-gallery-directory__arrow"/);

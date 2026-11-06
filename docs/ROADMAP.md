@@ -341,13 +341,33 @@ This document is the source of truth for implementation status. The existence of
 
 ### Menus V1
 
-- **✅ Alfajores Fleur dual-brand attribution implemented locally.** Its existing Mosaïque
-  discovery link now shares a two-column footer with a localized Amante o Amigo discovery link,
-  the approved AOA logo, and a fine wine-tinted vertical divider. The provider owns the related
-  event identity and route; Menu-owned EN/ES/FR copy supplies the invitation, and the route uses
-  the existing locale helper. The location line remains below both logos. Mobile-to-desktop
-  visual review confirms the two links remain distinct and readable without horizontal overflow;
-  no hydration, motion, or dependency was added.
+- **✅ Alfajores Fleur menu redesign and dish details: implemented locally (2026-11-05).**
+  Menu-owned contracts are separated into theme (including logo/typography), social, provider
+  (including related-event identity), content, and translation modules, with stable barrel
+  exports. `config` and `eventConfig` retain the same complete `MenuThemeConfig` contract and
+  full-replacement resolution; no Events-domain or core abstraction was introduced.
+  The user's revised event menu supersedes the earlier seven-product set: tacos 25 CAD,
+  Colombian empanadas 16 CAD, chicken chaufa rice 20 CAD, tiramisu 8 CAD, and tres leches 8 CAD.
+  Canonical section items supply EN/ES/FR names and approved descriptions, three supplied
+  main-dish photos, and two generated dessert illustrations identified in localized alt text.
+  The optional `imageId` is validated against the typed local asset registry. The supplied
+  `fleur_causa.jpeg` is stored as `arroz-chaufa-de-pollo.jpeg`.
+  The menu has a centered hero, a single dark Instagram link, horizontal main-dish cards and
+  vertical dessert cards in two columns when there is sufficient room. The original
+  two-column footer links the Mosaïque text and logo to the Mosaïque website and the
+  Amante o Amigo text and logo to the localized event page, with a divider between them.
+  Each full-row button opens a native dialog. The full-width dish photo carries the event logo
+  and a floating close button. An overlapping cream panel contains the localized category,
+  description, and CAD price. The panel scrolls within the modal on short viewports while the
+  close button remains reachable. Images use responsive WebP via Astro Assets. No hydration
+  or new dependency was introduced.
+  Visual and responsive checks cover mobile through desktop. At 320 px the dessert cards stack
+  to preserve legibility. The dialog fades only when the browser supports discrete transitions
+  and the user allows motion. The reduced-motion preference was not emulated in the browser.
+  Build (87 pages), typecheck (220 files), all 29 Menu tests, source lint, formatting, and
+  diff-check pass. The global suite retains two pre-existing Event Link failures (gallery
+  directory metadata/time formatting and localized shell SEO), with 48 of 50 tests passing;
+  global lint retains the 2521 generated `.vercel/output` errors.
 
 - **✅ MENUS-00 through MENUS-02.1: complete.** The feature has a canonical provider contract,
   localized EN/ES/FR content and routes, CAD formatting, language-routing support, and optional
@@ -536,7 +556,14 @@ This document is the source of truth for implementation status. The existence of
   1024, 1280, and 1600 px, with both share actions, Instagram, Menu, Event Detail, Tree, and
   language routes intact. The component adds no gallery images, lightbox, client JavaScript,
   dependency, motion, producer, or sponsors. Runtime reduced-motion emulation remains unverified;
-  there is no Gallery Directory animation to vary. Real gallery records remain pending.
+  there was no Gallery Directory animation to vary at that checkpoint.
+- **✅ Photo Gallery accordion adapted from PC React `/tree` locally.** The historical
+  `EventGroupCard` in `EventAccordionList.tsx` (before PC React commit `7f9f762`) informed the
+  rounded card, icon, count, chevron, and expanding panel. `EventLinkAccordion.astro` uses native
+  disclosure for Photo Gallery, which starts collapsed with the Amante o Amigo logo.
+  The Menu link shares the gallery card’s surface, icon tile, and typography.
+  Events uses the full event card. Supported browsers animate the gallery panel when
+  reduced motion is off.
 - **✅ Step 9 — Produced by MOSAÏQUE attribution is complete locally.** The Event Link
   selector prepares the existing producer identity and approved EN/ES/FR label for one
   feature-owned Astro attribution component. It uses the registered official MOSAÏQUE logo,

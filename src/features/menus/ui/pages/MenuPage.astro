@@ -45,33 +45,36 @@ const logoImage = theme.logo ? menuLogoAssets[theme.logo.assetId] : undefined;
       <MenuLanguageSwitcher {provider} {locale} currentUrl={Astro.url} label={copy.languages} />
       <div class="menu-page__inner">
         <header class="menu-page__header">
-          {
-            theme.logo && logoImage && (
-              <div class="menu-page__brand">
-                <Image
-                  src={logoImage}
-                  alt={theme.logo.alt}
-                  class="menu-page__brand-logo"
-                  width={logoImage.width}
-                  height={logoImage.height}
-                  loading="eager"
-                  decoding="async"
-                />
-              </div>
-            )
-          }
-          <div class="menu-page__identity">
-            <Heading as="h1" variant="heading-lg" class="menu-page__title">{menu.title}</Heading
-            >
-            <p class="menu-page__eyebrow">{copy.menu}</p>
-            <div class="menu-page__ornament" aria-hidden="true"><span>∞</span></div>
+          <div class="menu-page__brand-identity">
             {
-              menu.description && (
-                <Text variant="body-lg" class="menu-page__description">
-                  {menu.description}
-                </Text>
+              theme.logo && logoImage && (
+                <div class="menu-page__brand">
+                  <Image
+                    src={logoImage}
+                    alt={theme.logo.alt}
+                    class="menu-page__brand-logo"
+                    width={logoImage.width}
+                    height={logoImage.height}
+                    loading="eager"
+                    decoding="async"
+                  />
+                </div>
               )
             }
+            <div class="menu-page__identity">
+              <Heading as="h1" variant="heading-lg" class="menu-page__title"
+                >{menu.title}</Heading
+              >
+              <p class="menu-page__eyebrow">{copy.menu}</p>
+              <div class="menu-page__ornament" aria-hidden="true"><span>∞</span></div>
+              {
+                menu.description && (
+                  <Text variant="body-lg" class="menu-page__description">
+                    {menu.description}
+                  </Text>
+                )
+              }
+            </div>
           </div>
           <MenuSocialLinks
             links={provider.socialLinks}
@@ -83,7 +86,11 @@ const logoImage = theme.logo ? menuLogoAssets[theme.logo.assetId] : undefined;
         </header>
 
         <div class="menu-page__sections">
-          {menu.sections.map((section) => <MenuSection {section} {locale} />)}
+          {
+            menu.sections.map((section) => (
+              <MenuSection {section} {locale} relatedEvent={provider.relatedEvent} />
+            ))
+          }
         </div>
 
         <footer class="menu-page__attribution">
